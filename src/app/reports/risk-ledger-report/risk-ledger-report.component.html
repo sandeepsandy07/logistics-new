@@ -1,0 +1,415 @@
+<div class="wrapper">
+  <div class="container-fluid">
+      <form  [formGroup]="form" enctype="multipart/form-data"  >
+          <div class="card-box" style="padding-top: 0px">
+              <div class="row">
+                  <div class="col-12">
+                      <h4  style="text-align:center">Risk Ledger Report</h4>
+                  </div>
+              </div>
+              <div class="row">
+                <div class="col-1">
+                  <button mat-raised-button color="primary" (click)="filter_table()">Filter <mat-icon>search</mat-icon></button>
+              </div>
+
+              <div  class="col-3">
+                <mat-form-field appearance="fill">
+                    <mat-label>Choose Date Range</mat-label>
+                    <mat-date-range-input [rangePicker]="dcpicker">
+                      <input matStartDate  placeholder="Start date"  formControlName="dcfromDate" (ngModelChange)="dcdatePickerChange()">
+                      <input matEndDate  placeholder="End date"  formControlName="dctoDate" (ngModelChange)="dcdatePickerChange()">
+                    </mat-date-range-input>
+                    <mat-datepicker-toggle matSuffix [for]="dcpicker"></mat-datepicker-toggle>
+                    <mat-date-range-picker #dcpicker></mat-date-range-picker>
+                    <mat-hint>Choose Date Range</mat-hint>
+                  </mat-form-field>
+            </div>
+              <!-- <div class="col-3">
+                <button style="margin-left:1rem;" mat-raised-button color="primary" (click)="exportToExcel()">Export To Excel</button>
+              </div> -->
+
+              <div class="col-3">
+                <button mat-raised-button color="primary" (click)="exportToExcelAll()">Export To Excel All</button>
+              </div>
+              </div>
+              <br/>
+
+              <div *ngIf="filterDataForm">
+                  <div class="row">
+                    
+                      <!-- <div class="col-2" style="margin-right: 18px;">
+                        <mat-form-field class="example-full-width" appearance="fill">
+                                <input type="text" matInput formControlName="project_id" 
+                                placeholder="Project Id">
+                                <mat-hint>Project Id</mat-hint>
+                        </mat-form-field>
+                      </div> -->
+    
+                      <div class="col-2" style="margin-right: 18px;">
+                        <mat-form-field class="example-full-width" appearance="fill">
+                                <input type="text" matInput formControlName="so_no" 
+                                placeholder="So No">
+                                <mat-hint>SO No.</mat-hint>
+                        </mat-form-field>
+                    </div>
+    
+                  <div class="col-2" style="margin-right: 18px;">
+                    <mat-form-field appearance="fill" >
+                      <mat-label>Bill Type</mat-label>
+                      <mat-select formControlName="billtype" [(value)]="form.value.billtype">
+                        <mat-option value="billable">Billable</mat-option>
+                        <mat-option value="nonbillable">Non Billable</mat-option>
+                      </mat-select>
+                      <mat-hint>Bill Type</mat-hint>
+                    </mat-form-field>
+                  </div>
+    
+                    <div class="col-2" style="margin-right: 18px;">
+                        <mat-form-field appearance="fill">
+                          <mat-label>Business Unit</mat-label>
+                          <mat-select formControlName="business_unit" [(value)]="form.value.business_unit" multiple>
+                            <mat-option>-select-</mat-option>
+                            <mat-option *ngFor="let subskill of business_unit_list" [value]="subskill.sub_dept_id">
+                              {{subskill.sub_department}}
+                            </mat-option>
+                          </mat-select>
+                          <mat-hint>Business Unit</mat-hint>
+                          </mat-form-field>
+                    </div>
+
+                    <div  class="col-2">
+                      <mat-form-field appearance="fill" style="margin-right: 18px;width:160px;">
+                          <mat-label>Choose Risk Occurence Created Date Range</mat-label>
+                          <mat-date-range-input [rangePicker]="picker">
+                            <input matStartDate  placeholder="Start date"  formControlName="fromDate" (ngModelChange)="datePickerChange()">
+                            <input matEndDate  placeholder="End date"  formControlName="toDate" (ngModelChange)="datePickerChange()">
+                          </mat-date-range-input>
+                          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                          <mat-date-range-picker #picker></mat-date-range-picker>
+                          <mat-hint>Choose Risk Occurence Created Date Range</mat-hint>
+                        </mat-form-field>
+                  </div>
+
+                  <div class="col-2">
+                    <button mat-raised-button color="primary" (click)="getRecordsBasedOnFilterData()">Search</button>
+                    <button style="margin-left:1rem;" mat-raised-button color="primary" (click)="clearAllFilterDataFields()">Clear</button>
+                </div>
+               </div>
+                  
+                      <!-- <div class="col-2" style="margin-right: 18px;">
+                        <mat-form-field class="example-full-width" appearance="fill">
+                            <mat-label>Date Type</mat-label>
+                                    <mat-select #datetypeselect  formControlName="date_type" (selectionChange) ='onDateTypeSelected(datetypeselect.value)'>
+                                    <mat-option value="TaxInvDate">Tax Invoice</mat-option>
+                                    <mat-option value="ChallanCreatedDate">Challan Created</mat-option>
+                                    <mat-option value="TaxChallanDate">Both</mat-option>
+                                  </mat-select>
+                          </mat-form-field>
+                        </div> -->
+    
+                        <!-- <div  class="col-2" style="margin-right: 18px;">
+                            <mat-form-field style="width:160px">
+                                <mat-label>Choose Risk Occurence Created Date Range</mat-label>
+                                <mat-date-range-input [rangePicker]="picker">
+                                  <input matStartDate  placeholder="Start date"  formControlName="fromDate" (ngModelChange)="datePickerChange()">
+                                  <input matEndDate  placeholder="End date"  formControlName="toDate" (ngModelChange)="datePickerChange()">
+                                </mat-date-range-input>
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-date-range-picker #picker></mat-date-range-picker>
+                              </mat-form-field>
+                        </div> -->
+                    </div>   
+              </div>
+      </form>
+
+      <div class="row">
+        <div class="col-12">
+            <div class="card-box table-responsive">
+              <table  class="table table-bordered table-striped table-hover" datatable [dtOptions]="dtOptions" dtElement [dtTrigger]="dtTrigger" style="overflow: scroll;">
+                    <thead>
+                        <tr>
+                            <th style="width: 30px;">Sl.no</th>
+                            <th style="width: 130px;">Job Name</th>
+                            <th style="width: 130px;">Job code/SO.No</th>
+                            <th style="width: 130px;">Customer Name</th>
+                            <th style="width: 130px;">Bill Type</th>
+                            <th style="width: 130px;">Business Unit</th>  
+                            <th  style="width: 130px;" >Probale Risk (Pre defined)+E5:M6</th>
+                            <th style="width: 130px;">Detailed Description of Risk</th>
+                            <th style="width: 130px;">Type of Risk Commericial/ Techanical/Others</th>
+                            <th   style="width: 130px;">Impact</th>
+                            <th style="width: 130px;">Likelihood of Occurrence /Severity of Risk(High/Medium Low)</th>
+                            <th  style="width: 130px;">Countermeasure/Mitigation Plan (What to do to avoid the risk occuring)</th>
+                            <th style="width: 130px;" >Contigency Plan (what to do if the risk occurs)</th>
+                            <th style="width: 130px;" >Risk status(Open/Mitigated/Closed/ Accepted/Converted to Opportunity/NA)</th>
+                            <th style="width: 230px;">Remarks</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                            <tr *ngFor="let subskill of tablelist;let i=index">
+                            <td >{{i+1}}</td>
+                            <td>{{subskill.job_name}}</td>
+                            <td>{{subskill.job_code}}/{{subskill.so_no}}</td>
+                            <td>{{subskill.customer_name}}</td>
+                            <td>{{subskill.bill_type}}</td>
+                            <td>{{subskill.business_unit}}</td>
+                            <td>{{subskill.probale_risk}}</td>
+                            <td>{{subskill.detailed_description_risk}}</td>
+                            <td>{{subskill.type_of_risk}}</td>
+                            <td>{{subskill.impact}}</td>
+                            <td>{{subskill.severity_of_risk}}</td>
+                            <td>{{subskill.countermeasure_mitigation_plan}}</td>
+                            <td>{{subskill.contigency_plan_value}}</td>  
+                            <td>{{subskill.risk_status}}</td>
+                            <td>{{subskill.remarks}}</td>                              
+                            <!-- <td>{{subskill.enroute_hold_up_issues_remarks}}/{{subskill.no_supply_of_packing_material_remarks}}/{{subskill.statutory_regulations_remarks}}</td> -->
+                          </tr> 
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    </div>
+  </div>
+
+
+
+
+  <!-- </div> commented on 3/2/2023
+</div> -->
+
+  <!-- <div class="row">
+    <button style="margin-left:1rem;" mat-raised-button color="primary" (click)="exportToExcel()">Export To Excel</button>
+  </div>
+  
+    <div class="row">
+      <div class="col-12">
+          <div class="card table-responsive">
+            <table  class="table table-bordered" datatable  style="overflow: scroll;">
+                  <thead>
+                    <tr>
+                      <th>Sl.no</th>
+                      <th >Job Name</th>
+                      <th >Job code/SO.No</th>
+                      <th>Probale_Risk(Pre defined)+E5:M6</th>
+                      <th>Detailed_Description_of_Risk</th>
+                      <th>Type_of_Risk_Commericial/ Techanical/Others</th>
+                      <th>Impact(What will be the impact if risk occurs)</th>
+                      <th>Likelihood_of_Occurrence /Severity_of_Risk(High/Medium Low)</th>
+                      <th>Countermeasure/Mitigation_Plan (What to do to avoid the risk occuring)</th>
+                      <th>Contigency_Plan (what to do if the risk occurs)</th>
+                      <th>Risk_status(Open/Mitigated/Closed/Accepted/Converted to Opportunity/NA)</th>
+                      <th>Remark</th>
+                    </tr>
+                  </thead>
+                  <tbody *ngFor="let subskill of tablelist;let i=index">
+                    <tr> 
+                        <td rowspan="3">{{i+1}}</td>
+                        <td rowspan="3">{{subskill.job_name}}</td>
+                        <td rowspan="3">{{subskill.job_code}}/{{subskill.so_no}}</td>
+                        <td>Enroute Hold up Issues.</td>
+                        <td>Delivery - Enroute breakdown of truck, detention and transit delay due to Natural calamities /Strike / Bandh etc.,</td>
+                        <td>Nil</td>
+                        <td>Delay in delivery leads to dissatification of customer</td>
+                        <td>Low</td>
+                        <td>NA</td>
+                        <td>NA</td>
+                        <td>NA</td>
+                        <td>{{subskill.enroute_hold_up_issues_remarks}}</td>
+                      </tr>
+                    <tr> 
+                      <td>No Supply of packing material</td>
+                      <td>Delay in supply of packing material due to unforseen issue.</td>
+                      <td>Nil</td>
+                      <td>Will lead to delay in packing and shipping</td>
+                      <td>Low</td>
+                      <td>NA</td>
+                      <td>NA</td>
+                      <td>NA</td>
+                      <td>{{subskill.no_supply_of_packing_material_remarks}}</td>
+                    </tr>
+                    <tr>
+                      <td>Statutory Regulations</td>
+                      <td>Ensure Regulatory Compliance by way of updation on tax matters, road permite, Vehicle Licence etc.,</td>
+                      <td>Nil</td>
+                      <td>Delay in delivery to customer</td>
+                      <td>Low</td>
+                      <td>NA</td>
+                      <td>NA</td>
+                      <td>NA</td>
+                      <td>{{subskill.statutory_regulations_remarks}}</td>
+                    </tr> 
+                  </tbody>
+              </table>
+          </div>
+      </div>
+  </div> 
+
+</div>
+</div> -->
+
+
+
+  <!-- </div> -->
+
+
+
+
+
+
+
+
+
+
+
+  <!--<td rowspan="3" style="width:130px;"><span *ngIf="subskill.risk_ledger_record.length != 0">{{subskill.risk_ledger_record[0].job_name}}</span></td>
+  <td rowspan="3"><span *ngIf="subskill.risk_ledger_record.length != 0">{{subskill.risk_ledger_record[0].job_code}}/{{subskill.risk_ledger_record[0].so_no}}</span></td>-->
+
+
+<!-- <div class="wrapper">
+  <div class="container-fluid">
+      <form  [formGroup]="form" enctype="multipart/form-data"  >
+          <div class="card-box" style="padding-top: 0px">
+              <div class="row">
+                  <div class="col-12">
+                      <h4  style="text-align:center">Risk Ledger Report</h4>
+                  </div>
+              </div>
+              <div class="row">
+                <div class="col-1">
+                  <button mat-raised-button color="primary" (click)="filter_table()">Filter <mat-icon>search</mat-icon></button>
+              </div>
+              </div>
+              <br/>
+
+              <div *ngIf="filterDataForm">
+                  <div class="row">
+                      <div class="col-2" style="margin-right: 18px;">
+                        <mat-form-field class="example-full-width" appearance="fill">
+                                <input type="text" matInput formControlName="project_id" 
+                                placeholder="Project Id">
+                        </mat-form-field>
+                      </div>
+    
+                      <div class="col-2" style="margin-right: 18px;">
+                        <mat-form-field class="example-full-width" appearance="fill">
+                                <input type="text" matInput formControlName="so_no" 
+                                placeholder="So No">
+                        </mat-form-field>
+                    </div>
+    
+                    <div class="col-2" style="margin-right: 18px;">
+                        <mat-form-field appearance="fill">
+                          <mat-label>Business Unit</mat-label>
+                          <mat-select formControlName="business_unit" [(value)]="form.value.business_unit" multiple>
+                            <mat-option>-select-</mat-option>
+                            <mat-option *ngFor="let subskill of business_unit_list" [value]="subskill.sub_dept_id">
+                              {{subskill.sub_department}}
+                            </mat-option>
+                          </mat-select>
+                          </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-2" style="margin-right: 18px;">
+                        <mat-form-field class="example-full-width" appearance="fill">
+                            <mat-label>Date Type</mat-label>
+                                    <mat-select #datetypeselect  formControlName="date_type" (selectionChange) ='onDateTypeSelected(datetypeselect.value)'>
+                                    <mat-option value="TaxInvDate">Tax Invoice</mat-option>
+                                    <mat-option value="ChallanCreatedDate">Challan Created</mat-option>
+                                    <mat-option value="TaxChallanDate">Both</mat-option>
+                                  </mat-select>
+                          </mat-form-field>
+                        </div>
+    
+                        <div  class="col-2" style="margin-right: 18px;">
+                            <mat-form-field style="width:160px">
+                                <mat-label>Enter a date range</mat-label>
+                                <mat-date-range-input [rangePicker]="picker">
+                                  <input matStartDate  placeholder="Start date"  formControlName="fromDate" (ngModelChange)="datePickerChange()">
+                                  <input matEndDate  placeholder="End date"  formControlName="toDate" (ngModelChange)="datePickerChange()">
+                                </mat-date-range-input>
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-date-range-picker #picker></mat-date-range-picker>
+                              </mat-form-field>
+                        </div>
+    
+                        <div class="col-3">
+                            <button style="margin-left:1rem;" mat-raised-button color="primary" (click)="getRecordsBasedOnFilterData()">Search</button>
+                            <button style="margin-left:1rem;" mat-raised-button color="primary" (click)="clearAllFilterDataFields()">Clear</button>
+                        </div>
+                        </div>
+                    </div>   
+              </div>
+      </form>
+  </div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card-box table-responsive">
+           <table class="table table-bordered" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" style="overflow: scroll;">
+            <thead>
+            <tr>
+              <th>Sl.no</th>
+              <th>Job Name</th>
+              <th>Job code / SO No</th>
+              <th>Probale Risk (Pre defined)+E5:M6</th>
+              <th>Detailed Description of Risk</th>
+              <th>Type of Risk Commericial / Techanical / Others</th>
+              <th>Impact  (What will be the impact if risk occurs)</th>
+              <th>Likelihood of Occurrence /Severity of Risk  (High/Medium Low)</th>
+              <th>Countermeasure / Mitigation Plan (What to do to avoid the risk occuring)</th>
+              <th>Contigency Plan (what to do if the risk occurs)</th>
+              <th>Risk status (Open/Mitigated/Closed/Accepted/Converted to Opportunity/NA)</th>
+              <th>Remark</th>
+            </tr>
+          </thead>
+          <tbody *ngFor="let subskill of tablelist;let i=index">
+          <tr> 
+              <td rowspan="3">{{i+1}}</td>
+              <td rowspan="3">{{subskill.job_name}}</td>
+              <td rowspan="3">{{subskill.job_code}}/{{subskill.so_no}}</td>
+              <td>Enroute Hold up Issues.</td>
+              <td>Delivery - Enroute breakdown of truck, detention and transit delay due to Natural calamities /Strike / Bandh etc.,</td>
+              <td>Nil</td>
+              <td>Delay in delivery leads to dissatification of customer</td>
+              <td>Low</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>{{subskill.remarks}}</td>
+            </tr>
+          <tr> 
+            <td>No Supply of packing material</td>
+            <td>Delay in supply of packing material due to unforseen issue.</td>
+            <td>Nil</td>
+            <td>Will lead to delay in packing and shipping</td>
+            <td>Low</td>
+            <td>NA</td>
+            <td>NA</td>
+            <td>NA</td>
+            <td>{{subskill.remarks}}</td>
+          </tr>
+          <tr>
+            <td>Statutory Regulations</td>
+            <td>Ensure Regulatory Compliance by way of updation on tax matters, road permite, Vehicle Licence etc.,</td>
+            <td>Nil</td>
+            <td>Delay in delivery to customer</td>
+            <td>Low</td>
+            <td>NA</td>
+            <td>NA</td>
+            <td>NA</td>
+            <td>{{subskill.remarks}}</td>
+          </tr> 
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+</div> -->
+
+  
+  <!-- <tr *ngFor="let subskill of tablelist;let i=index"> -->
+    <!-- <td rowspan="3">1</td>
+              <td rowspan="3">ACCESS TECHNOLOGIES</td>
+              <td rowspan="3">2008096730</td> -->

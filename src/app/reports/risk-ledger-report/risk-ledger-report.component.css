@@ -1,0 +1,46 @@
+/* thead th {
+  padding: 10px 18px;
+  width: initial;
+  border: 1px solid rgb(192, 192, 230);
+}
+
+tbody td {
+  overflow-wrap: initial;
+  width:max-content;
+  padding: 2px 2px;
+  border: 1px solid rgb(192, 192, 230);
+}
+
+thead td {
+  padding: 10px 18px;
+  border: 1px solid darkblue
+}
+
+table.dataTable {
+  width: 100%;
+  margin: 0 auto;
+  clear: both;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+
+
+.th
+{
+ width:930px;
+  color:blue;
+  overflow-wrap: unset;
+white-space: nowrap;
+  
+}
+
+
+.td
+{
+ width:930px;
+  color:blue;
+  overflow: hidden;
+white-space: nowrap;
+  
+} */

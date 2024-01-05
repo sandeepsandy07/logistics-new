@@ -1,0 +1,46 @@
+
+<div class="wrapper " >
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+          
+              <h4 class=""><b>Truck file upload </b></h4>
+             
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12"> 
+                <div class="card-box">
+                  
+                   
+                    <form [formGroup]="uploadForm"  enctype="multipart/form-data" #myForm="ngForm">
+                        <div class="row justify-content-center">
+                            <div class="col-md-6">
+                            <div ng-controller="AppController" class="upload">
+                                <h4>File Upload</h4>
+                                <input type="file" class="" name="vehicleBillingDetails_report" #takeInput
+                                (change)="OnFileSelect($event,'vehicleBillingDetails_report')" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                            </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div >
+                                  
+                                </div>
+                                </div>
+                            <div class="col-md-4">
+                                <div >
+                                    <h4><span style="color: red">*</span> upload format of BOM <mat-icon >cloud_download</mat-icon></h4>
+                                </div>
+                                </div>
+                        </div>
+                        <div class="row justify-content-center mt-2">
+                            <button type="submit" mat-raised-button color="primary"  class="col-sm-2" (click)="onSubmit()">Upload</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                           
+                        </div>
+                    </form>
+                    
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>

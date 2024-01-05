@@ -1,0 +1,335 @@
+<div class="row">
+    <div class="col-12">
+            <table  class="table table-bordered table-striped table-hover" datatable style="overflow: scroll;">
+                <thead>
+                    <tr>
+                        <th style="width: 30px;">Sl.no</th>
+                        <th style="width: 130px;">Vehicle No</th>
+                        <th style="width: 160px;">Truck Type</th>
+                        <th style="width: 230px;">Transportation Provider</th>
+                        <th style="width: 260px;">lrn/cha. No.</th>
+                        <th style="width: 230px;">Expected Date To Reach Destination</th>
+                        <th style="width: 260px;" >Checked Out</th>
+                        <th style="width: 260px;">Delivered Datetime</th>
+                        <th  style="width: 130px;">Delay(days)</th>
+                        <th style="width: 260px;">Loaded Date</th>
+                        <th style="width: 230px;">Checked Out Remarks</th>
+                        <th style="width: 230px;">Loading Remarks</th>
+                        <th style="width: 230px;">Status</th>
+                        <th  style="width: 130px;" >Driver Name</th>
+                        <th style="width: 160px;">Driver No</th>
+                    </tr>
+                </thead>
+                <tbody>
+                        <tr *ngFor="let subskill of passed_result_list;let i=index">
+                        <td >{{i+1}}</td>
+                        <td style="color:blue;" (click)="openDialogPanel(subskill.truckListId)">{{subskill.vehicle_no}}</td>
+                        <td *ngIf="subskill.truckDetails.length != 0">{{subskill.truckDetails[0].truckName}}</td>
+                        <td>{{subskill.transportationProvider}}</td>
+                        
+                        <td>{{subskill.delivery_challen[0].lrn_no}}/{{subskill.delivery_challen[0].challen_no}}</td>
+                        <td style="text-align: center;">{{subskill.expectedNoOfDays != null ? (subskill.expectedNoOfDays | date : 'dd/MM/yyyy') : ('-')}}</td>
+                        <td>{{subskill.check_out  | date : 'dd/MM/yyyy HH:mm:ss a'}}</td>
+                        <td>{{subskill.delivered_datetime | date : 'dd/MM/yyyy HH:mm:ss a'}}</td>
+                        <td style="text-align: center;">
+                            <span style="color:green;font-size:20px;" *ngIf="subskill.delays <= 0">{{subskill.delays != null ? subskill.delays : '-'}}</span>
+                            <span style="color:red;font-size:20px;" *ngIf="subskill.delays > 0">{{subskill.delays != null ? subskill.delays : '-'}}</span>
+                          </td>
+                        <td>{{subskill.loaded_date  | date : 'dd/MM/yyyy HH:mm:ss a'}}</td>
+                        <td>{{subskill.check_out_remarks}}</td>
+                        <td>{{subskill.loading_remarks}}</td>
+                        <td style="color:forestgreen">{{subskill.status}}</td>
+                        <td>{{subskill.driver_name}}</td>
+                        <td>{{subskill.driver_no}}</td>
+                        </tr> 
+                </tbody>
+            </table>
+            <div class="col-12" align="center">  
+                <button color="warn" mat-raised-button mat-dialog-close style="margin-left:20px;" (click)="dialogClose()">Close</button>
+            </div> 
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <div class="row" >
+    <div class="col-12">
+        <mat-dialog-content>
+
+            <mat-accordion>
+                <mat-expansion-panel style="background-color:#4f9ef5" >
+                    <mat-expansion-panel-header style="height: auto" >
+                      
+                        <div class="col-1 ">
+                            <mat-panel-title>
+                                Sl.no  
+                            </mat-panel-title>
+                        </div>
+                        <div class="col-2">
+                            <mat-panel-title>
+                             <span>Vehicle No.</span>
+                            </mat-panel-title>
+                        </div>
+                       
+                        <div class="col-3">
+                            <mat-panel-title>
+                             <span>Providers</span>
+                               
+                            </mat-panel-title>
+                        </div>
+                      
+                        <div class="col-2">
+                            <mat-panel-title>
+                             <span>Ship Date</span>
+                               
+                            </mat-panel-title>
+                        </div>
+                        <div class="col-2">
+                            <mat-panel-title>
+                                <span>Expect Date</span>
+                               
+                            </mat-panel-title>
+                        </div>
+                        <div class="col-1">
+                            <mat-panel-title>
+                             <span>Location </span>
+                               
+                            </mat-panel-title>
+                        </div>
+                        <div class="col-1">
+                            <mat-panel-title>
+                             <span >Due</span>
+                               
+                            </mat-panel-title>
+                        </div>
+                      
+                       
+                   
+                  
+                   
+                </mat-expansion-panel-header>
+                   
+                   
+                   
+                </mat-expansion-panel>
+                <mat-expansion-panel >
+                    <mat-expansion-panel-header style="height: auto" >
+                      
+                        <div class="col-1 ">
+                            <mat-panel-title>
+                                1  
+                            </mat-panel-title>
+                        </div>
+                        <div class="col-2">
+                            <mat-panel-title>
+                             <span>Ka-02-123</span>
+                            </mat-panel-title>
+                        </div>
+                       
+                        <div class="col-3">
+                            <mat-panel-title>
+                             <span>logistic providers</span>
+                               
+                            </mat-panel-title>
+                        </div>
+                      
+                        <div class="col-2">
+                            <mat-panel-title>
+                             <span>22-03-2022 18:43</span>
+                               
+                            </mat-panel-title>
+                        </div>
+                        <div class="col-2">
+                            <mat-panel-title>
+                                <span>22-03-2022 18:43</span>
+                               
+                            </mat-panel-title>
+                        </div>
+                        <div class="col-1">
+                            <mat-panel-title>
+                             <span>Bangalore </span>
+                               
+                            </mat-panel-title>
+                        </div>
+                        <div class="col-1">
+                            <mat-panel-title>
+                             <span style="color: red;">-</span>
+                               
+                            </mat-panel-title>
+                        </div>
+                      
+                       
+                   
+                  
+                   
+                </mat-expansion-panel-header>
+                   
+                   
+                    <table class="table table-dark"> 
+                        <thead>
+                            <tr style="line-height: 0px !important;">
+                                <th>
+                                    sl.no
+                                </th>
+                                <th>
+                                    Date Time
+                                </th>
+                                <th>
+                                    Location
+                                </th>
+                                <th>
+                                   Status
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                         
+                            <tr  class="table-active"  >
+                                <td>1</td>
+                                <td>22-03-2022 18:43</td>
+                                <td>mysore</td>
+                                <td>Transit</td>
+                               
+                              </tr>
+                              <tr  class="table-active"  >
+                                <td>2</td>
+                                <td>21-03-2022 18:43</td>
+                                <td>Bangalore</td>
+                                <td>shipped</td>
+                               
+                              </tr>
+                        </tbody>
+                    </table>
+                </mat-expansion-panel>
+                <mat-expansion-panel >
+                    <mat-expansion-panel-header style="height: auto" >
+                      
+                        <div class="col-1 ">
+                            <mat-panel-title>
+                                2  
+                            </mat-panel-title>
+                        </div>
+                        <div class="col-2">
+                            <mat-panel-title>
+                             <span>Ka-02-123</span>
+                            </mat-panel-title>
+                        </div>
+                       
+                        <div class="col-3">
+                            <mat-panel-title>
+                             <span>logistic providers</span>
+                               
+                            </mat-panel-title>
+                        </div>
+                      
+                        <div class="col-2">
+                            <mat-panel-title>
+                             <span>22-03-2022 18:43</span>
+                               
+                            </mat-panel-title>
+                        </div>
+                        <div class="col-2">
+                            <mat-panel-title>
+                                <span>22-03-2022 18:43</span>
+                               
+                            </mat-panel-title>
+                        </div>
+                        <div class="col-1">
+                            <mat-panel-title>
+                             <span>Bangalore </span>
+                               
+                            </mat-panel-title>
+                        </div>
+                        <div class="col-1">
+                            <mat-panel-title>
+                             <span style="color: red;">2</span>
+                               
+                            </mat-panel-title>
+                        </div>
+                      
+                       
+                   
+                  
+                   
+                </mat-expansion-panel-header>
+                   
+                   
+                    <table class="table table-dark"> 
+                        <thead>
+                            <tr style="line-height: 0px !important;">
+                                <th>
+                                    sl.no
+                                </th>
+                                <th>
+                                    Date Time
+                                </th>
+                                <th>
+                                    Location
+                                </th>
+                                <th>
+                                   Status
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                         
+                            <tr  class="table-active"  >
+                                <td>1</td>
+                                <td>22-03-2022 18:43</td>
+                                <td>mysore</td>
+                                <td>Transit</td>
+                               
+                              </tr>
+                              <tr  class="table-active"  >
+                                <td>2</td>
+                                <td>21-03-2022 18:43</td>
+                                <td>Bangalore</td>
+                                <td>shipped</td>
+                               
+                              </tr>
+                        </tbody>
+                    </table>
+                </mat-expansion-panel>
+            </mat-accordion>
+
+
+
+
+
+
+           
+        
+          
+        </mat-dialog-content>
+        <div class="col-12" align="center">  
+            
+            <button mat-raised-button mat-dialog-close style="margin-left:20px;" (click)="dialogClose()">Close</button>
+        </div> 
+    </div>
+</div> -->

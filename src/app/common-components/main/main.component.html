@@ -1,0 +1,144 @@
+
+<style>
+  .tooltip123 {
+    width: 200px;
+    position: fixed;
+    top: 6%;
+    z-index: 1000;
+    right: 11%;
+    left: auto;
+    color: black;
+    box-shadow: 0 0px 8px 0 rgb(0 0 0 / 6%), 0 1px 0px 0 rgb(0 0 0 / 2%);
+    border-radius: 5px;
+    background-color:#3c92cb8c;
+    
+}
+.profileinfo {
+    width: 200px;
+    position: fixed;
+    top: 9%;
+    z-index: 1000;
+    right: 3%;
+    left: auto;
+    color: black;
+    box-shadow: 0 0px 8px 0 rgb(0 0 0 / 6%), 0 1px 0px 0 rgb(0 0 0 / 2%);
+    border-radius: 5px;
+    background-color: #ffffff;
+}
+</style>
+<!-- <mat-toolbar  style="background-image: url('../assets/images/logistics-management.jpg'); background-size:50%;background-repeat:round;color:rgb(248 250 250)"> -->
+<mat-toolbar  style="background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#014a7d), to(#3399cc));">
+  
+  <mat-toolbar-row style="color: white" width="50%">
+    <button mat-icon-button>
+      <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
+    </button>
+    
+    <div class="row" style="width: 100%;color: white;">
+      <div class="col-6">
+        
+        <h1 ><a [routerLink]="'/material/Dashboard'" style="color: white;">Logistics </a></h1>
+      
+      </div>
+      <div class="col-3">        
+        <!-- <mat-icon style="width: 36px;background: #216da1;float: right; font-size: 36px;height: 36px;border-radius: 14px;" matBadge="{{notification_count}}" mat-raised-button matBadgeColor="accent"  (click)="openNotification()"  >notifications_active</mat-icon> -->
+        
+       
+         
+        <mat-icon>contact_support</mat-icon><span style="font-size: 15px;">Support: yil-lpsupport@yokogawa.com</span>
+
+        
+      </div>
+      <div class="col-2">      
+        
+
+        <!-- <mat-icon style="width: 36px;background: #216da1;float: right; font-size: 36px;height: 36px;border-radius: 14px;" matBadge="{{notification_count}}" mat-raised-button matBadgeColor="accent"  (click)="openNotification()"  >notifications_active</mat-icon> -->
+        <mat-icon style="float: right;" matBadge="{{notification_count}}" mat-raised-button matBadgeColor="accent"  (click)="openNotification()"  >notifications_active</mat-icon>
+        <a  style="float: left;font-size: 15px;padding-right: 1%;color:white" mat-list-item href="../assets/images/LogisticsPortalUserGuide.pdf" target="_blank"   class="reduce_hight_main_menu"><mat-icon title="User Guide">info</mat-icon>User Guide</a>
+       
+      
+        
+
+        
+      </div>
+      <div class="col-1">
+        <!-- <mat-icon style="width: 36px;background: #216da1;float: right; font-size: 36px;height: 36px;border-radius: 14px;" (click)="emp_profile()">person</mat-icon>   -->
+        <mat-icon  (click)="emp_profile()">person</mat-icon>  
+       
+
+      </div>
+    </div>
+   
+  
+  </mat-toolbar-row>
+
+
+ 
+</mat-toolbar>
+
+<mat-sidenav-container >
+  <mat-sidenav #sidenav  >
+    <mat-nav-list>
+      <div *ngFor="let menulist of modulelist">
+        <a mat-list-item (click)="onMaterialHander(menulist.module_id)" class="reduce_hight_main_menu">
+          <mat-icon matListIcon [ngStyle]="{'color':menulist.m_color}"> {{menulist.m_icon_name}}</mat-icon>
+          {{menulist.module_name}}
+        </a>
+        <div *ngFor="let submenu of menulist.root_module">
+          <mat-list *ngIf="menulist.module_id == current_menu" style="margin-left:30px;">
+            <mat-list-item class="reduce_hight" (click)="sidenav.toggle()" >
+
+              <a [routerLink]="submenu.m_link" style="font-size:13px;" *ngIf="submenu.module_name != 'Create DA' && submenu.module_name != 'DA Report'">
+                <div class="center-vertically"> 
+                  <mat-icon matListIcon>{{submenu.m_icon_name}}</mat-icon>  {{submenu.module_name}}
+                  </div>
+              </a> 
+              <a *ngIf="submenu.module_name == 'Create DA'" (click)="daNavigation_da(1233,'/material/DAcreate','Create')" style="font-size:13px;" >
+                <div class="center-vertically"> 
+                  <mat-icon matListIcon>{{submenu.m_icon_name}}</mat-icon>  {{submenu.module_name}}
+                  </div>
+              </a>
+              <a *ngIf="submenu.module_name == 'DA Report'" (click)="daNavigation_da_report('/material/DA-details-report')" style="font-size:13px;" >
+                <div class="center-vertically"> 
+                  <mat-icon matListIcon>{{submenu.m_icon_name}}</mat-icon>  {{submenu.module_name}}
+                  </div>
+              </a> 
+            </mat-list-item>
+          </mat-list>
+        </div>
+      </div>  
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content> 
+
+   
+    <div style="height: 88vh;">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+<div class="tooltip123" *ngIf="isCollapsed">
+  <div class="" *ngFor="let notification_lists of notification_list" style="margin: 5px; box-shadow: 0 0px 8px 0 rgb(0 0 0 / 6%), 0 1px 0px 0 rgb(0 0 0 / 2%);
+  border-radius: 5px;
+  background-color: #ffffff; " (click)="daNavigation(notification_lists.da_id,'material/DaApprovalPage')"><mat-icon style="color: #2470a4;">check_circle</mat-icon><span>{{notification_lists.jobcode_da_no}}-{{notification_lists.job_code}}</span></div>
+
+</div>
+<div class="profileinfo" *ngIf="empinfo">
+  <mat-nav-list>
+    <a mat-list-item  class="reduce_hight_main_menu"><mat-icon matListIcon [ngStyle]="{'color':'#e59605'}">person_pin</mat-icon> Profile </a>
+
+    <a mat-list-item (click)="logout()"   class="reduce_hight_main_menu"><mat-icon matListIcon >power_settings_new</mat-icon>Log Out</a>
+    <a mat-list-item href="../assets/images/LogisticsPortalUserGuide.pdf" target="_blank"   class="reduce_hight_main_menu"><mat-icon title="User Guide">info</mat-icon>User Guide</a>
+
+    
+    </mat-nav-list>
+   
+      
+      
+
+</div>
+
+
+<!-- <app-footer>
+    
+</app-footer> -->

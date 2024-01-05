@@ -1,0 +1,433 @@
+
+<div class="wrapper">
+    <div class="container-fluid">
+        <form  [formGroup]="form" enctype="multipart/form-data"  >
+            <div class="card-box" style="padding-top: 0px">
+                <div class="row">
+                    <div class="col-12">
+                        <h4  style="text-align:center">Insurance Report</h4>
+                    </div>
+                </div>
+
+                <div class="col-4">
+                    <button mat-raised-button color="primary" (click)="filter_table()">Filter <mat-icon>search</mat-icon></button>
+                    <!-- <button style="margin-left:1rem;" mat-raised-button color="primary" (click)="CurrentDateTruckList()">Get Current Date Records</button> -->
+                </div>
+                <br/>
+
+            <div *ngIf="filterDataForm">
+                <div class="row">
+                    <!-- <div class="col-2" style="margin-right: 18px;">
+                        <mat-form-field class="example-full-width" appearance="fill">
+                                <input type="text" matInput formControlName="project_id" 
+                                placeholder="Project ID">
+                        </mat-form-field>
+                    </div> -->
+
+                    <div class="col-2" style="margin-right: 18px;">
+                        <mat-form-field class="example-full-width" appearance="fill">
+                                <input type="text" matInput formControlName="so_no" 
+                                placeholder="So No">
+                                <mat-hint>So No.</mat-hint>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-2" style="margin-right: 18px;">
+                        <mat-form-field class="example-full-width" appearance="fill">
+                                <input type="text" matInput formControlName="delivery_challan_no" 
+                                placeholder="Delivery Challan No">
+                                <mat-hint>Delivery Challan No.</mat-hint>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-2" style="margin-right: 18px;">
+                        <mat-form-field class="example-full-width" appearance="fill">
+                                <input type="text" matInput formControlName="tax_inv_no" 
+                                placeholder="Tax inv no">
+                                <mat-hint>Tax inv no</mat-hint>
+                        </mat-form-field>
+                    </div>
+
+                    <!-- <div class="col-2" style="margin-right: 18px;">
+                        <mat-form-field class="example-full-width" appearance="fill">
+                                <input type="text" matInput formControlName="customer_name" 
+                                placeholder="Customer Name">
+                        </mat-form-field>
+                    </div> -->
+
+                    <!-- <div class="col-2" style="margin-right: 18px;">
+                        <mat-form-field class="example-full-width" appearance="fill">
+                                <input type="text" matInput formControlName="transporter" 
+                                placeholder="Transporter">
+                        </mat-form-field>
+                    </div> -->
+
+                    <div class="col-2" style="margin-right: 18px;">
+                      <mat-form-field class="example-full-width" appearance="fill">
+                              <input type="text" matInput formControlName="lr_no" 
+                              placeholder="LR No">
+                              <mat-hint>LR No</mat-hint>
+                      </mat-form-field>
+                  </div>
+
+                  <div class="col-md-2" style="margin-right: 18px;">
+                    <mat-form-field class="example-full-width" appearance="fill">
+                      <mat-label>Search Customer Name</mat-label>
+                      <input type="text" matInput list="codes" formControlName="customer_name" autocomplete="off" multiple>
+                      <datalist id="codes">
+                        <option *ngFor="let val of customer_name_list" value="{{val.customer_name}}">{{val.customer_name}}</option>
+                      </datalist>
+                      <mat-hint>Customer Name</mat-hint>
+                    </mat-form-field>
+                  </div>
+
+                    <div class="col-2" style="margin-right: 18px;">
+                        <mat-form-field appearance="fill">
+                          <mat-label>Transporter Name</mat-label>
+                          <mat-select formControlName="transporter" [(value)]="form.value.transporter" multiple>
+                            <mat-option>-select-</mat-option>
+                            <mat-option *ngFor="let subskill of transportationlist" [value]="subskill.transportationId">
+                              {{subskill.transportationName}}
+                            </mat-option>
+                          </mat-select>
+                          <mat-hint>Transporter Name</mat-hint>
+                          </mat-form-field>
+                    </div>
+
+                    <div class="col-2" style="margin-right: 18px;">
+                      <mat-form-field appearance="fill">
+                        <mat-label>Truck Type</mat-label>
+                        <mat-select formControlName="truck_type" [(value)]="form.value.truck_type" multiple>
+                          <mat-option>-select-</mat-option>
+                          <mat-option *ngFor="let subskill of trucktypeslist" [value]="subskill.truckId">
+                            {{subskill.truckName}}
+                          </mat-option>
+                        </mat-select>
+                        <mat-hint>Truck Type</mat-hint>
+                        </mat-form-field>
+                  </div>
+                    <!-- <div class="col-2" style="margin-right: 18px;">
+                        <mat-form-field class="example-full-width" appearance="fill">
+                                <input type="text" matInput formControlName="from" 
+                                placeholder="From">
+                        </mat-form-field>
+                    </div> -->
+
+                    <!-- <div class="col-2" style="margin-right: 18px;">
+                        <mat-form-field class="example-full-width" appearance="fill">
+                                <input type="text" matInput formControlName="destination" 
+                                placeholder="Destination">
+                        </mat-form-field>
+                    </div> -->
+
+                    <!-- <div class="col-2" style="margin-right: 18px;">
+                        <mat-form-field class="example-full-width" appearance="fill">
+                                <input type="text" matInput formControlName="insurance_scope" 
+                                placeholder="Insurance Scope">
+                        </mat-form-field>
+                    </div> -->
+
+                    <div class="col-2" style="margin-right: 18px;">
+                      <mat-form-field appearance="fill">
+                        <mat-label>Business Unit</mat-label>
+                        <mat-select formControlName="business_unit" [(value)]="form.value.business_unit" multiple>
+                          <mat-option>-select-</mat-option>
+                          <mat-option *ngFor="let subskill of business_unit_list" [value]="subskill.sub_dept_id">
+                            {{subskill.sub_department}}
+                          </mat-option>
+                        </mat-select>
+                        <mat-hint>Business Unit</mat-hint>
+                        </mat-form-field>
+                  </div>
+
+                  <div class="col-2" style="margin-right: 18px;">
+                    <mat-form-field appearance="fill">
+                      <mat-label>Insurance Scope</mat-label>
+                      <mat-select formControlName="insurance_scope" [(value)]="form.value.insurance_id" multiple>
+                        <mat-option>-select-</mat-option>
+                        <mat-option *ngFor="let subskill of insurencescopelist" [value]="subskill.insurance_scope_id">
+                          {{subskill.insurance_scope_name}}
+                        </mat-option>
+                      </mat-select>
+                      <mat-hint>Insurance Scope</mat-hint>
+                      </mat-form-field>
+                </div>
+
+                  <div class="col-md-2" style="margin-right: 18px;">
+                    <mat-form-field appearance="fill" >
+                      <mat-label>Bill Type</mat-label>
+                      <mat-select formControlName="billtype" [(value)]="form.value.billtype">
+                        <mat-option value="billable">Billable</mat-option>
+                        <mat-option value="nonbillable">Non Billable</mat-option>
+                      </mat-select>
+                      <mat-hint>Bill Type</mat-hint>
+                    </mat-form-field>
+                  </div>
+
+                    <div class="col-2" style="margin-right: 18px;">
+                        <mat-form-field class="example-full-width" appearance="fill">
+                            <mat-label>Data Type</mat-label>
+                                  <!-- <mat-select #datetypeselect  formControlName="date_type" (selectionChange) ='onDateTypeSelected(datetypeselect.value)' multiple> -->
+                                    <mat-select #datetypeselect  formControlName="date_type" (selectionChange) ='onDateTypeSelected(datetypeselect.value)'>
+                                    <mat-option value="ChallanCreateDate">Challan Create</mat-option>
+                                    <mat-option value="TaxInvDate">Tax inv</mat-option>
+                                    <mat-option value="TaxChallanDate">Both</mat-option>
+                                  </mat-select>
+                                </mat-form-field>
+                    </div> 
+                    
+                    <div class="col-md-2" style="margin-right: 18px;">
+                        <mat-form-field>
+                        <mat-label>Start Date</mat-label>
+                        <input matInput [matDatepicker]="datePicker1" formControlName="fromDate" (ngModelChange)="startdatePickerChange()">
+                        <mat-datepicker-toggle [for]="datePicker1" matSuffix> </mat-datepicker-toggle>
+                        <mat-datepicker #datePicker1></mat-datepicker>
+                        </mat-form-field>
+                </div>
+
+                <div class="col-md-2" style="margin-right: 18px;">
+                    <mat-form-field>
+                      <mat-label>End Date</mat-label>
+                    <input matInput [matDatepicker]="datePicker2" formControlName="toDate" (ngModelChange)="enddatePickerChange()">
+                    <mat-datepicker-toggle [for]="datePicker2" matSuffix> </mat-datepicker-toggle>
+                    <mat-datepicker #datePicker2></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                
+                    <div class="col-4">
+                        <button style="margin-left:1rem;" mat-raised-button color="primary" (click)="getRecordsBasedOnFilterData()">Search</button>
+                        <button style="margin-left:1rem;" mat-raised-button color="primary" (click)="clearAllFilterDataFields()">Clear</button>
+                    </div>
+
+                </div>
+            </div>
+            </div>
+        </form>
+
+
+      <div class="row">
+        <div class="col-12">
+            <div class="card-box table-responsive">
+              <table  class="table table-bordered table-striped table-hover" datatable [dtOptions]="dtOptions" dtElement [dtTrigger]="dtTrigger" style="overflow: scroll;">
+                    <thead>
+                        <tr>
+                            <th style="width: 30px;">Sl.no</th>
+                            <th style="width: 130px;">Project ID</th>
+                            <th style="width: 130px;">So no</th>
+                            <th  style="width: 130px;" >Delivery Challan No</th>
+                            <th style="width: 130px;">Challan Create Date</th>
+                            <th style="width: 130px;">Tax inv no</th>
+                            <th   style="width: 130px;">Tax inv Date</th>
+                            <th style="width: 130px;">Customer Name</th>
+                            <th  style="width: 130px;">Billable/ NonBillable</th>
+                            <th style="width: 130px;" >Transporter</th>
+
+                            <th style="width: 130px;" >Truck Type</th>
+                            <th style="width: 230px;"> LR No</th>
+                            <th style="width: 230px;">LR Date</th>
+                            <th  style="width: 130px;">Destination </th>
+                            <th  style="width: 130px;">Insurance Scope </th>
+                            <th  style="width: 130px;">Ref Doc Cat </th>
+                            <th  style="width: 130px;">Storage Location</th>
+                            <th  style="width: 130px;">Storage Location Description </th>
+                            <th  style="width: 130px;">Business Unit</th>
+                            <th  style="width: 130px;">Category </th>
+
+                            <th  style="width: 130px;">Invoice Amount</th>
+                            <th  style="width: 130px;">Truck Amount</th>
+                            <th  style="width: 130px;">SAP Assessable Value</th>
+                            <th  style="width: 130px;">SAP Tax Value</th>
+                            <th  style="width: 130px;">SAP Total Value</th>
+                            <th  style="width: 130px;">Difference</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                            <tr *ngFor="let subskill of tablelist;let i=index">
+                            <td >{{i+1}}</td>
+                            <td><span *ngIf="subskill.delivery_challan.length != 0">{{subskill.delivery_challan[0].da[0].ygs_proj_defi}}</span></td>
+                            <td>{{subskill.reference_document}}</td>
+                            <td>{{subskill.challan_no}}</td>
+                            <td>{{subskill.challan_create_date | date : 'dd/MM/yyyy'}}</td>
+                            <td>{{subskill.tax_invoice_number}}</td>
+                            <td>{{subskill.tax_invoice_date | date : 'dd/MM/yyyy'}}</td>
+                            <td>{{subskill.ship_to_party_name}}</td>
+                           
+                            <td><span *ngIf="subskill.delivery_challan.length != 0">{{subskill.delivery_challan[0].da[0].bill_type}}</span></td>
+                            <td>{{subskill.transportation_type_portal}}</td>  
+                            <td>{{subskill.truck_type}}</td>
+                            <td><span *ngIf="subskill.delivery_challan.length != 0">{{subskill.delivery_challan[0].lrn_no}}</span></td>
+
+                            <td><span *ngIf="subskill.delivery_challan.length != 0">{{subskill.delivery_challan[0].lrn_date | date : 'dd/MM/yyyy'}}</span></td>
+                            <td><span *ngIf="subskill.delivery_challan.length != 0">{{subskill.delivery_challan[0].district}}</span></td>
+                            <td>{{subskill.insurance_scope_value}}</td>
+                            
+                            <td>{{subskill.category_of_reference_document}}</td>
+                            <td>{{subskill.storage_location}}</td>
+                            <td>{{subskill.storage_location_description}}</td>
+                            <td>{{subskill.business_unit}}</td>
+                            <td>-</td>
+
+                            <td style="text-align: right;"><span *ngIf="subskill.delivery_challan.length != 0">{{ subskill.delivery_challan[0].inv_amount | number:'1.2-2'}}</span></td>
+                            <td style="text-align: right;"><span *ngIf="subskill.delivery_challan.length != 0">{{ subskill.delivery_challan[0].truck_amount | number:'1.2-2'}}</span></td>
+                            
+                            <td style="text-align: right;">{{ subskill.totalAccessableValue.tax_invoice_assessable_value__sum | number:'1.2-2'}}</td> 
+                            <td style="text-align: right;">{{ subskill.totalTaxValue.tax_invoice_total_tax_value__sum | number:'1.2-2'}}</td> 
+                            <td style="text-align: right;">{{ subskill.finalTotalValue.tax_invoice_total_value__sum | number:'1.2-2'}}</td> 
+                            <td style="text-align: right;"><span *ngIf="subskill.delivery_challan.length != 0">{{ subskill.delivery_challan[0].inv_no != null ? (subskill.finalTotalValue.tax_invoice_total_value__sum - subskill.delivery_challan[0].inv_amount | number:'1.2-2')  : (subskill.finalTotalValue.tax_invoice_total_value__sum - subskill.delivery_challan[0].truck_amount | number:'1.2-2')}}</span></td>
+                          </tr> 
+
+                          <tr>
+                            <td style="color:blue;size:25px;">Sum</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+
+                            <td style="text-align: right;">{{portalTotalInvoiceAmount | number:'1.2-2'}}</td>
+                            <td style="text-align: right;">{{portalTotalTruckAmount | number:'1.2-2'}}</td>
+
+                            <td></td>
+                            <td style="color:blue;size:25px;">Total Sap Amount</td>
+                            <td style="text-align: right;">{{sapTotalValue | number:'1.2-2'}}</td>
+                            <td></td>
+                            
+                          </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        </div>
+      </div>
+
+
+                            <!-- <td>{{ subskill.totalAccessableValue.tax_invoice_assessable_value__sum != 0 ? (subskill.totalAccessableValue.tax_invoice_assessable_value__sum | number:'1.2-2')  : (subskill.delivery_challan[0].inv_amount | number:'1.2-2') }}</td> 
+                            <td>{{ subskill.totalTaxValue.tax_invoice_total_tax_value__sum != 0 ? (subskill.totalTaxValue.tax_invoice_total_tax_value__sum | number:'1.2-2')  : '-' }}</td> 
+                            <td>{{ subskill.finalTotalValue.tax_invoice_total_value__sum != 0 ? (subskill.finalTotalValue.tax_invoice_total_value__sum | number:'1.2-2')  : (subskill.delivery_challan[0].inv_amount | number:'1.2-2') }}</td> 
+                             10/02/2023 -->
+
+                            <!-- <td><span *ngIf="subskill.delivery_challan.length != 0">{{subskill.delivery_challan[0].inv_amount != null? subskill.delivery_challan[0].inv_amount : subskill.delivery_challan[0].truck_amount | number:'1.2-2'}}</span></td>
+                            <td><span *ngIf="subskill.delivery_challan.length != 0">-</span></td>
+                            <td><span *ngIf="subskill.delivery_challan.length != 0">{{subskill.delivery_challan[0].inv_amount != null ? subskill.delivery_challan[0].inv_amount : subskill.delivery_challan[0].truck_amount | number:'1.2-2'}}</span></td> -->
+
+                            <!-- <td>{{ subskill.totalAccessableValue.tax_invoice_assessable_value__sum != 0 ? (subskill.totalAccessableValue.tax_invoice_assessable_value__sum | number:'1.2-2')  : (subskill.delivery_challan[0].inv_amount | number:'1.2-2')}}</td> 
+                            <td>{{ subskill.totalTaxValue.tax_invoice_total_tax_value__sum != 0 ? (subskill.totalTaxValue.tax_invoice_total_tax_value__sum | number:'1.2-2') : '-' }}</td> 
+                            <td>{{ subskill.finalTotalValue.tax_invoice_total_value__sum != 0 ? (subskill.finalTotalValue.tax_invoice_total_value__sum | number:'1.2-2')  : (subskill.delivery_challan[0].inv_amount | number:'1.2-2')}}</td>
+                              -->
+
+                            <!-- correct one <td>{{ subskill.totalAccessableValue.tax_invoice_assessable_value__sum | number:'1.2-2'}}</td> 
+                            <td>{{ subskill.totalTaxValue.tax_invoice_total_tax_value__sum | number:'1.2-2'}}</td> 
+                            <td>{{ subskill.finalTotalValue.tax_invoice_total_value__sum | number:'1.2-2'}}</td>  -->
+
+                            <!-- <td>{{ subskill.finalTotalValue.tax_invoice_total_value__sum != 0 ? (subskill.finalTotalValue.tax_invoice_total_value__sum - subskill.finalTotalValue.tax_invoice_total_value__sum | number:'1.2-2')  : (subskill.finalTotalValue.tax_invoice_total_value__sum - subskill.delivery_challan[0].inv_amount | number:'1.2-2')}}</td>
+                            <td>{{subskill.delivery_challan[0].inv_amount - subskill.finalTotalValue.tax_invoice_total_value__sum | number:'1.2-2'}}</td> 
+     -->
+
+                            <!-- <td><span *ngIf="subskill.delivery_challan.length != 0">{{subskill.delivery_challan[0].inv_amount}}</span></td>
+                            <td><span *ngIf="subskill.delivery_challan.length != 0">-</span></td>
+                            <td><span *ngIf="subskill.delivery_challan.length != 0">{{subskill.delivery_challan[0].inv_amount}}</span></td>
+                                  14/01/2023
+                            <td>{{ subskill.totalAccessableValue.tax_invoice_assessable_value__sum != 0 ? subskill.totalAccessableValue.tax_invoice_assessable_value__sum  : subskill.delivery_challan[0].inv_amount }}</td> 
+                            <td>{{ subskill.totalTaxValue.tax_invoice_total_tax_value__sum != 0 ? subskill.totalTaxValue.tax_invoice_total_tax_value__sum  : '-' }}</td> 
+                            <td>{{ subskill.finalTotalValue.tax_invoice_total_value__sum != 0 ? subskill.finalTotalValue.tax_invoice_total_value__sum  : subskill.delivery_challan[0].inv_amount }}</td> 
+                             -->
+                            <!-- <td>{{ subskill.totalAccessableValue != 0 ? subskill.totalAccessableValue  : subskill.records[0].delivery_challan[0].inv_amount }}</td> 
+                            <td>{{ subskill.totalTaxValue != 0 ? subskill.totalTaxValue  : '-' }}</td> 
+                            <td>{{ subskill.finalTotalValue != 0 ? subskill.finalTotalValue  : subskill.records[0].delivery_challan[0].inv_amount }}</td>  -->
+                        
+
+
+  <!--24/12/2022-->
+  <!-- <tbody>                  
+    <tr *ngFor="let subskill of tablelist;let i=index">
+    <td >{{i+1}}</td>
+  
+    <td>{{subskill.project_id}}</td>
+    <td>{{subskill.reference_document}}</td>
+   
+    <td>{{subskill.challan_no}}</td>
+    <td>{{subskill.challan_create_date | date : 'dd/MM/yyyy'}}</td>
+
+    <td>{{subskill.tax_invoice_number}}</td>
+    <td>{{subskill.tax_invoice_date | date : 'dd/MM/yyyy'}}</td>
+    <td><span *ngIf="subskill.delivery_challan.length != 0">{{subskill.delivery_challan[0].da[0].customer_name}}</span></td>
+    
+    <td>{{subskill.transportation_type}}</td>  
+    <td>{{subskill.truck_type}}</td>
+   
+    <td><span *ngIf="subskill.delivery_challan.length != 0">{{subskill.delivery_challan[0].lrn_no}}</span></td>
+
+    <td><span *ngIf="subskill.delivery_challan.length != 0">{{subskill.delivery_challan[0].lrn_date | date : 'dd/MM/yyyy'}}</span></td>
+  
+    <td><span *ngIf="subskill.delivery_challan.length != 0">{{subskill.delivery_challan[0].district}}</span></td>
+    <td>{{subskill.insurance_scope_value}}</td>
+    
+    <td>{{subskill.category_of_reference_document}}</td>
+    <td>{{subskill.storage_location}}</td>
+    <td>{{subskill.storage_location_description}}</td>
+    <td>{{subskill.business_unit}}</td>
+    <td>-</td>
+    <td>{{ subskill.tax_invoice_assessable_value != 0 ? subskill.tax_invoice_assessable_value  : subskill.delivery_challan[0].inv_amount }}</td> 
+    <td>{{ subskill.tax_invoice_total_tax_value != 0 ? subskill.tax_invoice_total_tax_value  : '-' }}</td> 
+    <td>{{ subskill.tax_invoice_total_value != 0 ? subskill.tax_invoice_total_value  : subskill.delivery_challan[0].inv_amount }}</td> 
+</tr> 
+</tbody> -->
+
+
+
+<!-- <tbody>
+  <tr *ngFor="let subskill of tablelist;let i=index">
+  <td >{{i+1}}</td>
+   <td><span *ngIf="subskill.delivery_challan.length != 0">{{subskill.delivery_challan[0].da[0].ygs_proj_defi}}</span></td> 
+  <td>{{subskill.records[0].project_id}}</td>
+  <td>{{subskill.records[0].reference_document}}</td>
+  <td><span *ngIf="subskill.delivery_challan.length != 0">{{subskill.delivery_challan[0].da[0].so_no}}</span></td> 
+  <td><span *ngIf="subskill.delivery_challan.length != 0">{{subskill.delivery_challan[0].lrn_no}}</span></td>
+   <td ><span *ngFor="let data of subskill;let i=index">{{data.delivery_challan.challen_no}}</span></td>
+  <td>{{subskill.challan_no}}</td>
+  <td>{{subskill.records[0].challan_create_date | date : 'dd/MM/yyyy'}}</td>
+
+  <td>{{subskill.records[0].tax_invoice_number}}</td>
+  <td>{{subskill.records[0].tax_invoice_date | date : 'dd/MM/yyyy'}}</td>
+  <td><span *ngIf="subskill.records[0].delivery_challan.length != 0">{{subskill.records[0].delivery_challan[0].da[0].customer_name}}</span></td>
+   <td><span *ngIf="subskill.delivery_challan.length != 0">{{subskill.delivery_challan[0].CustomerName}}</span></td>
+  <td>{{subskill.records[0].transportation_type}}</td>  
+  <td>{{subskill.records[0].truck_type}}</td>
+<td>{{subskill.lr_no_docket_no}}</td>
+  <td><span *ngIf="subskill.records[0].delivery_challan.length != 0">{{subskill.records[0].delivery_challan[0].lrn_no}}</span></td>
+
+  <td><span *ngIf="subskill.records[0].delivery_challan.length != 0">{{subskill.records[0].delivery_challan[0].lrn_date | date : 'dd/MM/yyyy'}}</span></td>
+  
+  <td><span *ngIf="subskill.records[0].delivery_challan.length != 0">{{subskill.records[0].delivery_challan[0].district}}</span></td>
+  <td>{{subskill.records[0].insurance_scope_value}}</td>
+  
+  <td>{{subskill.records[0].category_of_reference_document}}</td>
+  <td>{{subskill.records[0].storage_location}}</td>
+  <td>{{subskill.records[0].storage_location_description}}</td>
+  <td>{{subskill.records[0].business_unit}}</td>
+  <td>-</td>
+  <td>{{ subskill.totalAccessableValue != 0 ? subskill.totalAccessableValue  : subskill.records[0].delivery_challan[0].inv_amount }}</td> 
+  <td>{{ subskill.totalTaxValue != 0 ? subskill.totalTaxValue  : '-' }}</td> 
+  <td>{{ subskill.finalTotalValue != 0 ? subskill.finalTotalValue  : subskill.records[0].delivery_challan[0].inv_amount }}</td> 
+</tr> 
+</tbody> -->
+
+
+  

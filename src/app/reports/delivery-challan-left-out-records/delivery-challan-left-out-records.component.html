@@ -1,0 +1,65 @@
+<div class="wrapper">
+    <div class="container-fluid">
+  
+        <div class="row">
+            <div class="col-12">
+              <h4 class=""><b>Unmatched Records From Delivery Challan</b></h4>
+            </div>
+        </div>
+
+      <div class="row">
+        <div class="col-12">
+            <div class="card-box table-responsive">
+              <table class="table table-bordered table-striped table-hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+                    <thead>
+                        <tr>
+                            <th style="width: 30px;">Sl.no</th>
+                            <th style="width: 20px;">Challan No.</th>
+                            <th style="width: 30px;">Invoice No</th>
+                            <th style="width: 30px;">Invoice Date</th>
+                            <th style="width: 30px;">Invoice Amount</th>  
+                            <th style="width: 30px;">Truck Amount</th>
+                            <th style="width: 30px;">Challan /Inv Created Date</th>
+                            <th style="width: 30px;">LRN Date</th>
+                            <th style="width: 30px;white-space: nowrap;">LRN No</th>
+                            <!-- <th style="width: 30px;white-space: nowrap;">Eway Bill No</th> -->
+                            <th style="width: 30px;white-space: nowrap;">DA No</th>
+                            <th>Qty</th>                           
+                            <!-- <th style="width: 30px;white-space: nowrap;">TruckList Id</th>                            -->
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                            <tr *ngFor="let subskill of tablelist;let i=index">
+                            <td style="text-align: center;">{{i + 1}}</td>
+                            <td >{{subskill.challen_no}}</td>
+                            <td>{{subskill.inv_no}}</td>
+                            <td>{{subskill.inv_date | date : 'dd/MM/yyyy'}}</td>
+                            <td style="text-align: right;">{{subskill.inv_amount | number:'1.2-2'}}</td>
+                            <td style="text-align: right;">{{subskill.truck_amount | number:'1.2-2'}}</td>
+                            <td>{{subskill.created_at | date:'d/M/yyyy h:mm a'}}</td>
+                            <td>{{subskill.lrn_date | date : 'dd/MM/yyyy'}}</td>
+                            <td>{{subskill.lrn_no}}</td>
+                            <!-- <td>{{subskill.eway_bill_no}}</td> -->
+                            <td>{{subskill.da_job_code_no}}</td>
+                            <td style="text-align: center;">{{subskill.qty}}</td>
+                            <!-- <td>{{subskill.trucklist_id}}</td> -->
+                            <td>
+                                <mat-icon *ngIf="subskill.status != 'loaded'" (click)="daNavigation(subskill.trucklist_id,'/loading/truckdeliverychallan','edit','false')" style="color: #5382a3;">edit</mat-icon>
+                                <mat-icon  *ngIf="subskill.status != 'loaded'"  (click)="daNavigation(subskill.trucklist_id,'/loading/truckdeliverychallan','View','true')" style="color: #5382a3;">visibility</mat-icon>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-center">
+    <div class="spinner-border" role="status" >
+      <span  id="loading"></span>
+    </div>
+  </div>
+  

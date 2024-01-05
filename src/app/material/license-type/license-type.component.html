@@ -1,0 +1,414 @@
+<div style="text-align: center;" *ngIf="MainFormHeader">
+    <span>
+        <h2 style="font-size: 25px;">License Type</h2>
+    </span>
+</div>
+
+  <div *ngIf="CreateForm">
+      <div class="container">
+        <form #myForm="ngForm" (ngSubmit)="createList()">
+        <p class="p">Create New</p>
+        <hr>
+        <div class="row">
+            <div class="col-md-3">
+              <div class="example-container div">
+                    <mat-form-field appearance="fill">
+                      <mat-label>License Type Name required</mat-label>
+                      <input matInput placeholder="License Type Name" [(ngModel)]="LicenseTypeName" name="licenseTypeName" required maxlength="30" #licenseTypeName="ngModel" pattern="^[a-zA-Z\s _]+$">
+                      <mat-hint style="color:black">eg.EPCG</mat-hint>
+                      <mat-hint style="color:black" align="end">maxLength=30</mat-hint>
+                      <mat-error  *ngIf="licenseTypeName.touched && !licenseTypeName.valid">License Type Name must be a Character Value, Numbers and Special Characters are not allowed.</mat-error>
+                    </mat-form-field>
+              </div>
+            </div>
+            <div class="col-md-3">
+               <button mat-raised-button color="primary" type="submit"  [disabled]="!myForm.valid" >Submit</button>
+            </div>
+            <div class="col-3">
+              <mat-form-field style="margin-left:23rem;" appearance="standard">
+                <mat-label>Search</mat-label>
+                <!-- <mat-icon>search</mat-icon> -->
+                <input matInput (keyup)="applyFilter($event)" #input>
+              </mat-form-field>
+            </div>
+        </div>
+        <hr>
+      </form>
+    </div>
+  </div>
+      
+  <div *ngIf="ListForm"> 
+    <div style="margin-left:2rem;margin-right:2rem">
+      <table class="lessons-table mat-elevation-z8" matSort mat-table [dataSource]="dataSource">
+                
+                            <ng-container matColumnDef="Sl.no.">
+                              <th class="bg" mat-header-cell *matHeaderCellDef width="1%">Sl.no.</th>
+                              <td mat-cell *matCellDef="let element;let i=index;">{{i+1}}</td>
+                            </ng-container>
+      
+                            <ng-container matColumnDef="LicenseTypeName">
+                              <th class="bg" mat-header-cell *matHeaderCellDef width ="2%">LicenseTypeName</th>
+                              <td mat-cell *matCellDef="let element">{{element?.license_type_name}}</td>
+                            </ng-container>
+      
+                            <ng-container matColumnDef="CreatedBy">
+                              <th class="bg" mat-header-cell *matHeaderCellDef width ="2%">CreatedBy</th>
+                              <td mat-cell *matCellDef="let element">{{element?.created_by}}</td>
+                            </ng-container>
+      
+                            <ng-container matColumnDef="UpdatedBy">
+                              <th class="bg" mat-header-cell *matHeaderCellDef width ="2%">UpdatedBy</th>
+                              <td mat-cell *matCellDef="let element">{{element?.updated_by}}</td>
+                            </ng-container>
+         
+                            <ng-container matColumnDef="Action">
+                              <th class="bg" mat-header-cell *matHeaderCellDef width ="1%">Action</th>
+                              <td mat-cell *matCellDef="let element"> 
+                                  <button mat-icon-button color="primary" (click)="viewData(element?.license_type_id)">
+                                      <mat-icon class="mat-18">visibility</mat-icon>
+                                  </button>
+                                  <button mat-icon-button color="primary" (click)="update(element)">
+                                    <mat-icon class="mat-18">edit</mat-icon>
+                                </button>
+                                <button mat-icon-button color="accent" (click)="deleteData(element?.license_type_id)">
+                                  <mat-icon class="mat-18">delete</mat-icon>
+                              </button>
+                              </td>
+                          </ng-container>
+      
+                          <!-- <ng-container matColumnDef="Edit">
+                            <th mat-header-cell *matHeaderCellDef width ="1%">Edit</th>
+                            <td mat-cell *matCellDef="let element"> 
+                                <button mat-icon-button color="accent" (click)="update(element)">
+                                    <mat-icon class="mat-18">edit</mat-icon>
+                                </button>
+                            </td>
+                        </ng-container> -->
+                           
+                        <!-- <ng-container matColumnDef="Delete">
+                          <th mat-header-cell *matHeaderCellDef width ="1%">Delete</th>
+                          <td mat-cell *matCellDef="let element"> 
+                              <button mat-icon-button color="accent" (click)="deleteData(element?.license_type_id)">
+                                  <mat-icon class="mat-18">delete</mat-icon>
+                              </button>
+                          </td>
+                      </ng-container> -->
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                        </table>
+                        <div *ngIf="resultsLength == 0" class="noRecords">No records found</div>
+                        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+                    </div>
+            </div>
+      
+
+<div  class="div" *ngIf="ViewForm">
+    <mat-card class="example-card">
+      <mat-card-title>Details</mat-card-title>
+      <mat-card-content>
+        <p>License Type ID: {{viewRecords.license_type_id}}</p>
+        <p>License Type Name: {{viewRecords.license_type_name}}</p>
+      </mat-card-content>
+      <mat-card-actions>
+          <button mat-raised-button (click)="setViewForm()" color="primary">Back</button>
+      </mat-card-actions>
+    </mat-card>
+  </div> 
+      
+  <div *ngIf="EditForm" style="text-align: center;">
+    <span>
+        <h2 style="font-size: 25px;">License Type - Edit</h2>
+    </span>
+  </div>
+
+  <div class="container" *ngIf="EditForm">
+    <form #myForm="ngForm" (ngSubmit)="updateList()">
+        <div class="row">
+            <div class="col-md-6">
+              <div class="example-container div">
+                    <mat-form-field appearance="fill">
+                      <mat-label>License Type Name required</mat-label>
+                      <input matInput placeholder="License Type Name" [(ngModel)]="licenseTypeName" name="LicenseTypeName" ngModel required maxlength="30" #LicenseTypeName="ngModel" pattern="^[a-zA-Z\s _]+$">
+                      <mat-hint style="color:black">eg.EPCG</mat-hint>
+                      <mat-hint style="color:black" align="end">maxLength=30</mat-hint>
+                      <mat-error  *ngIf="LicenseTypeName.touched && !LicenseTypeName.valid">License Type Name must be a Character Value, Numbers and Special Characters are not allowed.</mat-error>
+                    </mat-form-field>
+              </div>
+              <br>
+               <button mat-raised-button color="primary" type="submit" [disabled]="!myForm.valid">Submit</button><button style="margin-left: 3rem;" mat-raised-button (click)="setEditForm()" color="primary">Back</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<!-- <div class="container-fluid">
+<form [formGroup]="addmore" (ngSubmit)="OnSubmit()"> 
+<div class="card"> 
+<div class="card-header text-center">Add Daily Task Report</div>
+
+<div class="card-body">
+
+<div class="row">
+  <div class="col-sm-4">
+    <mat-form-field appearance="outline">
+      <mat-label>Title</mat-label>
+      <input matInput formControlName="title"> -->
+      <!-- <mat-error *ngif="(f.title.dirty && f.title.invalid)">
+        <span>Please Enter Valid Value</span>
+      </mat-error> -->
+    <!-- </mat-form-field>
+  </div>
+  <div class="col-md-3">
+    <mat-form-field appearance="outline">
+      <mat-label>type</mat-label>
+      <mat-select formControlName="type">
+        <mat-option value="">
+          None
+        </mat-option>
+        <mat-option value="1">
+          Plan
+        </mat-option>
+        <mat-option value="1">Rutine</mat-option>
+        <mat-option value="1">R&D</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="col-sm-4">
+    <mat-form-field appearance="outline">
+      <mat-label>description</mat-label>
+      <textarea matInput formControlName="description"></textarea>
+    </mat-form-field>
+  </div>
+</div> -->
+
+
+<!-- <div class="row">
+  <div class="col-sm-12" table-responsive formArrayName="itemRows">
+    <table class="table">
+      <thead>
+        <tr>
+          <th style="white-space: nowrap;float:center"><span class="required-field"></span>Task</th>
+          <th style="white-space: nowrap;float:center"><span class="required-field"></span>TimeRange</th>
+          <th style="white-space: nowrap;float:center"><span class="required-field"></span>Status</th>
+          <th style="white-space: nowrap;float:center"><span class="required-field"></span>Client</th>
+          <th style="white-space: nowrap;float:center"><span class="required-field"></span>Assign To</th>
+          <th style="white-space: nowrap;float:center"><span class="required-field"></span>QA</th>
+          <th style="white-space: nowrap;float:center"><span class="required-field"></span>Test</th>
+          <th style="white-space: nowrap;float:center">Learn</th>
+          <th style="white-space: nowrap;float:center">Description</th>
+          <th style="white-space: nowrap;float:center">Action</th>
+        </tr>
+      </thead>
+      <tbody>-->
+        <!-- <tr *ngFor="let itemrow of addmore.controls.itemRows['controls']; let i=index" 
+        [formGroupName]="i"> -->
+        <!-- <tr let i=index" 
+        [formGroupName]="i">
+      <td style="white-space:nowrap;">
+        <mat-form-field appearance="outline">
+          <mat-label>Task</mat-label>
+          <input id="task{{i}}" matInput formControlName="task"> -->
+          <!-- <mat-error
+          *ngIf="(formArr.controls[i].controls[i].controls.task.touched || formArr.controls[i].controls.
+          task.dirty || formArr.controls[i].controls.task.invalid)">
+          <span *ngIf="formArr.controls[i].controls.task.invalid">Enter Valid Value</span>
+        </mat-error> -->
+        <!-- </mat-form-field>
+      </td>
+      <td style="white-space:nowrap;">
+        <mat-form-field appearance="outline">
+          <mat-label>Time Range</mat-label>
+          <input id="timeRange{{i}}" matInput formControlName="timeRange">
+        </mat-form-field>
+      </td>
+      <td> -->
+        <!-- <mat-form-field appearance="outline">
+          <mat-label>Status</mat-label>
+          <mat-select formControlName="status">
+            <mat-option value="">In Progress</mat-option>
+            <mat-option value="1">Update Sent</mat-option>
+            <mat-option value="1">Partial Update</mat-option>
+            <mat-option value="1">R&D</mat-option>
+            <mat-option value="1">Completed</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </td> -->
+      <!-- <td style="white-space:nowrap;">
+        <mat-form-field appearance="outline">
+          <mat-label>Client</mat-label>
+          <input id="client{{i}}" matInput formControlName="client">
+          <input matInput formControlName="client">
+        </mat-form-field>
+      </td> -->
+
+        <!-- <td style="white-space:nowrap;">
+          <mat-form-field appearance="outline">
+            <mat-label>Assign To</mat-label>
+            <input id="assignTo{{i}}" matInput formControlName="assignTo">
+            <input matInput formControlName="client">
+          </mat-form-field>
+      </td>  -->
+      <!-- <td style="white-space:nowrap;">
+        <mat-form-field appearance="outline">
+          <mat-label>QA</mat-label>
+          <input id="qa{{i}}" matInput formControlName="qa">
+          <input matInput formControlName="client">
+        </mat-form-field>
+      </td> -->
+
+      <!-- <td style="white-space:nowrap;">
+        <mat-form-field appearance="outline">
+          <mat-label>Test</mat-label>
+          <input id="test{{i}}" matInput formControlName="test">
+          <input matInput formControlName="client">
+        </mat-form-field>
+      </td> -->
+
+      <!-- <td style="white-space:nowrap;">
+        <mat-form-field appearance="outline">
+          <mat-label>Learn</mat-label>
+          <input id="learn{{i}}" matInput formControlName="learn">
+          <input matInput formControlName="client">
+        </mat-form-field>
+      </td> -->
+
+      <!-- <td style="white-space:nowrap;">
+        <mat-form-field appearance="outline">
+          <mat-label>Description</mat-label>
+          <textarea matInput id="description{{i}}" formControlName="description"></textarea>
+          <input matInput formControlName="client">
+        </mat-form-field>
+      </td> -->
+
+      <!-- <td>
+        <button *ngIf="addmore.controls.itemRows.controls.length > 1" (click)="deleteRow(i)"
+          class="btn btn-danger"><i class="fa fa-minus-circle" aria-hidden="true"></i></button>
+          <button (click)="deleteRow(i)"
+            class="btn btn-danger"><i class="fa fa-minus-circle" aria-hidden="true"></i></button>
+      </td> -->
+
+    <!-- </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td>
+          <button type="button" (click)="addNewRow()" class="btn btn-primary">
+            <i class="fa fa-plus-circle" aria-hidden="true"></i>
+          </button>
+        </td>
+      </tr>
+    </tfoot>
+    </table>
+  </div>
+  </div>
+</div> -->
+
+<!-- <div class="card-footer text-center">
+  <button mat-raised-button color="primary">Submit</button>
+</div>
+</div>
+</form>
+</div> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <p>material works!</p>
+<p>fgfgf</p>
+
+<div class="container" style="margin-top: 5%">    
+    <table class="table table-striped table-bordered">    
+        <thead>    
+            <tr>    
+                <th>Action</th>    
+                <th>Title 1</th>    
+                <th>Title 2</th>    
+                <th>Title 3</th>    
+            </tr>    
+        </thead>    
+        <tbody>    
+             <tr *ngFor="let dynamic of dynamicArray; let i = index;">    
+              <td (click)="deleteRow(i)">    
+                <i class="fa fa-trash fa-2x"></i>    
+              </td>    
+                <td>    
+                  <input [(ngModel)]="dynamicArray[i].title1" class="form-control" type="text" />    
+                </td>    
+                <td>    
+                  <input [(ngModel)]="dynamicArray[i].title2" class="form-control" type="text" />    
+                </td>    
+                <td>    
+                  <input [(ngModel)]="dynamicArray[i].title3" class="form-control" type="text"/>    
+                </td>    
+            </tr>    
+            <tr>    
+              <td (click)="addRow(i)">    
+                <i class="fa fa-plus fa-2x"></i>    
+              </td>    
+            </tr>    
+        </tbody>    
+    </table>    
+  </div>    
+
+ -->

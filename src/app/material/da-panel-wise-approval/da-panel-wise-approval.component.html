@@ -1,0 +1,339 @@
+<div *ngIf="success;then showform;else showtable"></div>
+<ng-template #showform>
+<div class="card-box example-small-box-details" *ngIf="viewRecords">
+    <div class="row">
+        <div class="col-1">  
+            <div class="row">
+                <div class="col-6">
+                    <!-- <mat-icon matListIcon [ngStyle]="{'color':'red'}" (click)="daNavigation(viewRecords.da_id,'/material/billableform')">arrow_back</mat-icon> -->
+                </div>
+                <div class="col-6">
+                    <label>DA No</label>
+                </div>
+            </div>
+           
+        </div>
+        <div class="col-3">  
+            <span>:&nbsp;<a style="color: blue;cursor: pointer;" (click)="daNavigation(viewRecords.da_id,'material/DA-details')">{{viewRecords.jobcode_da_no}}</a></span>
+           <label>(R-{{viewRecords.revision}})</label>
+        </div>
+       
+        <div class="col-2">  
+            <label>Date</label>
+            <span>:&nbsp;{{viewRecords.da_date | date}}</span>
+           
+        </div>
+        <div class="col-1">  
+            <label>SO no</label>
+           
+        </div>
+        <div class="col-1">  
+            <span>:&nbsp;{{viewRecords.so_no}}</span>
+           
+        </div>
+        <div class="col-1">  
+            <label>PO no</label>
+           
+        </div>
+        <div class="col-2">  
+            <span>:&nbsp;{{viewRecords.po_no}}</span>
+           
+        </div>
+        <div class="col-1">  
+           
+           
+        </div>
+        </div>
+        <div class="row">
+            <div class="col-2">  
+                <label>Job Code</label><span>:&nbsp;{{viewRecords.job_code}}</span>
+               
+            </div>
+            <div class="col-1">  
+                <label>Location</label><span>:&nbsp;{{viewRecords.location_unit}}</span>
+               
+            </div>
+           
+            <div class="col-4">  
+                <label>Job Name</label><span>:&nbsp;{{viewRecords.job_name}}</span>
+               
+            </div>
+            <div class="col-1">  
+                <label>Customer</label>
+               
+            </div>
+            <div class="col-4">  
+                <span>:&nbsp;{{viewRecords.customer_name }}</span>
+               
+            </div>
+
+        </div>
+</div>
+<div class="container-fluid">
+
+
+    <mat-checkbox    [checked]="checkallbox"    
+    (change)="clickofallcheckbox( $event)"></mat-checkbox> 
+                   
+    
+
+    <div class="mt-2" *ngFor="let card of list;let i = index">
+        <div class="row">
+            <div class="col-md-12 mb-2">
+                <b>SECTION - {{card.section}}&nbsp;&nbsp;<span></span></b>
+                
+            </div>
+        </div>
+        
+        <div class="row" >
+            <div class="col-md-2 mb-2" style="text-align: center;" *ngFor="let list of card.panel">
+               
+                
+                <mat-card *ngIf=" list.packing_flag == 2 " style="cursor: pointer;padding:7px;background-color: #ffc864d1;"  >
+                    <mat-checkbox [checked]="list.checked_flag"    
+                    (change)="clickofcheckbox(i,list, $event,list.length)" ></mat-checkbox>  
+                                    
+     
+                              
+                    <span style="color: #3f51b5;" (click)="getFilterList(list.panel_name, card.section)"><b>{{list.component_no}}&nbsp;&nbsp;</b></span><br>
+                    <span style="color: #3f51b5;" (click)="getFilterList(list.panel_name, card.section)"><b>{{list.description}}-{{list.panel_name}}&nbsp;&nbsp;</b></span><br>                    
+                   
+                    <span style="color:green;"><b>  Verified</b></span> <span><mat-icon style="font-size:25px;float:right;color:rebeccapurple" title="Dispatch Check List" (click)="generateSinglePanelWisePdf(list.panel_name)">print</mat-icon></span>
+                </mat-card>
+                <mat-card *ngIf=" list.packing_flag == 1 " style="cursor: pointer;padding:7px;background-color: #afbbaf5c;"  >
+                    <span style="color: #3f51b5;" (click)="getFilterList(list.panel_name, card.section)"><b>{{list.component_no}}&nbsp;&nbsp;</b></span><br>
+                    <span style="color: #3f51b5;" (click)="getFilterList(list.panel_name, card.section)"><b>{{list.description}}-{{list.panel_name}}&nbsp;&nbsp;</b></span><br>                    
+                   
+                    <span style="color:green;"><b> Modification</b></span> 
+                </mat-card>
+                <mat-card *ngIf=" list.packing_flag == 3 " style="cursor: pointer;padding:7px;background-color: #65ff65b8;"  >
+                    <span style="color: #3f51b5;" (click)="getFilterList(list.panel_name, card.section)"><b>{{list.component_no}}&nbsp;&nbsp;</b></span><br>
+
+                    <span style="color: #3f51b5;" (click)="getFilterList(list.panel_name, card.section)"><b>{{list.description}}-{{list.panel_name}}&nbsp;&nbsp;</b></span><br>                    
+                    <span style="color:green;"><b>Approved</b></span> <span><mat-icon style="font-size:25px;float:right;color:rebeccapurple" title="Dispatch Check List" (click)="generateSinglePanelWisePdf(list.panel_name)">print</mat-icon></span>
+                </mat-card>
+                <mat-card *ngIf=" list.packing_flag > 3 " style="cursor: pointer;padding:7px;background-color: #65ff65b8;"  >
+                    <span style="color: #3f51b5;" (click)="getFilterList(list.panel_name, card.section)"><b>{{list.component_no}}&nbsp;&nbsp;</b></span><br>
+
+                    <span style="color: #3f51b5;" (click)="getFilterList(list.panel_name, card.section)"><b>{{list.description}}-{{list.panel_name}}&nbsp;&nbsp;</b></span><br>                    
+                    <span style="color:green;"><b>Packed</b></span> <span><mat-icon style="font-size:25px;float:right;color:rebeccapurple" title="Dispatch Check List" (click)="generateSinglePanelWisePdf(list.panel_name)">print</mat-icon></span>
+                </mat-card>
+            </div>
+        </div>
+      
+</div>
+<div class="col-12" style="text-align:center">
+<button   class="btn btn-success" (click)="multiplepanelapprove()" >Approve</button>
+
+</div>
+</div>
+</ng-template>
+<ng-template #showtable>
+    <mat-tab-group   >
+
+    <mat-tab label="DA List for MQA Approve">
+        <div class="wrapper">
+            <div class="container-fluid">
+        
+                
+            <div class="row">
+                <div class="col-12">
+                    <div class="card-box table-responsive">
+                    
+                    
+                    <table class="table table-bordered table-striped table-hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+                            <thead>
+                                <tr>
+                                
+                                    <th  width="10%">Date</th>
+                                    <th  width="10%">DA no</th>
+                                    <th  width="12%">Customer</th>
+                                    <th  width="9%">Job Code</th>
+                                    <th  width="10%">Job Name</th>
+                                    <th  width="8%">So no.</th>
+                                    <th  width="8%">Po No.</th>
+                                    <th  width="10%">Type </th>
+                                
+                                    <th  width="10%">Approve </th>
+                                
+                                </tr>
+                            </thead>
+                            <tbody>
+                            
+                                    <tr *ngFor="let subskill of tablelist">
+                                    
+                                    <td>{{subskill.da_date | date}}</td>
+                                
+                                    
+                                    <td >{{subskill.jobcode_da_no}}</td>
+                                    <td>{{subskill.Customer}}</td>
+                                    <td>{{subskill.job_code}}</td>
+                                    <td>{{subskill.job_name}}</td>
+                                    <td>{{subskill.so_no}}</td>
+                                    <td>{{subskill.po_no}}</td>
+                                    <td>{{subskill.bill_type}}</td>
+                                
+                                
+                                    
+                                <td  >
+                                
+                                <button  type="button" class="btn btn-success" (click)="getList(subskill.da_id)">Approve</button>
+                                
+                                </td>
+                                
+
+                                    </tr>
+        
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        
+            </div>
+        </div>
+    </mat-tab>
+    <mat-tab label="Approved list" >
+        <form  [formGroup]="form" enctype="multipart/form-data"  >
+            <div class="row" style="margin: unset;" >
+              <div class="col-1">
+                <button mat-raised-button color="primary" (click)="showfilter= !showfilter">Filter <mat-icon>search</mat-icon></button>
+              </div>
+              <div class="col-11" *ngIf="showfilter">
+                <div class="row" >
+                  
+                    <div class="col-2" >
+                      <mat-form-field class="example-full-width" appearance="fill">
+                              <input type="text" matInput formControlName="da_no" 
+                              placeholder="DA No">
+                      </mat-form-field>
+                    </div>
+            
+                    <div class="col-2" >
+                      <mat-form-field class="example-full-width" appearance="fill">
+                              <input type="text" matInput formControlName="so_no" 
+                              placeholder="So No">
+                      </mat-form-field>
+                    </div>
+                    <div class="col-2" >
+                      <mat-form-field class="example-full-width" appearance="fill">
+                              <input type="text" matInput formControlName="job_code" 
+                              placeholder="Job Code">
+                      </mat-form-field>
+                    </div>
+                    <div class="col-2" >
+                      <mat-form-field class="example-full-width" appearance="fill">
+                              <input type="text" matInput formControlName="ygs_proj_defi" 
+                              placeholder="Project ID">
+                      </mat-form-field>
+                    </div>
+                    <div  class="col-2" >
+                      <mat-form-field style="display: block;">
+                          <mat-label>Enter DA date range</mat-label>
+                          <mat-date-range-input [rangePicker]="picker">
+                            <input matStartDate  placeholder="Start date"  formControlName="fromdate" >
+                            <input matEndDate  placeholder="End date"  formControlName="todate" >
+                          </mat-date-range-input>
+                          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                          <mat-date-range-picker #picker></mat-date-range-picker>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-2">
+                     
+                        
+                           <button  mat-raised-button color="primary" (click)="getRecordsBasedOnFilterData()" style="background-color: #30dc1d;"><mat-icon>search</mat-icon></button>
+      
+                        
+                          <button  mat-raised-button color="primary" (click)="clearAllFilterDataFields()" style="    background-color: #f11515bd;">Clear</button>
+                          
+                       
+        
+                      
+      
+      
+          
+      
+                  
+                </div>
+      
+                
+              </div>
+              
+      
+              </div>
+            </div>
+            </form>
+        <div class="wrapper">
+            <div class="container-fluid">
+        
+               
+            <div class="row">
+                <div class="col-12">
+                    <div class="card-box table-responsive">
+                    
+                    
+                    <table class="table table-bordered table-striped table-hover" datatable [dtOptions]="dtOptions2" [dtTrigger]="dtTrigger2">
+                            <thead>
+                                <tr>
+                                
+                                    <th  width="10%">Date</th>
+                                    <th  width="10%">DA no</th>
+                                    <th  width="12%">Customer</th>
+                                    <th  width="9%">Job Code</th>
+                                    <th  width="10%">Job Name</th>
+                                    <th  width="8%">So no.</th>
+                                    <th  width="8%">Po No.</th>
+                                    <th  width="10%">Type </th>
+                                
+                                    <th  width="10%">view </th>
+                                
+                                </tr>
+                            </thead>
+                            <tbody>
+                            
+                                    <tr *ngFor="let subskill of tablelist2">
+                                    
+                                    <td>{{subskill.da_date | date}}</td>
+                                
+                                    
+                                    <td ><a style="color: blue;cursor: pointer;" (click)="daNavigation(subskill.da_id,'material/DA-details')">{{subskill.jobcode_da_no}}</a></td>
+                                    <td>{{subskill.Customer}}</td>
+                                    <td>{{subskill.job_code}}</td>
+                                    <td>{{subskill.job_name}}</td>
+                                    <td>{{subskill.so_no}}</td>
+                                    <td>{{subskill.po_no}}</td>
+                                    <td>{{subskill.bill_type}}</td>
+                                
+                                
+                                    
+                                <td  >
+                                
+                                <button  type="button" class="btn btn-success" (click)="getList(subskill.da_id)">view</button>
+                                
+                                </td>
+                                
+
+                                    </tr>
+        
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        
+            </div>
+        </div>
+
+
+    </mat-tab>
+    </mat-tab-group>
+
+</ng-template>
+
+
+
+
+
+
+
+

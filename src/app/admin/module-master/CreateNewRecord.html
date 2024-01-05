@@ -1,0 +1,81 @@
+<div class="container">
+      <form #myForm="ngForm" (ngSubmit)="createList()">
+      <div class="row">
+          <div class="col-md-3">
+            <div class="example-container div">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Module Name</mat-label>
+                    <input matInput [(ngModel)]="ModuleName" name="moduleName" ngModel required maxlength="30" #moduleName="ngModel" pattern="^[a-zA-Z\s _]+$">
+                    <mat-hint style="color:black">eg..Material Receipt</mat-hint>
+                    <mat-error  *ngIf="moduleName.touched && !moduleName.valid">ModuleName must be a Character Value, Numbers and Special Characters are not allowed.</mat-error>
+                  </mat-form-field>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="example-container div">
+                <mat-form-field appearance="fill">
+                  <mat-label>Module Slug</mat-label>
+                  <input matInput [(ngModel)]="ModuleSlug" name="moduleSlug" ngModel required maxlength="30" #moduleSlug="ngModel" pattern="^[a-zA-Z\s _]+$">
+                  <mat-error *ngIf="moduleSlug.touched && !moduleSlug.valid">ModuleSlug must be a Character Value, Numbers and Special Characters are not allowed.</mat-error>
+                  <mat-hint style="color:black">eg..material_receipt</mat-hint>
+                </mat-form-field>
+          </div>
+        </div>
+        <div class="col-md-3">
+            <mat-form-field appearance="fill">
+              <mat-label>Root</mat-label>
+              <mat-select  [(ngModel)]="Root" name="Root" id="Root">
+                <mat-option value="ROOT">ROOT</mat-option>
+                <mat-option *ngFor="let val of RootList"  [value]="val.module_id" selected>{{val.module_name}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+      </div>
+      <br/>
+
+      <div class="row">
+        <div class="col-md-3">
+            <div class="example-container div">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Color Name</mat-label>
+                    <input matInput [(ngModel)]="colorValue" name="ColorValue" ngModel required maxlength="30" #ColorValue="ngModel" pattern="^[a-zA-Z\s _]+$">
+                    <mat-hint style="color:black">eg..Blue</mat-hint>
+                    <mat-error  *ngIf="ColorValue.touched && !ColorValue.valid">Color must be a Character Value, Numbers and Special Characters are not allowed.</mat-error>
+                  </mat-form-field>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="example-container div">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Icon Name</mat-label>
+                    <input matInput [(ngModel)]="iconName" name="IconName" ngModel required maxlength="30" #IconName="ngModel" pattern="^[a-zA-Z\s _]+$">
+                    <mat-hint style="color:black">eg..Material Receipt</mat-hint>
+                    <mat-error  *ngIf="IconName.touched && !IconName.valid">Icon Name must be a Character Value, Numbers and Special Characters are not allowed.</mat-error>
+                  </mat-form-field>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="example-container div">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Link</mat-label>
+                    <input matInput [(ngModel)]="link" name="Link" ngModel required maxlength="30" #Link="ngModel">
+                    <mat-hint style="color:black">eg..Material Receipt</mat-hint>
+                    <mat-error  *ngIf="Link.touched && !Link.valid">link is required.</mat-error>
+                  </mat-form-field>
+            </div>
+          </div>
+      </div>
+      <br/>
+      
+      <div class="row">
+        <div class="col-md-3">
+            <mat-checkbox #Superuserstatus name="superUserValue"  [ngModel]="Superuserstatus" [checked]="SuperUserStatus" (change)="onSuperUserStatusChecked(Superuserstatus.checked)">Menu-Flag</mat-checkbox>
+        </div>
+        <div class="col-md-3">
+            <button class="btn-align" mat-raised-button [disabled]="!myForm.valid" color="primary" type="submit">Submit</button><button style="margin-left: 1rem;" mat-raised-button (click)="dialogClose()" color="warn">Close</button>
+        </div>
+      </div>
+    </form>
+    </div>

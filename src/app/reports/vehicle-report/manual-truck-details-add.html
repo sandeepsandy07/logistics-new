@@ -1,0 +1,66 @@
+<div class="container">
+    <form #myForm="ngForm" (ngSubmit)="createList()" name="Myform" id="Myform">
+          <p style="color:blue;font-size:medium;">Enter Truck Delivery Details</p>
+          <hr>
+          <div class="row">
+            <div class="col-md-3">
+              <mat-form-field appearance="fill">
+                <mat-label>Current Location</mat-label>
+                <input matInput placeholder="Current Location" [(ngModel)]="currentLocation" ngModel  maxlength="1000" name="location">
+                <mat-hint style="color:black" class="txt-align">Eg.Powai</mat-hint>
+               </mat-form-field>
+            </div>
+  
+            <div class="col-md-3">
+              <mat-form-field appearance="fill">
+              <mat-label>Current Date:</mat-label>
+              <input matInput [matDatepicker]="datePicker" [(ngModel)]="currentDateTime" (ngModelChange)="datePickerChange()" required name="currentDate" #currentDate="ngModel">
+              <mat-datepicker-toggle [for]="datePicker" matSuffix> </mat-datepicker-toggle>
+              <mat-datepicker #datePicker></mat-datepicker>
+              <mat-hint style="color:black" align="end">Eg.20/09/1998</mat-hint>
+              <mat-error  *ngIf="date.touched && !date.valid">Date Field is required.</mat-error>
+              </mat-form-field>
+          </div>
+  
+          <div class="col-md-3">
+            <mat-form-field appearance="fill">
+              <mat-label>Time</mat-label>
+              <input matInput placeholder="Time" type="time" [(ngModel)]="currentTimeValue" ngModel required  maxlength="1000" name="time" #time="ngModel">
+              <mat-hint style="color:black" class="txt-align">Eg.2.45</mat-hint>
+              <mat-error  *ngIf="time.touched && !time.valid">Time Field is required.</mat-error>
+             </mat-form-field>
+          </div>
+  
+            <div class="col-md-3">
+              <mat-form-field appearance="fill">
+                <mat-label>Current Latitude</mat-label>
+                <input matInput placeholder="Current Latitude" [(ngModel)]="currentLatitude" ngModel  maxlength="50" name="latitude">
+                <mat-hint style="color:black" class="txt-align">Eg.26.0441244</mat-hint>
+               </mat-form-field>
+            </div>
+  
+          </div>
+  
+          <div class="row">
+              <div class="col-md-3">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Current Longitude</mat-label>
+                    <input matInput placeholder="Current Longitude" [(ngModel)]="currentLongitude" ngModel maxlength="50" name="longitude">
+                    <mat-hint style="color:black" class="txt-align">Eg.75.79536</mat-hint>
+                   </mat-form-field>
+                </div>
+                <div class="col-md-4">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Current Status</mat-label>
+                    <input matInput placeholder="Current Status" [(ngModel)]="currentStatus" ngModel required  maxlength="500" name="status" #status="ngModel">
+                    <mat-hint style="color:black" class="txt-align">Eg.Shipment Picked Up</mat-hint>
+                    <mat-error  *ngIf="status.touched && !status.valid">Status Field is required.</mat-error>
+                   </mat-form-field>
+                </div>
+                <div class="col-md-3">
+                  <button mat-raised-button color="primary" type="submit" [disabled]="!myForm.valid">Submit</button><button style="margin-left: 1rem;" mat-raised-button (click)="dialogClose()" color="warn">Close</button>
+                </div>
+          </div>
+          </form>
+  </div>
+  

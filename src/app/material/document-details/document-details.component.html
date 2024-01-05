@@ -1,0 +1,37 @@
+<div class="wrapper">
+    <div class="container-fluid">
+        <button   type="button" class="btn " style="background-color: #f7d324;float: right;" (click)="dafile_upload(da_id)">File upload</button>
+        <div class="row"  >          
+            <div class="col-12 mb-2" style="padding:5px ;text-align: center;" *ngFor="let list of single_files" >
+                <mat-card  class="icon-rocket"  style="padding:0px">
+                    <label style="margin-bottom:0px;">{{list.file_name}}
+                    <mat-icon style="color: #3f51b5;" (click)="download_documents(list)">cloud_download</mat-icon>
+                    <mat-icon style="color:red;" (click)="deletesinglefile(list.id)">delete</mat-icon>
+                </label><br>
+                <label><b>{{list.filetype}}</b></label>
+                 </mat-card>          
+            </div>
+        </div>
+        <div class="row"  >  
+                    
+            <div class="col-12 mb-2" style="padding:5px ;text-align: center;" *ngFor="let list of multi_files" >
+                <mat-card  class="icon-rocket"  style="padding:0px">
+                    <label><b>{{list.file_type}}</b></label>
+                <div class="row" >
+                    <div class="col-4" *ngFor="let list_files of list.file_list">
+                        <label style="margin-bottom:0px;">{{list_files.file_name}}
+                            <mat-icon style="color: #3f51b5;" (click)="download_documents(list_files)">cloud_download</mat-icon>
+                            
+                            <mat-icon style="color:red;" (click)="deletemultifile(list_files.filetype_id)">delete</mat-icon></label><br> 
+                    </div>                    
+                </div>
+                    
+                 </mat-card>          
+            </div>
+           
+        </div>
+    </div>
+    
+</div>
+
+

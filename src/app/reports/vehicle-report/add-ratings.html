@@ -1,0 +1,50 @@
+<div style="text-align: center;">
+    <span>
+        <h2 style="font-size: 25px;color:Blue">Enter Trasporter Performance Remarks</h2>
+    </span>
+</div>
+
+<div class="row">
+    <div class="col-12"> 
+        <div class="card-box">
+          <form  [formGroup]="form">
+            <div style="border: 1px solid whitesmoke;background: #d0dedf26;">
+            <div class="row">
+
+                <div class="col-3">
+                    <mat-form-field class="example-full-width" appearance="fill">
+                      <mat-label>Select a rating</mat-label>
+                      <input type="text" matInput list="codes" formControlName="rating" autocomplete="off">
+                      <datalist id="codes">
+                        <option value="">Select a rating</option>
+                        <option value="Excellent">Excellent</option>
+                        <option value="Very Good">Very Good</option>
+                        <option value="Average">Average</option>
+                        <option value="Poor">Poor</option>
+                        <option value="Terrible">Terrible</option>
+                      </datalist>
+                    </mat-form-field>
+                  </div>
+          
+
+                <div class="col-3">
+                    <mat-form-field appearance="fill">
+                        <textarea type="text" matInput formControlName="ratingRemarks" 
+                            placeholder="Remarks"></textarea>
+                            <mat-hint>Enter Remarks</mat-hint>
+                    </mat-form-field>
+                </div>
+
+
+            <div class="col-2" style="margin-left:1rem;">
+              <button mat-raised-button color="primary" (click)="onSubmitPost()" >Submit</button>
+          </div>
+          <div class="col-2" style="margin-left:1rem;">
+            <button mat-raised-button color="warn" (click)="dialogClose()" >Close</button>
+        </div>
+        </div>
+    </div>
+  </form>
+  </div>
+</div>
+</div>

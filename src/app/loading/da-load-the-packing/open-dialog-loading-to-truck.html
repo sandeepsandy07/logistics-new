@@ -1,0 +1,315 @@
+<style>
+    .mat-header-cell {
+    /* background:#91999140; */
+    color: white;
+    background: #3f51b5;
+}
+tr.mat-header-row{
+    height: 22px;
+}
+.mat-row {
+    height: 22px;
+    background:#d0e3f363;
+}
+.buttonsizereduce{
+    line-height: 22px;
+}
+.table td{
+    padding:2px;
+    vertical-align: middle;
+}
+
+</style>
+<mat-tab-group dynamicHeight  >
+    
+
+<mat-tab label="Pending Box To loading ">
+    <div class="row">
+        <div class="col-6">
+            <mat-dialog-content>
+                <mat-card>
+                    
+                    <!-- <input type="text" style="float: right" (change)="onKey_barcode($event)"  #keywordsInput /> -->
+                    <input type="text" style="float: right" [(ngModel)]="inputValue"   autofocus />
+                </mat-card>
+    
+                <table mat-table [dataSource]="dataSourcebox" class="mat-elevation-z8 table" width="100%">
+            
+                    <ng-container matColumnDef="slno">
+                        <th mat-header-cell *matHeaderCellDef> SL.NO. </th>
+                        <td mat-cell *matCellDef="let element; let i=index"> {{i + 1}} </td>
+                    </ng-container>               
+                    <ng-container matColumnDef="box_size">
+                        <th mat-header-cell *matHeaderCellDef> Box Size </th>
+                        <td mat-cell *matCellDef="let element"> {{element.box_details.boxSize == null ? '-' : element.box_details.boxSize}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="box_no">
+                        <th mat-header-cell *matHeaderCellDef> Box No. </th>
+                        <td mat-cell *matCellDef="let element"> {{element.box_serial_no == null ? '-' : element.box_serial_no}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="box_code">
+                        <th mat-header-cell *matHeaderCellDef> Box Code </th>
+                        <td mat-cell *matCellDef="let element"> {{element.box_code == null ? '-' : element.box_code}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="boxTypeID">
+                        <th mat-header-cell *matHeaderCellDef> Box Type </th>
+                        <td mat-cell *matCellDef="let element"> {{element.box_details.boxtype_details.boxType == null ? '-' : element.box_details.boxtype_details.boxType}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="remarks">
+                        <th mat-header-cell *matHeaderCellDef> Remarks </th>
+                        <td mat-cell *matCellDef="let element"> {{element.remarks == null ? '-' : element.remarks}} </td>
+                    </ng-container>
+                
+        
+            
+                    <ng-container matColumnDef="price">
+                        <th mat-header-cell *matHeaderCellDef>  </th>
+                        <td mat-cell *matCellDef="let element; let i=index">  
+                              <button mat-raised-button color="primary" class="buttonsizereduce" (click)="addBoxToMain(element,i)" >push</button>
+                        
+                        </td>
+                    </ng-container>
+                
+                    <tr mat-header-row *matHeaderRowDef="displayedColumnsbox"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumnsbox;"></tr>
+            
+                </table>
+            
+            </mat-dialog-content>
+        </div>
+        
+        <div class="col-6" style="padding-left: 30px;">
+            <form  [formGroup]="boxform" >
+            <div class="row">
+                <div class="col-6">
+                <mat-form-field class="example-full-width" appearance="fill">
+                    <mat-label> Truck </mat-label>
+                   
+                            
+                    <mat-select formControlName="truck_list_id" (selectionChange)="getvehicleDetails()" > 
+                        <mat-option *ngFor="let subskill of trucktype_list" [value]="subskill.truckListId" >
+                             {{subskill.truckName }}
+                           </mat-option>
+                                                                               
+                    </mat-select> 
+                   
+                  </mat-form-field>
+
+                  
+                </div>
+                <div class="col-6">
+                    <mat-form-field class="example-full-width" appearance="fill">
+                        <mat-label> DA No. Truck </mat-label>                            
+                        <mat-select formControlName="da_id" (selectionChange)="getTuckTypelist()" [(value)]="boxform.value.da_id"> 
+                            <mat-option *ngFor="let subskill of da_list" [value]="subskill.da_id" >
+                                 {{subskill.jobcode_da_no }}
+                            </mat-option>                                                                 
+                        </mat-select>
+                        <mat-hint>DA list for trucklist</mat-hint>
+                       
+                    </mat-form-field>
+    
+                      
+                    </div>
+                </div>
+                <div class="row">
+
+               
+                <div class="col-4">
+                    <mat-form-field class="example-full-width" appearance="fill" >
+                        <mat-label>Vehicle Number</mat-label>
+                        <input type="text" matInput formControlName="vehicle_no" 
+                               placeholder="">
+                      </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field class="example-full-width" appearance="fill" >
+                        <mat-label>Driver Name</mat-label>
+                        <input type="text" matInput formControlName="driver_name" 
+                               placeholder="">
+                      </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field class="example-full-width" appearance="fill" >
+                        <mat-label>Driver Number</mat-label>
+                        <input type="text" matInput formControlName="driver_no" 
+                               placeholder="">
+                      </mat-form-field>
+                </div>
+            </div>
+            <div class="row" >
+                <div class="col-4">
+                   
+                </div>
+               
+            </div>
+
+            <div>
+
+    
+                <table class="table table-dark"> 
+                  <thead>
+                  <tr style="line-height: 0px !important;">
+                      <th>
+                          sl.no
+                      </th>
+                      <th>
+                        Box Size
+                    </th>
+                      <th>
+                          Box No.
+                      </th>
+                      <!-- <th>
+                        Box code
+                    </th> -->
+                      <th>
+                          Type
+                      </th>
+                      <th>
+                          Remarks
+                      </th>
+                      <th>
+                        Remove
+                    </th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                      <tr  class="table-active" *ngFor="let resultboxs of this.boxform.value.box_list; let i=index" style="line-height: 0px !important">
+                          <td>{{i+1}}</td>
+                          <td>{{resultboxs.box_details.boxSize}}</td>
+                          <td>{{resultboxs.box_serial_no}}</td>
+                          <!-- <td>{{resultboxs.box_code}}</td> -->
+                          <td>{{resultboxs.box_details.boxtype_details.boxType}}</td>
+                          <td>{{resultboxs.remarks}}</td>
+                          <td>
+                              <mat-icon (click)="removeBoxToMain(resultboxs,i)">delete_forever</mat-icon>
+                          </td>
+                      </tr>
+                  </tbody>
+              </table>
+          </div>
+          
+           
+        <div class="row">
+            <div class="col-12">
+            <mat-form-field class="example-full-width" appearance="fill" >
+                <mat-label>Remarks</mat-label>
+               
+                <textarea matInput matInput formControlName="remarks" 
+                       placeholder=""></textarea>
+              </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <button mat-raised-button [disabled]="!truckcompletebutton" color="primary" (click)="onSubmitBoxToMain()" >Completed</button>
+                <button mat-raised-button mat-dialog-close (click)="dialogClose()">Close</button>
+            </div>
+        </div>
+        </form>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+</mat-tab>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <mat-tab label="Loading Completed Box">
+        
+        <div class="row" >
+            
+           
+            <div class="col-md-3 mb-2" style="text-align: center;height: 150px;" *ngFor="let resulttruck of loaded_truck_list;"
+               (click)="showtruckdetails(resulttruck.truckListId)">
+
+                <mat-card  class="icon-rocket" 
+                    style="height: 100%;padding: 20px;/* padding: unset; */ ;cursor: pointer; background-image: url('../assets/images/truckimg2.png'); background-size: cover;width: 280px;" >
+
+                  
+                    <div >
+                    <div class="row">
+                        <div class="col-8">
+                            <span style="font-weight: bold;font-size: 16px;">{{resulttruck.vehicle_no}}</span>
+                        </div>
+                        <div class="col-4">
+                         
+                            <button  (click)="daNavigation(resulttruck.truckListId,'/loading/trucklist')" style="background-color: #0d0d0d; border: none; box-shadow: 2px 2px 23px 6px black;border-radius: 4px;color: white;">DC</button>
+
+                            
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-8">
+                            <span style="font-weight: bold;font-size: 16px;">{{resulttruck.truckName}}</span>
+                        </div>
+                        <div class="col-4">
+                           
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-8">
+                            <span style="font-weight: bold;font-size: 16px;" *ngFor="let delivery_challan of resulttruck;">{{delivery_challan.lrn_no}}</span>
+                        </div>
+                        <div class="col-4">
+                           
+                        </div>
+                    </div>
+                </div>
+                </mat-card>        
+            </div>
+
+            
+
+           
+            
+            
+        </div>
+        <div class="row">
+            <div class="col-12" align="center">
+                <button mat-raised-button mat-dialog-close (click)="dialogClose()" class="btn-success">Close</button>
+            </div>
+        </div>
+
+    </mat-tab>
+</mat-tab-group>

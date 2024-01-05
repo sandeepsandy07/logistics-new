@@ -1,0 +1,91 @@
+<form  [formGroup]="form" >
+  <div class="card-box taskboard-box"  >
+    <h4>Approver Change</h4>
+
+    <table class="mat-elevation-z8 table" >
+      <thead>
+          <tr>
+              <th> sl.no</th>
+              <th>Role</th>
+              <th>Approver</th>
+              <th>Action</th>
+          </tr>
+
+      </thead>
+      <tbody>
+        <tr *ngFor="let approver of approverslist;let k=index">
+
+          <td>
+           {{k+1}}
+          </td>
+          <td>
+            {{approver.approver}}
+           
+          </td>
+          <td>
+            <mat-select  [(value)]="approver.emp_id"style="width: 150px;"  (selectionChange)="update_approver(k,$event)" >
+              <mat-option>-select-</mat-option>
+              <mat-option *ngFor="let subskill of userList" [value]="subskill.id" >
+                {{subskill.employee_name}}
+              </mat-option>
+          </mat-select>
+            
+          </td>
+          <td>
+            
+            <mat-icon title="update the approver" (click)="update_da_status(k)"  style="color: green;" *ngIf="da_level <= approver.level" >check_circle</mat-icon>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+
+
+
+
+    <!-- <div class="card-box taskboard-box"  >
+        <h4 class="header-title m-t-0 text-warning">Update Status</h4>
+        <div class="row" >
+            
+            <div class="col-6">
+            <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Assign To</mat-label>
+                <mat-select formControlName="assign_to" multiple> 
+                  <mat-option>-select-</mat-option>
+                  <mat-option *ngFor="let subskill of userList" [value]="subskill.id" >
+                       {{subskill.employee_name }}
+                  </mat-option>                           
+                </mat-select>                             
+              </mat-form-field>
+            </div>
+            <div class="form-group col-6" id="desc" >
+                <mat-form-field class="example-full-width"  appearance="fill" >
+                  <mat-label>Discription</mat-label>
+                  <textarea matInput 
+                         placeholder="" formControlName="remarks"></textarea>
+                  <mat-hint>Discription</mat-hint>
+                
+                </mat-form-field>
+            </div>
+          </div>
+         
+
+            
+             
+        
+           
+           
+                 
+           
+          
+        <br>
+       
+         <div class="text-center">
+         <button mat-raised-button color="primary"(click)="update_da_status()" >Submit</button> 
+        </div>
+      
+       
+        
+    </div> -->
+</form>

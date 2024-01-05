@@ -1,0 +1,98 @@
+<div class="wrapper">
+    <div class="container-fluid">
+  
+        <div class="row">
+            <div class="col-12">
+              <h4 style="text-align:center;" class=""><b>Not Logistics List</b></h4>
+            </div>
+        </div>
+
+      <div class="row">
+        <div class="col-12">
+            <div class="card-box table-responsive">
+                <table class="table table-bordered table-striped table-hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+                    <thead>
+                      <tr>
+                        <th width="10%">SL.No</th>
+                        <th style="width: 130px;">Attach Invoice Scan</th>
+                        <th style="width: 130px;">View Invoice Attached Documnets</th>
+                        <th width="10%">LRNO</th>
+                        <th width="10%">LR Date</th>
+                        <th width="10%">Transporter</th>
+                        <th width="10%">Transporter Bill Number</th>
+                        <th width="10%">Transporter Bill Date</th>
+
+                        <!-- <th width="10%">Actions</th>
+                        <th width="10%">Delete</th>
+                        <th width="10%">Move to Not Logistics</th> -->
+                        <th width="10%">Challan No</th>
+                        <th width="10%">Invoice No</th>
+                        
+                        <th width="10%">Bill Submission Date to YIL</th>
+                        <th width="10%">Primary Freight Amount</th>
+                        <th width="10%">Primary Other charges</th>
+                        <th width="10%">Primary Total Freight</th>
+                        <th width="10%">Primary Reduced Amount</th>
+                        <th width="10%">Primary Remarks</th>
+                        
+                        <th width="10%">Sec Transporter Bill Number</th>
+                        <th width="10%">Sec Transporter Bill Date</th>
+                        <th width="10%">Secondary Freight Amount</th>
+                        <th width="10%">Secondary Other charges</th>
+                        <th width="10%">Secondary Total Freight</th>
+                        <th width="10%">Sec Reduced Amount</th>
+                        <th width="10%">Sec Remarks</th>
+                        <th width="10%">FinalFreight Passed For Payments to Finance</th>
+                        <th width="10%">Status</th>
+                        <th width="10%">Approved Date</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let subskill of unmatched_record_tablelist;let i=index">
+                      <td style="text-align: center;">{{i+1}}</td>
+                      <td>
+                        <button style="color:red;" mat-raised-button (click)="openUploadBillReceipts(subskill)">Upload Document</button>
+                      </td>
+                      <!-- <td>
+                        <button style="color:blue;" mat-raised-button *ngIf="subskill.delivery_challan.length != 0 && subskill.delivery_challan[0].invoice_file_flag == 1" (click)="openUploadBillReceipts(subskill)">Invoice Files Have Been Uploaded</button>
+                        <button style="color:red;" mat-raised-button *ngIf="(subskill.delivery_challan.length == 0) || (subskill.delivery_challan.length != 0 && subskill.delivery_challan[0].invoice_file_flag == 0)" (click)="openUploadBillReceipts(subskill)">Upload Invoice Scan Files</button>
+                      </td> -->
+                      <td style="color:blue;" (click)="viewAttachedDocuments(subskill)">View</td>
+                      <td>{{subskill.lrn_no}}</td>
+                      <td style="text-align: center;">{{subskill.lrn_date | date}}</td>
+                      <td style="text-align: center;">{{subskill.transporter}}</td>
+                      <td>{{subskill.transporter_bill_number}}</td>
+                      <td style="text-align: center;">{{subskill.transporter_bill_date | date}}</td>
+                    
+                      <td>{{subskill.challan_number}}</td>
+                      <td>{{subskill.inv_no}}</td>
+                      
+                      <td style="text-align: center;">{{subskill.bill_submission_date_to_yil | date}}</td>
+                      <td style="text-align: right;">{{subskill.freight_amount | number:'1.2-2'}}</td>
+                      <td style="text-align: right;">{{subskill.other_charges | number:'1.2-2'}}</td>
+                      <td style="text-align: right;">{{subskill.total_freight | number:'1.2-2'}}</td>
+                      <td style="text-align: right;">{{subskill.primary_reduction_amount | number:'1.2-2'}}</td>
+                      <td>{{subskill.remarks}}</td>
+                     
+                      <td>{{subskill.secondary_transporter_bill_number}}</td>
+                      <td style="text-align: center;">{{subskill.secondary_transporter_bill_date | date}}</td>
+                      <td style="text-align: right;">{{subskill.sec_freight_amount | number:'1.2-2'}}</td>
+                      <td style="text-align: right;">{{subskill.sec_other_charges | number:'1.2-2'}}</td>
+                      <td style="text-align: right;">{{subskill.sec_total_freight | number:'1.2-2'}}</td>
+                      <td style="text-align: right;">{{subskill.sec_reduction_amount | number:'1.2-2'}}</td>
+                      
+                      <td>{{subskill.sec_remarks}}</td>
+                    <td style="text-align: right;">{{subskill.final_total_freight_passed_for_payments_to_finance | number:'1.2-2'}}</td>
+                      <td style="text-align: center;">{{subskill.status}}</td>
+                      <td style="text-align: center;">{{subskill.approved_date | date}}</td>
+                      </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- <div class="col-12" align="center">  
+            <button color="warn" mat-raised-button mat-dialog-close style="margin-left:20px;" (click)="dialogClose()">Close</button>
+        </div> -->
+    </div>
+    </div>
+  </div>

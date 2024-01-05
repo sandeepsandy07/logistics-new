@@ -1,0 +1,413 @@
+<mat-tab-group (selectedTabChange)="onChange($event)">
+  <mat-tab label="Transporter Provider Freight Amount List To Verify">
+    <div class="wrapper">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-3">
+            <button type="submit" mat-raised-button color="primary"  (click)="exportVerifyDataToExcelFormat()">Export To Excel</button>
+          </div>
+          <div class="col-3">
+            <button type="submit" style="margin-left:30rem;" mat-raised-button color="primary" [disabled]="!onupload_button" (click)="onSubmit()">Upload Transporter Provider Freight DATA File</button>
+          </div>
+          <div class="col-4">
+            <h4 style="color: #ff4081;"><span >*</span> upload format<mat-icon (click)="download_vendor_freight_upload_format()">cloud_download</mat-icon></h4>
+        </div>
+
+          </div>
+        <div class="row">
+          <div class="col-12">
+              <div class="card-box table-responsive">
+                
+                <table class="table table-bordered table-striped table-hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+                      <thead>
+                          <tr>
+                            <th width="10%">SL.No</th>
+                            <th width="10%">LRNO</th>
+                            <th width="10%">LR Date</th>
+                            <th width="10%">Transporter</th>
+                            <th width="10%">Transporter Bill Number</th>
+                            <th width="10%">Transporter Bill Date</th>
+  
+                            <th width="10%">Actions</th>
+                            <th width="10%">Challan No</th>
+                            <th width="10%">Invoice No</th>
+                            
+                            <th width="10%">Bill Submission Date to YIL</th>
+                            <th width="10%">Primary Freight Amount</th>
+                            <th width="10%">Primary Other charges</th>
+                            <th width="10%">Primary Total Freight</th>
+                            <th width="10%">Primary Reduced Amount</th>
+                            <th width="10%">Primary Remarks</th>
+                            
+                            <th width="10%">Sec Transporter Bill Number</th>
+                            <th width="10%">Sec Transporter Bill Date</th>
+                            <th width="10%">Secondary Freight Amount</th>
+                            <th width="10%">Secondary Other charges</th>
+                            <th width="10%">Secondary Total Freight</th>
+                            <th width="10%">Sec Reduced Amount</th>
+                            <th width="10%">Sec Remarks</th>
+                            <th width="10%">FinalFreight Passed For Payments to Finance</th>
+                            <th width="10%">Status</th>
+                            <th width="10%">Approved Date</th>
+
+                          </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let subskill of verify_tablelist;let i=index">
+                          <td style="text-align: center;">{{i+1}}</td>
+                          <td>{{subskill.lrn_no}}</td>
+                          <td style="text-align: center;">{{subskill.lrn_date | date}}</td>
+                          <td style="text-align: center;">{{subskill.transporter}}</td>
+                          <td>{{subskill.transporter_bill_number}}</td>
+                          <td style="text-align: center;">{{subskill.transporter_bill_date | date}}</td>
+                          <td>
+                            <button  class="form-control success" style="background-color: lightgreen;" *ngIf="subskill.status == 'Yet to Approve'"  (click)="onSubmitTransporterFreight(subskill)">Verify</button>
+                            <button class="form-control success" style="background-color: darkgreen; color:white;" *ngIf="subskill.status == 'Approved'" (click)="onSubmitTransporterFreight(subskill)">Approved</button>
+                            <button class="form-control success" style="background-color: red;color:black" *ngIf="subskill.status == 'Hold'" (click)="onSubmitTransporterFreight(subskill)">Hold</button>
+                            <button class="form-control success" style="width:125px;height:50px;background-color:yellow;color:black" *ngIf="subskill.status == 'Secondary Bill Yet to Approve'" (click)="onSubmitTransporterFreight(subskill)">Secondary Bill Yet to Approve</button> 
+                          </td>
+
+                          <td>{{subskill.challan_number}}</td>
+                          <td>{{subskill.inv_no}}</td>
+                          
+                          <td style="text-align: center;">{{subskill.bill_submission_date_to_yil | date}}</td>
+                          <td style="text-align: right;">{{subskill.freight_amount | number:'1.2-2'}}</td>
+                          <td style="text-align: right;">{{subskill.other_charges | number:'1.2-2'}}</td>
+                          <td style="text-align: right;">{{subskill.total_freight | number:'1.2-2'}}</td>
+                          <td style="text-align: right;">{{subskill.primary_reduction_amount | number:'1.2-2'}}</td>
+                          <td>{{subskill.remarks}}</td>
+                         
+                          <td>{{subskill.secondary_transporter_bill_number}}</td>
+                          <td style="text-align: center;">{{subskill.secondary_transporter_bill_date | date}}</td>
+                          <td style="text-align: right;">{{subskill.sec_freight_amount | number:'1.2-2'}}</td>
+                          <td style="text-align: right;">{{subskill.sec_other_charges | number:'1.2-2'}}</td>
+                          <td style="text-align: right;">{{subskill.sec_total_freight | number:'1.2-2'}}</td>
+                          <td style="text-align: right;">{{subskill.sec_reduction_amount | number:'1.2-2'}}</td>
+                          
+                          <td>{{subskill.sec_remarks}}</td>
+                        <td style="text-align: right;">{{subskill.final_total_freight_passed_for_payments_to_finance | number:'1.2-2'}}</td>
+                          <td style="text-align: center;">{{subskill.status}}</td>
+                          <td style="text-align: center;">{{subskill.approved_date | date}}</td>
+                          </tr>
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      </div>
+    
+      </div>
+    </div>
+    <div class="d-flex justify-content-center">
+      <div class="spinner-border" role="status" >
+        <span  id="loading"></span>
+      </div>
+    </div>
+  </mat-tab>
+
+  <mat-tab label="Approved List" >
+    <form  [formGroup]="form" enctype="multipart/form-data"  >
+      <div class="row" style="margin: unset;" >
+        <div class="col-1">
+          <button mat-raised-button color="primary" (click)="showfilter= !showfilter">Filter <mat-icon>search</mat-icon></button>
+        </div>
+        <div class="col-3">
+          <button type="submit" style="margin-left:4rem;" mat-raised-button color="primary"  (click)="exportApprovedDataToExcelFormat()">Export To Excel</button>
+        </div>
+        <div class="col-11" *ngIf="showfilter">
+          <div class="row" >
+
+            <div class="col-3">
+              <mat-form-field appearance="standard">
+                <mat-label>Start Date</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="startDate">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+            </div>
+
+            <div class="col-3">
+              <mat-form-field style="margin-left:1rem;" appearance="standard">
+                <mat-label>End Date</mat-label>
+                <input matInput [matDatepicker]="picker2" formControlName="endDate">
+                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
+              </mat-form-field>
+            </div>
+
+            <div class="col-3">
+                <button  mat-raised-button color="primary" type="submit" style="background-color: #30dc1d;" (click)="FilterDataOnDate()" >Filter</button>
+                <button mat-raised-button color="primary" type="submit" style="background-color: #f11515bd;margin-left:5px;" (click)="clearDataOnDate()" >Clear</button>
+              </div>
+
+          </div> 
+        </div>
+        </div>
+      </form>
+    <div class="wrapper">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+              <div class="card-box table-responsive">
+                
+                <table class="table table-bordered table-striped table-hover" datatable [dtOptions]="dtOptions2" [dtTrigger]="dtTrigger2">
+                      <thead>
+                        <tr>
+                          <th width="10%">SL.No</th>
+                          <th width="10%">LRNO</th>
+                          <th width="10%">LR Date</th>
+                          <th width="10%">Transporter</th>
+                          <th width="10%">Transporter Bill Number</th>
+                          <th width="10%">Transporter Bill Date</th>
+
+                          <th width="10%">Actions</th>
+                          <th width="10%">Challan No</th>
+                          <th width="10%">Invoice No</th>
+                          
+                          <th width="10%">Bill Submission Date to YIL</th>
+                          <th width="10%">Primary Freight Amount</th>
+                          <th width="10%">Primary Other charges</th>
+                          <th width="10%">Primary Total Freight</th>
+                          <th width="10%">Primary Reduced Amount</th>
+                          <th width="10%">Primary Remarks</th>
+                          
+                          <th width="10%">Sec Transporter Bill Number</th>
+                          <th width="10%">Sec Transporter Bill Date</th>
+                          <th width="10%">Secondary Freight Amount</th>
+                          <th width="10%">Secondary Other charges</th>
+                          <th width="10%">Secondary Total Freight</th>
+                          <th width="10%">Sec Reduced Amount</th>
+                          <th width="10%">Sec Remarks</th>
+                          <th width="10%">FinalFreight Passed For Payments to Finance</th>
+                          <th width="10%">Status</th>
+                          <th width="10%">Approved Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let subskill of approved_tablelist;let i=index">
+                        <td style="text-align: center;">{{i+1}}</td>
+                        <td>{{subskill.lrn_no}}</td>
+                        <td style="text-align: center;">{{subskill.lrn_date | date}}</td>
+                        <td style="text-align: center;">{{subskill.transporter}}</td>
+                        <td>{{subskill.transporter_bill_number}}</td>
+                        <td style="text-align: center;">{{subskill.transporter_bill_date | date}}</td>
+                        <td>
+                          <button  class="form-control success" style="background-color: lightgreen;" *ngIf="subskill.status == 'Yet to Approve'"  (click)="onSubmitTransporterFreight(subskill)">Verify</button>
+                          <button class="form-control success" style="background-color: darkgreen; color:white;" *ngIf="subskill.status == 'Approved'" (click)="onSubmitTransporterFreight(subskill)">Approved</button>
+                          <button class="form-control success" style="background-color: red;color:black" *ngIf="subskill.status == 'Hold'" (click)="onSubmitTransporterFreight(subskill)">Hold</button>
+                          <button class="form-control success" style="width:125px;height:50px;background-color:yellow;color:black" *ngIf="subskill.status == 'Secondary Bill Yet to Approve'" (click)="onSubmitTransporterFreight(subskill)">Secondary Bill Yet to Approve</button> 
+                        </td>
+
+                        <td>{{subskill.challan_number}}</td>
+                        <td>{{subskill.inv_no}}</td>
+                        
+                        <td style="text-align: center;">{{subskill.bill_submission_date_to_yil | date}}</td>
+                        <td style="text-align: right;">{{subskill.freight_amount | number:'1.2-2'}}</td>
+                        <td style="text-align: right;">{{subskill.other_charges | number:'1.2-2'}}</td>
+                        <td style="text-align: right;">{{subskill.total_freight | number:'1.2-2'}}</td>
+                        <td style="text-align: right;">{{subskill.primary_reduction_amount | number:'1.2-2'}}</td>
+                        <td>{{subskill.remarks}}</td>
+                       
+                        <td>{{subskill.secondary_transporter_bill_number}}</td>
+                        <td style="text-align: center;">{{subskill.secondary_transporter_bill_date | date}}</td>
+                        <td style="text-align: right;">{{subskill.sec_freight_amount | number:'1.2-2'}}</td>
+                        <td style="text-align: right;">{{subskill.sec_other_charges | number:'1.2-2'}}</td>
+                        <td style="text-align: right;">{{subskill.sec_total_freight | number:'1.2-2'}}</td>
+                        <td style="text-align: right;">{{subskill.sec_reduction_amount | number:'1.2-2'}}</td>
+                        
+                        <td>{{subskill.sec_remarks}}</td>
+                      <td style="text-align: right;">{{subskill.final_total_freight_passed_for_payments_to_finance | number:'1.2-2'}}</td>
+                        <td style="text-align: center;">{{subskill.status}}</td>
+                        <td style="text-align: center;">{{subskill.approved_date | date}}</td>
+                        </tr>
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      </div>
+      </div>
+    </div>
+  </mat-tab>
+
+  <mat-tab label="List On Hold Status">
+    <div class="wrapper">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <button type="submit" style="margin-left:58rem;" mat-raised-button color="primary"  (click)="exportHoldDataToExcelFormat()">Export To Excel</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+              <div class="card-box table-responsive">
+                
+                <table class="table table-bordered table-striped table-hover" datatable [dtOptions]="dtOptions3" [dtTrigger]="dtTrigger3">
+                      <thead>
+                        <tr>
+                          <th width="10%">SL.No</th>
+                          <th width="10%">LRNO</th>
+                          <th width="10%">LR Date</th>
+                          <th width="10%">Transporter</th>
+                          <th width="10%">Transporter Bill Number</th>
+                          <th width="10%">Transporter Bill Date</th>
+
+                          <th width="10%">Actions</th>
+                          <th width="10%">Challan No</th>
+                          <th width="10%">Invoice No</th>
+                          
+                          <th width="10%">Bill Submission Date to YIL</th>
+                          <th width="10%">Primary Freight Amount</th>
+                          <th width="10%">Primary Other charges</th>
+                          <th width="10%">Primary Total Freight</th>
+                          <th width="10%">Primary Reduced Amount</th>
+                          <th width="10%">Primary Remarks</th>
+                          
+                          <th width="10%">Sec Transporter Bill Number</th>
+                          <th width="10%">Sec Transporter Bill Date</th>
+                          <th width="10%">Secondary Freight Amount</th>
+                          <th width="10%">Secondary Other charges</th>
+                          <th width="10%">Secondary Total Freight</th>
+                          <th width="10%">Sec Reduced Amount</th>
+                          <th width="10%">Sec Remarks</th>
+                          <th width="10%">FinalFreight Passed For Payments to Finance</th>
+                          <th width="10%">Status</th>
+                          <th width="10%">Approved Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let subskill of hold_tablelist;let i=index">
+                        <td style="text-align: center;">{{i+1}}</td>
+                        <td>{{subskill.lrn_no}}</td>
+                        <td style="text-align: center;">{{subskill.lrn_date | date}}</td>
+                        <td style="text-align: center;">{{subskill.transporter}}</td>
+                        <td>{{subskill.transporter_bill_number}}</td>
+                        <td style="text-align: center;">{{subskill.transporter_bill_date | date}}</td>
+                        <td>
+                          <button  class="form-control success" style="background-color: lightgreen;" *ngIf="subskill.status == 'Yet to Approve'"  (click)="onSubmitTransporterFreight(subskill)">Verify</button>
+                          <button class="form-control success" style="background-color: darkgreen; color:white;" *ngIf="subskill.status == 'Approved'" (click)="onSubmitTransporterFreight(subskill)">Approved</button>
+                          <button class="form-control success" style="background-color: red;color:black" *ngIf="subskill.status == 'Hold'" (click)="onSubmitTransporterFreight(subskill)">Hold</button>
+                          <button class="form-control success" style="width:125px;height:50px;background-color:yellow;color:black" *ngIf="subskill.status == 'Secondary Bill Yet to Approve'" (click)="onSubmitTransporterFreight(subskill)">Secondary Bill Yet to Approve</button> 
+                        </td>
+
+                        <td>{{subskill.challan_number}}</td>
+                        <td>{{subskill.inv_no}}</td>
+                        
+                        <td style="text-align: center;">{{subskill.bill_submission_date_to_yil | date}}</td>
+                        <td style="text-align: right;">{{subskill.freight_amount | number:'1.2-2'}}</td>
+                        <td style="text-align: right;">{{subskill.other_charges | number:'1.2-2'}}</td>
+                        <td style="text-align: right;">{{subskill.total_freight | number:'1.2-2'}}</td>
+                        <td style="text-align: right;">{{subskill.primary_reduction_amount | number:'1.2-2'}}</td>
+                        <td>{{subskill.remarks}}</td>
+                       
+                        <td>{{subskill.secondary_transporter_bill_number}}</td>
+                        <td style="text-align: center;">{{subskill.secondary_transporter_bill_date | date}}</td>
+                        <td style="text-align: right;">{{subskill.sec_freight_amount | number:'1.2-2'}}</td>
+                        <td style="text-align: right;">{{subskill.sec_other_charges | number:'1.2-2'}}</td>
+                        <td style="text-align: right;">{{subskill.sec_total_freight | number:'1.2-2'}}</td>
+                        <td style="text-align: right;">{{subskill.sec_reduction_amount | number:'1.2-2'}}</td>
+                        
+                        <td>{{subskill.sec_remarks}}</td>
+                      <td style="text-align: right;">{{subskill.final_total_freight_passed_for_payments_to_finance | number:'1.2-2'}}</td>
+                        <td style="text-align: center;">{{subskill.status}}</td>
+                        <td style="text-align: center;">{{subskill.approved_date | date}}</td>
+                        </tr>
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      </div>
+      </div>
+    </div>
+  </mat-tab>
+
+  <mat-tab label="Unmatched Records">
+    <div class="wrapper">
+      <div class="container-fluid">
+        <!-- <div class="row">
+          <div class="col-3">
+            <button type="submit" mat-raised-button color="primary"  (click)="getUnmatchedLRNNoList()">See Unmatched Records to Dc</button>
+          </div>
+          </div> -->
+        <div class="row">
+          <div class="col-12">
+              <div class="card-box table-responsive">
+                
+                <table class="table table-bordered table-striped table-hover" datatable [dtOptions]="dtOptions4" [dtTrigger]="dtTrigger4">
+                      <thead>
+                        <tr>
+                          <th width="10%">SL.No</th>
+                          <th width="10%">LRNO</th>
+                          <th width="10%">LR Date</th>
+                          <th width="10%">Transporter</th>
+                          <th width="10%">Transporter Bill Number</th>
+                          <th width="10%">Transporter Bill Date</th>
+
+                          <!-- <th width="10%">Actions</th> -->
+                          <th width="10%">Delete</th>
+                          <th width="10%">Move to Not Logistics</th>
+                          <th width="10%">Challan No</th>
+                          <th width="10%">Invoice No</th>
+                          
+                          <th width="10%">Bill Submission Date to YIL</th>
+                          <th width="10%">Primary Freight Amount</th>
+                          <th width="10%">Primary Other charges</th>
+                          <th width="10%">Primary Total Freight</th>
+                          <th width="10%">Primary Reduced Amount</th>
+                          <th width="10%">Primary Remarks</th>
+                          
+                          <th width="10%">Sec Transporter Bill Number</th>
+                          <th width="10%">Sec Transporter Bill Date</th>
+                          <th width="10%">Secondary Freight Amount</th>
+                          <th width="10%">Secondary Other charges</th>
+                          <th width="10%">Secondary Total Freight</th>
+                          <th width="10%">Sec Reduced Amount</th>
+                          <th width="10%">Sec Remarks</th>
+                          <th width="10%">FinalFreight Passed For Payments to Finance</th>
+                          <th width="10%">Status</th>
+                          <th width="10%">Approved Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let subskill of unmatched_record_tablelist;let i=index">
+                        <td style="text-align: center;">{{i+1}}</td>
+                        <td>{{subskill.lrn_no}}</td>
+                        <td style="text-align: center;">{{subskill.lrn_date | date}}</td>
+                        <td style="text-align: center;">{{subskill.transporter}}</td>
+                        <td>{{subskill.transporter_bill_number}}</td>
+                        <td style="text-align: center;">{{subskill.transporter_bill_date | date}}</td>
+                        <td><button class="form-control success" style="background-color:red;color:black" (click)="delete(subskill.id)">Delete</button> </td>
+                        <td><button class="form-control success" style="width:125px;height:50px;background-color:green;color:white" (click)="moveToNotLogistics(subskill.id)">Move to Not-Logistics</button> </td>
+
+                        <td>{{subskill.challan_number}}</td>
+                        <td>{{subskill.inv_no}}</td>
+                        
+                        <td style="text-align: center;">{{subskill.bill_submission_date_to_yil | date}}</td>
+                        <td style="text-align: right;">{{subskill.freight_amount | number:'1.2-2'}}</td>
+                        <td style="text-align: right;">{{subskill.other_charges | number:'1.2-2'}}</td>
+                        <td style="text-align: right;">{{subskill.total_freight | number:'1.2-2'}}</td>
+                        <td style="text-align: right;">{{subskill.primary_reduction_amount | number:'1.2-2'}}</td>
+                        <td>{{subskill.remarks}}</td>
+                       
+                        <td>{{subskill.secondary_transporter_bill_number}}</td>
+                        <td style="text-align: center;">{{subskill.secondary_transporter_bill_date | date}}</td>
+                        <td style="text-align: right;">{{subskill.sec_freight_amount | number:'1.2-2'}}</td>
+                        <td style="text-align: right;">{{subskill.sec_other_charges | number:'1.2-2'}}</td>
+                        <td style="text-align: right;">{{subskill.sec_total_freight | number:'1.2-2'}}</td>
+                        <td style="text-align: right;">{{subskill.sec_reduction_amount | number:'1.2-2'}}</td>
+                        
+                        <td>{{subskill.sec_remarks}}</td>
+                      <td style="text-align: right;">{{subskill.final_total_freight_passed_for_payments_to_finance | number:'1.2-2'}}</td>
+                        <td style="text-align: center;">{{subskill.status}}</td>
+                        <td style="text-align: center;">{{subskill.approved_date | date}}</td>
+                        </tr>
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      </div>
+      </div>
+    </div>
+  </mat-tab>
+
+</mat-tab-group>
+
+

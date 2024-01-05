@@ -1,0 +1,241 @@
+<style>
+    .mat-header-cell {
+    /* background:#91999140; */
+    color: white;
+    background: #3f51b5;
+}
+tr.mat-header-row{
+    height: 22px;
+}
+.mat-row {
+    height: 22px;
+    background:#d0e3f363;
+}
+.buttonsizereduce{
+    line-height: 22px;
+}
+</style>
+<div class="row">
+    <div class="col-8">
+        <mat-dialog-content>
+
+            <mat-card>
+                <span><b>SECTION:&nbsp;&nbsp;</b>{{sectionName}}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                <span><b>PANEL NAME:&nbsp;&nbsp;</b>{{panelName}}</span>
+            </mat-card>
+        
+            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table" width="100%">
+        
+                <ng-container matColumnDef="slno">
+                    <th mat-header-cell *matHeaderCellDef> SL.NO. </th>
+                    <td mat-cell *matCellDef="let element; let i=index"> {{i + 1}} </td>
+                </ng-container>               
+        
+                <ng-container matColumnDef="item_desc">
+                    <th mat-header-cell *matHeaderCellDef> Item Description </th>
+                    <td mat-cell *matCellDef="let element"> {{element.item_desc == null ? '-' : element.item_desc}} </td>
+                </ng-container>
+                <ng-container matColumnDef="front">
+                    <th mat-header-cell *matHeaderCellDef> Front </th>
+                    <td mat-cell *matCellDef="let element"> {{element.front == null ? '-' : element.front}} </td>
+                </ng-container>
+                <ng-container matColumnDef="rear">
+                    <th mat-header-cell *matHeaderCellDef> Rear </th>
+                    <td mat-cell *matCellDef="let element"> {{element.rear == null ? '-' : element.rear}} </td>
+                </ng-container>
+                <ng-container matColumnDef="qty">
+                    <th mat-header-cell *matHeaderCellDef> QTY </th>
+                    <td mat-cell *matCellDef="let element"> {{element.qty == null ? '-' : element.qty}} </td>
+                </ng-container>
+                <ng-container matColumnDef="make">
+                    <th mat-header-cell *matHeaderCellDef> Make </th>
+                    <td mat-cell *matCellDef="let element"> {{element.make == null ? '-' : element.make}} </td>
+                </ng-container>
+            
+                <ng-container matColumnDef="model">
+                    <th mat-header-cell *matHeaderCellDef> Model </th>
+                    <td mat-cell *matCellDef="let element"> {{element.model == null ? '-' : element.model}} </td>
+                </ng-container>
+        
+                <ng-container matColumnDef="remarks">
+                    <th mat-header-cell *matHeaderCellDef> Remarks </th>
+                    <td mat-cell *matCellDef="let element"> {{element.remark == null ? '-' : element.remark}} </td>
+                </ng-container>
+               
+        
+               
+            
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        
+            </table>
+        
+        </mat-dialog-content>
+    </div>
+    <div class="col-4" *ngIf="panel_completed_pack.length > 0 && under_revision.length == 0" >
+        <form  [formGroup]="form" >
+        <div class="row">
+            <div class="col-8">
+            <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Box Size</mat-label>
+                
+                <mat-select formControlName="box_type"  > 
+                    <mat-option *ngFor="let subskill of box_types" [value]="subskill.boxId" >
+                         {{subskill.boxSize }} - {{subskill.boxtype_details.boxType}}
+                       </mat-option>
+                      
+                       
+                     
+                    
+                   </mat-select> 
+               
+              </mat-form-field>
+            </div>
+            <div class="col-4">
+                <mat-checkbox  color="primary" formControlName="main_box" [disabled]="true">
+                    Main Box
+                  </mat-checkbox>
+            </div>
+        </div>
+        <div class="row" *ngIf="form.value.box_type == '120'">
+            <div class="col-4">
+                <mat-form-field class="example-full-width" appearance="fill" style="width:90px">
+                    <mat-label>Length</mat-label>
+                    <input type="number" matInput formControlName="box_length" 
+                           placeholder="">
+                  </mat-form-field>
+            </div>
+            <div class="col-4">
+                <mat-form-field class="example-full-width" appearance="fill" style="width:90px">
+                    <mat-label>Height</mat-label>
+                    <input type="number" matInput formControlName="box_height" 
+                           placeholder="">
+                  </mat-form-field>
+                
+            </div>
+            <div class="col-4">
+                <mat-form-field class="example-full-width" appearance="fill" style="width:90px">
+                    <mat-label>Breadth</mat-label>
+                    <input type="number" matInput formControlName="box_breadth" 
+                           placeholder="">
+                  </mat-form-field>
+                
+            </div>
+            
+        </div>
+        <div class="row">
+            <div class="col-4">
+                <mat-form-field class="example-full-width" appearance="fill" style="width:90px">
+                    <mat-label>Gross Weight</mat-label>
+                    <input type="number" matInput formControlName="gross_weight" 
+                           placeholder="">
+                  </mat-form-field>
+                
+            </div>
+            <div class="col-4">
+                <mat-form-field class="example-full-width" appearance="fill" style="width:90px">
+                    <mat-label>Net Weight</mat-label>
+                    <input type="number" matInput formControlName="net_weight" 
+                           placeholder="">
+                  </mat-form-field>
+                
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <mat-form-field class="example-full-width" appearance="fill">
+                    <mat-label>QA witness</mat-label>
+                    <mat-select formControlName="qa_wetness" > 
+                      <mat-option>-select-</mat-option>
+                      <mat-option *ngFor="let subskill of userList" [value]="subskill.id" >
+                           {{subskill.employee_name }}
+                      </mat-option>                           
+                    </mat-select> 
+                    <mat-error *ngIf="f.qa_wetness.errors?.required">
+                        <strong>required</strong>
+                   </mat-error>                                     
+                  </mat-form-field>
+            </div>
+            <div class="col-6">
+                <mat-form-field class="example-full-width" appearance="fill">
+                    <mat-label>Project witness</mat-label>
+                    <mat-select formControlName="project_wetness" > 
+                      <mat-option>-select-</mat-option>
+                      <mat-option *ngFor="let subskill of userList" [value]="subskill.id" >
+                           {{subskill.employee_name }}
+                      </mat-option>                           
+                    </mat-select>    
+                    <mat-error *ngIf="f.project_wetness.errors?.required">
+                        <strong>required</strong>
+                   </mat-error>                                  
+                  </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+            <mat-form-field class="example-full-width" appearance="fill" >
+                <mat-label>Remarks</mat-label>
+               
+                <textarea matInput matInput formControlName="remarks" 
+                       placeholder=""></textarea>
+              </mat-form-field>
+            </div>
+        </div>
+  
+        
+        <div>
+            <mat-dialog-actions >
+                <button mat-raised-button color="primary" (click)="onSubmitPanel()" >Create A BOX and BARCODE </button>
+
+                <button mat-raised-button mat-dialog-close (click)="dialogClose()">Close</button>
+            </mat-dialog-actions>
+
+        
+          <!-- <table class="table table-dark"> 
+            <thead>
+            <tr style="line-height: 0px !important;">
+                <th>
+                    sl.no
+                </th>
+                <th>
+                    Item
+                </th>
+                <th>
+                    Quantity
+                </th>
+                <th>
+                    Remove
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr  class="table-active" *ngFor="let resultboxs of resultbox; let i=index" style="line-height: 0px !important">
+                    <td>{{i+1}}</td>
+                    <td>{{resultboxs.item_desc}}</td>
+                    <td>{{resultboxs.qty}}</td>
+                    <td>
+                        <mat-icon (click)="removeItemFromBox(resultboxs,i)">delete_forever</mat-icon>
+                    </td>
+                </tr>
+            </tbody>
+        </table> -->
+
+    </div>
+</form>
+</div>
+
+</div>
+<div class="row" >
+    <div class="col-4" *ngIf="under_revision.length > 0" >
+        <h4 style="color: red">This panel under revision</h4>
+    </div>
+    <mat-dialog-actions >
+        <button mat-raised-button mat-dialog-close (click)="dialogClose()">Close</button>
+    </mat-dialog-actions>
+</div>
+
+
+
+
+
+

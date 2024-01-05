@@ -1,0 +1,329 @@
+
+<div class="wrapper">
+    <div class="container-fluid">
+        <form  [formGroup]="form" enctype="multipart/form-data"  >
+            <div class="card-box" style="padding-top: 0px">
+              <div class="row">
+                <div class="col-12">
+                    <h4  style="text-align:center">Vehicle Report</h4>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-1">
+                  <button mat-raised-button color="primary" (click)="filter_table()">Filter <mat-icon>search</mat-icon></button>
+              </div>
+              <div class="col-4">
+                <button type="submit" style="margin-top:5px;margin-left:48rem;" mat-raised-button color="primary" (click)="UploadExpectedDateTemplate()"> Upload Expected Date Template</button>
+              </div>
+              <div class="col-4">
+                <h4 style="color: #ff4081;margin-top:1px;margin-left: 13rem;;"><span >*</span> upload format<mat-icon (click)="download_expected_days_upload_format()">cloud_download</mat-icon></h4>
+            </div>
+            </div>
+            <br/>
+
+              <div *ngIf="filterDataForm">
+                <div class="row">
+                 <div class="col-2" style="margin-right: 18px;">
+                      <mat-form-field class="example-full-width" appearance="fill">
+                              <input type="text" matInput formControlName="lrn_no" 
+                              placeholder="LR No">
+                              <mat-hint>LR No</mat-hint>
+                      </mat-form-field>
+                  </div>
+
+                  <div class="col-2" style="margin-right: 18px;">
+                    <mat-form-field class="example-full-width" appearance="fill">
+                            <input type="text" matInput formControlName="vehicle_no" 
+                            placeholder="Vehicle Number">
+                            <mat-hint>Vehicle Number</mat-hint>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-2" style="margin-right: 18px;">
+                  <mat-form-field class="example-full-width" appearance="fill">
+                          <input type="text" matInput formControlName="da_no" 
+                          placeholder="DA No">
+                          <mat-hint>DA No</mat-hint>
+                  </mat-form-field>
+              </div>
+                  
+                  <!-- <div class="col-2" style="margin-right: 18px;">
+                    <mat-form-field appearance="fill">
+                      <mat-label>DA no{{form.value.da_no}}</mat-label>
+                      <mat-select formControlName="da_no" multiple>
+                        <mat-option value=''>Select Option</mat-option>
+                        <mat-option *ngFor="let subskill of DaIdList"  [value]="subskill.da_id">
+                          {{subskill.jobcode_da_no}}
+                        </mat-option>
+                      </mat-select>
+                      <mat-hint>DA no</mat-hint>
+                    </mat-form-field>
+                  </div> -->
+
+                  <div class="col-2" style="margin-right: 18px;">
+                    <mat-form-field appearance="fill">
+                      <mat-label>Transporter Name</mat-label>
+                      <mat-select formControlName="transporter_name" [(value)]="form.value.transporter_name" multiple>
+                        <mat-option>-select-</mat-option>
+                        <mat-option *ngFor="let subskill of transportationlist" [value]="subskill.transportationId">
+                          {{subskill.transportationName}}
+                        </mat-option>
+                      </mat-select>
+                      <mat-hint>Transporter Name</mat-hint>
+                    </mat-form-field>
+                  </div>
+
+                  <div class="col-2" style="margin-right: 18px;">
+                    <mat-form-field appearance="fill">
+                      <mat-label>Truck Type</mat-label>
+                      <mat-select formControlName="truck_type" [(value)]="form.value.truck_type" multiple>
+                        <mat-option>-select-</mat-option>
+                        <mat-option *ngFor="let subskill of trucktypeslist" [value]="subskill.truckId">
+                          {{subskill.truckName}}
+                        </mat-option>
+                      </mat-select>
+                      <mat-hint>Truck Type</mat-hint>
+                      </mat-form-field>
+                  </div>
+
+              <div class="col-2" style="margin-right: 18px;">
+                <mat-form-field class="example-full-width" appearance="fill">
+                        <input type="text" matInput formControlName="delivery_challan_no" 
+                        placeholder="Delivery Challan No">
+                        <mat-hint>Delivery Challan No.</mat-hint>
+                </mat-form-field>
+              </div>
+
+            <div class="col-2" style="margin-right: 18px;">
+              <mat-form-field class="example-full-width" appearance="fill">
+                  <mat-label>Status</mat-label>
+                        <mat-select  formControlName="status">
+                          <mat-option value="">Select</mat-option>
+                        
+                          <mat-option value="DC Created">DC Created</mat-option>
+                          <mat-option value="loaded">loaded</mat-option> 
+
+                          <mat-option value="Delivered">Delivered</mat-option>
+                          <mat-option value="NotDelivered">Not Delivered</mat-option>
+                          <!-- <mat-option value="Transit">Transit</mat-option> -->
+                          <!-- <mat-option value="Shipped">Shipped</mat-option>
+                          <mat-option value="ARRIVED AT DESTINATION">ARRIVED AT DESTINATION</mat-option> -->
+                        </mat-select>
+                      </mat-form-field>
+            </div>
+
+          <div class="col-2" style="margin-right: 18px;">
+            <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Delayed Trucks</mat-label>
+                      <mat-select  formControlName="delayed_trucks">
+                        <mat-option value="">Select</mat-option>
+                        <mat-option value="DelayedTrucks">Delayed Trucks</mat-option>
+                        <mat-option value="InlineTrucks">Inline Trucks</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+          </div>
+
+              <div class="col-2" style="margin-right: 18px;">
+                <mat-form-field class="example-full-width" appearance="fill">
+                    <mat-label>Data Type</mat-label>
+                          <mat-select #datetypeselect  formControlName="date_type" (selectionChange) ='onDateTypeSelected(datetypeselect.value)'>
+                            <mat-option value="ShipedDate">Shiped Date</mat-option>
+                            <mat-option value="DeliveredDate">Delivered Date</mat-option>
+                            <mat-option value="ShipedAndDeliveredDate">Both</mat-option>
+                          </mat-select>
+                        </mat-form-field>
+            </div>
+                       
+              <div  class="col-2" style="margin-right: 18px;">
+                <mat-form-field>
+                    <mat-label>Enter a date range</mat-label>
+                    <mat-date-range-input [rangePicker]="picker">
+                      <input matStartDate  placeholder="Start date"  formControlName="fromDate" (ngModelChange)="datePickerChange()">
+                      <input matEndDate  placeholder="End date"  formControlName="toDate" (ngModelChange)="datePickerChange()">
+                    </mat-date-range-input>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-date-range-picker #picker></mat-date-range-picker>
+                  </mat-form-field>
+            </div>
+
+            <div class="col-2" style="margin-left: 15px;">
+              <button mat-raised-button color="primary" (click)="getRecordsBasedOnFilterData()">Search</button>
+            <button style="margin-left:1rem;" mat-raised-button color="primary" (click)="clearAllFilterDataFields()">Clear</button>
+        </div>  
+                            
+                </div>
+              </div>
+          </div>
+        </form>
+
+      <div class="row">
+        <div class="col-12">
+            <div class="card-box table-responsive">
+              <table  class="table table-bordered table-striped table-hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" style="overflow: scroll;">
+                    <thead>
+                        <tr>
+                            <th style="width: 30px;">Sl.no</th>
+                            <th style="width: 130px;">DA No</th>
+                            <th style="width: 130px;">SO No</th>
+                            <th style="width: 130px;">DA From</th>
+                            <th style="width: 130px;">Customer Name</th>
+                            <th style="width: 130px;">Vehile No.</th>
+                            <th style="width: 130px;">Add Truck Delivery Details</th>
+                            <th style="width: 130px;">Ratings And Remarks</th>
+                            <th style="width: 130px;">Refresh </th>
+                            <th  style="width: 130px;">Truck  Status</th>
+                            
+                            <!-- <th style="width: 130px;">GoDown Details</th> -->
+                            <th style="width: 130px;">Transportation Name</th>
+                            <th  style="width: 130px;">LRN/Doc No.</th>
+                            <th style="width: 130px;" >Challan no.</th>
+
+                            <th style="width: 130px;">Truck Type</th>
+                            <th style="width: 230px;">Expected Date To Reach Destination</th>
+                            <th  style="width: 230px;">Shiped Date</th>
+                            <th style="width: 230px;">Delivered Date </th>
+                            <th  style="width: 130px;">Delay(days)</th>
+                            <th  style="width: 130px;">Last Location</th>
+                            
+
+                           
+                            
+                            <th style="width: 130px;" >Destination</th>
+                            <th  style="width: 130px;">Truck Value</th>
+
+                            <th style="width: 130px;" >Moved To Godown Date</th>
+                            <th style="width: 130px;" >Moved From Godown Date</th>
+
+                            <th style="width: 130px;">Driver Name</th>
+                            <th   style="width: 130px;">Driver No.</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let subskill of tablelist;let i=index">
+                            <td style="text-align: center;">{{i+1}}</td>
+                            <td><span *ngIf="subskill.da.length != 0" (click)="daNavigation(subskill.da_id,'material/DA-details')">{{subskill.da[0].jobcode_da_no != null ? subskill.da[0].jobcode_da_no : '-'}}</span></td>
+                            <td>{{subskill.da[0].so_no != null ? subskill.da[0].so_no : '-'}}</td>
+                            <td>{{subskill.Sub_dept_name}}</td>
+                            <td>{{subskill.da[0].customer_name != null ? subskill.da[0].customer_name : '-'}}</td>
+                            <td style="color:blue;text-align: center;" (click)="openDialogPanel(subskill.truckListId)">{{subskill.vehicle_no != null ? subskill.vehicle_no : '-'}}</td>
+                            <td style="text-align: center;"><mat-icon color="primary" class="mat-18" (click)="openTruckDeliveryDetailsAdd(subskill.truckListId)">add_circle</mat-icon><mat-icon style="color:darkgreen" class="mat-18" (click)="openAddRatings(subskill.truckListId)">note_add</mat-icon></td>
+                            <td>{{subskill.rating != null ? subskill.rating : '-'}}-{{subskill.ratingRemarks != null ? subskill.ratingRemarks : '-'}}</td>
+
+                            <td style="text-align: center;"><mat-icon (click)="callvehicledetailsapi(subskill.truckListId)" >settings_backup_restore</mat-icon></td>
+                            <td>{{subskill.status != null ? subskill.status : '-'}}</td>
+                            <td>{{subskill.transportationName != null ? subskill.transportationName : '-'}}</td>
+                            <td><span *ngIf="subskill.deliveryChallan.length != 0">{{subskill.deliveryChallan[0].lrn_no != null ? subskill.deliveryChallan[0].lrn_no : '-'}}</span></td>
+                            <td><span *ngIf="subskill.deliveryChallan.length != 0">{{subskill.deliveryChallan[0].challen_no != null ? subskill.deliveryChallan[0].challen_no : '-'}}</span></td>
+
+                            <td>{{subskill.truckName != null ? subskill.truckName : '-'}}</td>
+                            <td style="text-align: center;">{{subskill.expectedNoOfDays != null ? (subskill.expectedNoOfDays | date : 'dd/MM/yyyy') : ('-')}}</td>
+                            <td style="text-align: center;">{{subskill.check_out != null ? (subskill.check_out | date : 'dd/MM/yyyy') : ('-')}}</td>
+                            <td style="text-align: center;">{{subskill.delivered_datetime != null ? (subskill.delivered_datetime | date : 'dd/MM/yyyy') : ('-')}}</td>
+
+                            <!-- <td style="text-align: center;">{{subskill.delays != null ? subskill.delays : '-'}}</td> -->
+                            <td style="text-align: center;">
+                              <!-- <span style="color:red;" *ngIf="subskill.delivered_datetime == null">Truck Not Yet Reached to Destination</span> -->
+                              <span style="color:green;font-size:20px;" *ngIf="subskill.delays <= 0">{{subskill.delays != null ? subskill.delays : '-'}}</span>
+                              <span style="color:red;font-size:20px;" *ngIf="subskill.delays > 0">{{subskill.delays != null ? subskill.delays : '-'}}</span>
+                            </td>
+                            
+                            <td><span *ngIf="subskill.deliveryDetails.length != 0">{{subskill.deliveryDetails[0].current_location != null ? subskill.deliveryDetails[0].current_location : '-'}}</span></td>
+                          
+
+                            <td>{{subskill.destination != null ? subskill.destination : '-'}}</td>
+                            <td><span *ngIf="subskill.deliveryChallan.length != 0">{{(subskill.deliveryChallan[0].inv_amount + subskill.deliveryChallan[0].truck_amount)| number }}</span></td>
+
+                            <!-- <td style="text-align: center;"><span *ngIf="subskill.deliveryChallan.length != 0">{{subskill.deliveryChallan[0].move_to_godown_date != null ? (subskill.deliveryChallan[0].move_to_godown_date | date : 'dd/MM/yyyy') : ('-')}}</span></td> -->
+                            <!--<td style="text-align: center;"><span *ngIf="subskill.deliveryChallan.length != 0">{{subskill.deliveryChallan[0].check_out != null ? (subskill.deliveryChallan[0].check_out | date : 'dd/MM/yyyy') : ('-')}}</span></td>-->
+                            <td style="text-align: center;"><span *ngIf="subskill.deliveryChallan.length != 0">{{subskill.deliveryChallan[0].truck_moved_to_godown != null ? (subskill.deliveryChallan[0].truck_moved_to_godown | date : 'dd/MM/yyyy') : ('-')}}</span></td>
+                            <td style="text-align: center;">{{ subskill.tracking_date != null ? (subskill.tracking_date | date : 'dd/MM/yyyy') : ('-')}}</td>
+
+                            <td >{{subskill.driver_name != null ? subskill.driver_name : '-'}}</td>
+                            <td>{{subskill.driver_no != null ? subskill.driver_no : '-'}}</td>
+                          
+                          </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+  
+    </div>
+  </div>
+
+
+  <!-- <div class="d-flex justify-content-center">
+    <div class="spinner-border" role="status" >
+      <span  id="loading"></span>
+    </div>
+  </div> -->
+
+  <!-- <div class="col-2" style="margin-right: 18px;">
+    <mat-form-field class="example-full-width" appearance="fill">
+    
+        <mat-label>Vehicle No</mat-label>
+            <input type="text" matInput list="codes" formControlName="da_date" 
+            placeholder="">
+            
+            <mat-hint>Vehicle No</mat-hint>
+            <datalist  id="codes">
+                <option  >DA-01</option>
+                <option >DA-02</option>
+                <option >DA-03</option>
+            </datalist>
+        
+        
+    </mat-form-field>
+</div>
+
+<div class="col-2" style="margin-right: 50px;">
+  <mat-form-field appearance="fill">
+    <mat-label>Shiped date</mat-label>
+    <input matInput [matDatepicker]="fromdate" formControlName="time_critical_date">
+    <mat-datepicker-toggle matSuffix [for]="fromdate"></mat-datepicker-toggle>
+    <mat-datepicker #fromdate></mat-datepicker>
+  </mat-form-field>
+</div>
+<div class="col-2" style="margin-right: 50px;">
+   
+    
+      <mat-form-field appearance="fill">
+        <mat-label>Delivered date</mat-label>
+        <input matInput [matDatepicker]="todate" formControlName="time_critical_date">
+        <mat-datepicker-toggle matSuffix [for]="todate"></mat-datepicker-toggle>
+        <mat-datepicker #todate></mat-datepicker>
+      </mat-form-field>
+        
+        
+    
+</div>
+<div class="col-2" style="margin-right: 18px;">
+    <mat-form-field class="example-full-width" appearance="fill">
+    
+        <mat-label>Logistics Name</mat-label>
+            <input type="text" matInput list="customer" formControlName="customer_no" 
+            placeholder="">
+            
+            <mat-hint>Transportation name</mat-hint>
+            <datalist  id="customer_list">
+                <option  >DA-01</option>
+                <option >DA-02</option>
+                <option >DA-03</option>
+            </datalist>
+        
+        
+    </mat-form-field>
+</div>
+<div class="col-1">
+    
+    
+        <button mat-raised-button color="primary" (click)="filter_table()"  >Filter <mat-icon>search</mat-icon></button>
+        
+        
+    
+</div>
+
+
+</div>
+</div> -->

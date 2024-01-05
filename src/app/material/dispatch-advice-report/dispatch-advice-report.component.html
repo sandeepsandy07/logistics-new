@@ -1,0 +1,225 @@
+
+<div class="wrapper">
+    <div class="container-fluid">
+        <form  [formGroup]="form" enctype="multipart/form-data"  >
+            <div class="card-box" style="padding-top: 0px">
+                <div class="row">
+                    <div class="col-12">
+                        <h4  style="text-align:center">Dispatch Advice Report</h4>
+                    </div>
+                </div>
+
+                <div class="col-1">
+                    <button mat-raised-button color="primary" (click)="filter_table()">Filter <mat-icon>search</mat-icon></button>
+                </div>
+                <br/>
+
+            <div *ngIf="filterDataForm">
+              <div class="row">
+                <div class="col-2" style="margin-right: 18px;">
+                  <mat-form-field appearance="fill">
+                    <!-- <mat-label>Dispatch Mode{{form.value.mode_of_dispatch}}</mat-label> -->
+                    <mat-label>DA no{{form.value.da_no}}</mat-label>
+                    <mat-select formControlName="da_no" >
+                      <mat-option value=''>Select Option</mat-option>
+                      <mat-option *ngFor="let subskill of DaIdList"  [value]="subskill.da_id">
+                        {{subskill.jobcode_da_no}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+
+                <div class="col-2" style="margin-right: 18px;">
+                  <mat-form-field class="example-full-width" appearance="fill">
+                          <input type="text" matInput formControlName="jobcode" 
+                          placeholder="Job Code">
+                  </mat-form-field>
+                </div>
+
+                <div class="col-2" style="margin-right: 18px;">
+                  <mat-form-field class="example-full-width" appearance="fill">
+                          <input type="text" matInput formControlName="so_no" 
+                          placeholder="So no">
+                  </mat-form-field>
+                </div>
+
+                <div class="col-2" style="margin-right: 18px;">
+                  <mat-form-field class="example-full-width" appearance="fill">
+                          <input type="text" matInput formControlName="po_no" 
+                          placeholder="Po no">
+                  </mat-form-field>
+                </div>
+
+                <div class="col-2" style="margin-right: 18px;">
+                  <mat-form-field class="example-full-width" appearance="fill">
+                          <input type="text" matInput formControlName="bill_to_code" 
+                          placeholder="Bill To Code">
+                  </mat-form-field>
+                </div>
+              </div>
+                <div class="row">
+
+                  <div class="col-2" style="margin-right: 18px;">
+                    <mat-form-field class="example-full-width" appearance="fill">
+                            <input type="text" matInput formControlName="project_id" 
+                            placeholder="Project Id">
+                    </mat-form-field>
+                  </div>
+
+                    <!-- <div class="col-2" style="margin-right: 18px;">
+                        <mat-form-field appearance="fill">
+                          <mat-label>Department</mat-label>
+                          <mat-select formControlName="from" [(value)]="form.value.from">
+                            <mat-option>-select-</mat-option>
+                            <mat-option *ngFor="let subskill of SubDeptIdDataList" [value]="subskill.sub_dept_id">
+                              {{subskill.sub_department}}
+                            </mat-option>
+                          </mat-select>
+                          </mat-form-field>
+                    </div> -->
+
+                    <div class="col-2" style="margin-right: 18px;">
+                      <mat-form-field appearance="fill">
+                        <mat-label>Business Unit</mat-label>
+                        <mat-select formControlName="business_unit" [(value)]="form.value.business_unit" multiple>  
+                          <mat-option *ngFor="let subskill of business_unit_list" [value]="subskill.sub_dept_id">
+                            {{subskill.sub_department}}
+                          </mat-option>
+                          <!-- <mat-option [value]="[3, 4, 5, 6, 7, 8, 10, 11, 12, 9]" (click)="selectAll(ev)"   #ev>All</mat-option> -->
+                        </mat-select>
+                        </mat-form-field>
+                  </div>
+
+                    <div class="col-2" style="margin-right: 18px;">
+                        <mat-form-field appearance="fill">
+                          <mat-label>Status</mat-label>
+                          <mat-select formControlName="status" [(value)]="form.value.status">
+                            <mat-option>-select-</mat-option>
+                            <mat-option value="2">Approval in Progress</mat-option>
+                            <mat-option value="3">Approved</mat-option>
+
+                            <mat-option value="4">Aknowledge</mat-option>
+                            <mat-option value="5">Packing Initiated</mat-option>
+
+                            <mat-option value="6">Packed</mat-option>
+                            <mat-option value="7">Loading Completed</mat-option>
+
+                            <mat-option value="8">Dispatched</mat-option>
+                            <mat-option value="9">Delivered</mat-option>
+
+                            <mat-option value="10">Closed</mat-option>
+                            <mat-option value="11">Pending</mat-option>
+                           
+                          </mat-select>
+                          </mat-form-field>
+                    </div>
+
+                
+                    <div  class="col-2" style="margin-right: 18px;">
+                        <mat-form-field style="width:160px">
+                            <mat-label>Enter a date range</mat-label>
+                            <mat-date-range-input [rangePicker]="picker">
+                              <input matStartDate  placeholder="Start date"  formControlName="fromDate" (ngModelChange)="datePickerChange()">
+                              <input matEndDate  placeholder="End date"  formControlName="toDate" (ngModelChange)="datePickerChange()">
+                            </mat-date-range-input>
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-date-range-picker #picker></mat-date-range-picker>
+                            <mat-hint>DA Created date</mat-hint>
+                          </mat-form-field>
+                    </div>
+                    <div  class="col-1">
+
+                    </div>
+
+                    <div class="col-3">
+                        <button style="margin-left:1rem;" mat-raised-button color="primary" (click)="getRecordsBasedOnFilterData()">Search</button>
+                        <button style="margin-left:1rem;" mat-raised-button color="primary" (click)="clearAllFilterDataFields()">Clear</button>
+                    </div>
+
+                </div>
+            </div>
+            </div>
+        </form>
+
+
+
+      <div class="row">
+        <div class="col-12">
+            <div class="card-box table-responsive">
+              <table  class="table table-bordered table-striped table-hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" style="overflow: scroll;">
+                    <thead>
+                        <tr>
+                            <th style="width: 30px;">Sl.no</th>
+                            <th style="width: 230px;white-space: nowrap;">DA no</th>
+                            <th style="width: 230px;">From</th>
+                            <!-- <th style="width: 130px;">To</th> -->
+                            <th style="width: 230px;white-space: nowrap;">Job Code</th>
+                            <th  style="width: 230px;white-space: nowrap;" >Job Name</th>
+                            <th  style="width: 230px;white-space: nowrap;" >DA Date</th>
+                            <th style="width: 230px;white-space: nowrap;">So no</th>
+                            <th style="width: 230px;white-space: nowrap;">Po No</th>
+                            <th   style="width: 230px;">Type</th>
+                            <th style="width: 230px;white-space: nowrap;">Customer Name</th>
+                            <th style="width: 230px;">Status</th>
+                            <th style="width: 230px;">DA Acknowledge Date</th>
+                            <th style="width: 230px;">Loading Completed Date</th>
+                            <th style="width: 230px;">No. of Days Taken</th>
+                            <th style="width: 230px;">View</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                            <tr *ngFor="let subskill of tablelist;let i=index">
+                            <td >{{i+1}}</td>
+                            <td style="color:blue;padding:2px;" (click)="daNavigation_tab(subskill.da_id,'material/DA-details')" >{{subskill.jobcode_da_no}}</td>
+                            <td><span *ngIf="subskill.da_from != 0">{{subskill.sub_department}}</span></td>
+                            <!-- <td>{{subskill.da_from}}</td> -->
+                            <!-- <td>{{subskill.da_to}}</td> -->
+                            <td>{{subskill.job_code}}</td>
+                            <td>{{subskill.job_name}}</td>
+                            <td>{{subskill.da_date | date : 'dd/MM/yyyy'}}</td>
+                            <td>{{subskill.so_no}}</td>
+                            <td>{{subskill.po_no}}</td>
+                            <td>{{subskill.bill_type | uppercase}}</td>
+                            <!-- <td>{{subskill.customer_name}}</td> -->
+                            <td><span *ngIf="subskill.customer_id != 0">{{subskill.customer_name}}</span></td>
+                            <td>{{subskill.status}}</td>
+                            <td>{{subskill.da_ack_date != null ? (subskill.da_ack_date | date : 'dd/MM/yyyy') : ('-')}}</td>
+                            <td>{{subskill.loaded_date != null ? (subskill.loaded_date | date : 'dd/MM/yyyy') : ('-')}}</td>
+                            <td style="text-align:center;">{{(subskill.date_diff) != null ? (subskill.date_diff) : ('-')}}</td>
+                            <td style="color: blue;" (click)="openDialogPanel(subskill.da_id)">View</td>
+                        </tr> 
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    </div>
+  </div>
+
+
+
+  <!-- <div class="col-2" style="margin-right: 18px;">
+                        <mat-form-field class="example-full-width" appearance="fill">
+                                <input type="text" matInput formControlName="to" 
+                                placeholder="To">
+                        </mat-form-field>
+                    </div> -->
+
+                    <!-- <div class="col-2" style="margin-right: 18px;">
+                        <mat-form-field class="example-full-width" appearance="fill">
+                                <input type="text" matInput formControlName="status" 
+                                placeholder="Status">
+                        </mat-form-field>
+                    </div> -->
+
+                      <!-- <div class="col-2" style="margin-right: 18px;display:none   " >
+                        <mat-form-field class="example-full-width" appearance="fill" style="display:none" >
+                            <mat-label>Date Type</mat-label>
+                                  <mat-select #datetypeselect  formControlName="date_type" (selectionChange) ='onDateTypeSelected(datetypeselect.value)'>
+                                    <mat-option value="DADate">DA Date</mat-option>
+                                  </mat-select>
+                                </mat-form-field>
+                    </div> -->
+
+                    

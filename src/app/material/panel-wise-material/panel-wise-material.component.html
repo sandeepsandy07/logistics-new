@@ -1,0 +1,258 @@
+<!-- <div class="card-box example-small-box-details" *ngIf="viewRecords"> -->
+
+<div class="row" style="margin: unset;" *ngIf="viewRecords">
+    <div class="col-1" style="padding: unset;margin-top: unset;">
+        <button mat-raised-button color="primary" *ngIf="user_action == 'creater'"
+            style="margin-top: unset;background-color: #3cc81c;height: 100%;width: 100%;"
+            (click)="daNavigation(viewRecords.da_id,'/material/billableform')"><span>Billing page </span><br><span>
+                <mat-icon matListIcon [ngStyle]="{'color':'red'}">arrow_back</mat-icon>
+            </span> </button>
+
+    </div>
+    <div class="col-10" style="padding: unset;">
+        <div class="card-box example-small-box-details" style="margin-bottom: unset;padding: unset;padding-top: 12px;">
+
+            <table>
+                <thead>
+                    <th style="border: unset; " width="5%"></th>
+                    <th style="border: unset; " width="5%"></th>
+                    <th style="border: unset; " width="5%"></th>
+                    <th style="border: unset; " width="5%"></th>
+                    <th style="border: unset; " width="5%"></th>
+                    <th style="border: unset; " width="5%"></th>
+                    <th style="border: unset; " width="5%"></th>
+                    <th style="border: unset; " width="5%"></th>
+                    <th style="border: unset; " width="5%"></th>
+                    <th style="border: unset; " width="5%"></th>
+                    <th style="border: unset; " width="5%"></th>
+                    <th style="border: unset; " width="5%"></th>
+                    <th style="border: unset; " width="5%"></th>
+                    <th style="border: unset; " width="5%"></th>
+                    <th style="border: unset; " width="5%"></th>
+                    <th style="border: unset; " width="5%"></th>
+                    <th style="border: unset; " width="5%"></th>
+                    <th style="border: unset; " width="5%"></th>
+                    <th style="border: unset; " width="5%"></th>
+                    <th style="border: unset; " width="5%"></th>
+
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td style="border: unset;text-align: right;color:#0d5d8f "><label>DA No:</label></td>
+
+
+                        <td style="border: unset; " colspan="4"><label>{{viewRecords.jobcode_da_no}}</label></td>
+                        <td style="border: unset;text-align: right;color:#0d5d8f"><label>Date:</label></td>
+
+                        <td style="border: unset; " colspan="2"><label>{{viewRecords.da_date | date}}</label></td>
+                        <td style="border: unset;text-align: right;color:#0d5d8f " colspan="2"><label>Job Code:</label>
+                        </td>
+                        <td style="border: unset; " colspan="3"><label>{{viewRecords.job_code}}</label></td>
+                        <td style="border: unset;text-align: right;color:#0d5d8f "><label>SO no:</label></td>
+                        <td style="border: unset; " colspan="2"> <label>{{viewRecords.so_no}}</label></td>
+                        <td style="border: unset;text-align: right;color:#0d5d8f "><label>Location:</label></td>
+                        <td style="border: unset; "> <label>{{viewRecords.location_unit}}</label></td>
+                        <td style="border: unset;text-align: right;color:#0d5d8f "><label>Revision</label></td>
+                        <td style="border: unset; "> <label>{{viewRecords.revision}}</label></td>
+                    </tr>
+                    <tr>
+                        <td style="border: unset;text-align: right;color:#0d5d8f "><label>PO</label></td>
+                        <td style="border: unset; " colspan="4"><span>:&nbsp;{{viewRecords.po_no}}</span>
+                            <span>({{viewRecords.po_date}})</span></td>
+                        <td style="border: unset;text-align: right;color:#0d5d8f " colspan="2"><label>Job Name</label>
+                        </td>
+                        <td style="border: unset; " colspan="6"><span>:&nbsp;{{viewRecords.job_name}}</span></td>
+                        <td style="border: unset;text-align: right;color:#0d5d8f "> <label>Customer</label></td>
+                        <td style="border: unset; " colspan="6"><span>:&nbsp;{{viewRecords.customer_name}}</span></td>
+                    </tr>
+
+
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-1" style="padding: unset;margin-top: unset;">
+        <button mat-raised-button color="primary" *ngIf="user_action == 'creater'"
+            style="margin-top: unset;background-color: #3cc81c;height: 100%;width: 100%;"
+            (click)="daNavigation_da(viewRecords.da_id,'/material/DAcreate','edit')"><span>First page </span><br><span>
+                <mat-icon matListIcon [ngStyle]="{'color':'red'}">arrow_forward</mat-icon>
+            </span> </button>
+
+
+
+    </div>
+</div>
+<!-- </div> -->
+<div class="todo-tasklist-item-text"  style=" border-top: 2px solid whitesmoke;" *ngIf="viewRecords">
+                                        
+    <ol class="progtrckr" data-progtrckr-steps="3" >
+            
+
+            <!-- <li class="progtrckr-done"  
+                 [ngClass]="{'progtrckr-done': approverslists.status === 'approved', 'progtrckr-todo' : approverslists.status === 'pending' }"> -->
+            <li class=" status-text" [ngClass]="{'progtrckr-done': viewRecords.da_stage >= 1}" style="width: 33%;" >
+                <b><span style="color: #00000047">DA Details( Step-1 )</span></b>
+            </li>  
+            <li class=" status-text" [ngClass]="{'progtrckr-done': viewRecords.da_stage >= 2, 'progtrckr-todo' : viewRecords.da_stage < 2 }" style="width: 33%;" >
+               <b><span style="color: #00000047"> Billing Details ( Step-2 )</span> </b>
+            </li>  
+            <li class=" status-text"  [ngClass]="{'progtrckr-done': viewRecords.da_stage >= 3, 'progtrckr-todo' : viewRecords.da_stage < 3 }"  style="width: 33%;">
+                <b (click)="daNavigation(viewRecords.da_id,'/material/panelwisematerial')"><span style="color: #227eb1;font-size: 20px;">BOM </span><span style="color: black">-Items For Logistics to pack  </span><span style="color: #3cc81c">( Step-3 )</span></b>
+            </li>  
+
+    </ol>
+</div>
+<div class="container-fluid" *ngIf="isListView">
+    <div class="mt-2 row" *ngIf="viewRecords">
+        <div class="col-6">
+
+
+            <mat-card>
+
+                <form [formGroup]="uploadForm" enctype="multipart/form-data" #myForm="ngForm">
+                    <div class="row justify-content-center">
+                        
+                       
+                                <div class="col-md-4">
+                                    <div ng-controller="AppController" class="upload">
+                                        <label style="color: #c85827;">Bom File Upload </label>
+                                        <input type="file" class="" name="panel_wise_material" #takeInput
+                                            (change)="OnFileSelect($event,'panel_wise_material')"
+                                            accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                </div>
+
+                                <div class="col-md-5">
+                                    <div>
+        
+        
+                                       <label style="color: #c85827;" (click)="download_bom_temp()">
+                                        <span style="color: red">*</span> upload format of BOM <mat-icon
+                                                >cloud_download</mat-icon>
+                                        </label>
+                                       
+                                    </div>
+                                </div>
+
+
+                          
+
+                    </div>
+                    <div class="row justify-content-center mt-2" *ngIf="viewRecords">
+                        <button type="submit" mat-raised-button color="primary" style="background-color: #c85827" [disabled]="!onupload_button"
+                            class="col-sm-2" (click)="onSubmit()">Upload</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                    </div>
+                </form>
+            </mat-card>
+        </div>
+        <div class="col-6">
+
+
+            <mat-card>
+                <div class="row">
+                    <div class="col-3">
+                        <button type="submit" mat-raised-button color="primary" *ngIf="viewRecords.da_status_number <= 0"
+                        (click)="submitda_direct()" >Submit DA</button>
+                    </div>
+                    <div class="col-2">
+                        <button type="submit" mat-raised-button 
+                        (click)="daNavigation(viewRecords.da_id,'/material/da')" style="background-color: red;">Close</button>
+                    </div>
+                    <div class="col-1">
+                    </div>
+                    <div class="col-2">
+                        <button type="submit" mat-raised-button color="primary"  
+                        (click)="viewPage()" style="background-color: #ffcf05;"> View DA</button>
+                            
+                    </div>
+                    <div class="col-4">
+                        <button type="submit" mat-raised-button color="primary"
+                        *ngIf="viewRecords.status == 'modification' " 
+                        (click)="sendforapproval()">Send to Approvers</button>
+                   
+                            
+                    </div>
+                </div>
+
+               
+             
+
+
+            </mat-card>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="container-fluid">
+    <!-- <div class="mt-2">
+        <mat-card>
+            <div class="row"> -->
+                <!-- <div class="col-md-4 mt-2" style="margin-left: 8px;">
+                    <span style="cursor: pointer;">
+                        <mat-icon *ngIf="isListView" (click)="isListView=false">reorder</mat-icon>
+                    </span>
+                    <span style="cursor: pointer;">
+                        <mat-icon *ngIf="!isListView" (click)="isListView=true">grid_view</mat-icon>
+                    </span>
+                </div> -->
+                <!-- <div class="col-md-4 mt-2" style="text-align: center; margin-left: inherit;">
+
+                    <span *ngIf="isListView"><b>PANEL WISE MATERIAL (GRID VIEW)</b></span>
+                    <span style="float: right;">
+                        <mat-icon style="color: blue;" (click)="download_bom()">cloud_download</mat-icon>
+                    </span>
+
+
+
+                   
+                </div> -->
+                <!-- <div class="col-md-4 mt-2" style="text-align: end;">
+                    <span style="cursor: pointer;" *ngIf="expandbtn">
+                        <mat-icon *ngIf="!isListView" (click)="openAllPanels()">unfold_more</mat-icon>
+                    </span>
+                    <span style="cursor: pointer;" *ngIf="!expandbtn">
+                        <mat-icon *ngIf="!isListView" (click)="closeAllPanels()">unfold_less</mat-icon>
+                    </span>
+                </div> -->
+            <!-- </div>
+        </mat-card>
+    </div> -->
+
+    <div class="mt-2" *ngFor="let card of list;let i = index">
+        <div class="row">
+            <div class="col-md-12 mb-2">
+                <mat-card>
+                    <div class="row">
+                        <div *ngIf="card.delete_flag" class="col-md-5" style="margin-left: 8px;"
+                            (click)="delete_panelwise(card.section, 'section_wise')">
+                            <mat-icon style="cursor: pointer;">delete</mat-icon>
+                        </div>
+                        <div class="col-md-7" style="margin-left: inherit;">
+                            <b>SECTION - {{card.section}}&nbsp;&nbsp;<span>({{card.panel.length}})</span></b>
+                        </div>
+                    </div>
+                </mat-card>
+            </div>
+        </div>
+        <div class="row" *ngIf="isListView">
+            <div class="col-md-2 mb-2" style="text-align: center;" *ngFor="let list of card.panel">
+                <mat-card style="cursor: pointer;" (click)="getFilterList(list.name, card.section,list)">
+                    <span style="color: #3f51b5;"><b>{{list.data[0].panel_name}}-{{list.data[0].component_no}}</b></span><br> 
+                    <span style="color: #3f51b5;"><b>{{list.data[0].description}}</b></span><span>({{list.data.length}})</span></mat-card>
+            </div>
+        </div>
+       
+    </div>
+</div>
+
+<div class="d-flex justify-content-center">
+    <div class="spinner-border" role="status">
+        <span id="loadingform"></span>
+    </div>
+</div>

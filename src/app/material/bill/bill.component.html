@@ -1,0 +1,83 @@
+<!-- <p>bill works!</p> -->
+<!-- <h1>
+    Welcome
+</h1>
+<form novalidate [formGroup]="FormGroup">
+    <div class="row">
+        <div class="col-xs-12 form-group">
+            <div style="margin-top:0px;" formGroupName="itemRows">
+                <div class="row panel-heading text-bold" style="text-align:left;margin-top:0px;margin-left:10px;">
+                    Form Details
+                </div> 
+                <div formArrayName='users'>
+                 myForm.controls['addresses'] to myForm.get('addresses')  *ngIf="FormGroup.get('itemRows')!=null"
+                myForm.get('addresses').controls to myForm.get('addresses')['controls']
+                <ng-container *ngIf='FormGroup.controls.itemRows!=null'>
+                    <div *ngFor="let itemrow of FormGroup.controls.itemRows.controls; let i=index" [formGroupName]="i"></div>
+                <ng-container>
+                    <div *ngFor="let itemrow of FormGroup.get('itemRows')['controls']; let i=index" [formGroupName]="i">
+                        <div class="row">
+                            <div class="col-md-2 form-group">
+                                <input matInput placeholder="Name" formControlName="Name">
+                            </div>
+                            <div class="col-md-2 form-group">
+                                <input matInput placeholder="RollNo" formControlName="RollNo">
+                            </div>
+                            <div class="col-md-2 form-group">
+                                <input matInput placeholder="Class" formControlName="Class">
+                            </div>
+                            <div class="col-md-2 form-group">
+                                <input matInput placeholder="MobleNo" formControlName="MobileNo">
+                            </div>
+
+                            <div class="col-md-2 form-group">
+                                <button (click)="deleteRow(i)" class="btn-btn-danger">X</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+                <div class="form-group" style="text-align:right;">
+                    <button type="button" (click)="addNewRow()" [disabled]="FormGroup.invalid" class="btn btn-primary">AddNew</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form> -->
+
+
+<form [formGroup]="usersForm" (ngSubmit)="onSubmit()">
+    <div formArrayName='users'>
+        <ng-container *ngFor="let userFormGroup of userFormGroups.controls; let i=index">
+        <div [formGroupName]="i">
+        <label>
+          Service Name:
+          <input type="text" formControlName="gHService">
+        </label>
+        <label>
+          Quantity:
+          <input type="text" formControlName="quantity">
+        </label>
+        <label>
+          Start Time:
+          <input type="text" formControlName="startTime">
+        </label>
+        <label>
+          End Time:
+          <input type="text" formControlName="endTime">
+        </label>
+        <label>
+          Remarks:
+          <input type="text" formControlName="remarks">
+        </label>
+        <label>
+          <button (click)="removeFormControl(i)">remove formGroup</button>
+        </label>
+      </div>
+    </ng-container>
+    </div>
+    
+    <button type="submit">Submit</button>
+</form>
+<button (click)="addFormControl()">add new user formGroup</button>

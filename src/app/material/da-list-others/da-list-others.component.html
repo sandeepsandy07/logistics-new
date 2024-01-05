@@ -1,0 +1,148 @@
+
+ <mat-tab-group >
+
+    <mat-tab label="DA List others">
+      <div class="wrapper">
+          <div class="container-fluid">
+        
+              <div class="row">
+                  <div class="col-12">
+                
+                    <!-- <h4 class=""><b> Dispatch Advice</b></h4> -->
+                  
+                  </div>
+              </div>
+            <div class="row">
+              <div class="col-12">
+                  <div class="card-box table-responsive">
+                    
+                  
+                    <table class="table table-bordered table-striped table-hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+                          <thead>
+                              <tr>
+                                
+                                <th  width="10%">Date</th>
+                                  <th  width="10%">DA no</th>
+                                  <th  width="12%">Customer</th>
+                                  <th  width="9%">Job Code</th>
+                                  <th  width="10%">Job Name</th>
+                                  <th  width="8%">So no.</th>
+                                  <th  width="8%">Po No.</th>
+                                  <th  width="10%">Type </th>
+                                  <th  width="10%">Action </th>
+                                  
+                                
+                              </tr>
+                          </thead>
+                          <tbody>
+                            
+                                  <tr *ngFor="let subskill of tablelist">
+                                    <td>{{subskill.da_date | date}}</td>
+                                   
+                                    <td *ngIf="subskill.da_stage <= 2" ><a style="color: blue;cursor: pointer;" (click)="daNavigation(subskill.da_id,'material/DA-details')">{{subskill.da_id}}</a></td>
+                                    
+                                    <td *ngIf="subskill.da_stage == 3"><a style="color: blue;cursor: pointer;" (click)="daNavigation(subskill.da_id,'material/DA-details')">{{subskill.jobcode_da_no}}</a></td>
+                                  
+  
+                                    <td>{{subskill.customer_name}}</td>
+                                    <td>{{subskill.job_code}}</td>
+                                    <td>{{subskill.job_name}}</td>
+                                    <td>{{subskill.so_no}}</td>
+                                    <td>{{subskill.po_no}}</td>
+                                    <td>{{subskill.bill_type}}</td>
+                                    <td>
+                            
+  
+                             
+                                      <mat-icon *ngIf="subskill.status == 'Prepared' || subskill.status == 'modification' || subskill.status == null || subskill.under_r_flag == true " (click)="daNavigation_da(subskill.da_id,'/material/DAcreate','edit')" style="color: #5382a3;">edit</mat-icon>
+
+                                      </td>
+           
+                                   
+                                    
+                                
+                                  
+                                 
+                                  
+                              
+                                
+                                
+                                
+                                    </tr>
+        
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+          </div>
+        
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="Completed" >
+        <div class="wrapper">
+          <div class="container-fluid">
+        
+              <div class="row">
+                  <div class="col-12">
+                
+                    <!-- <h4 class=""><b> Dispatch Advice</b></h4> -->
+                  
+                  </div>
+              </div>
+            <div class="row">
+              <div class="col-12">
+                  <div class="card-box table-responsive">
+                    
+                  
+                    <table class="table table-bordered table-striped table-hover" datatable [dtOptions]="dtOptions2" [dtTrigger]="dtTrigger2">
+                          <thead>
+                              <tr>
+                                
+                                  <th  width="10%">Date</th>
+                                  <th  width="10%">DA no</th>
+                                  <th  width="12%">Customer</th>
+                                  <th  width="9%">Job Code</th>
+                                  <th  width="10%">Job Name</th>
+                                  <th  width="8%">So no.</th>
+                                  <th  width="8%">Po No.</th>
+                                  <th  width="10%">Type </th>
+                                  
+                                  
+                                
+                              </tr>
+                          </thead>
+                          <tbody>
+                            
+                                  <tr *ngFor="let subskill of tablelist_approved">
+                                  
+                                  <td>{{subskill.da_date | date}}</td>
+                                 
+                                  
+                                  <td ><a style="color: blue;cursor: pointer;" (click)="daNavigation(subskill.da_id,'material/DA-details')">{{subskill.jobcode_da_no}}</a></td>
+
+                                  <td>{{subskill.Customer}}</td>
+                                  <td>{{subskill.job_code}}</td>
+                                  <td>{{subskill.job_name}}</td>
+                                  <td>{{subskill.so_no}}</td>
+                                  <td>{{subskill.po_no}}</td>
+                                  <td>{{subskill.bill_type}}</td>
+                                 
+                                  
+                              
+                                
+                                
+                                
+                                    </tr>
+        
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+          </div>
+        
+          </div>
+        </div>
+      
+    </mat-tab>
+  

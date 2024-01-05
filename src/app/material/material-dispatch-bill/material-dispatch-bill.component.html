@@ -1,0 +1,1252 @@
+<div style="text-align: center;margin-top:2rem;">
+    <span>
+        <h2 style="font-size: 25px;">Material Dispatch Bill</h2>
+        <!-- you have see that enter next line item button action function -->
+    </span>
+</div>
+
+<div class="container">
+
+<div class="container" *ngIf="MainForm">
+        <div class="row">
+            <div class="col-md-4">
+                <!-- <tr>
+                    <td class="tdLeft">Job Name :</td>
+                    <td class="tdRight" colspan="3"><Label ID="lblJobName" runat="server">Job Name</Label></td>
+                </tr> -->
+                    <mat-form-field class="example-full-width">
+                        <mat-label>Job Name</mat-label>
+                        <input matInput placeholder="Job Name" [(ngModel)]="JobName">
+                        <mat-hint style="color:black"></mat-hint>
+                      </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                    <mat-form-field class="example-full-width">
+                        <mat-label>Job Code</mat-label>
+                        <input style="width: 100px;" matInput placeholder="Job Code" [(ngModel)]="JobCode">
+                        <mat-hint style="color:black"></mat-hint>
+                      </mat-form-field>
+                </div>
+            <div class="col-md-4">
+                    <mat-form-field>
+                        <mat-label>S.O No</mat-label>
+                        <input matInput placeholder="S.O No" [(ngModel)]="SONo">
+                        <mat-hint style="color:black"></mat-hint>
+                      </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <mat-form-field>
+                    <mat-label>DA No</mat-label>
+                    <input matInput placeholder="DA No" [(ngModel)]="DANo">
+                    <mat-hint style="color:black"></mat-hint>
+                </mat-form-field>
+        </div>
+            <div class="col-md-3">
+                    <mat-form-field>
+                        <mat-label>PM</mat-label>
+                        <input matInput placeholder="PM" [(ngModel)]="PM">
+                        <mat-hint style="color:black"></mat-hint>
+                    </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                    <mat-form-field >
+                        <mat-label>P.O No</mat-label>
+                        <input matInput placeholder="P.O No" [(ngModel)]="PONo">
+                        <mat-hint style="color:black"></mat-hint>
+                    </mat-form-field>
+            </div>
+            
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <mat-form-field >
+                    <mat-label>P.O.Date</mat-label>
+                    <input matInput placeholder="P.O.Date" [(ngModel)]="PODate">
+                    <mat-hint style="color:black"></mat-hint>
+                </mat-form-field>
+        </div>
+        <div class="col-md-3">
+                <mat-form-field>
+                    <mat-label>DADate</mat-label>
+                    <input matInput placeholder="DADate" [(ngModel)]="DADate">
+                    <mat-hint style="color:black"></mat-hint>
+                </mat-form-field>
+        </div>
+            <div class="col-md-3">
+                    <mat-form-field>
+                      <mat-label>GM</mat-label>
+                      <input matInput placeholder="GM" [(ngModel)]="GM">
+                      <mat-hint style="color:black"></mat-hint>
+                    </mat-form-field>
+            </div><br><hr>
+        </div>
+</div>
+
+<div class="container" *ngIf="MainForm">
+        <div class="row">
+            <div class="col-md-9">
+              <mat-radio-group aria-label="Select an option">
+                <label><b>Options :</b></label>&nbsp;&nbsp;
+                <mat-radio-button name="billType" (change)="SelectBillType('Billable')" value="1">Billable</mat-radio-button>&nbsp;&nbsp;
+                <mat-radio-button name="billType" (change)="SelectBillType('NonBillable')" value="2">Non-Billable</mat-radio-button>
+                <!-- <button mat-raised-button color="primary" class="add" (click)="getNewRow()"><b>AddNewLineItem</b></button> -->
+              </mat-radio-group>
+            </div><br><br>
+            
+        <hr>
+       </div>
+</div>
+
+<div class="container" *ngIf="HeaderForBillableForm">
+        <div>
+            <table class="tab-flex" mat-table [dataSource]="dataSource">
+
+                <ng-container matColumnDef="SAP.DA.No">
+                    <th mat-header-cell *matHeaderCellDef width="5%">SAP.DA.No</th>
+                    <!-- <td mat-cell *matCellDef="let element">
+                        <input matInput placeholder="SAP DA No" formControlName="SAPDANo">
+                    </td> -->
+                </ng-container>
+
+                <ng-container matColumnDef="CustomerPoRefNo">
+                    <th mat-header-cell *matHeaderCellDef width="5%">CustomerPoRefNo</th>
+                    <!-- <td mat-cell *matCellDef="let element">
+                        <input matInput placeholder="CustomerPoRefNo" formControlName="CustomerPoRefNo" >
+                    </td> -->
+                </ng-container>
+
+                <ng-container matColumnDef="ItemDescription">
+                    <th mat-header-cell *matHeaderCellDef width="5%">ItemDescription</th>
+                    <!-- <td mat-cell *matCellDef="let element">
+                        <input matInput placeholder="ItemDescription" formControlName="ItemDescription">
+                    </td> -->
+                </ng-container>
+
+                <ng-container matColumnDef="ModelNo">
+                    <th mat-header-cell *matHeaderCellDef width="5%">ModelNo</th>
+                    <!-- <td mat-cell *matCellDef="let element">
+                        <input matInput placeholder="ModelNo" formControlName="ModelNo">
+                    </td> -->
+                </ng-container>
+
+                <ng-container matColumnDef="TotalQuantity">
+                    <th mat-header-cell *matHeaderCellDef width="5%">TotalQuantity</th>
+                    <!-- <td mat-cell *matCellDef="let element">
+                        <input matInput placeholder="TotalQuantity" formControlName="TotalQuantity">
+                    </td> -->
+                </ng-container>
+
+                <ng-container matColumnDef="UOM">
+                    <th mat-header-cell *matHeaderCellDef width="5%">UOM</th>
+                    <!-- <td mat-cell *matCellDef="let element">
+                        <input matInput placeholder="UOM" formControlName="UOM">
+                    </td> -->
+                </ng-container>
+
+                <ng-container matColumnDef="Total">
+                    <th mat-header-cell *matHeaderCellDef width="5%">Total</th>
+                    <!-- <td mat-cell *matCellDef="let element">
+                        <input matInput placeholder="Total" formControlName="Total">
+                    </td> -->
+                </ng-container>
+
+                <ng-container matColumnDef="BalanceQuantity">
+                    <th mat-header-cell *matHeaderCellDef width="5%">BalanceQuantity</th>
+                    <!-- <td mat-cell *matCellDef="let element">
+                        <input matInput placeholder="BalanceQuantity" formControlName="BalanceQuantity">
+                    </td> -->
+                </ng-container>
+
+                <ng-container matColumnDef="UnitPrice">
+                    <th mat-header-cell *matHeaderCellDef width="5%">UnitPrice</th>
+                    <!-- <td mat-cell *matCellDef="let element">
+                        <input matInput placeholder="UnitPrice" formControlName="UnitPrice">
+                    </td> -->
+                </ng-container>
+
+                <ng-container matColumnDef="SGST">
+                    <th mat-header-cell *matHeaderCellDef width="5%">SGST</th>
+                    <!-- <td mat-cell *matCellDef="let element">
+                        <input matInput placeholder="SGST" formControlName="SGST">
+                    </td> -->
+                </ng-container>
+
+                <ng-container matColumnDef="CGST">
+                    <th mat-header-cell *matHeaderCellDef width="5%">CGST</th>
+                    <!-- <td mat-cell *matCellDef="let element">
+                        <input matInput placeholder="CGST" formControlName="CGST">
+                    </td> -->
+                </ng-container>
+
+                <ng-container matColumnDef="IGST">
+                    <th mat-header-cell *matHeaderCellDef width="5%">IGST</th>
+                    <!-- <td mat-cell *matCellDef="let element">
+                        <input matInput placeholder="IGST" formControlName="IGST">
+                    </td> -->
+                </ng-container>
+
+                <ng-container matColumnDef="Remarks">
+                    <th mat-header-cell *matHeaderCellDef width="5%">Remarks</th>
+                    <!-- <td mat-cell *matCellDef="let element">
+                        <input matInput placeholder="BillableRemarks" formControlName="BillableRemarks">
+                    </td> -->
+                </ng-container>
+                <ng-container matColumnDef="delete">
+                    <th mat-header-cell *matHeaderCellDef width="5%">Delete</th>
+                    <!-- <td mat-cell *matCellDef="let element">
+                        <input matInput placeholder="BillableRemarks" formControlName="BillableRemarks">
+                    </td> -->
+                </ng-container>
+                <ng-container matColumnDef="view">
+                    <th mat-header-cell *matHeaderCellDef width="5%">View</th>
+                    <!-- <td mat-cell *matCellDef="let element">
+                        <input matInput placeholder="BillableRemarks" formControlName="BillableRemarks">
+                    </td> -->
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </div>
+</div>
+    
+<div class="container" *ngIf="BillableForm">
+    <form [formGroup]="usersForm">
+        <div formArrayName='users'>
+            <ng-container *ngFor="let userFormGroup of userFormGroups.controls; let i=index">
+            <div [formGroupName]="i">
+                <div>
+                    <table class="table table-bordered">
+                        <tr>
+                        <td>
+                            <!-- <mat-form-field style="width: 30%;" appearance="fill"> -->
+                            <input matInput placeholder="SAPDANo" formControlName="da_no">
+                        <!-- </mat-form-field> -->
+                        </td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <td>
+                            <!-- <mat-form-field style="width: 100%;" appearance="fill"> -->
+                            <input matInput placeholder="CPoRefNo" formControlName="customerPoRefNo">
+                        <!-- </mat-form-field> -->
+                        </td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <td>
+                            <input matInput placeholder="ItemDes" formControlName="item_desc">
+                        </td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <td>
+                            <input matInput placeholder="ModelNo" formControlName="model">
+                        </td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <td>
+                            <input matInput placeholder="TotalQ" formControlName="total_qty">
+                        </td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <td style="margin-right:3rem">
+                            <input matInput placeholder="UOM" formControlName="uom">
+                        </td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <td>
+                            <input matInput placeholder="Total" formControlName="total">
+                        </td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <td>
+                            <input matInput placeholder="BalanceQ" formControlName="balance_qty">
+                        </td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <td>
+                            <input matInput placeholder="UnitPrice" formControlName="unit_price">
+                        </td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <td>
+                            <input matInput placeholder="SGST" formControlName="sgst_amt">
+                        </td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <td>                     
+                            <input matInput placeholder="CGST" formControlName="cgst_amt">
+                        </td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <td>  
+                            <input matInput placeholder="IGST" formControlName="igst_amt">
+                        </td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <td>
+                            <input matInput placeholder="Remarks" formControlName="billableRemark">
+                        </td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <td>
+                            <!-- <button class="btn btn-danger" (click)="removeFormControl(i)">Delete</button> -->
+                            <button mat-icon-button color="accent" (click)="removeFormControl(i)">
+                                <mat-icon class="mat-18">delete</mat-icon>
+                            </button>
+                        </td>
+                        <td>
+                            <button mat-icon-button color="accent" (click)="viewData(i)">
+                                <mat-icon class="mat-18">visibility</mat-icon>
+                            </button>
+                        </td>
+                    </tr>
+                    </table>
+                </div>
+            </div>
+            </ng-container>
+        </div>
+        <button mat-raised-button class="add" color="primary" (click)="addFormControl()">Add Next Line Item</button>&nbsp;&nbsp;&nbsp;
+        <button mat-raised-button class="add" color="primary" (click)="onSubmit()" type="submit">Submit</button>&nbsp;&nbsp;&nbsp;
+        <!--<button mat-raised-button class="add" color="primary" (click)="removeFormControl(i)">Remove Item</button>-->
+    </form>
+ </div>
+</div>
+
+<div class="container" *ngIf="HeaderForNonBillableForm">
+    <div class="col-md-12">
+        <table class="tab-flex" mat-table [dataSource]="dataSource2">
+
+            <ng-container matColumnDef="SAP.DA.No">
+                <th mat-header-cell *matHeaderCellDef width="3%">SAP.DA.No</th>
+            </ng-container>
+
+            <ng-container matColumnDef="CustomerPoRefNo">
+                <th mat-header-cell *matHeaderCellDef width="4%">CustomerPoRefNo</th>
+            </ng-container>
+
+            <ng-container matColumnDef="ItemDescription">
+                <th mat-header-cell *matHeaderCellDef width="3%">ItemDescription</th>
+            </ng-container>
+
+            <ng-container matColumnDef="ModelNo">
+                <th mat-header-cell *matHeaderCellDef width="3%">ModelNo</th>
+            </ng-container>
+
+            <ng-container matColumnDef="TotalQuantity">
+                <th mat-header-cell *matHeaderCellDef width="3%">TotalQuantity</th>
+            </ng-container>
+
+            <ng-container matColumnDef="UOM">
+                <th mat-header-cell *matHeaderCellDef width="3%">UOM</th>
+            </ng-container>
+
+            <ng-container matColumnDef="UnitPrice">
+                <th mat-header-cell *matHeaderCellDef width="3%">UnitPrice</th>
+            </ng-container>
+
+            <ng-container matColumnDef="UnderWorNW">
+                <th mat-header-cell *matHeaderCellDef width="3%">UnderWorNW</th>
+            </ng-container>
+
+            <ng-container matColumnDef="SGST">
+                <th mat-header-cell *matHeaderCellDef width="3%">SGST</th>
+            </ng-container>
+
+            <ng-container matColumnDef="CGST">
+                <th mat-header-cell *matHeaderCellDef width="3%">CGST</th>
+            </ng-container>
+
+            <ng-container matColumnDef="IGST">
+                <th mat-header-cell *matHeaderCellDef width="3%">IGST</th>
+            </ng-container>
+
+            <ng-container matColumnDef="ReasonForSuppliesNW">
+                <th mat-header-cell *matHeaderCellDef width="3%">ReasonForSuppliesNW</th>
+            </ng-container>
+
+            <!-- <ng-container matColumnDef="NonBillableRemarks">
+                <th mat-header-cell *matHeaderCellDef width="3%">NonBillableRemarks</th>
+            </ng-container> -->
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+        </table>
+    </div>
+</div>
+
+ <div class="container" *ngIf="NonBillableForm">
+    <form [formGroup]="NonBillableFormArray">
+        <div formArrayName='nonBill'>
+            <ng-container *ngFor="let nonBillFormGroup of nonBillFormGroups.controls; let i=index">
+            <div [formGroupName]="i">
+
+                <div class="col-md-12">
+                    <table class="table table-bordered">
+                        <tr>
+                        <td>
+                            <input matInput placeholder="SAP DA No" formControlName="da_no">
+                        </td>
+                        
+                        <td>
+                            <input matInput placeholder="CPoRefNo" formControlName="customerPoRefNo" >
+                        </td>
+                       
+                        <td>
+                            <input matInput placeholder="ItemDes" formControlName="item_desc">
+                        </td>
+                        
+                        <td>
+                            <input matInput placeholder="ModelNo" formControlName="model">
+                        </td>
+        
+                        <td>
+                            <input matInput placeholder="TotalQ" formControlName="total_qty">
+                        </td>
+
+                        <td>
+                            <input matInput placeholder="UOM" formControlName="uom">
+                        </td>
+
+                        <td>
+                            <input matInput placeholder="UnitPrice" formControlName="unit_price">
+                        </td>
+                        
+                        <td>
+                            <input matInput placeholder="Under W/NW" formControlName="underWorNW">
+                        </td>
+                       
+                        <td>
+                            <input matInput placeholder="SGST" formControlName="sgst_amt">
+                        </td>
+
+                        <td>
+                            <input matInput placeholder="CGST" formControlName="cgst_amt">
+                        </td>
+                        <td>
+                            <input matInput placeholder="IGST" formControlName="igst_amt">
+                        </td>
+
+                        <td>
+                            <input matInput placeholder="RFSNW" formControlName="reasonForSuppliesNW">
+                        </td>
+
+                        <!-- <td>
+                            <input matInput placeholder="Remarks" formControlName="nonbillableRemark">
+                        </td> -->
+                        <td>
+                            <!-- <button class="btn btn-danger" (click)="removeitem(i)">Delete</button> -->
+                            <button mat-icon-button color="accent" (click)="removeitem(i)">
+                                <mat-icon class="mat-18">delete</mat-icon>
+                            </button>
+                        </td>
+                    </tr>
+                    </table>
+                </div>
+            </div>
+            </ng-container>
+        </div>
+        <div class="row">
+        <div class="col-md-4">
+        <mat-form-field appearance="fill" class="example-full-width">
+            <mat-label>Remarks</mat-label>
+            <textarea matInput placeholder="Remarks" [(ngModel)]="NonBillableRemarks"></textarea>
+            <mat-hint style="color:black"></mat-hint>
+        </mat-form-field>
+        </div>
+        <div class="col-md-6">
+        <button mat-raised-button class="add" color="primary" (click)="additem()">Add Next Line Item</button>&nbsp;&nbsp;&nbsp;
+        <button mat-raised-button class="add" color="primary" (click)="onNonBillSubmit()" type="submit">Submit</button>&nbsp;&nbsp;&nbsp;
+        <!-- <button mat-raised-button class="add" color="primary" (click)="removeitem(i)">Remove Item</button> -->
+    </div>
+</div>
+    </form>
+ </div>
+
+
+ <div  class="div" *ngIf="ViewForm">
+    <mat-card class="example-card">
+      <mat-card-title>Details Entered (if Entered data is not correct please go back and edit)</mat-card-title>
+      <mat-card-content>
+          <br>
+        <p>SAP DA No: {{SAPDANo}}</p>
+        <p>Customer Ref No: {{CustomerPoRefNo}}</p>
+        <p>Item Description: {{ItemDescription}}</p>
+        <p>Model Number: {{ModelNo}}</p>
+        <p>Total Quantity: {{TotalQuantity}}</p>
+        <p>TotalAmount : {{TotalAmount}}</p>
+        <p>UOM : {{UOM}}</p>
+        <p>Total : {{Total}}</p>
+        <p>Balance Quantity : {{BalanceQuantity}} </p>
+        <p>Unit Price : {{UnitPrice}}</p>
+        <p>SGST : {{SGST}}</p>
+        <p>CGST : {{CGST}}</p>
+        <p>IGST : {{IGST}}</p>
+        <p>TotalPrice : {{TotalPrice}}</p>
+        <p>Billable Remarks : {{BillableRemarks}}</p>
+        <!-- <td>
+            <input placeholder="SAPDANO" value={{DANO}} formControlName="DANO" >
+        </td> -->
+      </mat-card-content>
+      <mat-card-actions>
+          <button mat-raised-button (click)="setViewForm()" color="primary">Back</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+
+ 
+
+
+ 
+
+<!-- <div class="container" *ngIf="NonBillableForm">
+    <form [formGroup]="usersForm">
+        <div formArrayName='users'>
+            <ng-container *ngFor="let userFormGroup of userFormGroups.controls; let i=index">
+            <div [formGroupName]="i">
+
+                <div class="col-md-12">
+                    <table>
+                        <tr>
+                        <td>
+                            <input matInput placeholder="SAP DA No" formControlName="SAPDANo">
+                        </td>
+                        
+                        <td>
+                            <input matInput placeholder="CPoRefNo" formControlName="CustomerPoRefNo" >
+                        </td>
+                       
+                        <td>
+                            <input matInput placeholder="ItemDes" formControlName="ItemDescription">
+                        </td>
+                        
+                        <td>
+                            <input matInput placeholder="ModelNo" formControlName="ModelNo">
+                        </td>
+        
+                        <td>
+                            <input matInput placeholder="TotalQ" formControlName="TotalQuantity">
+                        </td>
+
+                        <td>
+                            <input matInput placeholder="UOM" formControlName="UOM">
+                        </td>
+
+                        <td>
+                            <input matInput placeholder="UnitPrice" formControlName="UnitPrice">
+                        </td>
+                        
+                        <td>
+                            <input matInput placeholder="Under W/NW" formControlName="UnderWorNW">
+                        </td>
+                       
+                        <td>
+                            <input matInput placeholder="SGST" formControlName="SGST">
+                        </td>
+
+                        <td>
+                            <input matInput placeholder="CGST" formControlName="CGST">
+                        </td>
+                        <td>
+                            <input matInput placeholder="IGST" formControlName="IGST">
+                        </td>
+
+                        <td>
+                            <input matInput placeholder="RFSNW" formControlName="ReasonForSuppliesNW">
+                        </td>
+
+                        <td>
+                            <input matInput placeholder="Remarks" formControlName="NonBillableRemarks">
+                        </td>
+                        <td>
+                            <button class="btn btn-danger" (click)="removeFormControl(i)">Delete</button>
+                        </td>
+                    </tr><br><br>
+                    </table>
+                </div>
+            </div>
+            </ng-container>
+        </div>
+        <button mat-raised-button class="add" color="primary" (click)="addFormControl()">Add Next Line Item</button>&nbsp;&nbsp;&nbsp;
+        <button mat-raised-button class="add" color="primary" (click)="onSubmit()" type="submit">Submit</button>&nbsp;&nbsp;&nbsp;
+        <button mat-raised-button class="add" color="primary" (click)="removeFormControl(i)">Remove Item</button>
+    </form>
+ </div> -->
+
+
+<!-- <div class="container" *ngIf="BillableForm">
+    <div style="text-align: center;margin-top:2rem;">
+        <span>
+            <h2 style="font-size: 25px;">Billable Form</h2>
+        </span>
+    </div>
+    <form [formGroup]="usersForm" (ngSubmit)="onSubmit()">
+        <div formArrayName='users'>
+            <ng-container *ngFor="let userFormGroup of userFormGroups.controls; let i=index">
+            <div [formGroupName]="i">
+
+                <div class="col-md-12">
+                    <table class="tab-flex" mat-table [dataSource]="dataSource">
+
+                        <ng-container matColumnDef="Sl.no.">
+                            <th mat-header-cell *matHeaderCellDef width="1%">Sl.no.</th>
+                            <td mat-cell *matCellDef="let element;let i=index;">{{i+1}}</td>
+                          </ng-container>
+
+                        <ng-container matColumnDef="SAP.DA.No">
+                            <th mat-header-cell *matHeaderCellDef width="3%">SAP.DA.No</th>
+                            <td mat-cell *matCellDef="let element">
+                                <input matInput placeholder="SAP DA No" formControlName="SAPDANo">
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="CustomerPoRefNo">
+                            <th mat-header-cell *matHeaderCellDef width="3%">CustomerPoRefNo</th>
+                            <td mat-cell *matCellDef="let element">
+                                <input matInput placeholder="CustomerPoRefNo" formControlName="CustomerPoRefNo" >
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="ItemDescription">
+                            <th mat-header-cell *matHeaderCellDef width="3%">ItemDescription</th>
+                            <td mat-cell *matCellDef="let element">
+                                <input matInput placeholder="ItemDescription" formControlName="ItemDescription">
+                            </td>
+                        </ng-container>
+        
+                        <ng-container matColumnDef="ModelNo">
+                            <th mat-header-cell *matHeaderCellDef width="3%">ModelNo</th>
+                            <td mat-cell *matCellDef="let element">
+                                <input matInput placeholder="ModelNo" formControlName="ModelNo">
+                            </td>
+                        </ng-container>
+        
+                        <ng-container matColumnDef="TotalQuantity">
+                            <th mat-header-cell *matHeaderCellDef width="3%">TotalQuantity</th>
+                            <td mat-cell *matCellDef="let element">
+                                <input matInput placeholder="TotalQuantity" formControlName="TotalQuantity">
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="UOM">
+                            <th mat-header-cell *matHeaderCellDef width="3%">UOM</th>
+                            <td mat-cell *matCellDef="let element">
+                                <input matInput placeholder="UOM" formControlName="UOM">
+                            </td>
+                        </ng-container>
+        
+                        <ng-container matColumnDef="Total">
+                            <th mat-header-cell *matHeaderCellDef width="3%">Total</th>
+                            <td mat-cell *matCellDef="let element">
+                                <input matInput placeholder="Total" formControlName="Total">
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="BalanceQuantity">
+                            <th mat-header-cell *matHeaderCellDef width="3%">BalanceQuantity</th>
+                            <td mat-cell *matCellDef="let element">
+                                <input matInput placeholder="BalanceQuantity" formControlName="BalanceQuantity">
+                            </td>
+                        </ng-container>
+        
+                        <ng-container matColumnDef="UnitPrice">
+                            <th mat-header-cell *matHeaderCellDef width="3%">UnitPrice</th>
+                            <td mat-cell *matCellDef="let element">
+                                <input matInput placeholder="UnitPrice" formControlName="UnitPrice">
+                            </td>
+                        </ng-container>
+        
+                        <ng-container matColumnDef="SGST">
+                            <th mat-header-cell *matHeaderCellDef width="3%">SGST</th>
+                            <td mat-cell *matCellDef="let element">
+                                <input matInput placeholder="SGST" formControlName="SGST">
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="CGST">
+                            <th mat-header-cell *matHeaderCellDef width="3%">CGST</th>
+                            <td mat-cell *matCellDef="let element">
+                                <input matInput placeholder="CGST" formControlName="CGST">
+                            </td>
+                        </ng-container>
+        
+                        <ng-container matColumnDef="IGST">
+                            <th mat-header-cell *matHeaderCellDef width="3%">IGST</th>
+                            <td mat-cell *matCellDef="let element">
+                                <input matInput placeholder="IGST" formControlName="IGST">
+                            </td>
+                        </ng-container>
+        
+                        <ng-container matColumnDef="BillableRemarks">
+                            <th mat-header-cell *matHeaderCellDef width="3%">BillableRemarks</th>
+                            <td mat-cell *matCellDef="let element">
+                                <input matInput placeholder="BillableRemarks" formControlName="BillableRemarks">
+                            </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+                </div>
+            </div>
+            </ng-container>
+        </div>
+        <button mat-raised-button color="primary" class="add" type="submit" (click)="getNewRow()" >Add</button>&nbsp;&nbsp;&nbsp;
+        <button mat-raised-button color="primary" type="submit">Submit</button>&nbsp;&nbsp;&nbsp;
+        <button mat-raised-button color="primary" (click)="addFormControl()">add new user formGroup</button>&nbsp;&nbsp;&nbsp;
+        <button mat-raised-button color="primary" (click)="removeFormControl(i)">remove formGroup</button>
+    </form>
+ </div>
+</div> -->
+
+
+<!--<div class="container" *ngIf="NonBillableForm">
+    <div style="text-align: center;margin-top:2rem;">
+        <span>
+            <h2 style="font-size: 25px;">Non-Billable Form</h2>
+        </span>
+    </div>
+    <form [formGroup]="usersForm" (ngSubmit)="onSubmit()">
+        <div formArrayName='users'>
+            <ng-container *ngFor="let userFormGroup of userFormGroups.controls; let i=index">
+            <div [formGroupName]="i">
+
+                <div class="col-md-12">
+                    <table class="tab-flex" mat-table [dataSource]="dataSource2">
+                        
+                        <ng-container matColumnDef="Sl.no.">
+                          <th mat-header-cell *matHeaderCellDef width="1%">Sl.no.</th>
+                          <td mat-cell *matCellDef="let element;let i=index;">{{i+1}}</td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="SAP.DA.No">
+                            <th mat-header-cell *matHeaderCellDef width="3%">SAP.DA.No</th>
+                            <td mat-cell *matCellDef="let element">
+                                <input matInput placeholder="SAP DA No" formControlName="SAPDANo">
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="CustomerPoRefNo">
+                            <th mat-header-cell *matHeaderCellDef width="3%">CustomerPoRefNo</th>
+                            <td mat-cell *matCellDef="let element">
+                                <input matInput placeholder="CustomerPoRefNo" formControlName="CustomerPoRefNo" >
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="ItemDescription">
+                            <th mat-header-cell *matHeaderCellDef width="3%">ItemDescription</th>
+                            <td mat-cell *matCellDef="let element">
+                                <input matInput placeholder="ItemDescription" formControlName="ItemDescription">
+                            </td>
+                        </ng-container>
+        
+                        <ng-container matColumnDef="ModelNo">
+                            <th mat-header-cell *matHeaderCellDef width="3%">ModelNo</th>
+                            <td mat-cell *matCellDef="let element">
+                                <input matInput placeholder="ModelNo" formControlName="ModelNo">
+                            </td>
+                        </ng-container>
+        
+                        <ng-container matColumnDef="TotalQuantity">
+                            <th mat-header-cell *matHeaderCellDef width="3%">Quantity</th>
+                            <td mat-cell *matCellDef="let element">
+                                <input matInput placeholder="TotalQuantity" formControlName="TotalQuantity">
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="UOM">
+                            <th mat-header-cell *matHeaderCellDef width="3%">UOM</th>
+                            <td mat-cell *matCellDef="let element">
+                                <input matInput placeholder="UOM" formControlName="UOM">
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="UnitPrice">
+                            <th mat-header-cell *matHeaderCellDef width="3%">UnitPrice</th>
+                            <td mat-cell *matCellDef="let element">
+                                <input matInput placeholder="UnitPrice" formControlName="UnitPrice">
+                            </td>
+                        </ng-container>
+        
+                        <ng-container matColumnDef="UnderWorNW">
+                            <th mat-header-cell *matHeaderCellDef width="3%">Under W/NW</th>
+                            <td mat-cell *matCellDef="let element">
+                                <input matInput placeholder="Under W/NW" formControlName="UnderWorNW">
+                            </td>
+                        </ng-container>
+        
+                        <ng-container matColumnDef="SGST">
+                            <th mat-header-cell *matHeaderCellDef width="3%">SGST</th>
+                            <td mat-cell *matCellDef="let element">
+                                <input matInput placeholder="SGST" formControlName="SGST">
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="CGST">
+                            <th mat-header-cell *matHeaderCellDef width="3%">CGST</th>
+                            <td mat-cell *matCellDef="let element">
+                                <input matInput placeholder="CGST" formControlName="CGST">
+                            </td>
+                        </ng-container>
+        
+                        <ng-container matColumnDef="IGST">
+                            <th mat-header-cell *matHeaderCellDef width="3%">IGST</th>
+                            <td mat-cell *matCellDef="let element">
+                                <input matInput placeholder="IGST" formControlName="IGST">
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="ReasonForSuppliesNW">
+                            <th mat-header-cell *matHeaderCellDef width="3%">ReasonForSuppliesNW</th>
+                            <td mat-cell *matCellDef="let element">
+                                <input matInput placeholder="ReasonForSuppliesNW" formControlName="ReasonForSuppliesNW">
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="NonBillableRemarks">
+                            <th mat-header-cell *matHeaderCellDef width="3%">Remarks</th>
+                            <td mat-cell *matCellDef="let element">
+                                <input matInput placeholder="Remarks" formControlName="NonBillableRemarks">
+                            </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+                    </table>
+                </div>
+            </div>
+            </ng-container>
+        </div>
+        <button mat-raised-button color="primary" class="add" type="submit" (click)="getNewRow()" >Add</button>&nbsp;&nbsp;&nbsp;
+        <button mat-raised-button color="primary" type="submit">Submit</button>&nbsp;&nbsp;&nbsp;
+        <button mat-raised-button color="primary" (click)="addFormControl()">add new user formGroup</button>&nbsp;&nbsp;&nbsp;
+        <button mat-raised-button color="primary" (click)="removeFormControl(i)">remove formGroup</button>
+    </form>
+ </div>-->
+
+ <!-- <form [formGroup]="usersForm" (ngSubmit)="onSubmit()"> -->
+ 
+
+ <!--<div class="container" *ngIf="BillableForm">
+        <div class="col-md-12">
+                <table class="tab-flex" mat-table [dataSource]="dataSource">
+                  
+                    <ng-container matColumnDef="Sl.no.">
+                      <th mat-header-cell *matHeaderCellDef width="1%">Sl.no.</th>
+                      <td mat-cell *matCellDef="let element;let i=index;">{{i+1}}</td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="SAP.DA.No">
+                        <th mat-header-cell *matHeaderCellDef width="3%">SAP.DA.No</th>
+                        <td mat-cell *matCellDef="let element">
+                            <input matInput placeholder="SAP DA No" [(ngModel)]="SAPDANo">
+                        </td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="CustomerPoRefNo">
+                        <th mat-header-cell *matHeaderCellDef width="3%">CustomerPoRefNo</th>
+                        <td mat-cell *matCellDef="let element">
+                            <input matInput placeholder="CustomerPoRefNo" [(ngModel)]="CustomerPoRefNo">
+                        </td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="ItemDescription">
+                        <th mat-header-cell *matHeaderCellDef width="3%">ItemDescription</th>
+                        <td mat-cell *matCellDef="let element">
+                            <input matInput placeholder="ItemDescription" [(ngModel)]="ItemDescription">
+                        </td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="ModelNo">
+                        <th mat-header-cell *matHeaderCellDef width="3%">ModelNo</th>
+                        <td mat-cell *matCellDef="let element">
+                            <input matInput placeholder="ModelNo" [(ngModel)]="ModelNo">
+                        </td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="TotalQuantity">
+                        <th mat-header-cell *matHeaderCellDef width="3%">TotalQuantity</th>
+                        <td mat-cell *matCellDef="let element">
+                            <input matInput placeholder="TotalQuantity" [(ngModel)]="TotalQuantity">
+                        </td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="UOM">
+                        <th mat-header-cell *matHeaderCellDef width="3%">UOM</th>
+                        <td mat-cell *matCellDef="let element">
+                            <input matInput placeholder="UOM" [(ngModel)]="UOM">
+                        </td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="Total">
+                        <th mat-header-cell *matHeaderCellDef width="3%">Total</th>
+                        <td mat-cell *matCellDef="let element">
+                            <input matInput placeholder="Total" [(ngModel)]="Total">
+                        </td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="BalanceQuantity">
+                        <th mat-header-cell *matHeaderCellDef width="3%">BalanceQuantity</th>
+                        <td mat-cell *matCellDef="let element">
+                            <input matInput placeholder="BalanceQuantity" [(ngModel)]="BalanceQuantity">
+                        </td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="UnitPrice">
+                        <th mat-header-cell *matHeaderCellDef width="3%">UnitPrice</th>
+                        <td mat-cell *matCellDef="let element">
+                            <input matInput placeholder="UnitPrice" [(ngModel)]="UnitPrice">
+                        </td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="SGST">
+                        <th mat-header-cell *matHeaderCellDef width="3%">SGST</th>
+                        <td mat-cell *matCellDef="let element">
+                            <input matInput placeholder="SGST" [(ngModel)]="SGST">
+                        </td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="CGST">
+                        <th mat-header-cell *matHeaderCellDef width="3%">CGST</th>
+                        <td mat-cell *matCellDef="let element">
+                            <input matInput placeholder="CGST" [(ngModel)]="CGST">
+                        </td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="IGST">
+                        <th mat-header-cell *matHeaderCellDef width="3%">IGST</th>
+                        <td mat-cell *matCellDef="let element">
+                            <input matInput placeholder="IGST" [(ngModel)]="IGST">
+                        </td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="BillableRemarks">
+                        <th mat-header-cell *matHeaderCellDef width="3%">BillableRemarks</th>
+                        <td mat-cell *matCellDef="let element">
+                            <input matInput placeholder="BillableRemarks" [(ngModel)]="BillableRemarks">
+                        </td>
+                    </ng-container>
+                      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                  </table>
+        </div>
+    </div>
+
+    <div class="container" *ngIf="MainForm">
+        <div class="col-md-9">
+            <button mat-raised-button color="primary" class="add" type="submit"  (click)="createNewList()" >Submit</button>&nbsp;&nbsp;&nbsp;
+            <button mat-raised-button color="primary" class="add" (click)="getNewRow()">AddNextLineItem</button>
+        </div>
+    </div>
+</div>
+
+<div class="container" *ngIf="MainForm">
+    <div class="col-md-9">
+        <button mat-raised-button color="primary" class="add" type="submit" (click)="addFormControl()" >AddNextLineItem</button>&nbsp;&nbsp;&nbsp;
+        <button mat-raised-button color="primary" class="add" type="submit" (click)="getNewRow()" >AddNextLineItem</button>&nbsp;&nbsp;&nbsp;
+        <button mat-raised-button color="primary" class="add" type="submit">Submit</button>&nbsp;&nbsp;&nbsp;
+        <button mat-raised-button color="primary" class="add" (click)="removeFormControl(i)">RemoveLineItem</button>
+    </div>
+</div> -->
+
+
+<!-- <div class="container" *ngIf="BillableForm">
+    <div style="text-align: center;margin-top:2rem;">
+        <span>
+            <h2 style="font-size: 25px;">Billable Form</h2>
+        </span>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <mat-form-field appearance="fill">
+                <mat-label>SAP DA No</mat-label>
+                <input matInput placeholder="SAP DA No" [(ngModel)]="SAPDANo">
+                <mat-hint style="color:black"></mat-hint>
+            </mat-form-field>
+        </div>
+        <div class="col-md-3">
+            <mat-form-field appearance="fill">
+                <mat-label>Customer PO reference no</mat-label>
+                <input matInput placeholder="Customer PO reference no" [(ngModel)]="CustomerPoRefNo">
+                <mat-hint style="color:black"></mat-hint>
+            </mat-form-field>
+        </div>
+        <div class="col-md-3">
+            <mat-form-field appearance="fill">
+                <mat-label>Item Description</mat-label>
+                <input matInput placeholder="Item Description" [(ngModel)]="ItemDescription">
+                <mat-hint style="color:black"></mat-hint>
+            </mat-form-field>
+        </div>
+        <div class="col-md-3">
+            <mat-form-field appearance="fill">
+                <mat-label>Model No</mat-label>
+                <input matInput placeholder="Model No" [(ngModel)]="ModelNo">
+                <mat-hint style="color:black"></mat-hint>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <mat-form-field appearance="fill">
+                <mat-label>Total Quantity</mat-label>
+                <input matInput placeholder="Total Quantity" [(ngModel)]="TotalQuantity">
+                <mat-hint style="color:black"></mat-hint>
+            </mat-form-field>
+        </div>
+        <div class="col-md-3">
+            <mat-form-field appearance="fill">
+                <mat-label>UOM</mat-label>
+                <input matInput placeholder="UOM" [(ngModel)]="UOM">
+                <mat-hint style="color:black"></mat-hint>
+            </mat-form-field>
+        </div>
+        <div class="col-md-3">
+            <mat-form-field appearance="fill">
+                <mat-label>Total</mat-label>
+                <input matInput placeholder="Total" [(ngModel)]="Total">
+                <mat-hint style="color:black"></mat-hint>
+            </mat-form-field>
+        </div>
+        <div class="col-md-3">
+            <mat-form-field appearance="fill">
+                <mat-label>Balance Quantity</mat-label>
+                <input matInput placeholder="Balance Quantity" [(ngModel)]="BalanceQuantity">
+                <mat-hint style="color:black"></mat-hint>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <mat-form-field appearance="fill">
+                <mat-label>Unit Price</mat-label>
+                <input matInput placeholder="Unit Price" [(ngModel)]="UnitPrice">
+                <mat-hint style="color:black"></mat-hint>
+            </mat-form-field>
+        </div>
+        <div class="col-md-3">
+            <mat-form-field appearance="fill">
+                <mat-label>SGST %</mat-label>
+                <input matInput placeholder="SGST %" [(ngModel)]="SGST">
+                <mat-hint style="color:black"></mat-hint>
+            </mat-form-field>
+        </div>
+        <div class="col-md-3">
+            <mat-form-field appearance="fill">
+                <mat-label>CGST %</mat-label>
+                <input matInput placeholder="CGST %" [(ngModel)]="CGST">
+                <mat-hint style="color:black"></mat-hint>
+            </mat-form-field>
+        </div>
+        <div class="col-md-3">
+            <mat-form-field appearance="fill">
+                <mat-label>IGST %</mat-label>
+                <input matInput placeholder="IGST %" [(ngModel)]="IGST">
+                <mat-hint style="color:black"></mat-hint>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <mat-form-field appearance="fill" class="example-full-width">
+                <mat-label>Remarks</mat-label>
+                <input matInput placeholder="Remarks" [(ngModel)]="BillableRemarks">
+                <mat-hint style="color:black"></mat-hint>
+            </mat-form-field>
+        </div>
+        <div class="col-md-6">
+            <button mat-raised-button color="primary" type="submit"  (click)="createList()" >Submit</button>&nbsp;&nbsp;&nbsp;
+            <button mat-raised-button color="primary" type="submit"  (click)="clearInputFields()" >Enter Next Line Item</button>&nbsp;&nbsp;&nbsp;
+            <button mat-raised-button color="primary" type="submit" matTooltip="Click on this button to clear the Input Text Values" (click)="clearInputFields()" >Clear</button>&nbsp;&nbsp;
+            <button mat-raised-button color="primary" type="submit" (click)="setBillableReviewForm()">Review</button>
+        </div>
+    <button mat-raised-button color="primary" type="submit" (click)="setBillableReviewForm">Review</button>&nbsp;&nbsp;&nbsp;
+</div>
+</div> -->
+
+
+<!-- <div class="container" *ngIf="NonBillableForm">
+    <div style="text-align: center;margin-top:2rem;">
+        <span>
+            <h2 style="font-size: 25px;">Non-Billable Form</h2>
+        </span>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <mat-form-field appearance="fill">
+                <mat-label>SAP DA No</mat-label>
+                <input matInput placeholder="SAP DA No" [(ngModel)]="SAPDANo">
+                <mat-hint style="color:black"></mat-hint>
+            </mat-form-field>
+        </div>
+        <div class="col-md-3">
+            <mat-form-field appearance="fill">
+                <mat-label>Customer PO reference no</mat-label>
+                <input matInput placeholder="Customer PO reference no" [(ngModel)]="CustomerPoRefNo">
+                <mat-hint style="color:black"></mat-hint>
+            </mat-form-field>
+        </div>
+        <div class="col-md-3">
+            <mat-form-field appearance="fill">
+                <mat-label>Item Description</mat-label>
+                <input matInput placeholder="Item Description" [(ngModel)]="ItemDescription">
+                <mat-hint style="color:black"></mat-hint>
+            </mat-form-field>
+        </div>
+        <div class="col-md-3">
+            <mat-form-field appearance="fill">
+                <mat-label>Model No</mat-label>
+                <input matInput placeholder="Model No" [(ngModel)]="ModelNo">
+                <mat-hint style="color:black"></mat-hint>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <mat-form-field appearance="fill">
+                <mat-label>Quantity</mat-label>
+                <input matInput placeholder="Total Quantity" [(ngModel)]="TotalQuantity">
+                <mat-hint style="color:black"></mat-hint>
+            </mat-form-field>
+        </div>
+        <div class="col-md-3">
+            <mat-form-field appearance="fill">
+                <mat-label>UOM</mat-label>
+                <input matInput placeholder="UOM" [(ngModel)]="UOM">
+                <mat-hint style="color:black"></mat-hint>
+            </mat-form-field>
+        </div>
+        <div class="col-md-3">
+            <mat-form-field appearance="fill">
+                <mat-label>Unit Price</mat-label>
+                <input matInput placeholder="Unit Price" [(ngModel)]="UnitPrice">
+                <mat-hint style="color:black"></mat-hint>
+            </mat-form-field>
+        </div>
+        <div class="col-md-3">
+            <mat-form-field appearance="fill">
+                <mat-label>Under W/NW</mat-label>
+                <input matInput placeholder="Under W/NW" [(ngModel)]="UnderWorNW">
+                <mat-hint style="color:black"></mat-hint>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <mat-form-field appearance="fill">
+                <mat-label>SGST %</mat-label>
+                <input matInput placeholder="SGST %" [(ngModel)]="SGST">
+                <mat-hint style="color:black"></mat-hint>
+            </mat-form-field>
+        </div>
+        <div class="col-md-3">
+            <mat-form-field appearance="fill">
+                <mat-label>CGST %</mat-label>
+                <input matInput placeholder="CGST %" [(ngModel)]="CGST">
+                <mat-hint style="color:black"></mat-hint>
+            </mat-form-field>
+        </div>
+        <div class="col-md-3">
+            <mat-form-field appearance="fill">
+                <mat-label>IGST %</mat-label>
+                <input matInput placeholder="IGST %" [(ngModel)]="IGST">
+                <mat-hint style="color:black"></mat-hint>
+            </mat-form-field>
+        </div>
+        <div class="col-md-3">
+            <button mat-raised-button color="primary" type="submit" (click)="setNonBillableReviewForm">Review</button>&nbsp;&nbsp;&nbsp; 
+            <button mat-raised-button color="primary" type="submit"  (click)="createList()" >Submit</button>&nbsp;&nbsp;&nbsp;
+            <button mat-raised-button color="primary" type="submit"  (click)="clearInputFields()" >Enter Next Line Item</button>&nbsp;&nbsp;&nbsp;
+            <button mat-raised-button color="primary" type="submit" matTooltip="Click on this button to clear the Input Text Values" (click)="clearInputFields()" >Clear</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <mat-form-field appearance="fill" class="example-full-width">
+                <mat-label>Reason for supplies under Non-Warranty</mat-label>
+                <textarea matInput placeholder="Reason for supplies under Non-Warranty" [(ngModel)]="ReasonForSuppliesNW"></textarea>
+                <mat-hint style="color:black"></mat-hint>
+            </mat-form-field>
+        </div>
+        <div class="col-md-6">
+            <mat-form-field appearance="fill" class="example-full-width">
+                <mat-label>Remarks</mat-label>
+                <textarea matInput placeholder="Remarks" [(ngModel)]="NonBillableRemarks"></textarea>
+                <mat-hint style="color:black"></mat-hint>
+            </mat-form-field>
+        </div>
+    </div>
+</div> -->
+
+
+
+<div class="container" *ngIf="BillableReviewForm">
+<p><b>Review Form</b></p>
+<div class="container">
+    <table class="table" class="table table-bordered">
+      <thead>
+        <tr>
+          <th>SAP.DA.No</th>
+          <th>CustomerPORef.No.</th>
+          <th>ItemDescription</th>
+          <th>ModelNo</th>
+          <th>TotalQty</th>
+          <th>UOM</th>
+          <th>ActualDispatchedQuantity</th>
+          <th>Total</th>
+          <th>BalanceQty</th>
+          <th>UnitPrice</th>
+          <th>TotalAmount</th>
+          <th>SGST%</th>
+          <th>CGST%</th>
+          <th>IGST%</th>
+          <th>Total Price</th>
+          <th>Remarks</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        
+      </tbody>
+    </table>
+  </div>
+
+<button style="margin-left: 3rem;" mat-raised-button (click)="setBackButton()" color="primary">Back</button>
+</div>
+
+
+
+<div class="container" *ngIf="NonBillableReviewForm">
+    <p><b>Review Form</b></p>
+    <div class="container">
+        <table class="table" class="table table-bordered">
+          <thead>
+            <tr>
+              <th>JobName</th>
+              <th>Job Code</th>
+              <th>S.O No</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            
+          </tbody>
+        </table>
+      </div>
+    
+    <button style="margin-left: 3rem;" mat-raised-button (click)="setNonBillableReviewForm()" color="primary">Back</button>
+    </div>
+
+    <!-- <div class="col-md-3">
+        <mat-form-field appearance="fill">
+            <mat-label>Actual Dispatched Quantity</mat-label>
+            <input matInput placeholder="Actual Dispatched Quantity" [(ngModel)]="ActualDispatchedQuantity">
+            <mat-hint style="color:black"></mat-hint>
+        </mat-form-field>
+    </div> -->
+    <!-- <div class="col-md-3">
+        <mat-form-field appearance="fill">
+            <mat-label>Total Amount</mat-label>
+            <input matInput placeholder="Total Amount" [(ngModel)]="TotalAmount">
+            <mat-hint style="color:black"></mat-hint>
+        </mat-form-field>
+    </div> -->
+    <!-- <div class="col-md-3">
+        <mat-form-field appearance="fill">
+            <mat-label>Total Price</mat-label>
+            <input matInput placeholder="Total Price" [(ngModel)]="TotalPrice">
+            <mat-hint style="color:black"></mat-hint>
+        </mat-form-field>
+    </div> -->

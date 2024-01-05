@@ -1,0 +1,65 @@
+<div class="container" *ngIf="mainForm">
+    <div class="row">
+        <!-- <div class="col-md-3">
+            <mat-form-field appearance="fill">
+              <mat-label>Da_Id</mat-label>
+              <mat-select #mySelect [(ngModel)]="daId" name="daId" id="daId" (selectionChange) ='onOptionsSelected(mySelect.value)'>
+                <mat-option value="">Select Option</mat-option>
+                <mat-option *ngFor="let val of DaIdList"  [value]="val.da_id" selected>{{val.jobcode_da_no}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            </div> -->
+
+            <!-- <div class="col-3">
+              <button style="margin-left: 1rem;" mat-raised-button (click)="dialogClose()" color="warn">Close</button>
+            </div> -->
+
+            <div class="col-md-3">
+              <mat-form-field appearance="fill">
+                      <input type="text" matInput [(ngModel)]="daId" 
+                      placeholder="DA No">
+                      <mat-hint>DA No</mat-hint>
+              </mat-form-field>
+          </div>
+
+            <div class="col-md-3">
+                <button mat-raised-button color="primary" type="submit" (click)="getDaTruckList()">Submit</button>
+                <button style="margin-left: 1rem;" mat-raised-button (click)="dialogClose()" color="warn">Close</button>
+            </div>
+</div>
+</div>
+
+<div class="listForm">
+  <table class="table table-bordered table-striped table-hover" style="width:100%">
+    <tr>
+      <th colspan="1">SL.NO.</th>
+      <!-- <th colspan="1">Truck List Id</th> -->
+      <th colspan="1">Truck Type</th>
+      <th colspan="1">Vehicle No</th>
+      <th colspan="1">Driver Name</th>
+      <th colspan="1">Driver Number</th>
+      <th colspan="1">CheckInTime</th>
+      <th colspan="1">CheckOutTime</th>
+      <th colspan="1">select</th>
+    </tr>
+    <tr *ngFor="let data of DaTruckList; let i=index">
+      <td class="col-md-1">{{i + 1}}</td>
+      <!-- <div class="col-md-1">{{data.daID}}</div> -->
+      <!-- <td class="col-md-1">{{data.truckListID}}</td> -->
+      <!-- <td class="col-md-1">{{data.truckName}}</td> -->
+      <td class="col-md-1"><span *ngIf="data.truck_list != null">{{data.truck_list.truckName}}</span></td>
+      <td class="col-md-1">{{data.vehicleNo}}</td>
+      <td class="col-md-1">{{data.driverName}}</td>
+      <td class="col-md-1">{{data.driverNo}}</td>
+      <td class="col-md-1">{{data.checkInTime | date:'d/M/yyyy h:mm a'}}</td>
+      <td class="col-md-1">{{data.checkOutTime | date:'d/M/yyyy h:mm a'}}</td>
+      <td class="col-md-1">
+          <input type="checkbox" style="width: 15px;height: 15px;" [checked]="false" #checkbox (click)="setCheckbox(data, i, checkbox.checked)">
+      </td>
+    </tr>
+  </table>
+</div>
+<div class="row">
+  <button mat-raised-button color="primary" type="submit" (click)="getTruckListPdf()">Get Dispatch Particular Pdf</button>
+  <button mat-raised-button style="margin-left:1rem" color="primary" type="submit" (click)="generateMultipleAnnexurePdf()">Get Multiple Annexure pdf</button>
+</div>

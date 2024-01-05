@@ -1,0 +1,40 @@
+<div class="wrapper">
+    <div class="container-fluid">
+  
+        <div class="row">
+            <div class="col-12">
+              <h4 class=""><b>Vehicle Tracking Details</b></h4>
+            </div>
+        </div>
+
+      <div class="row">
+        <div class="col-12">
+            <div class="card-box table-responsive">
+              <table class="table table-bordered table-striped table-hover" datatable [dtTrigger]="dtTrigger" [dtOptions]="dtOptions">
+                    <thead>
+                        <tr>
+                            <th style="width: 30px;text-align: center;">Sl.no</th>
+                            <th style="width: 20px;">Date Time</th>
+                            <th style="width: 30px;">Status</th>
+                            <th style="width: 30px;">Location</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                            <tr *ngFor="let subskill of tablelist;let i=index">
+                            <td style="text-align: center;">{{i + 1}}</td>
+                            <!-- <td >{{subskill.current_datetime == null ? '-' : subskill.current_datetime | date : 'dd/MM/yyyy'}}</td> -->
+                            <td >{{subskill.current_datetime == null ? '-' : subskill.current_datetime | date:'d/M/yyyy h:mm a'}}</td>
+                            <td>{{subskill.current_status == null ? '-' : subskill.current_status}}</td>
+                            <td>{{subskill.current_location}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-12" align="center">  
+            <button color="warn" mat-raised-button mat-dialog-close style="margin-left:20px;" (click)="dialogClose()">Close</button>
+        </div>
+    </div>
+    </div>
+  </div>
+

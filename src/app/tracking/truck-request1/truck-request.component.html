@@ -1,0 +1,288 @@
+<div style="text-align: center">
+    <span>
+        <h2 style="font-size: 25px;"><b>Truck Request</b></h2>
+    </span>
+</div>
+<hr>
+
+<div class="conainer" style="border:1px solid bold">
+    <div class="row">
+        <div class="col-md-3" style="margin-left:4rem;">
+            <mat-radio-group aria-label="Select an option">
+                <label><b>Options :</b></label>&nbsp;&nbsp;
+                <mat-radio-button name="billType" (change)="SelectType('contract')" value="1">Contract</mat-radio-button>&nbsp;&nbsp;
+                <mat-radio-button name="billType" (change)="SelectType('manual')" value="2">Manual</mat-radio-button>
+              </mat-radio-group>
+        </div>
+    </div>
+</div>
+<br>
+
+<div class="container" *ngIf="ContractForm">
+    <div class="row">
+        <div class="col-md-3">
+          <mat-form-field appearance="fill">
+            <mat-label>Transportation</mat-label>
+            <mat-select [(ngModel)]="transportationID">
+              <mat-option *ngFor="let val of TransportationList" [value]="val.transportationId" selected>{{val.transportationName}}</mat-option>
+            </mat-select>
+            <mat-hint style="color:black">eg.ABC</mat-hint>
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-3">
+            <mat-form-field appearance="fill">
+              <mat-label>Destination</mat-label>
+              <mat-select [(ngModel)]="destinationId">
+                <mat-option value="">Select Option</mat-option>
+                <mat-option *ngFor="let val of DestinationList" [value]="val.destinationId" selected>{{val.destinationName}}</mat-option>
+              </mat-select>
+              <mat-hint style="color:black">eg.Karnataka</mat-hint>
+            </mat-form-field>
+          </div>
+        
+          <div class="col-md-3">
+            <div class="example-container div">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Remarks</mat-label>
+                    <input matInput placeholder="Remarks" [(ngModel)]="remark" ngModel required maxlength="200" #Remarks="ngModel">
+                      <mat-hint style="color:black" align="end">maxLength=200</mat-hint>
+                      <mat-error  *ngIf="Remarks.dirty && !Remarks.valid">Remarks is Required</mat-error>
+                  </mat-form-field>
+            </div>
+          </div>
+    </div>
+</div>
+
+
+<div class="container" *ngIf="ManualForm">
+    <div class="row">
+        <div class="col-md-3">
+          <mat-form-field appearance="fill">
+            <mat-label>Transportation</mat-label>
+            <mat-select [(ngModel)]="transportationID" multiple>
+              <mat-option *ngFor="let val of TransportationList" [value]="val.transportationId" selected>{{val.transportationName}}</mat-option>
+            </mat-select>
+            <mat-hint style="color:black">eg.ABC</mat-hint>
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-3">
+            <mat-form-field appearance="fill">
+              <mat-label>Destination</mat-label>
+              <mat-select [(ngModel)]="destinationId">
+                <mat-option value="">Select Option</mat-option>
+                <mat-option *ngFor="let val of DestinationList" [value]="val.destinationId" selected>{{val.destinationName}}</mat-option>
+              </mat-select>
+              <mat-hint style="color:black">eg.Karnataka</mat-hint>
+            </mat-form-field>
+          </div>
+        
+          <div class="col-md-3">
+            <div class="example-container div">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Remarks</mat-label>
+                    <input matInput placeholder="Remarks" [(ngModel)]="remark" ngModel required maxlength="200" #Remark="ngModel">
+                    <mat-hint style="color:black" align="end">maxLength=200</mat-hint>
+                    <mat-error  *ngIf="Remark.dirty && !Remark.valid">Remarks is Required</mat-error>
+                  </mat-form-field>
+            </div>
+          </div>
+    </div>
+</div>
+
+<div class="container" *ngIf="TableDisplayForm">
+    <div class="row" mat-list-item >
+        <div class="col-md-1"><b>SL.NO.</b></div>
+        <div class="col-md-1"><b>TruckType</b></div>
+        <div class="col-md-2"><b>Quantity</b></div>
+        <hr>
+    </div>
+    <div class="row" mat-list-item *ngFor="let data of TruckList; let i=index">
+        <div class="col-md-1">{{i + 1}}</div>
+        <div class="col-md-1">{{data.truckName}}</div>
+        <div class="col-md-2">
+            <div class="example-container div">
+                  <mat-form-field appearance="fill" style="width:80px">
+                    <mat-label>Quantity</mat-label>
+                     <input matInput placeholder="Enter Quantity" (change)="fetchingAmountValue(data.truckId,i)" [(ngModel)]="quantity[i]" ngModel required #qty="ngModel" pattern="^[0-9]+$">
+                     <small class="form-text text-muted" *ngIf="qty.touched && !qty.valid">Only Numbers accepted</small>
+                     <!-- <mat-error  *ngIf="qty.touched && !qty.valid">Character and Special Characters Value not accepted.</mat-error> -->
+                     <!-- <input matInput placeholder="Enter Quantity" (change)="fetchingAmountValue(data.truckId,i)" [(ngModel)]="quantity[i]"> -->
+                    <!-- <input matInput placeholder="Enter Quantity" (change)="fetchingAmountValue(data.truckId)" [(ngModel)]="quantity[i]"> -->
+                  </mat-form-field>
+            </div>
+          </div>
+          <!-- <div class="col-md-1">
+            <input type="checkbox" style="width: 15px;height: 15px;" [checked]="false" #checkbox (click)="setCheckbox(data, i,checkbox.checked)">
+          </div> -->
+        </div>
+
+    <div class="col-md-3">
+       <button mat-raised-button style="margin-top:1rem;margin-left:3rem;" color="primary" type="submit" (click)="CreateList()">Submit</button>
+      <!--<button *ngIf="subskill.da_stage == 1" type="button" class="btn btn-primary" (click)="daNavigation(subskill.da_id,'/tracking/truck-approval')">Continue(BOM) </button>-->
+      <!-- <button mat-raised-button style="margin-top:1rem;margin-left:3rem;" color="primary" type="submit" (click)="AddNewElement()">Submit</button> -->
+  </div>
+</div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <div class="container" *ngIf="ListForm">
+    <form [formGroup]="usersForm">
+        <div formArrayName='users'>
+            <ng-container *ngFor="let userFormGroup of userFormGroups.controls; let i=index">
+            <div [formGroupName]="i">
+                <div>
+                    <table class="table table-bordered">
+                        <tr>
+                        <div class="row">
+                        <div class="col-md-1">
+                            <td style="width:2rem;margin-left:2rem;">{{i+1}}</td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </div>
+                        
+                        <div class="col-md-3">
+                        <td>
+                            <input matInput placeholder="Destination" formControlName="destinationId"> 
+                            <mat-form-field appearance="fill" style="width:13rem;">
+                                <mat-label>DA_Id</mat-label>
+                                <mat-select formControlName="daId">
+                                  <mat-option *ngFor="let val of DAIDList" [value]="val.da_no">
+                                    {{val.job_code}}
+                                  </mat-option>
+                                </mat-select>
+                                </mat-form-field>
+                        </td>
+                        </div>
+
+                        <div class="col-md-2">
+                        <td>
+                            <mat-form-field appearance="fill" style="width:11rem;">
+                                <mat-label>TruckType</mat-label>
+                                <mat-select formControlName="TruckId">
+                                  <mat-option *ngFor="let val of TruckList" [value]="val.truckId">
+                                    {{val.truckName}}
+                                  </mat-option>
+                                </mat-select>
+                                </mat-form-field>
+                            <input matInput placeholder="TruckType" formControlName="TruckId">
+                        </td>
+                    </div>
+                    <div class="col-md-1">
+                        <td>
+                            <input style="background-color: lightgray;height:40px;width:150px;" matInput placeholder="Enter Quantity" formControlName="quantity">
+                        </td>
+                    </div>
+                </div>
+            </tr>
+                    </table>
+                </div>
+            </div>
+            </ng-container>
+        </div>
+        <button mat-raised-button class="add" color="primary" (click)="addFormControl()">Add Next Value</button>&nbsp;&nbsp;&nbsp;
+        <button mat-raised-button class="add" color="primary" (click)="onSubmit()" type="submit">Submit</button>&nbsp;&nbsp;&nbsp;
+    </form>
+</div> -->
+
+<!-- <div class="container" *ngIf="CreateForm">
+    <div class="row">
+        <div class="col-md-3">
+            <mat-radio-group aria-label="Select an option">
+                <label><b>Options :</b></label>&nbsp;&nbsp;
+                <mat-radio-button name="billType" (change)="SelectType('contract')" value="1">Contract</mat-radio-button>&nbsp;&nbsp;
+                <mat-radio-button name="billType" (change)="SelectType('manual')" value="2">Manual</mat-radio-button>
+              </mat-radio-group>
+        </div>
+        <div class="col-md-3">
+          <mat-form-field appearance="fill">
+            <mat-label>Transportation</mat-label>
+            <mat-select [(ngModel)]="transportationID" multiple>
+              <mat-option value="">Select Option</mat-option>
+              <mat-option *ngFor="let val of TransportationList" [value]="val.transportationId" selected>{{val.transportationName}}</mat-option>
+            </mat-select>
+            <mat-hint style="color:black">eg.ABC</mat-hint>
+          </mat-form-field>
+        </div>
+
+        <!-- <div class="col-md-3">
+            <mat-form-field appearance="fill">
+              <mat-label>Destination</mat-label>
+              <mat-select [(ngModel)]="destinationId">
+                <mat-option value="">Select Option</mat-option>
+                <mat-option *ngFor="let val of DestinationList" [value]="val.destinationId" selected>{{val.destinationName}}</mat-option>
+              </mat-select>
+              <mat-hint style="color:black">eg.Karnataka</mat-hint>
+            </mat-form-field>
+          </div> -->
+        
+          <!-- <div class="col-md-3">
+            <div class="example-container div">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Remarks</mat-label>
+                    <input matInput placeholder="Remarks" [(ngModel)]="remark" ngModel required minlength="1">
+                  </mat-form-field>
+            </div>
+          </div>
+    </div>
+</div>  -->
+
+
+<!-- <div class="container" *ngIf="ListForm">
+    <form [formGroup]="usersForm">
+        <div formArrayName='users'>
+            <ng-container *ngFor="let userFormGroup of userFormGroups.controls; let i=index">
+            <div [formGroupName]="i">
+                <div>
+                    <table class="table table-bordered">
+                        <tr>
+                            <td>
+                                <input matInput placeholder="" formControlName="">
+                            </td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                           
+                        <td>
+                            <input matInput placeholder="Destination" formControlName="destinationId">
+                        </td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <td>
+                            <input matInput placeholder="TruckType" formControlName="TruckId">
+                        </td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <td>
+                            <input matInput placeholder="Quantity" formControlName="quantity">
+                        </td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </tr>
+                    </table>
+                </div>
+            </div>
+            </ng-container>
+        </div>
+        <button mat-raised-button class="add" color="primary" (click)="addFormControl()">Add Next Line Item</button>&nbsp;&nbsp;&nbsp;
+        <button mat-raised-button class="add" color="primary" (click)="onSubmit()" type="submit">Submit</button>&nbsp;&nbsp;&nbsp;
+    </form>
+</div> -->

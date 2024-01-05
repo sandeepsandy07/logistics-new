@@ -1,0 +1,31 @@
+<form [formGroup]="uploadForm"  enctype="multipart/form-data" #myForm="ngForm">
+    <div class="row">
+        <div class="col-12">
+            <h4 style="text-align: center;color:blue;">Upload Expected Date Data Template</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+        <div ng-controller="AppController" class="upload">
+            <h4>File Upload</h4>
+            <input style="margin-left: 5px;" type="file" class="" name="sap_data_file" #takeInput
+            (change)="OnFileSelect($event,'sap_data_file')">
+        </div>
+        </div>
+    
+        <div class="col-md-4">
+            <button type="submit" mat-raised-button color="primary" style="margin-top: 2rem;" [disabled]="!onupload_button" (click)="fileUpload()">Upload</button>
+        </div>
+
+        <div class="col-4">
+            <button color="warn" style="margin-top: 2rem;" mat-raised-button mat-dialog-close (click)="dialogClose()">Close</button>
+        </div>
+       
+    </div>
+    </form>
+
+    <div class="d-flex justify-content-center">
+        <div class="spinner-border" role="status" >
+          <span  id="loadingform" ></span>
+        </div>
+      </div>

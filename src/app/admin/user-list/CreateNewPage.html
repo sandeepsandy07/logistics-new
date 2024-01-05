@@ -1,0 +1,145 @@
+<div *ngIf="CreateForm">
+    <form #myForm="ngForm" (ngSubmit)="createList()" name="Myform" id="Myform">
+    <div class="container">
+      <p style="color:blue;font-size:medium;">Enter Your Details</p>
+      <hr>
+      <div class="row">
+        <div class="col-md-3">
+          <mat-form-field appearance="fill">
+            <mat-label>User Name</mat-label>
+            <input matInput placeholder="" [(ngModel)]="UserName" ngModel required  maxlength="150" name="userName" #userName="ngModel">
+            <mat-hint style="color:black" class="txt-align">Eg.464ID</mat-hint>
+            <mat-error  *ngIf="userName.touched && !userName.valid">UserName Field is required</mat-error>
+           </mat-form-field>
+        </div>
+        <div class="col-md-3">
+          <mat-form-field appearance="fill">
+          <mat-label>Employee Number</mat-label>
+          <input matInput placeholder="" [(ngModel)]="EmployeeNo" ngModel required  maxlength="500" name="employeeNo" #employeeNo="ngModel" pattern="^[0-9\s _]+$">
+          <mat-hint style="color:black"  class="txt-align">Eg.160453</mat-hint>
+          <mat-error  *ngIf="employeeNo.touched && !employeeNo.valid">Employee Number Field is required.Special Characters and Characters Value are not accepted.</mat-error>
+        </mat-form-field>
+      </div>
+        <div class="col-md-3">
+          <mat-form-field appearance="fill">
+            <mat-label>Employee Name</mat-label>
+            <input matInput placeholder="" [(ngModel)]="EmployeeName" ngModel required  maxlength="500" name="employeeName" #employeeName="ngModel">
+            <mat-hint style="color:black"  class="txt-align">Eg.Hitesh S</mat-hint>
+            <mat-error  *ngIf="employeeName.touched && !employeeName.valid">EmployeeName Field is required.</mat-error>
+          </mat-form-field>
+      </div>
+      <div class="col-md-3">
+        <label id="example-radio-group-label"><b>Gender:</b> </label>
+          <br><br>
+          <mat-radio-group aria-label="Select an option">
+            <mat-radio-button (change)="genderSelect('Male')" name="gender" value="1">Male</mat-radio-button>
+            <mat-radio-button (change)="genderSelect('Female')" name="gender" class="example-radio-button" value="2">Female</mat-radio-button>
+          </mat-radio-group>
+        </div>
+      </div>
+        <br>
+     <div class="row">
+    <div class="col-md-3">
+        <label id="example-radio-group-label"><b>DOB:</b></label>
+        <br>
+        <mat-form-field>
+        <mat-label>Field is required</mat-label> 
+        <input matInput [matDatepicker]="datePicker" [formControl]="DOB" (ngModelChange)="datePickerChange()" required name="dob">
+        <mat-datepicker-toggle [for]="datePicker" matSuffix> </mat-datepicker-toggle>
+        <mat-datepicker #datePicker></mat-datepicker>
+        <mat-hint style="color:black" align="end">Eg.20/09/1998</mat-hint>
+        </mat-form-field>
+    </div>
+    <div class="col-md-3">
+      <div class="example-container div">
+        <mat-form-field appearance="fill">
+          <mat-label>Department Code</mat-label>
+          <input matInput placeholder="" [(ngModel)]="DeptCode" ngModel required  maxlength="500" name="deptCode" #deptCode="ngModel">
+          <mat-hint style="color:black">Eg.E13</mat-hint>
+          <mat-error  *ngIf="deptCode.touched && !deptCode.valid">Department Code Field is required.</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <mat-form-field appearance="fill">
+        <mat-label>Department Name</mat-label>
+        <mat-select #mySelect [(ngModel)]="dept_ID" name="dept_ID" id="dept_ID" (selectionChange) ='onOptionsSelected(mySelect.value)'>
+          <mat-option value="">Select Option</mat-option>
+          <mat-option *ngFor="let val of DeptIdList"  [value]="val.dept_id" selected>{{val.department}}</mat-option>
+        </mat-select>
+        <mat-hint style="color:black">eg.DSIN</mat-hint>
+      </mat-form-field>
+      </div>
+        <div class="col-md-3">
+          <mat-form-field appearance="fill">
+            <mat-label>Sub Department Name</mat-label>
+            <mat-select  [(ngModel)]="sub_dept_ID" name="sub_dept_ID" id="sub_dept_ID">
+              <mat-option value="">Select Option</mat-option>
+              <mat-option *ngFor="let val of SubDeptIdList" [value]="val.sub_dept_id" selected>{{val.sub_department}}</mat-option>
+            </mat-select>
+            <mat-hint style="color:black">eg.DSIN</mat-hint>
+          </mat-form-field>
+        </div>
+</div>
+<br>
+
+<div class="row">
+  <div class="example-container div">
+    <mat-form-field appearance="fill">
+      <mat-label>Designation</mat-label>
+      <input matInput placeholder="" [(ngModel)]="Designation" ngModel required  maxlength="1000" name="designation" #designation="ngModel" pattern="^[a-zA-Z\s _]+$">
+      <mat-hint style="color:black"  class="txt-align">Eg.Manager</mat-hint>
+      <mat-error  *ngIf="designation.touched && !designation.valid">Designation Field is required.Special Characters and Numbers are not accepted.</mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="col-md-3">
+    <div class="example-container div">
+        <mat-form-field appearance="fill">
+          <mat-label>Location</mat-label>
+          <input matInput placeholder="" [(ngModel)]="Location" ngModel required  maxlength="1000" name="location" #location="ngModel" pattern="^[a-zA-Z\s _]+$">
+          <mat-hint style="color:black"  class="txt-align">Eg.Banglore</mat-hint>
+          <mat-error  *ngIf="location.touched && !location.valid">Location Field is required.Special Characters and Numbers are not accepted.</mat-error>
+        </mat-form-field>
+    </div>
+  </div>
+
+  <div class="col-md-3">
+    <mat-form-field appearance="fill">
+      <mat-label>Is Department Head</mat-label>
+      <mat-select  [(ngModel)]="deptHead" name="deptHead" id="deptHead">
+        <mat-option value="Yes">Yes</mat-option>
+        <mat-option value="No">No</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="col-md-3">
+    <mat-checkbox #Superuserstatus name="superUserValue"  [ngModel]="Superuserstatus" [checked]="SuperUserStatus" (change)="onSuperUserStatusChecked(Superuserstatus.checked)">Superuser status</mat-checkbox>
+  </div>
+</div>
+<br/>
+<div class="row">
+  <div class="col-md-3">
+    <mat-checkbox #active  [ngModel]="active" name="activeValue" [checked]="Active" (change)="onActive(active.checked)">Active</mat-checkbox>
+  </div>
+  <div class="col-md-3">
+  <button mat-raised-button color="primary" type="submit" [disabled]="!myForm.valid">Submit</button><button style="margin-left: 1rem;" mat-raised-button (click)="dialogClose()" color="warn">Close</button>
+</div>
+</div>
+</div>
+</form>
+</div>
+<br>
+
+
+
+
+<!-- <div class="example-container div">
+          <mat-form-field appearance="fill">
+            <mat-label>Department Name</mat-label>
+            <input matInput placeholder="" [(ngModel)]="DeptName" ngModel required maxlength="1000" name="deptName" #deptName="ngModel">
+            <mat-hint style="color:black"  class="txt-align">Eg.DSIN</mat-hint>
+            <mat-error  *ngIf="deptName.touched && !deptName.valid">Department Name Field is required.</mat-error>
+          </mat-form-field>
+      </div> -->

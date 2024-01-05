@@ -1,0 +1,1369 @@
+
+<style></style>
+<!-- <h4 style="text-align:center ;">Dashboard will update Soon</h4> -->
+<div *ngIf="tracking_billing" style="background-color: #2888bb0a;">
+   
+    <div class="row">
+        
+        <div class="col-1 mt-2" >
+                    
+        </div>
+        <div class="col-6 mb-2 mt-2">
+            <mat-card  class="icon-rocket" style="text-align: center;">
+                <div class="col-12">
+                    <h4 style="background-color: #2f92c5;font-weight: bold;color: white;text-align: center;font-size: 20px;">Tracking Details</h4>
+                </div>
+                <div class="row">
+                    <div class="col-12" style="display: flex;">
+                        <div class="col-4 mr-2" style="background-color:white; border-radius: 50px;color:  #64a7f7; font-weight: bold;">
+                            <div class="col-12" style="font-size: 25px;" (click)="show_truck_details('open')">
+                                <span>{{totalOpenCount}}</span>
+                            </div>
+                            <div class="col-12" style="font-size: 20px;">
+                                <span >Open</span>
+                            </div>                           
+                        </div>
+                        <div class="col-4 mr-2" style="background-color:white; border-radius: 50px;color:  #df677d; font-weight: bold;">
+                            <div class="col-12" style="font-size: 25px;" (click)="show_truck_details('due')">
+                                <span>{{totalDueCount}} <mat-icon >keyboard_arrow_down</mat-icon></span>
+                            </div>
+                            <div class="col-12" style="font-size: 20px;">
+                                <span >Over Due</span>
+                            </div>       
+                           
+                        </div>
+                        <div class="col-4" style="background-color:white ; border-radius: 50px;color:#64da93 ; font-weight: bold;" >
+                            <div class="col-12" style="font-size: 25px;" (click)="show_truck_details('inschedule')">
+                                <span >{{totalInScheduleCount}}<mat-icon >keyboard_arrow_up</mat-icon></span>
+                            </div>
+                            <div class="col-12" style="font-size: 20px;">
+                                <span >In Schedule </span>
+                            </div>       
+                            
+                        </div>
+                    
+                    </div>
+
+                </div>
+                <div class="col-12">
+                    <h4 style="background-color: #2f92c5;font-weight: bold;color: white;text-align: center;font-size: 20px;">-------------------</h4>
+                </div>
+            </mat-card>
+        </div>
+        <div class="col-1 mt-2" >
+            <button mat-fab color="primary" (click)="callvehicledetailsapiall()" aria-label="Example icon button with a home icon">
+                <mat-icon >settings_backup_restore</mat-icon>
+              </button>
+        </div>
+        <div class="col-3 mt-2" >
+            <mat-card  class="icon-rocket" style="text-align: center;">
+                <div class="col-12">
+                    <h4 style="background-color: #2f92c5;font-weight: bold;color: white;text-align: center;font-size: 20px;">Billing Details</h4>
+                </div>
+                <div class="row">
+                    <div class="col-12" style="display: flex;">
+                        <div class="col-6 mr-2" style="background-color:white; border-radius: 50px;color:  #64a7f7; font-weight: bold;">
+                            <div class="col-12" style="font-size: 16px;" (click)="show_billing_details('Department Wise Current Month Details')">
+                                <span>{{monthly_billing_value | number}}</span>
+                            </div>
+                            <div class="col-12" style="font-size: 20px;">
+                                <span >Month</span>
+                            </div>                           
+                        </div>
+                       
+                        <div class="col-6" style="background-color:white ; border-radius: 50px;color:#64da93 ; font-weight: bold;" >
+                            <div class="col-12" style="font-size: 16px;" (click)="show_billing_details('Department Wise Current Year Details')">
+                                <span >{{yearly_billing_value | number}}
+                                    
+                                </span>
+                            </div>
+                            <div class="col-12" style="font-size: 20px;">
+                                <span >Year </span>
+                            </div>       
+                            
+                        </div>
+                    
+                    </div>
+
+                </div>
+                <div class="col-12">
+                    <h4 style="background-color: #2f92c5;font-weight: bold;color: white;text-align: center;font-size: 20px;">-------------------</h4>
+                </div>
+            </mat-card>
+        </div>
+        <!-- <div class="col-1 mb-2" >
+        </div> -->
+    </div>
+
+       <mat-card  class="icon-rocket" style="text-align: center;" >
+        <!-- <div class="row">
+            <div class="col-12">
+                <h4 style="background-color: #2f92c5;font-weight: bold;color: white;text-align: center;font-size: 20px;">Transporter Details</h4>
+            </div>
+        </div> -->
+        <div class="row" >
+            
+
+            <div class="col-md-8 mb-2 mt-2" *ngIf="dispatched_list" >
+                <mat-card  class="icon-rocket" style="text-align: center;background-color: #e3e0e085;" >
+                    <h4 style="background-color: #2f92c5;font-weight: bold;color: white;text-align: center;font-size: 20px;">DA Current Status wise</h4><span style="color: #a92700;float: right;"></span>
+                    <div class="row">
+                    
+                        <div class="col-12" style="display: flex;font-size: 20px;">
+                            <div class="col-2" >
+                                <span  style="color: #7a680e;" *ngIf="approved_list.length == 0">0</span>
+                                <span  style="color: #7a680e;" *ngIf="approved_list.length != 0" (click)="show_billing_da_details(approved_list[0].records)">{{approved_list[0].length}}</span>
+                               
+                            </div>
+                            <div class="col-2" >
+                                <span  style="color: #7a680e;" *ngIf="aknowledge_list.length == 0">0</span>
+                                <span  style="color: #7a680e;" *ngIf="aknowledge_list.length != 0" (click)="show_billing_da_details(aknowledge_list[0].records)">{{aknowledge_list[0].length}}</span>
+                            </div>
+                            <div class="col-2" >
+                                <span  style="color: #7a680e;" *ngIf="packing_initiated_list.length == 0">0</span>
+                                <span  style="color: #7a680e;" *ngIf="packing_initiated_list.length != 0" (click)="show_billing_da_details(packing_initiated_list[0].records)">{{packing_initiated_list[0].length}}</span>
+                            </div>
+                            <div class="col-2" >
+                                <span  style="color: #7a680e;" *ngIf="packed_list.length == 0">0</span>
+                                <span  style="color: #7a680e;" *ngIf="packed_list.length != 0" (click)="show_billing_da_details(packed_list[0].records)">{{packed_list[0].length}}</span>
+                            </div>
+                            <div class="col-2" >
+                                <span  style="color: #7a680e;" *ngIf="loading_completed_list.length == 0">0</span>
+                                <span  style="color: #7a680e;" *ngIf="loading_completed_list.length != 0" (click)="show_billing_da_details(loading_completed_list[0].records)">{{loading_completed_list[0].length}}</span>
+                            </div>
+                            <div class="col-2" >
+                                <span  style="color: #7a680e;" *ngIf="dispatched_list.length == 0">0</span>
+                                <span  style="color: #7a680e;" *ngIf="dispatched_list.length != 0" (click)="show_billing_da_details(dispatched_list[0].records)">{{dispatched_list[0].length}}</span>
+                            </div>
+                        
+                        </div>
+                        <div class="col-12" style="display: flex;font-size: 15px;">
+                            <div class="col-2" >
+                                <span  style="color: #7a680e;">Approved </span>
+                            </div>
+                            <div class="col-2" >
+                                <span style="color: #ff1010;">Acknowledge</span>
+                            </div>
+                            <div class="col-2" >
+                                <span style="color: #0e6a0e">Packing Initiated</span>
+                            </div>
+                            <div class="col-2" >
+                                <span style="color: #0e6a0e">Packed</span>
+                            </div>
+                            <div class="col-2" >
+                                <span style="color: #0e6a0e">Loaded</span>
+                            </div>
+                            <div class="col-2" >
+                                <span style="color: #0e6a0e">Dispatch</span>
+                            </div>
+
+                        </div>
+                    </div>
+                </mat-card>
+            </div>
+        </div>
+    </mat-card>
+
+
+
+
+
+
+
+
+
+
+    <mat-card  class="icon-rocket" style="text-align: center;" >
+        <!-- <div class="row">
+            <div class="col-12">
+                <h4 style="background-color: #2f92c5;font-weight: bold;color: white;text-align: center;font-size: 20px;">Transporter Details</h4>
+            </div>
+        </div> -->
+        <div class="row" >
+            
+
+            <div class="col-md-8 mb-2 mt-2" *ngIf="dispatched_list" >
+                <mat-card  class="icon-rocket" style="text-align: center;background-color: #e3e0e085;" >
+                    <!-- <h4 style="background-color: #2f92c5;font-weight: bold;color: white;text-align: center;">
+                   -->
+                   <div class="row" style="background-color: #2f92c5;font-weight: bold;color: white;text-align: center;">
+                        <div class="col-6">
+                            <span style="font-size: 20px;">DA Current Status wise</span>
+                        </div>
+                        <div class="col-6">
+                            <mat-form-field style="font-weight: bold;font-size: 13px;">
+                                <mat-label>Enter a date range</mat-label>
+                                <mat-date-range-input [rangePicker]="picker">
+                                  <input matStartDate  placeholder="Start date"  [(ngModel)]="summary_start" >
+                                  <input matEndDate  placeholder="End date"  [(ngModel)]="summary_end" >
+                                </mat-date-range-input>
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-date-range-picker #picker></mat-date-range-picker>
+                                <button mat-button matSuffix  mat-icon-button (click)="getLogisticSummary()">
+                                <mat-icon>search</mat-icon>  </button>
+    
+                              </mat-form-field>
+                            
+                        </div>
+                   </div>
+                        
+                        <!-- </h4> -->
+                    
+                
+                    <div class="row" *ngIf="summary_list">
+                    
+                        <div class="col-12" style="display: flex;font-size: 20px;">
+                           
+                            <div class="col-2" >
+                                <span  style="color: #7a680e;" *ngIf="summary_list.ack.length == 0">0</span>
+                                <span  style="color: #7a680e;" *ngIf="summary_list.ack.length != 0" (click)="show_billing_da_details(summary_list.ack)">{{summary_list.ack.length}}</span>
+                            </div>
+                           
+                           
+                            <div class="col-2" >
+                                <span  style="color: #7a680e;" *ngIf="loading_completed_list.length == 0">0</span>
+                                <span  style="color: #7a680e;" *ngIf="loading_completed_list.length != 0" (click)="show_billing_da_details(loading_completed_list[0].records)">{{loading_completed_list[0].length}}</span>
+                            </div>
+                            <div class="col-2" >
+                                <span  style="color: #7a680e;" *ngIf="dispatched_list.length == 0">0</span>
+                                <span  style="color: #7a680e;" *ngIf="dispatched_list.length != 0" (click)="show_billing_da_details(dispatched_list[0].records)">{{dispatched_list[0].length}}</span>
+                            </div>
+                            <div class="col-2" >
+                                <span  style="color: #7a680e;" *ngIf="packed_list.length == 0">0</span>
+                                <span  style="color: #7a680e;" *ngIf="packed_list.length != 0" (click)="show_billing_da_details(packed_list[0].records)">{{packed_list[0].length}}</span>
+                            </div>
+                            <div class="col-2" >
+                                <span  style="color: #7a680e;" *ngIf="packed_list.length == 0">0</span>
+                                <span  style="color: #7a680e;" *ngIf="packed_list.length != 0" (click)="show_billing_da_details(packed_list[0].records)">{{packed_list[0].length}}</span>
+                            </div>
+                        
+                        </div>
+                        <div class="col-12" style="display: flex;font-size: 15px;">
+                            
+                            <div class="col-2" >
+                                <span style="color: #ff1010;">Acknowledge</span>
+                            </div>
+                            <div class="col-2" >
+                                <span style="color: #0e6a0e">Loaded</span>
+                            </div>
+                            <div class="col-2" >
+                                <span style="color: #0e6a0e">Dispatch</span>
+                            </div>
+                            <div class="col-2" >
+                                <span style="color: #0e6a0e">Delivered</span>
+                            </div>
+                            <div class="col-2" >
+                                <span style="color: #0e6a0e">Billing</span>
+                            </div>
+
+                        </div>
+                    </div>
+                </mat-card>
+            </div>
+        </div>
+    </mat-card>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- <mat-card  class="icon-rocket" style="text-align: center;" >
+        <div class="row">
+            <div class="col-12">
+                <h4 style="background-color: #2f92c5;font-weight: bold;color: white;text-align: center;font-size: 20px;">Transporter Details</h4>
+            </div>
+        </div>
+        <div class="row" >
+            
+
+            <div class="col-md-3 mb-2 mt-2" *ngFor="let subskill of CheckedOutList;let i=index">
+                <mat-card  class="icon-rocket" style="text-align: center;background-color: #e3e0e085;" >
+                    <h4 style="background-color: #2f92c5;font-weight: bold;color: white;text-align: center;font-size: 20px;">{{subskill.transportationProvider}}</h4><span style="color: #a92700;float: right;"></span>
+                    <div class="row">
+                    
+                        <div class="col-12" style="display: flex;font-size: 20px;">
+                            <div class="col-3" (click)="show_truck_details_val(subskill.records)">
+                                <span  style="color: #7a680e;">{{subskill.Open}}</span>
+                            </div>
+                            <div class="col-4" (click)="show_truck_details_val(subskill.over_due_list)">
+                                <span  style="color: #ff1010;">{{subskill.OverDue}}</span>
+                            </div>
+                            <div class="col-5" (click)="show_truck_details_val(subskill.in_schedule_list)">
+                                <span  style="color: #0e6a0e;">{{subskill.InSchedule}}</span>
+                            </div>
+                        
+                        </div>
+                        <div class="col-12" style="display: flex;font-size: 15px;">
+                            <div class="col-3" >
+                                <span  style="color: #7a680e;">Open </span>
+                            </div>
+                            <div class="col-4" >
+                                <span style="color: #ff1010;">Over Due</span>
+                            </div>
+                            <div class="col-5" >
+                                <span style="color: #0e6a0e">In Schedule </span>
+                            </div>
+                        </div>
+                    </div>
+                </mat-card>
+            </div>
+        </div>
+    </mat-card> -->
+</div>
+
+
+<!-- <div *ngIf="show_da_details_with_count && da_count_loaded" style="margin-bottom: 100px;background-color: #2888bb0a;">
+    <div class="row" >
+       
+        <div class="col-md-12 ">
+            <mat-card  class="icon-rocket" style="text-align: center;">
+                <div class="row">
+                    <div class="col-12">
+                        <h4 style="background-color: #2f92c5;font-weight: bold;color: white;text-align: center;font-size: 20px;">DA Details</h4>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12" style="display: flex;margin-bottom: 30px;">
+                        
+                        <div class="col-2 " style="border-radius: 30px;color: #099f4f; font-weight: bold;padding: 5px;margin-right: 40px;">
+                        
+                            <div class="col-12">
+                                <h5 style="color:#099f4f;font-size:25px;display: inline;font-weight: bold;" *ngIf="da_submitted_list.length == 0">0</h5>
+                                <h4 style=" color:#099f4f;font-size:25px;display: inline;font-weight: bold;" *ngIf="da_submitted_list.length != 0" (click)="show_da_details(da_submitted_list[0].records)">{{da_submitted_list[0].length}}</h4>
+                            </div>
+                            <div class="col-12" style="font-size: 20px;">
+                                <span  >DA Submitted</span>
+                            </div>                            
+                        </div>
+
+                        <div class="col-2 " style="border-radius: 30px; font-weight: bold;padding: 5px;margin-right: 40px;">
+                            <div class="col-12">
+                                <h4 style=" color:   #f935ae;;font-size:25px;display: inline;" *ngIf="approval_in_progress_list.length == 0">0</h4>
+                                <h4 style=" color:   #f935ae;;font-size:25px;display: inline;" *ngIf="approval_in_progress_list.length != 0" (click)="show_da_details(approval_in_progress_list[0].records)">{{approval_in_progress_list[0].length}}</h4>
+                            </div>
+                            <div class="col-12" style="font-size: 20px;">
+                                <span  style="color:   #f935ae;;">Approval in Progress</span>
+                            </div>  
+                        </div>
+
+                        <div class="col-2 " style=" border-radius: 30px;color: white; font-weight: bold;padding: 5px;margin-right: 40px;" >
+                            <div class="col-12">
+                                <h4 style=" color:   #576cda;;font-size:25px;display: inline;" *ngIf="approved_list.length == 0">0</h4>
+                                <h4 style=" color:   #576cda;;font-size:25px;display: inline;" *ngIf="approved_list.length != 0" (click)="show_da_details(approved_list[0].records)">{{approved_list[0].length}}</h4>
+                            </div>
+                            <div class="col-12" style="font-size: 20px;">
+                                <span  style="color:   #576cda;;">Approved</span>
+                            </div>  
+                        </div>
+
+                        <div class="col-2 " style=" border-radius: 30px;color: white; font-weight: bold;padding: 5px;margin-right: 40px;">
+                            <div class="col-12">
+                                <h4 style=" color:   #ff8b5d;;font-size:25px;display: inline;" *ngIf="aknowledge_list.length == 0">0</h4>
+                                <h4 style=" color:   #ff8b5d;;font-size:25px;display: inline;" *ngIf="aknowledge_list.length != 0" (click)="show_da_details(aknowledge_list[0].records)">{{aknowledge_list[0].length}}</h4>
+                            </div>
+                            <div class="col-12" style="font-size: 20px;">
+                                <span  style="color:   #ff8b5d;;">Aknowledge</span>
+                            </div>     
+                        </div>
+
+                        <div class="col-2" style=" border-radius: 30px;color: white; font-weight: bold;padding: 5px;margin-right: 40px;">
+                            <div class="col-12">
+                                <h4 style=" color:   #64da93;;font-size:25px;display: inline;" *ngIf="packing_initiated_list.length == 0">0</h4>
+                                <h4 style=" color:   #64da93;;font-size:25px;display: inline;" *ngIf="packing_initiated_list.length != 0" (click)="show_da_details(packing_initiated_list[0].records)">{{packing_initiated_list[0].length}}</h4>
+                            </div>
+                            <div class="col-12" style="font-size: 20px;">
+                                <span  style="color: #64da93;">Packing Initiated</span>
+                            </div> 
+                         </div>
+                         
+                         
+                </div>
+
+                <div class="col-12" style="display: flex; margin-top:3px;"> </div> 
+
+                    <div class="col-12 " style="display: flex;">
+                        <div class="col-2 " style=" border-radius: 30px;color: white; font-weight: bold;padding: 5px;margin-right: 40px;" >
+                            <div class="col-12">
+                                <h4 style=" color: #f085e9;font-size:25px;display: inline;" *ngIf="packed_list.length == 0">0</h4>
+                                <h4 style=" color: #f085e9;font-size:25px;display: inline;" *ngIf="packed_list.length != 0" (click)="show_da_details(packed_list[0].records)">{{packed_list[0].length}}</h4>
+                            </div>
+                            <div class="col-12" style="font-size: 20px;">
+                                <span  style="color: #f085e9;">Packed</span>
+                            </div>   
+                        </div>
+                        <div class="col-2" style="border-radius: 30px;color: white; font-weight: bold;padding: 5px;margin-right: 40px;">
+                            <div class="col-12">
+                                <h4 style=" color: #64a7f7;font-size:25px;display: inline;" *ngIf="loading_completed_list.length == 0">0</h4>
+                                <h4 style=" color: #64a7f7;font-size:25px;display: inline;" *ngIf="loading_completed_list.length != 0" (click)="show_da_details(loading_completed_list[0].records)">{{loading_completed_list[0].length}}</h4>
+                            </div>
+                            <div class="col-12" style="font-size: 20px;">
+                                <span  style="color: #64a7f7;">Loading Completed</span>
+                            </div>   
+                        </div>
+                        <div class="col-2 " style=" border-radius: 30px;color: white; font-weight: bold;padding: 5px;margin-right: 40px;">
+                            <div class="col-12">
+                                <h4 style=" color: #fdac8d;font-size:25px;display: inline;" *ngIf="dispatched_list.length == 0">0</h4>
+                                <h4 style=" color: #fdac8d;font-size:25px;display: inline;" *ngIf="dispatched_list.length != 0" (click)="show_da_details(dispatched_list[0].records)">{{dispatched_list[0].length}}</h4>
+                            </div>
+                            <div class="col-12" style="font-size: 20px;">
+                                <span  style="color: #fdac8d;">Dispatched</span>
+                            </div>     
+                        </div>
+                        <div class="col-2 " style=" border-radius: 30px;color: white; font-weight: bold;padding: 5px;margin-right: 40px;" >
+                            <div class="col-12">
+                                <h4 style=" color: #98ea75;font-size:25px;display: inline;" *ngIf="delivered_list.length == 0">0</h4>
+                                <h4 style=" color: #98ea75;font-size:25px;display: inline;" *ngIf="delivered_list.length != 0" (click)="show_da_details(delivered_list[0].records)">{{delivered_list[0].length}}</h4>
+                            </div>
+                            <div class="col-12" style="font-size: 20px;">
+                                <span  style="color: #98ea75;">Delivered</span>
+                            </div>     
+                        </div>
+                        <div class="col-2 " style=" border-radius: 30px;color: white; font-weight: bold;padding: 5px;margin-right: 40px;">
+                            <div class="col-12">
+                                <h4 style=" color: #f3b8f1;font-size:25px;display: inline;" *ngIf="pending_list.length == 0">0</h4>
+                                <h4 style=" color: #f3b8f1;font-size:25px;display: inline;" *ngIf="pending_list.length != 0" (click)="show_da_details(pending_list[0].records)">{{pending_list[0].length}}</h4>
+                            </div>
+                            <div class="col-12" style="font-size: 20px;">
+                                <span  style="color: #f3b8f1;">Pending</span>
+                            </div>                      
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <h4 style="background-color: #2f92c5;font-weight: bold;color: white;text-align: center;font-size: 20px;">---------------------------------------------------------------------------------------------</h4>
+                </div>
+            </mat-card>
+        </div>
+        
+    </div>
+
+    <div class="row" >
+        <div class="col-md-3 mb-2 mt-2" *ngFor="let subskill of dispatch_advice_dept_list;let i=index">
+            <mat-card  class="icon-rocket" style="text-align: center;background-color: #b747ebad;" >
+                <h4 style=" color: white;display: inline;">{{subskill.departmentName}}</h4><br/>
+                <div class="row">
+                    <div class="col-12" style="display: flex;font-size: 20px;text-align: center;">
+                        <div class="col-3" (click)="show_da_details(subskill.records)">
+                            <span style="color: green;font-size:25px; margin-left:6rem;">{{subskill.records.length}}</span>
+                        </div>
+                    </div>
+                </div>
+            </mat-card>
+        </div>
+    </div>
+
+</div> -->
+
+
+<div class="row" *ngIf="packing_loading_details">
+   
+<div class="col-6">
+<mat-card>
+    <span style="color:rgb(55, 9, 180);border-bottom:solid 1px;"><b>Packing List - Top 5</b></span>
+    <span style="color: #b529c5;border-bottom:solid 1px;float: right;" (click)="packingViewNavigation('packaging/packinglist')"><b>View All</b></span>
+    <table>
+        <thead>
+        <tr>
+            <th width="5%" ></th>
+            <th width="20%" ></th>
+            <th width="30%" ></th>
+            <th width="25%" ></th>
+            <th width="20%" ></th>
+            
+
+        </tr>
+          <tr style="border-bottom:solid 1px;color:#b529c5;">
+            <th>Sl.no</th>
+            <th>DA no</th>
+            <th>Department</th>
+            <th>Status</th>
+            <th>Assign To</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let subskill of tablepackinglist;let i=index">
+                <td style="padding:2px;">{{i+1}}</td>
+                <td style="color:blue;padding:2px;" (click)="packingNavigation(subskill.da_id,'packaging/dawise')">{{subskill.jobcode_da_no}}</td>
+                <td style="margin-right:1rem;padding:2px;">{{subskill.sub_dept_name}}</td>
+                <td style="color:rgb(66 219 31);margin-right:1rem;padding:2px;">{{subskill.status}}</td>
+                <td style="margin-right:1rem;padding:2px;">{{subskill.emp_names}}</td>
+            </tbody>
+        </table>
+</mat-card>
+</div>
+
+
+
+<div class="col-6" >
+    <mat-card>
+        <span style="color:rgb(55, 9, 180);border-bottom:solid 1px;"><b>Loading List - Top 5</b></span>
+        <span style="color: #b529c5;border-bottom:solid 1px;float: right;" (click)="packingViewNavigation('loading/loadingpackedbox')"><b>View All</b></span>
+       
+        <table>
+            <thead>
+            <tr>
+                
+                    <th width="5%" ></th>
+                    <th width="20%" ></th>
+                    <th width="30%" ></th>
+                    <th width="25%" ></th>
+                    <th width="20%" ></th>
+                    
+        
+               
+               
+            </tr>
+              <tr style="border-bottom:solid 1px;color:#b529c5;">
+                <th>Sl.no</th>
+                <th>DA no</th>
+                <th>Department</th>
+                <th>Status</th>
+                <th>Assign To</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let subskill of tableloadinglist;let i=index">
+                    <td style="padding:2px;">{{i+1}}</td>
+                    <td style="color:blue;padding:2px;" (click)="packingNavigation(subskill.da_id,'loading/loadingpackedbox')">{{subskill.jobcode_da_no}}</td>
+                    <td style="margin-right:1rem;padding:2px;">{{subskill.sub_dept_name}}</td>
+                    <td style="color:rgb(66 219 31);margin-right:1rem;padding:2px;">{{subskill.status}}</td>
+                    <td style="margin-right:1rem;padding:2px;">{{subskill.emp_names}}</td>
+                </tbody>
+            </table>
+    </mat-card>
+    </div>
+</div>
+    
+
+
+
+
+
+<div class="row" *ngIf="show_da_approver_list">
+    
+    <div class="col-3">
+
+    </div>
+    <div class="col-6">
+    <mat-card>
+        <h4 style="width:100%;background-color: #2f92c5;font-weight: bold;color: white;text-align: center;font-size: 20px;">DA Approval Pending List - Top 5   <span style="color: white;border-bottom:solid 1px;float: right;font-size: 12px;" (click)="packingViewNavigation('packaging/packinglist')"><b>View All</b></span></h4>
+
+        
+      
+        <!-- <table class="table table-bordered table-striped table-hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"> -->
+            <table >
+     
+            <thead>
+            
+              <tr style="border-bottom:solid 1px;color:#b529c5;">
+                <th width="10%">Sl.no</th>
+                <th width="20%">DA no</th>
+                <th width="25%">Department</th>
+                <th width="10%">Job Code</th>
+                <th width="20%">SO</th>
+                <th width="15%">Status</th>
+              
+            </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let subskill of tabledaapproverlist;let i=index">
+                    <td >{{i+1}}</td>
+                    <td style="color:blue;padding:2px;" (click)="packingNavigation(subskill.da_id,'packaging/dawise')">{{subskill.jobcode_da_no}}</td>
+                    <td >{{subskill.sub_dept_name}}</td>
+                    <td >{{subskill.job_code}}</td>
+                    <td >{{subskill.so_no}}</td>
+                    <td style="color:rgb(66 219 31);">{{subskill.status}}</td>
+                </tr>   
+            </tbody>
+            </table>
+    </mat-card>
+    </div>
+    <div class="col-3">
+        
+    </div>
+</div>
+  
+
+  
+  <div *ngIf="show_da_details_with_count_creater && da_count_loaded_creater" style="background-color: #2888bb0a;">
+    <div class="row" >
+       
+        <div class="col-md-12 ">
+            <mat-card  class="icon-rocket" style="text-align: center;">
+                <div class="row">
+                    <div class="col-12">
+                        <h4 style="background-color: #2f92c5;font-weight: bold;color: white;text-align: center;font-size: 20px;">DA Status Wise</h4>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12" style="display: flex;margin-bottom: 30px;">
+                        
+                        <div class="col-2 " style="border-radius: 30px;color: #099f4f; font-weight: bold;padding: 5px;margin-right: 40px;">
+                        
+                            <div class="col-12">
+                                <h5 style="color:#099f4f;font-size:25px;display: inline;font-weight: bold;" *ngIf="da_submitted_list_creater.length == 0">0</h5>
+                                <h4 style=" color:#099f4f;font-size:25px;display: inline;font-weight: bold;" *ngIf="da_submitted_list_creater.length != 0" (click)="show_da_details(da_submitted_list_creater)">{{da_submitted_list_creater.length}}</h4>
+                            </div>
+                            <div class="col-12" style="font-size: 20px;">
+                                <span  >DA Submitted</span>
+                            </div>                            
+                        </div>
+
+                        <div class="col-2 " style="border-radius: 30px; font-weight: bold;padding: 5px;margin-right: 40px;">
+                            <div class="col-12">
+                                <h4 style=" color:   #f935ae;;font-size:25px;display: inline;" *ngIf="approval_in_progress_list_creater.length == 0">0</h4>
+                                <h4 style=" color:   #f935ae;;font-size:25px;display: inline;" *ngIf="approval_in_progress_list_creater.length != 0" (click)="show_da_details(approval_in_progress_list_creater)">{{approval_in_progress_list_creater.length}}</h4>
+                            </div>
+                            <div class="col-12" style="font-size: 20px;">
+                                <span  style="color:   #f935ae;;">Approval in Progress</span>
+                            </div>  
+                        </div>
+
+                        <div class="col-2 " style=" border-radius: 30px;color: white; font-weight: bold;padding: 5px;margin-right: 40px;" >
+                            <div class="col-12">
+                                <h4 style=" color:   #576cda;;font-size:25px;display: inline;" *ngIf="approved_list_creater.length == 0">0</h4>
+                                <h4 style=" color:   #576cda;;font-size:25px;display: inline;" *ngIf="approved_list_creater.length != 0" (click)="show_da_details(approved_list_creater)">{{approved_list_creater.length}}</h4>
+                            </div>
+                            <div class="col-12" style="font-size: 20px;">
+                                <span  style="color:   #576cda;;">Approved</span>
+                            </div>  
+                        </div>
+
+                        <div class="col-2 " style=" border-radius: 30px;color: white; font-weight: bold;padding: 5px;margin-right: 40px;">
+                            <div class="col-12">
+                                <h4 style=" color:   #ff8b5d;;font-size:25px;display: inline;" *ngIf="aknowledge_list_creater.length == 0">0</h4>
+                                <h4 style=" color:   #ff8b5d;;font-size:25px;display: inline;" *ngIf="aknowledge_list_creater.length != 0" (click)="show_da_details(aknowledge_list_creater)">{{aknowledge_list_creater.length}}</h4>
+                            </div>
+                            <div class="col-12" style="font-size: 20px;">
+                                <span  style="color:   #ff8b5d;;">Aknowledge</span>
+                            </div>     
+                        </div>
+
+                        <div class="col-2" style=" border-radius: 30px;color: white; font-weight: bold;padding: 5px;margin-right: 40px;">
+                            <div class="col-12">
+                                <h4 style=" color:   #64da93;;font-size:25px;display: inline;" *ngIf="packing_initiated_list_creater.length == 0">0</h4>
+                                <h4 style=" color:   #64da93;;font-size:25px;display: inline;" *ngIf="packing_initiated_list_creater.length != 0" (click)="show_da_details(packing_initiated_list_creater)">{{packing_initiated_list_creater.length}}</h4>
+                            </div>
+                            <div class="col-12" style="font-size: 20px;">
+                                <span  style="color: #64da93;">Packing Initiated</span>
+                            </div> 
+                         </div>
+                         
+                         
+                </div>
+
+                <div class="col-12" style="display: flex; margin-top:3px;"> </div> 
+
+                    <div class="col-12 " style="display: flex;">
+                        <div class="col-2 " style=" border-radius: 30px;color: white; font-weight: bold;padding: 5px;margin-right: 40px;" >
+                            <div class="col-12">
+                                <h4 style=" color: #f085e9;font-size:25px;display: inline;" *ngIf="packed_list_creater.length == 0">0</h4>
+                                <h4 style=" color: #f085e9;font-size:25px;display: inline;" *ngIf="packed_list_creater.length != 0" (click)="show_da_details(packed_list_creater)">{{packed_list_creater.length}}</h4>
+                            </div>
+                            <div class="col-12" style="font-size: 20px;">
+                                <span  style="color: #f085e9;">Packed</span>
+                            </div>   
+                        </div>
+                        <div class="col-2" style="border-radius: 30px;color: white; font-weight: bold;padding: 5px;margin-right: 40px;">
+                            <div class="col-12">
+                                <h4 style=" color: #64a7f7;font-size:25px;display: inline;" *ngIf="loading_completed_list_creater.length == 0">0</h4>
+                                <h4 style=" color: #64a7f7;font-size:25px;display: inline;" *ngIf="loading_completed_list_creater.length != 0" (click)="show_da_details(loading_completed_list_creater)">{{loading_completed_list_creater.length}}</h4>
+                            </div>
+                            <div class="col-12" style="font-size: 20px;">
+                                <span  style="color: #64a7f7;">Loading Completed</span>
+                            </div>   
+                        </div>
+                        <div class="col-2 " style=" border-radius: 30px;color: white; font-weight: bold;padding: 5px;margin-right: 40px;">
+                            <div class="col-12">
+                                <h4 style=" color: #fdac8d;font-size:25px;display: inline;" *ngIf="dispatched_list_creater.length == 0">0</h4>
+                                <h4 style=" color: #fdac8d;font-size:25px;display: inline;" *ngIf="dispatched_list_creater.length != 0" (click)="show_da_details(dispatched_list_creater)">{{dispatched_list_creater.length}}</h4>
+                            </div>
+                            <div class="col-12" style="font-size: 20px;">
+                                <span  style="color: #fdac8d;">Dispatched</span>
+                            </div>     
+                        </div>
+                       
+                       
+                    </div>
+                </div>
+                <div class="col-12">
+                    <h4 style="background-color: #2f92c5;font-weight: bold;color: white;text-align: center;font-size: 20px;">---------------------------------------------------------------------------------------------</h4>
+                </div>
+            </mat-card>
+        </div>
+        
+    </div>
+
+    
+
+</div>
+
+
+    
+    
+    
+
+
+
+
+
+<!-- end -->
+<!-- <div *ngIf="dashboardtwoo" style="height: 100%;background-color: #2888bb0a;">
+    <div class="row" >
+        <div class="col-md-1 mb-2 mt-2" >
+        </div>
+        <div class="col-md-12 mb-2 mt-2">
+            <mat-card  class="icon-rocket" style="text-align: center;" *ngFor="let subskill of dispatch_advice_da_status_list;let i=index">
+                <div class="row">
+                    <div class="col-md-12">
+                        <span style="font-size:20px;text-align:left;">Dashboard</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12" style="display: flex;">
+                        <div class="col-2 mr-2 mb-2" style="background-color: #099f4f; border-radius: 30px;color: white; font-weight: bold;">
+                            <div class="col-12" (click)="show_da_details(subskill.aknowledge_list)">
+                                <h4 style=" color: white;font-size:25px;display: inline;" *ngIf="subskill.aknowledge_list.length ==0">0</h4>
+                                <h4 style=" color: white;font-size:25px;display: inline;" *ngIf="subskill.aknowledge_list.length !=0">{{subskill.aknowledge_list.length}}</h4>
+                            </div>
+                            <div class="col-12" style="font-size: 20px;" (click)="show_da_details(subskill.aknowledge_list)">
+                                    <span  style="color: #4f0e7a;" *ngIf="subskill.aknowledge_list.length ==0">Aknowledge</span>
+                                    <span  style="color: #4f0e7a;" *ngIf="subskill.aknowledge_list.length !=0">{{subskill.aknowledge_list[0].da_status}}</span>
+                            </div>                           
+                        </div>
+                        <div class="col-2 mr-2 mb-2" style="background-color: #f935ae; border-radius: 30px;color: white; font-weight: bold;">
+                            <div class="col-12" (click)="show_da_details(subskill.approval_in_progress_list)">
+                                <h4 style=" color: white;font-size:25px;display: inline;" *ngIf="subskill.approval_in_progress_list.length ==0">0</h4>
+                                <h4 style=" color: white;font-size:25px;display: inline;" *ngIf="subskill.approval_in_progress_list.length !=0">{{subskill.approval_in_progress_list.length}}</h4>
+                            </div>
+                            <div class="col-12" style="font-size: 20px;" (click)="show_da_details(subskill.approval_in_progress_list)">
+                                <span  style="color: #4f0e7a;" *ngIf="subskill.approval_in_progress_list.length ==0">Approval in Progress</span>
+                                <span  style="color: #4f0e7a;" *ngIf="subskill.approval_in_progress_list.length !=0">{{subskill.approval_in_progress_list[0].da_status}}</span>
+                            </div>
+                        </div>
+                        <div class="col-2 mr-2 mb-2" style="background-color: #576cda; border-radius: 30px;color: white; font-weight: bold;" >
+                            <div class="col-12" (click)="show_da_details(subskill.approved_list)">
+                                <h4 style=" color: white;font-size:25px;display: inline;" *ngIf="subskill.approved_list.length == 0">0</h4>
+                                <h4 style=" color: white;font-size:25px;display: inline;" *ngIf="subskill.approved_list.length !=0">{{subskill.approved_list.length}}</h4>
+                            </div>
+                            <div class="col-12"  style="font-size: 20px;" (click)="show_da_details(subskill.approved_list)">
+                                <span  style="color: #4f0e7a;" *ngIf="subskill.approved_list.length == 0">Approved</span>
+                                <span  style="color: #4f0e7a;" *ngIf="subskill.approved_list.length !=0">{{subskill.approved_list[0].da_status}}</span>
+                            </div>     
+                        </div>
+                        <!-- <div class="col-2 mr-1" style="background-color:#ff8b5d; border-radius: 30px;color: white; font-weight: bold;">
+                            <div class="col-12" (click)="show_da_details(subskill.closed_list)">
+                                <h4 style=" color: white;display: inline;" *ngIf="subskill.closed_list.length == 0">0</h4>
+                                <h4 style=" color: white;display: inline;" *ngIf="subskill.closed_list.length !=0">{{subskill.closed_list.length}}</h4>
+                            </div>
+                            <div class="col-12" style="font-size: 20px;" (click)="show_da_details(subskill.closed_list)">
+                                <span  style="color: #4f0e7a;" *ngIf="subskill.closed_list.length ==0">Closed</span>
+                                <span  style="color: #4f0e7a;" *ngIf="subskill.closed_list.length !=0">{{subskill.closed_list[0].da_status}}</span>
+                            </div>                        
+                        </div> 
+                        <div class="col-2 mr-2 mb-2" style="background-color: #64da93; border-radius: 30px;color: white; font-weight: bold;">
+                            <div class="col-12" (click)="show_da_details(subskill.da_submitted_list)">
+                                <h4 style=" color: white;font-size:25px;display: inline;" *ngIf="subskill.da_submitted_list.length == 0">0</h4>
+                                <h4 style=" color: white;font-size:25px;display: inline;" *ngIf="subskill.da_submitted_list.length !=0">{{subskill.da_submitted_list.length}}</h4>
+                            </div>
+                            <div class="col-12" style="font-size: 20px;" (click)="show_da_details(subskill.da_submitted_list)">
+                                <div class="col-12" (click)="show_da_details(subskill.da_submitted_list)">
+                                    <span  style="color: #4f0e7a;" *ngIf="subskill.da_submitted_list.length == 0">DA Submitted</span>
+                                    <span  style="color: #4f0e7a;" *ngIf="subskill.da_submitted_list.length !=0">{{subskill.da_submitted_list[0].da_status}}</span>
+                                </div>
+                            </div>
+                         </div>
+                         <div class="col-2 mb-2" style="background-color: #f085e9; border-radius: 30px;color: white; font-weight: bold;" >
+                            <div class="col-12" (click)="show_da_details(subskill.delivered_list)">
+                                <h4 style=" color: white;font-size:25px;display: inline;" *ngIf="subskill.delivered_list.length == 0">0</h4>
+                                <h4 style=" color: white;font-size:25px;display: inline;" *ngIf="subskill.delivered_list.length !=0">{{subskill.delivered_list.length}}</h4>
+                            </div>
+                            <div class="col-12" style="font-size: 20px;" (click)="show_da_details(subskill.delivered_list)">
+                                <span  style="color: #4f0e7a;" *ngIf="subskill.delivered_list.length == 0">Delivered</span>
+                                <span  style="color: #4f0e7a;" *ngIf="subskill.delivered_list.length !=0">{{subskill.delivered_list[0].da_status}}</span>
+                            </div>       
+                        </div>
+                </div>
+
+                <div class="col-12" style="display: flex; margin-top:3px;"> </div> 
+
+                    <div class="col-12 mb-2" style="display: flex;">
+                        <div class="col-2 mr-2" style="background-color: #64a7f7; border-radius: 30px;color: white; font-weight: bold;">
+                            <div class="col-12" (click)="show_da_details(subskill.dispatched_list)">
+                                <h4 style=" color: white;font-size:25px;display: inline;" *ngIf="subskill.dispatched_list.length == 0">0</h4>
+                                <h4 style=" color: white;font-size:25px;display: inline;" *ngIf="subskill.dispatched_list.length !=0">{{subskill.dispatched_list.length}}</h4>
+                            </div>
+                            <div class="col-12" style="font-size: 20px;" (click)="show_da_details(subskill.dispatched_list)">
+                                <span  style="color: #4f0e7a;" *ngIf="subskill.dispatched_list.length == 0">Dispatched</span>
+                                <span  style="color: #4f0e7a;" *ngIf="subskill.dispatched_list.length !=0">{{subskill.dispatched_list[0].da_status}}</span>
+                            </div>                      
+                        </div>
+                        <div class="col-2 mr-2 mb-2" style="background-color: #fdac8d; border-radius: 30px;color: white; font-weight: bold;">
+                            <div class="col-12" (click)="show_da_details(subskill.loading_completed_list)">
+                                <h4 style=" color: white;font-size:25px;display: inline;" *ngIf="subskill.loading_completed_list.length == 0">0</h4>
+                                <h4 style=" color: white;font-size:25px;display: inline;" *ngIf="subskill.loading_completed_list.length !=0">{{subskill.loading_completed_list.length}}</h4>
+                            </div>
+                            <div class="col-12" style="font-size: 20px;" (click)="show_da_details(subskill.loading_completed_list)">
+                                <span  style="color: #4f0e7a;" *ngIf="subskill.loading_completed_list.length == 0">Loading Completed</span>
+                                <span  style="color: #4f0e7a;" *ngIf="subskill.loading_completed_list.length !=0">{{subskill.loading_completed_list[0].da_status}}</span>
+                            </div>     
+                        </div>
+                        <div class="col-2 mr-2 mb-2" style="background-color: #98ea75; border-radius: 30px;color: white; font-weight: bold;" >
+                            <div class="col-12" (click)="show_da_details(subskill.packed_list)">
+                                <h4 style=" color: white;font-size:25px;display: inline;" *ngIf="subskill.packed_list.length == 0">0</h4>
+                                <h4 style=" color: white;font-size:25px;display: inline;" *ngIf="subskill.packed_list.length !=0">{{subskill.packed_list.length}}</h4>
+                            </div>
+                            <div class="col-12" style="font-size: 20px;" (click)="show_da_details(subskill.packed_list)">
+                                <span  style="color: #4f0e7a;" *ngIf="subskill.packed_list.length == 0">Packed</span>
+                                <span  style="color: #4f0e7a;" *ngIf="subskill.packed_list.length !=0">{{subskill.packed_list[0].da_status}}</span>
+                            </div>      
+                        </div>
+                        <div class="col-2 mr-2 mb-2" style="background-color: #f3b8f1; border-radius: 30px;color: white; font-weight: bold;">
+                            <div class="col-12" (click)="show_da_details(subskill.packing_initiated_list)">
+                                <h4 style=" color: white;font-size:25px;display: inline;" *ngIf="subskill.packing_initiated_list.length == 0">0</h4>
+                                <h4 style=" color: white;font-size:25px;display: inline;" *ngIf="subskill.packing_initiated_list.length !=0">{{subskill.packing_initiated_list.length}}</h4>
+                            </div>
+                            <div class="col-12" style="font-size: 20px;" (click)="show_da_details(subskill.packing_initiated_list)">
+                                <span  style="color: #4f0e7a;" *ngIf="subskill.packing_initiated_list.length == 0">Packing Initiated</span>
+                                <span  style="color: #4f0e7a;" *ngIf="subskill.packing_initiated_list.length !=0">{{subskill.packing_initiated_list[0].da_status}}</span>
+                            </div>                      
+                        </div>
+                        <div class="col-2 mr-2 mb-2" style="background-color: #c1dbff; border-radius: 30px;color: white; font-weight: bold;">
+                            <div class="col-12" (click)="show_da_details(subskill.pending_list)">
+                                <h4 style=" color: white;font-size:25px;display: inline;" *ngIf="subskill.pending_list.length == 0">0</h4>
+                                <h4 style=" color: white;font-size:25px;display: inline;" *ngIf="subskill.pending_list.length !=0">{{subskill.pending_list.length}}</h4>
+                            </div>
+                            <div class="col-12" style="font-size: 20px;"  (click)="show_da_details(subskill.pending_list)">
+                                <span style="color: #4f0e7a;" *ngIf="subskill.pending_list.length == 0">Pending</span>
+                                <span style="color: #4f0e7a;" *ngIf="subskill.pending_list.length !=0">{{subskill.pending_list[0].da_status}}</span>
+                            </div>      
+                        </div>
+                    </div>
+                </div>
+            </mat-card>
+        </div>
+        <div class="col-md-1 mb-2" >
+        </div>
+    </div>
+
+    <div class="row" >
+        <div class="col-md-3 mb-2 mt-2" *ngFor="let subskill of dispatch_advice_dept_list;let i=index">
+            <mat-card  class="icon-rocket" style="text-align: center;background-color: #b747ebad;" >
+                <h4 style=" color: white;display: inline;">{{subskill.departmentName}}</h4><br/>
+                <div class="row">
+                    <div class="col-12" style="display: flex;font-size: 20px;text-align: center;">
+                        <div class="col-3" (click)="show_da_details(subskill.records)">
+                            <span style="color: green;font-size:25px; margin-left:6rem;">{{subskill.records.length}}</span>
+                        </div>
+                    </div>
+                </div>
+            </mat-card>
+        </div>
+    </div>
+
+</div> -->
+
+
+
+
+
+
+
+
+
+
+
+<!-- <div *ngIf="dashboardtwo">
+<div class="row" >
+    <div class="col-md-3 mb-2 mt-2" *ngFor="let subskill of dispatch_advice_dept_list;let i=index">
+        <mat-card  class="icon-rocket" style="text-align: center;background-color: #859fffad;" >
+            <h4 style=" color: white;display: inline;">{{subskill.departmentName}}</h4><br/>
+            <div class="row">
+                <div class="col-12" style="display: flex;font-size: 20px;text-align: center;">
+                    <div class="col-3" (click)="show_da_details(subskill.records)">
+                        <span style="color: green; margin-left:6rem;">{{subskill.records.length}}</span>
+                    </div>
+                </div>
+            </div>
+        </mat-card>
+    </div>
+</div>
+</div> -->
+
+
+
+<!-- <div *ngIf="dashboardtwoo">
+    <div class="row" *ngFor="let subskill of dispatch_advice_da_status_list;let i=index">
+            <div class="col-md-4 mb-2 mt-2">
+                <mat-card   class="icon-rocket"  style="text-align: center;background-color: #859fffad;" >
+                    <h4 style=" color: white;display: inline;" *ngIf="subskill.aknowledge_list.length ==0">0</h4>
+                    <h4 style=" color: white;display: inline;" *ngIf="subskill.aknowledge_list.length !=0">{{subskill.aknowledge_list.length}}</h4>
+                    <div class="row">
+                    
+                        <div class="col-12" style="display: flex;font-size: 20px;">
+                            <div class="col-12" (click)="show_da_details(subskill.aknowledge_list)">
+                                <span  style="color: #4f0e7a;" *ngIf="subskill.aknowledge_list.length ==0">Aknowledge</span>
+                                <span  style="color: #4f0e7a;" *ngIf="subskill.aknowledge_list.length !=0">{{subskill.aknowledge_list[0].da_status}}</span>
+                            </div>
+                        </div>
+                        <div class="col-12" style="display: flex;font-size: 15px;">
+                            <div class="col-12">
+                                <span  style="color: red">Da Status </span>
+                            </div>
+                        </div>
+                    </div>
+                </mat-card>
+            </div>
+            <div class="col-md-4 mb-2 mt-2" >
+                <mat-card  class="icon-rocket" style="text-align: center;background-color: #859fffad;" >
+                    <h4 style=" color: white;display: inline;" *ngIf="subskill.approval_in_progress_list.length ==0">0</h4>
+                    <h4 style=" color: white;display: inline;" *ngIf="subskill.approval_in_progress_list.length !=0">{{subskill.approval_in_progress_list.length}}</h4>
+                    <div class="row">
+                    
+                        <div class="col-12" style="display: flex;font-size: 20px;">
+                            <div class="col-12" (click)="show_da_details(subskill.approval_in_progress_list)">
+                                <span  style="color: #4f0e7a;" *ngIf="subskill.approval_in_progress_list.length ==0">Approval in Progress</span>
+                                <span  style="color: #4f0e7a;" *ngIf="subskill.approval_in_progress_list.length !=0">{{subskill.approval_in_progress_list[0].da_status}}</span>
+                            </div>
+                        </div>
+                        <div class="col-12" style="display: flex;font-size: 15px;">
+                            <div class="col-12">
+                                <span  style="color: red;">Da Status </span>
+                            </div>
+                        
+                        </div>
+                    </div>
+                </mat-card>
+            </div>
+            <div class="col-md-4 mb-2 mt-2" >
+                <mat-card  class="icon-rocket" style="text-align: center;background-color: #859fffad;" >
+                    <h4 style=" color: white;display: inline;" *ngIf="subskill.approved_list.length == 0">0</h4>
+                    <h4 style=" color: white;display: inline;" *ngIf="subskill.approved_list.length !=0">{{subskill.approved_list.length}}</h4>
+                    <div class="row">
+                    
+                        <div class="col-12" style="display: flex;font-size: 20px;">
+                            <div class="col-12" (click)="show_da_details(subskill.approved_list)">
+                                <span  style="color: #4f0e7a;" *ngIf="subskill.approved_list.length == 0">Approved</span>
+                                <span  style="color: #4f0e7a;" *ngIf="subskill.approved_list.length !=0">{{subskill.approved_list[0].da_status}}</span>
+                            </div>
+                        </div>
+                        <div class="col-12" style="display: flex;font-size: 15px;">
+                            <div class="col-12">
+                                <span  style="color: red;">Da Status </span>
+                            </div>
+                        
+                        </div>
+                    </div>
+                </mat-card>
+            </div>
+            <div class="col-md-4 mb-2 mt-2" >
+                <mat-card  class="icon-rocket" style="text-align: center;background-color: #859fffad;" >
+                    <h4 style=" color: white;display: inline;" *ngIf="subskill.closed_list.length == 0">0</h4>
+                    <h4 style=" color: white;display: inline;" *ngIf="subskill.closed_list.length !=0">{{subskill.closed_list.length}}</h4>
+                    <div class="row">
+                    
+                        <div class="col-12" style="display: flex;font-size: 20px;">
+                            <div class="col-12" (click)="show_da_details(subskill.closed_list)">
+                                <span  style="color: #4f0e7a;" *ngIf="subskill.closed_list.length ==0">Closed</span>
+                                <span  style="color: #4f0e7a;" *ngIf="subskill.closed_list.length !=0">{{subskill.closed_list[0].da_status}}</span>
+                            </div>
+                        </div>
+                        <div class="col-12" style="display: flex;font-size: 15px;">
+                            <div class="col-12">
+                                <span  style="color: red;">Da Status </span>
+                            </div>
+                        </div>
+                    </div>
+                </mat-card>
+            </div>
+            <div class="col-md-4 mb-2 mt-2" >
+                <mat-card  class="icon-rocket" style="text-align: center;background-color: #859fffad;" >
+                    <h4 style=" color: white;display: inline;" *ngIf="subskill.da_submitted_list.length == 0">0</h4>
+                    <h4 style=" color: white;display: inline;" *ngIf="subskill.da_submitted_list.length !=0">{{subskill.da_submitted_list.length}}</h4>
+                    <div class="row">
+                    
+                        <div class="col-12" style="display: flex;font-size: 20px;">
+                            <div class="col-12" (click)="show_da_details(subskill.da_submitted_list)">
+                                <span  style="color: #4f0e7a;" *ngIf="subskill.da_submitted_list.length == 0">DA Submitted</span>
+                                <span  style="color: #4f0e7a;" *ngIf="subskill.da_submitted_list.length !=0">{{subskill.da_submitted_list[0].da_status}}</span>
+                            </div>
+                        </div>
+                        <div class="col-12" style="display: flex;font-size: 15px;">
+                            <div class="col-12">
+                                <span  style="color: red;">Da Status </span>
+                            </div>
+                        </div>
+                    </div>
+                </mat-card>
+            </div>
+            <div class="col-md-4 mb-2 mt-2" >
+                <mat-card  class="icon-rocket" style="text-align: center;background-color: #859fffad;" >
+                    <h4 style=" color: white;display: inline;" *ngIf="subskill.delivered_list.length == 0">0</h4>
+                    <h4 style=" color: white;display: inline;" *ngIf="subskill.delivered_list.length !=0">{{subskill.delivered_list.length}}</h4>
+                    <div class="row">
+                    
+                        <div class="col-12" style="display: flex;font-size: 20px;">
+                            <div class="col-12" (click)="show_da_details(subskill.delivered_list)">
+                                <span  style="color: #4f0e7a;" *ngIf="subskill.delivered_list.length == 0">Delivered</span>
+                                <span  style="color: #4f0e7a;" *ngIf="subskill.delivered_list.length !=0">{{subskill.delivered_list[0].da_status}}</span>
+                            </div>
+                        </div>
+                        <div class="col-12" style="display: flex;font-size: 15px;">
+                            <div class="col-12">
+                                <span  style="color: red;">Da Status </span>
+                            </div>
+                        </div>
+                    </div>
+                </mat-card>
+            </div>
+            <div class="col-md-4 mb-2 mt-2" >
+                <mat-card  class="icon-rocket" style="text-align: center;background-color: #859fffad;" >
+                    <h4 style=" color: white;display: inline;" *ngIf="subskill.dispatched_list.length == 0">0</h4>
+                    <h4 style=" color: white;display: inline;" *ngIf="subskill.dispatched_list.length !=0">{{subskill.dispatched_list.length}}</h4>
+                    <div class="row">
+                    
+                        <div class="col-12" style="display: flex;font-size: 20px;">
+                            <div class="col-12" (click)="show_da_details(subskill.dispatched_list)">
+                                <span  style="color: #4f0e7a;" *ngIf="subskill.dispatched_list.length == 0">Dispatched</span>
+                                <span  style="color: #4f0e7a;" *ngIf="subskill.dispatched_list.length !=0">{{subskill.dispatched_list[0].da_status}}</span>
+                            </div>
+                        </div>
+                        <div class="col-12" style="display: flex;font-size: 15px;">
+                            <div class="col-12">
+                                <span  style="color: red;">Da Status </span>
+                            </div>
+                        </div>
+                    </div>
+                </mat-card>
+            </div>
+            <div class="col-md-4 mb-2 mt-2" >
+                <mat-card  class="icon-rocket" style="text-align: center;background-color: #859fffad;" >
+                    <h4 style=" color: white;display: inline;" *ngIf="subskill.loading_completed_list.length == 0">0</h4>
+                    <h4 style=" color: white;display: inline;" *ngIf="subskill.loading_completed_list.length !=0">{{subskill.loading_completed_list.length}}</h4>
+                    <div class="row">
+                    
+                        <div class="col-12" style="display: flex;font-size: 20px;">
+                            <div class="col-12" (click)="show_da_details(subskill.loading_completed_list)">
+                                <span  style="color: #4f0e7a;" *ngIf="subskill.loading_completed_list.length == 0">Loading Completed</span>
+                                <span  style="color: #4f0e7a;" *ngIf="subskill.loading_completed_list.length !=0">{{subskill.loading_completed_list[0].da_status}}</span>
+                            </div>
+                        </div>
+                        <div class="col-12" style="display: flex;font-size: 15px;">
+                            <div class="col-12">
+                                <span  style="color: red;">Da Status </span>
+                            </div>
+                        </div>
+                    </div>
+                </mat-card>
+            </div>
+            <div class="col-md-4 mb-2 mt-2" >
+                <mat-card  class="icon-rocket" style="text-align: center;background-color: #859fffad;" >
+                    <h4 style=" color: white;display: inline;" *ngIf="subskill.packed_list.length == 0">0</h4>
+                    <h4 style=" color: white;display: inline;" *ngIf="subskill.packed_list.length !=0">{{subskill.packed_list.length}}</h4>
+                    <div class="row">
+                    
+                        <div class="col-12" style="display: flex;font-size: 20px;">
+                            <div class="col-12" (click)="show_da_details(subskill.packed_list)">
+                                <span  style="color: #4f0e7a;" *ngIf="subskill.packed_list.length == 0">Packed</span>
+                                <span  style="color: #4f0e7a;" *ngIf="subskill.packed_list.length !=0">{{subskill.packed_list[0].da_status}}</span>
+                            </div>
+                        </div>
+                        <div class="col-12" style="display: flex;font-size: 15px;">
+                            <div class="col-12">
+                                <span  style="color: red;">Da Status </span>
+                            </div>
+                        </div>
+                    </div>
+                </mat-card>
+            </div>
+            <div class="col-md-4 mb-2 mt-2" >
+                <mat-card  class="icon-rocket" style="text-align: center;background-color: #859fffad;" >
+                    <h4 style=" color: white;display: inline;" *ngIf="subskill.packing_initiated_list.length == 0">0</h4>
+                    <h4 style=" color: white;display: inline;" *ngIf="subskill.packing_initiated_list.length !=0">{{subskill.packing_initiated_list.length}}</h4>
+                    <div class="row">
+                    
+                        <div class="col-12" style="display: flex;font-size: 20px;">
+                            <div class="col-12" (click)="show_da_details(subskill.packing_initiated_list)">
+                                <span  style="color: #4f0e7a;" *ngIf="subskill.packing_initiated_list.length == 0">Packing Initiated</span>
+                                <span  style="color: #4f0e7a;" *ngIf="subskill.packing_initiated_list.length !=0">{{subskill.packing_initiated_list[0].da_status}}</span>
+                            </div>
+                        </div>
+                        <div class="col-12" style="display: flex;font-size: 15px;">
+                            <div class="col-12">
+                                <span  style="color: red;">Da Status </span>
+                            </div>
+                        </div>
+                    </div>
+                </mat-card>
+            </div>
+            <div class="col-md-4 mb-2 mt-2" >
+                <mat-card  class="icon-rocket" style="text-align: center;background-color: #859fffad;" >
+                    <h4 style=" color: white;display: inline;" *ngIf="subskill.pending_list.length == 0">0</h4>
+                    <h4 style=" color: white;display: inline;" *ngIf="subskill.pending_list.length !=0">{{subskill.pending_list.length}}</h4>
+                    <div class="row">
+                    
+                        <div class="col-12" style="display: flex;font-size: 20px;">
+                            <div class="col-12" (click)="show_da_details(subskill.pending_list)">
+                                <span style="color: #4f0e7a;" *ngIf="subskill.pending_list.length == 0">Pending</span>
+                                <span style="color: #4f0e7a;" *ngIf="subskill.pending_list.length !=0">{{subskill.pending_list[0].da_status}}</span>
+                            </div>
+                        </div>
+                        <div class="col-12" style="display: flex;font-size: 15px;">
+                            <div class="col-12">
+                                <span  style="color: red;">Da Status </span>
+                            </div>
+                        </div>
+                    </div>
+                </mat-card>
+            </div>
+        </div>
+    </div> -->
+
+<!-- <div *ngIf="dashboardtwoo" style="height: 100%;background-color: #2888bb0a;">
+    <div class="row" > -->
+        <!-- <div class="col-md-8 mb-1 mt-1">
+            <mat-card  class="icon-rocket" style="text-align: center;">
+                <div class="row">
+                    <div class="col-12" style="display: flex;">
+                        <div class="col-2 mr-1" style="background-color: #64a7f7; border-radius: 5px;color: white; font-weight: bold;" *ngFor="let subskill of dispatch_advice_da_status_list;let i=index">
+                            <div class="col-12" style="font-size: 40px;" (click)="show_da_details(subskill.records)">
+                                <span>{{subskill.len}}</span>
+                            </div>
+                            <div class="col-12" style="font-size: 20px;">
+                                <span style="color: #0e6a0e;">{{subskill.da_status}}</span>
+                            </div>                           
+                        </div>
+                    </div>
+                </div>
+            </mat-card>
+        </div>
+        <div class="col-md-2 mb-2" >
+        </div>
+    </div>
+    </div> -->
+
+<!-- <div class="row" >
+    <div class="col-md-3 mr-2 ml-2 mb-2 mt-2"  *ngFor="let subskill of dispatch_advice_da_status_list;let i=index">
+        
+        <mat-card  class="icon-rocket" style="text-align: center;background-color: #859fffad;" >
+            <h4 style=" color: white;display: inline;">{{subskill.aknowledge_list.length}}</h4>
+                <div class="col-12" style="display: flex;font-size: 20px;">
+                    <div class="col-12" (click)="show_da_details(subskill.aknowledge_list)">
+                        <span  style="text-align: center;color: #7a680e;">{{subskill.aknowledge_list[0].da_status}}</span>
+                    </div>
+                </div>
+                <div class="col-12" style="display: flex;font-size: 15px;">
+                    <div class="col-12" >
+                        <span  style="text-align: center;color: #ff1010;">Da Status</span>
+                    </div>
+                </div>
+            </mat-card>
+            
+            <mat-card  class="icon-rocket" style="text-align: center;background-color: #859fffad;" >
+            <h4 style=" color: white;display: inline;">{{subskill.approval_in_progress_list.length}}</h4>
+                <div class="col-12" style="display: flex;font-size: 20px;">
+                    <div class="col-12" (click)="show_da_details(subskill.approval_in_progress_list)">
+                        <span  style="text-align: center;color: #7a680e;">{{subskill.approval_in_progress_list[0].da_status}}</span>
+                    </div>
+                </div>
+                <div class="col-12" style="display: flex;font-size: 15px;">
+                    <div class="col-12" >
+                        <span  style="text-align: center;color: #ff1010;">Da Status</span>
+                    </div>
+                </div>
+            </mat-card>
+       
+            <mat-card  class="icon-rocket" style="text-align: center;background-color: #859fffad;" >
+            <h4 style=" color: white;display: inline;">{{subskill.approved_list.length}}</h4>
+           
+                <div class="col-12" style="display: flex;font-size: 20px;">
+                    <div class="col-12" (click)="show_da_details(subskill.approved_list)">
+                        <span  style="text-align: center;color: #7a680e;">{{subskill.approved_list[0].da_status}}</span>
+                    </div>
+                </div>
+                <div class="col-12" style="display: flex;font-size: 15px;">
+                    <div class="col-12" >
+                        <span  style="text-align: center;color: #ff1010;">Da Status</span>
+                    </div>
+                </div>
+        </mat-card>
+        
+    </div>
+</div> -->
+
+
+<!-- <div class="row" >
+    <div class="col-md-4 mb-2 mt-2"  *ngFor="let subskill of dispatch_advice_da_status_list;let i=index">
+        <mat-card  class="icon-rocket" style="text-align: center;background-color: #859fffad;" >
+            <h4 style=" color: white;display: inline;">{{subskill.length}}</h4>
+            <div class="row">
+            
+                <div class="col-12" style="display: flex;font-size: 20px;">
+                    <div class="col-12" (click)="show_da_details(subskill.records)">
+                        <span  style="text-align: center;color: #7a680e;">{{subskill.da_status}}</span>
+                    </div>
+                </div>
+                <div class="col-12" style="display: flex;font-size: 15px;">
+                    <div class="col-12" >
+                        <span  style="text-align: center;color: #ff1010;">Da Status</span>
+                    </div>
+                </div>
+            </div>
+        </mat-card>
+    </div>
+</div> -->
+
+
+ <!-- <div class="row" >
+        <div class="col-md-3 mb-2 mt-2" >
+            <mat-card  class="icon-rocket" style="text-align: center;background-color: #859fffad;" >
+                <h4 style=" color: white;display: inline;">Logistics provider 1</h4><span style="color: #a92700;float: right;">95%</span>
+            
+                <div class="row">
+                
+                    <div class="col-12" style="display: flex;font-size: 20px;">
+                        <div class="col-3" (click)="show_truck_details()">
+                            <span  style="color: #7a680e;">20</span>
+                        </div>
+                        <div class="col-4" (click)="show_truck_details()">
+                            <span  style="color: #ff1010;">2</span>
+                        </div>
+                        <div class="col-5" (click)="show_truck_details()">
+                            <span  style="color: #0e6a0e;">18</span>
+                        </div>
+                    
+                    </div>
+                    <div class="col-12" style="display: flex;font-size: 15px;">
+                        <div class="col-3" (click)="show_truck_details()">
+                            <span  style="color: #7a680e;">Open </span>
+                        </div>
+                        <div class="col-4" (click)="show_truck_details()">
+                            <span style="color: #ff1010;">Over Due</span>
+                        </div>
+                        <div class="col-5" (click)="show_truck_details()">
+                            <span style="color: #0e6a0e">In Schedule </span>
+                        </div>
+                    
+                    </div>
+                </div>
+            </mat-card>
+        </div>
+        <div class="col-md-3 mb-2 mt-2" >
+            <mat-card  class="icon-rocket" style="text-align: center;background-color: #859fffad;" >
+                <h4 style=" color: white;display: inline;">Logistics provider 2</h4><span style="color: #a92700;float: right;">92%</span>
+            
+                <div class="row">
+                
+                    <div class="col-12" style="display: flex;font-size: 20px;">
+                        <div class="col-3">
+                            <span  style="color: #7a680e;" (click)="show_truck_details()">10</span>
+                        </div>
+                        <div class="col-4">
+                            <span  style="color: #ff1010;">1</span>
+                        </div>
+                        <div class="col-5">
+                            <span  style="color: #0e6a0e;">9</span>
+                        </div>
+                    
+                    </div>
+                    <div class="col-12" style="display: flex;font-size: 15px;">
+                        <div class="col-3">
+                            <span  style="color: #7a680e;">Open </span>
+                        </div>
+                        <div class="col-4">
+                            <span style="color: #ff1010;">Over Due</span>
+                        </div>
+                        <div class="col-5">
+                            <span style="color: #0e6a0e">In Schedule </span>
+                        </div>
+                    
+                    </div>
+                </div>
+            </mat-card>
+        </div>
+        <div class="col-md-3 mb-2 mt-2" >
+            <mat-card  class="icon-rocket" style="text-align: center;background-color: #859fffad;" >
+                <h4 style=" color: white;display: inline;">Logistics provider 3</h4><span style="color: #a92700;float: right;">100%</span>
+            
+                <div class="row">
+                
+                    <div class="col-12" style="display: flex;font-size: 20px;">
+                        <div class="col-3">
+                            <span  style="color: #7a680e;">5</span>
+                        </div>
+                        <div class="col-4">
+                            <span  style="color: #ff1010;">0</span>
+                        </div>
+                        <div class="col-5">
+                            <span  style="color: #0e6a0e;">5</span>
+                        </div>
+                    
+                    </div>
+                    <div class="col-12" style="display: flex;font-size: 15px;">
+                        <div class="col-3">
+                            <span  style="color: #7a680e;">Open </span>
+                        </div>
+                        <div class="col-4">
+                            <span style="color: #ff1010;">Over Due</span>
+                        </div>
+                        <div class="col-5">
+                            <span style="color: #0e6a0e">In Schedule </span>
+                        </div>
+                    
+                    </div>
+                </div>
+            </mat-card>
+        </div>
+        <div class="col-md-3 mb-2 mt-2" >
+            <mat-card  class="icon-rocket" style="text-align: center;background-color: #859fffad;" >
+                <h4 style=" color: white;display: inline;">Logistics provider 4</h4><span style="color: #a92700;float: right;">88%</span>
+            
+                <div class="row">
+                
+                    <div class="col-12" style="display: flex;font-size: 20px;">
+                        <div class="col-3">
+                            <span  style="color: #7a680e;">5</span>
+                        </div>
+                        <div class="col-4">
+                            <span  style="color: #ff1010;">0</span>
+                        </div>
+                        <div class="col-5">
+                            <span  style="color: #0e6a0e;">5</span>
+                        </div>
+                    
+                    </div>
+                    <div class="col-12" style="display: flex;font-size: 15px;">
+                        <div class="col-3">
+                            <span  style="color: #7a680e;">Open </span>
+                        </div>
+                        <div class="col-4">
+                            <span style="color: #ff1010;">Over Due</span>
+                        </div>
+                        <div class="col-5">
+                            <span style="color: #0e6a0e">In Schedule </span>
+                        </div>
+                    
+                    </div>
+                </div>
+            </mat-card>
+        </div>
+    </div> -->

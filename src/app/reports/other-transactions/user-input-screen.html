@@ -1,0 +1,197 @@
+<div style="text-align: center;">
+    <span>
+        <h2 style="font-size: 25px;color:Blue">Enter Other Transaction Record Details</h2>
+    </span>
+</div>
+
+<div class="row">
+    <div class="col-12"> 
+        <div class="card-box">
+          <form  [formGroup]="form">
+            <div style="border: 1px solid whitesmoke;background: #d0dedf26;">
+            <div class="row">
+
+                <div class="col-3">
+                    <mat-form-field class="example-full-width" appearance="fill">
+                      <mat-label>Description of Goods</mat-label>
+                      <input type="text" matInput list="codes" formControlName="descriptionOfGoods" autocomplete="off">
+                      <datalist id="codes">
+                        <!-- <option *ngFor="let val of customer_name_list" value="{{val.customer_name}}">{{val.customer_name}}</option> -->
+                        <option value="Process Control Instruments">Process Control Instruments</option>
+                        <option value="Test & Measuring Instruments">Test & Measuring Instruments</option>
+                        <option value="Spares">Spares</option>
+                        <option value="Distributed Control System">Distributed Control System</option>
+                        <option value="Parts for Distributed Control System">Parts for Distributed Control System</option>
+                        <option value="Analyser System">Analyser System</option>
+                        <option value="Parts for Analyser System">Parts for Analyser System</option>
+                        <option value="Customer Material">Customer Material </option>
+                        <option value="Vendor Material">Vendor Material</option>
+                        <option value="Transmitter">Transmitter</option>
+                        <option value="Cylinders">Cylinders</option>
+                        <option value="Data Aquiation system">Data Aquiation system</option>
+                        <option value="Programmable Logist Control">Programmable Logist Control</option>
+                        <option value="Parts for Programmable Logic Control">Parts for Programmable Logic Control</option>
+                        <option value="OTHERS">OTHERS</option>
+                      </datalist>
+                    </mat-form-field>
+                  </div>
+          
+
+                <div class="col-3">
+                    <mat-form-field appearance="fill">
+                        <textarea type="text" matInput formControlName="kind_attn" 
+                            placeholder="Kind Attn Person Name"></textarea>
+                            <mat-hint>Kind Attn Person Name</mat-hint>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-3">
+                    <mat-form-field appearance="fill">
+                        <textarea type="text" matInput formControlName="qty" 
+                            placeholder="Quantity"></textarea>
+                            <mat-hint>Quantity</mat-hint>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-3">
+                    <mat-form-field appearance="fill">
+                        <textarea type="text" matInput formControlName="uom" 
+                            placeholder="Uom"></textarea>
+                            <mat-hint>Uom</mat-hint>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-3">
+                    <mat-form-field appearance="fill">
+                        <textarea type="text" matInput formControlName="way_bill_no" 
+                            placeholder="Way Bill No."></textarea>
+                            <mat-hint>Way Bill No.</mat-hint>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-3">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Transporter Name</mat-label>
+                    <mat-select formControlName="transporter_value_id" [(value)]="form.value.transporter_value_id">
+                      <mat-option>-select-</mat-option>
+                      <mat-option *ngFor="let subskill of transportationlist" [value]="subskill.transportationId">
+                        {{subskill.transportationName}}
+                      </mat-option>
+                    </mat-select>
+                    <mat-hint>Transporter Name</mat-hint>
+                    </mat-form-field>
+              </div>
+
+              <div class="col-3">
+                <mat-form-field appearance="fill">
+                  <mat-label>Truck Type</mat-label>
+                  <mat-select formControlName="truck_type_id" [(value)]="form.value.truck_type_id">
+                    <mat-option>-select-</mat-option>
+                    <mat-option *ngFor="let subskill of trucktypeslist" [value]="subskill.truckId">
+                      {{subskill.truckName}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-hint>Truck Type</mat-hint>
+                  </mat-form-field>
+            </div>
+
+            <div class="col-3">
+              <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Transportation Mode</mat-label>
+                 <mat-select formControlName="mode_of_transport"  [(value)]="form.value.mode_of_transport" >
+                  <mat-option value="">Select Option</mat-option>
+                  <mat-option value="Air">Air</mat-option>
+                  <mat-option value="Sea">Sea</mat-option>
+                  <mat-option value="Surface">Surface</mat-option>      
+                 </mat-select>
+              </mat-form-field>
+            </div>
+
+            <!-- <div class="col-3">
+              <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Transportation Mode</mat-label>
+                <input type="text" matInput list="transport" formControlName="mode_of_transport" autocomplete="off">
+                <datalist id="transport">
+                  <option value="Air">Air</option>
+                  <option value="Sea">Sea</option>
+                  <option value="Surface">Surface</option>
+                </datalist>
+              </mat-form-field>
+            </div> -->
+
+                <!-- <div class="col-3">
+                    <mat-form-field appearance="fill">
+                        <textarea type="text" matInput formControlName="transporter_value" 
+                            placeholder="Transporter Name"></textarea>
+                            <mat-hint>Transporter Name</mat-hint>
+                    </mat-form-field>
+                </div> -->
+
+                <div class="col-3">
+                    <mat-form-field appearance="fill">
+                      <mat-label>Delivery Mode</mat-label>
+                      <mat-select formControlName="mode_of_delivery_id">
+                        <mat-option *ngFor="let val of deliveryModeList" [value]="val.transportationModeId" selected>{{val.transportationMode}}</mat-option>
+                      </mat-select>
+                      <mat-hint style="color:black">eg.Godown Delivery </mat-hint>
+                    </mat-form-field>
+                  </div>
+
+                  <div class="col-3">
+                    <mat-form-field appearance="fill">
+                      <mat-label>Freight Mode</mat-label>
+                      <mat-select formControlName="freight_type_value_id">
+                        <mat-option *ngFor="let val of freightList" [value]="val.freightTypeId" selected>{{val.freightType}}</mat-option>
+                      </mat-select>
+                      <mat-hint style="color:black">eg.TBB</mat-hint>
+                    </mat-form-field>
+                  </div>
+
+                <div class="col-3">
+                    <mat-form-field appearance="fill">
+                        <textarea type="text" matInput formControlName="destination" 
+                            placeholder="Destination"></textarea>
+                            <mat-hint>Destination</mat-hint>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-3">
+                    <mat-form-field appearance="fill">
+                        <textarea type="text" matInput formControlName="dispatch_remarks" 
+                            placeholder="Remarks"></textarea>
+                            <mat-hint>Remarks</mat-hint>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-3">
+                  <mat-form-field>
+                    <mat-label>PO Date</mat-label>
+                    <input matInput [matDatepicker]="picker2" formControlName="po_date">
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                    <mat-hint>PO Date</mat-hint>
+                  </mat-form-field>
+            </div>
+
+            <div class="col-3">
+              <mat-form-field>
+                <mat-label>LR Date</mat-label>
+                <input matInput [matDatepicker]="picker1" formControlName="lr_date">
+                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+                <mat-hint>LR Date</mat-hint>
+              </mat-form-field>
+        </div>
+
+            <div class="col-2" style="margin-left:5rem;">
+              <button mat-raised-button color="primary" (click)="onSubmitPost()" >Submit</button>
+          </div>
+          <div class="col-2" style="margin-left:1rem;">
+            <button mat-raised-button color="warn" (click)="dialogClose()" >Close</button>
+        </div>
+        </div>
+    </div>
+  </form>
+  </div>
+</div>
+</div>

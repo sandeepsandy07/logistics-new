@@ -1,0 +1,337 @@
+<style>
+    .mat-header-cell {
+    /* background:#91999140; */
+    color: white;
+    background: #3f51b5;
+}
+tr.mat-header-row{
+    height: 22px;
+}
+.mat-row {
+    height: 22px;
+    background:#d0e3f363;
+}
+.buttonsizereduce{
+    line-height: 22px;
+}
+</style>
+<div class="row">
+    <div class="col-12">
+        <mat-dialog-content>
+
+            <mat-card style="background-color: #6e7ccbbf;">
+                <span><b>SECTION:&nbsp;&nbsp;{{sectionName}}</b></span>&nbsp;&nbsp;&nbsp;&nbsp;
+                <span><b>PANEL NAME:&nbsp;&nbsp;{{panelName}}</b></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span><b>Component No.:&nbsp;&nbsp;{{component_no}}</b></span>
+            </mat-card>
+        
+            <!-- <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                <div formArrayName="data">
+
+                    <div  class="row"  style="border: 1px solid;font-size: 14px;font-weight: bold;">
+                        <div class="col-1" style="text-align: center;">
+                            <label>Sl.no</label>
+                               
+                               
+                                
+                               
+                             
+                        </div>
+        
+                        <div class="col-3">
+                            <label>Item Desc</label>
+                               
+                               
+                                
+                               
+                             
+                        </div>
+                        <div class="col-1">
+                            
+                            <label>Make</label>
+                                
+                               
+                             
+                        </div>
+                        <div class="col-2">
+                            <label>Model</label>
+                        </div>
+                       
+                        <div class="col-1">
+                            <div class="row">
+
+                           
+                                <div class="col-6">
+                                    <label>Font</label>
+                                </div>
+                                <div class="col-6">
+                                    <label>Rear</label>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="col-1">
+                            <label>Qty</label>
+                            
+                        </div>
+                        <div class="col-1">
+                            <label>BOM Remarks</label>
+                            
+                        </div>
+                        
+                        <div class="col-2">
+                            <label>Remarks</label>
+                            
+                        </div>
+                       
+                        
+                        
+                      
+                 
+                        
+                    </div>
+                    
+                    <div *ngFor="let employee of panelitems().controls; let empIndex=index" style="border: 1px solid;font-size: 14px;">
+                    <div [formGroupName]="empIndex" class="row" >
+                    
+                
+                        <div class="col-1"  style="text-align: center;">
+                            <label>{{empIndex + 1}}</label>
+                               
+                               
+                                
+                               
+                             
+                        </div>
+        
+                        <div class="col-3">
+                            <textarea type="text"  matInput formControlName="item_desc" 
+                            placeholder="" style="width: 100%;border: none;"></textarea>
+                            
+                            
+                        
+                               
+                               
+                                
+                               
+                             
+                        </div>
+                        <div class="col-1">
+                            
+                                <input type="text" matInput formControlName="make" 
+                                       placeholder="" style="border: none;vertical-align: middle;">
+                                
+                               
+                             
+                        </div>
+                        <div class="col-2">
+                           
+                                <input type="text" matInput formControlName="model" 
+                                       placeholder=""style="border: none;vertical-align: middle;" >
+                                
+                               
+                             
+                        </div>
+                        <div class="col-1">
+                            <div class="row">
+                                <div class="col-6">
+                                    <input type="text" (keyup)="qtyFront(empIndex)"  matInput  formControlName="front" 
+                                        placeholder="" class="form-control" style="background-color: #b4ff2c3b;">
+                                </div>
+                                <div class="col-6">
+                                    <input type="text" matInput (keyup)="qtyRear(empIndex)" formControlName="rear"
+                                    placeholder="" class="form-control" style="background-color: #b4ff2c3b;" >
+                                </div>
+                            </div>
+                                
+                                
+                               
+                              
+                        </div>
+                       
+                        <div class="col-1">
+                            
+                                <input type="number" matInput formControlName="qty" 
+                                       placeholder="" class="form-control"  style="text-align:center;border: none;width: 50%;background-color: #f7080842;border: none;font-weight: bold;">
+                               
+                               
+                              
+                            
+                        </div>
+                        <div class="col-1">
+                           
+                                <input type="text" matInput formControlName="panel_remarks" 
+                                       placeholder="" style="border: none;">
+                               
+                               
+                             
+                            
+                        </div>
+                        
+                        <div class="col-2">
+                            
+                                <input type="text" matInput formControlName="remark" 
+                                       placeholder="" style="border: none;">
+                                 
+                               
+                             
+                            
+                        </div>
+                       
+                        
+                        
+                      
+                 
+                        
+                    </div>
+                    </div>
+                   
+                    </div>
+                   
+                
+            </form>
+         -->
+
+         
+         <div class="row" mat-list-item style="background-color: #929dd854;">
+            <div class="col-md-1"><b>SL.NO.</b></div>
+            <div class="col-md-2"><b>ITEM DESC</b></div>
+            <div class="col-md-1"><b>MAKE</b></div>
+            <div class="col-md-1"><b>MODEL</b></div>
+            <div class="col-md-1"><b>FRONT</b></div>
+            <div class="col-md-1"><b>REAR</b></div>
+            <div class="col-md-1"><b>QTY</b></div>
+            <div class="col-md-1"><b>BOM remarks</b></div>
+            <div class="col-md-1"><b>REMARKS</b></div>
+       
+            <div class="col-md-1"><b>ACCESSORIES</b></div>
+            <!-- <div class="col-md-1"><b>VIEW</b></div> -->
+            <hr>
+        </div>
+        <div *ngIf="panel_details.packing_flag <=1 && panel_details.panel_name != 'LOOSE SUPPLY' ">
+
+        
+            <div class="row" mat-list-item *ngFor="let data of data_list;let i=index;">
+                <div class="col-md-1">{{i + 1 }}</div>
+                <div class="col-md-2">{{data.item_desc == null ? '-' : data.item_desc}}</div>
+                <div class="col-md-1">{{data.make == null ? '-' : data.make}}</div>
+                <div class="col-md-1">{{data.model == null ? '-' : data.model}}</div>
+                <div class="col-md-1" ><b><input   type="text" size="4" (keyup)="qtyFront(data, i, panelName)" value="{{data.front}}" [(ngModel)]="front[i]" style="background-color: #45fc033d;"></b></div>
+                <div class="col-md-1" ><b><input   type="text" size="4" (keyup)="qtyRear(data, i, panelName)" value="{{data.rear}}" [(ngModel)]="rear[i]" style="background-color: #45fc033d;"></b></div>
+            
+                <div class="col-md-1"><b>{{data.qty == null ? '-' : data.qty}}</b></div>
+                <div class="col-md-1">{{data.panel_remarks == null ? '-' : data.panel_remarks}}</div>
+                <div class="col-md-1"><textarea  type="text" rows="1" cols="10" [(ngModel)]="remarks[i]" value="{{data.remark}}" (keyup)="add_remarks(data, i, panelName)"></textarea></div>
+                <div class="col-md-1"><mat-icon style="cursor: pointer;" (click)="openDialog(data.id)">add_circle</mat-icon></div>
+                <div class="col-md-1" *ngIf="data.accessories_flag == true"><mat-icon style="cursor: pointer;">preview</mat-icon></div>
+                
+                <hr>
+            </div>
+        </div>
+        <div *ngIf="panel_details.packing_flag >=2 || panel_details.panel_name == 'LOOSE SUPPLY' ">
+            <div class="row" mat-list-item *ngFor="let data of data_list;let i=index;">
+                <div class="col-md-1">{{i + 1 }}</div>
+                <div class="col-md-2">{{data.item_desc == null ? '-' : data.item_desc}}</div>
+                <div class="col-md-1">{{data.make == null ? '-' : data.make}}</div>
+                <div class="col-md-1">{{data.model == null ? '-' : data.model}}</div>
+                <div class="col-md-1" >{{data.front == null ? '-' : data.front}}</div>
+                <div class="col-md-1" >{{data.rear == null ? '-' : data.rear}}</div>
+            
+                <div class="col-md-1"><b>{{data.qty == null ? '-' : data.qty}}</b></div>
+                <div class="col-md-1">{{data.panel_remarks == null ? '-' : data.panel_remarks}}</div>
+                <div class="col-md-1">{{data.remark}}</div>
+                <div class="col-md-1"></div>
+                <div class="col-md-1" *ngIf="data.accessories_flag == true"><mat-icon style="cursor: pointer;">preview</mat-icon></div>
+                
+                <hr>
+            </div>
+           
+                <div class="row" >
+                    <div class="col-6">
+                        <label style="color:#929dd8;font-size: 14px;"> Sl.No:</label><b> {{panel_details.panel_serial_no}}</b>
+                       
+                    </div>
+                    <div class="col-6">
+                        <label style="color:#929dd8;font-size: 14px;">Shipping clearance label no.:</label> <b>{{panel_details.shipping_clearance_no}}</b>
+                        
+                    </div>
+
+                </div>
+                <div class="row" >
+                    
+                    <div class="col-8"  align="left">
+                       <label style="color: red;">Approver Remarks: </label> {{panel_details.remarks}}
+                        
+                    </div>
+                </div>
+          
+        </div>
+        </mat-dialog-content>
+    </div>
+   
+        
+      
+</div>
+
+    <!-- <div class="col-4" *ngIf="under_revision.length > 0" >
+        <h4 style="color: red">This panel under revision</h4>
+    </div> -->
+    <form [formGroup]="form" enctype="multipart/form-data"  >
+    <div class="row mt-5" mat-list-item *ngIf="panel_details.packing_flag <=1 && panel_details.panel_name != 'LOOSE SUPPLY' ">
+       
+        <div class="col-md-3">
+            <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Sl.No</mat-label>
+                <input type="text"  matInput formControlName="panel_serial_no"  
+                       placeholder="">
+              
+             
+              </mat-form-field>
+        </div>
+        <div class="col-md-3">
+            <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Shipping clearance label no.</mat-label>
+                <input type="text"  matInput formControlName="shipping_clearance_no"  
+                       placeholder="" >
+              
+             
+              </mat-form-field>
+        </div>
+        <div class="col-md-3">
+
+            <mat-form-field appearance="fill">
+                <mat-label>Approver </mat-label>
+                <mat-select   multiple  formControlName="approver" >
+                  <mat-option *ngFor="let data of userList"  [value]="data.id" >
+                    {{data.employee_name}}
+                  </mat-option>
+                  <mat-option [value]="3"  >
+                    Sandeep
+                  </mat-option>
+                </mat-select>
+                <mat-hint>Please select Approver   </mat-hint>
+          
+            </mat-form-field>
+
+          
+        </div>
+        <div class="col-md-3">
+            <button mat-raised-button type="submit" style="background-color: #ffd900;margin-right: 20px;" (click)=onSubmit_draft() >Save</button>
+            
+
+            <button mat-raised-button color="primary" type="submit" (click)=onSubmit() >Submit</button>
+        </div>
+   
+    
+</div>
+</form>
+<div >
+    <button mat-raised-button mat-dialog-close (click)="dialogClose()" style="    background-color: red;float: right;">Close</button>
+    
+</div>
+
+
+
+
+
+

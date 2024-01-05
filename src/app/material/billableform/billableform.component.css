@@ -1,0 +1,197 @@
+.example-radio-button{margin-left: 7px;}
+mat-grid-tile {
+  background:rgb(241, 224, 230);
+}
+.width-50{width: 49%;}
+.ml-1{margin-left: 1%;}
+.ml-2{margin-left: 2%;}
+.width-100{width: 100%;}
+.width-25{width: 25%;}
+
+.example-card {
+  margin-top: 4rem;
+  margin-left: 5rem;
+  margin-bottom:5rem;
+  max-width: 800px;
+}
+.p
+{
+  font-size: medium;
+  color:blue;
+}
+.example-full-width {
+  border: 1px;
+  width: 100%;
+}
+.add{
+  margin-top: 1rem;
+}
+/* td {
+  width: 1000rem;
+  text-align: center;
+  border: 1px solid black;
+  padding: 5px;
+} */
+
+.mat-column-demo-position {
+  width: 32px;
+  border-right: 1px solid currentColor;
+  padding-right: 24px;
+  text-align: center;
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+.bg
+{
+  background-color: cornflowerblue;
+}
+
+.ex
+{
+  width:150%;
+}
+
+td {
+  padding-right: 8px;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+td {
+  /* row border */
+  border-bottom: 1px solid rgb(117, 107, 107);
+  border-right:1px solid rgb(141, 131, 131);
+  border-left:1px solid rgb(175, 163, 163);
+}
+th
+{
+  border-bottom: 1px solid rgb(117, 107, 107);
+  border-right:1px solid rgb(141, 131, 131);
+  border-left:1px solid rgb(175, 163, 163);
+}
+
+button{
+  margin-top:2rem;
+}
+
+.border
+{
+  border:1px solid;
+}
+
+.footerdiv4{
+  margin-left:42rem;
+}
+
+.footerdiv5
+{
+  margin-left:10rem;
+}
+
+.footerdiv
+{
+  margin-left:42rem;
+}
+.footerdiv2
+{
+  margin-left:1rem;
+}
+.footerdiv3
+{
+  margin-left:12rem;
+}
+ol.progtrckr {
+  margin: 0;
+  padding: 0;
+  list-style-type :none;
+}
+
+ol.progtrckr li {
+  display: inline-block;
+  text-align: center;
+  line-height: 3.5em;
+}
+
+.mat-tab-label-active{
+background-color: #c3b7b7 !important;
+}
+
+ol.progtrckr li.progtrckr-done {
+  padding-right: 10px;
+  padding-left: 10px;
+  color: black;
+  border-bottom: 4px solid yellowgreen;
+}
+ol.progtrckr li.sandeep-progtrckr-done {
+padding-right: 10px;
+padding-left: 10px;
+color: black;
+
+}
+ol.progtrckr li.progtrckr-todo {
+padding-right: 10px;
+padding-left: 10px;
+  color: silver; 
+  border-bottom: 4px solid silver;
+}
+ol.progtrckr li.sandeep-progtrckr-todo {
+padding-right: 10px;
+padding-left: 10px;
+  color: silver; 
+ 
+}
+
+ol.progtrckr li:after {
+  content: "\00a0\00a0";
+}
+ol.progtrckr li:before {
+  position: relative;
+  bottom: -2.5em;
+  float: left;
+  left: 50%;
+  line-height: 1em;
+}
+ol.progtrckr li.progtrckr-done:before {
+  content: "\2713";
+  color: white;
+  background-color: yellowgreen;
+  height: 1.2em;
+  width: 1.2em;
+  line-height: 1.2em;
+  border: none;
+  border-radius: 1.2em;
+}
+ol.progtrckr li.sandeep-progtrckr-done:before {
+content: "\2713";
+color: white;
+background-color: yellowgreen;
+height: 1.2em;
+width: 1.2em;
+line-height: 1.2em;
+border: none;
+border-radius: 1.2em;
+}
+
+ol.progtrckr li.progtrckr-todo:before {
+  /* content: "\039F"; */
+  color: silver;
+  background-color: white;
+  font-size: 1.2em;
+  bottom: -1.2em;
+}
+ol.progtrckr li.sandeep-progtrckr-done:before {
+content: "\039F";
+color: #fafafa;
+background-color: #fafafa;
+font-size: 1.2em;
+
+}
+.viewda-table-background{
+background:whitesmoke;
+} 
+

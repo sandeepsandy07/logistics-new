@@ -1,0 +1,112 @@
+<div class="wrapper">
+  <div class="container-fluid">
+      <form  [formGroup]="form" enctype="multipart/form-data"  >
+          <div class="card-box" style="padding-top: 0px">
+              <div class="row">
+                  <div class="col-12">
+                    <h4  style="text-align:center">Truck Request Report</h4>
+                  </div>
+              </div>
+              <div class="row">
+                <div class="col-1">
+                  <button mat-raised-button color="primary" (click)="filter_table()">Filter <mat-icon>search</mat-icon></button>
+              </div>
+              </div>
+              <br/>
+
+              <div *ngIf="filterDataForm">
+                  <div class="row">
+                    <div class="col-3">
+                      <mat-form-field appearance="fill">
+                        <!-- <mat-label>Dispatch Mode{{form.value.mode_of_dispatch}}</mat-label> -->
+                        <mat-label>DA no{{form.value.da_no}}</mat-label>
+                        <mat-select formControlName="da_no" >
+                          <mat-option value=''>Select Option</mat-option>
+                          <mat-option *ngFor="let subskill of DaIdList"  [value]="subskill.da_id">
+                            {{subskill.jobcode_da_no}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+
+                    <div  class="col-2" style="margin-right: 18px;">
+                      <mat-form-field style="width:160px">
+                          <mat-label>Enter a date range</mat-label>
+                          <mat-date-range-input [rangePicker]="picker">
+                            <input matStartDate  placeholder="Start date"  formControlName="fromDate" (ngModelChange)="datePickerChange()">
+                            <input matEndDate  placeholder="End date"  formControlName="toDate" (ngModelChange)="datePickerChange()">
+                          </mat-date-range-input>
+                          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                          <mat-date-range-picker #picker></mat-date-range-picker>
+                        </mat-form-field>
+                  </div>
+    
+                        <div class="col-3">
+                            <button style="margin-left:1rem;" mat-raised-button color="primary" (click)="getRecordsBasedOnFilterData()">Search</button>
+                            <button style="margin-left:1rem;" mat-raised-button color="primary" (click)="clearAllFilterDataFields()">Clear</button>
+                        </div>
+                        </div>
+                    </div>   
+              </div>
+      </form>
+
+    <div class="row">
+      <div class="col-12">
+          <div class="card-box table-responsive">
+            
+            <table  class="table table-bordered table-striped" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+                  <thead>
+                      <tr>
+                          <th style="width: 30px;">Sl.no</th>
+                          <th style="width: 130px;">Request Type</th>
+                          <th style="width: 130px;">Request Date</th>
+                          <th  style="width: 130px;" >DA no</th>
+                          <th style="width: 130px;">Status</th>
+                          <th   style="width: 130px;">Transportation</th>
+                          <th   style="width: 130px;">Truck Type</th>
+                          <th style="width: 130px;" >Taluk</th>
+                          <th  style="width: 130px;">District</th>
+                          <th style="width: 230px;">State</th>
+                          <th  style="width: 130px;">Pincode</th>
+                          <th style="width: 130px;" >Remarks</th>
+                          <th  style="width: 130px;">View</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                          <tr *ngFor="let subskill of tablelist;let i=index">
+                              <td style="text-align:center">{{i+1}}</td>
+                              <td>{{subskill.requestType}}</td>
+                              <td>{{subskill.request_date | date : 'dd/MM/yyyy'}}</td>
+                              <td>{{subskill.daNo != null ? subskill.daNo : '-'}}</td>
+  
+                              <td>{{subskill.status != null ? subskill.status : '-'}}</td>
+                              <td>{{subskill.transportationName != null ? subskill.transportationName : '-'}}</td>
+                              <td>{{subskill.truckType != null ? subskill.truckType : '-'}}</td>
+                              <td>{{subskill.talukName != null ? subskill.talukName : '-'}}</td>
+                            
+                              <td>{{subskill.destination != null ? subskill.destination : '-'}}</td>
+                              <td>{{subskill.stateName != null ? subskill.stateName : '-'}}</td>
+                              <td>{{subskill.pincode != null ? subskill.pincode : '-'}}</td>
+                              
+                              <td>{{subskill.remarks != null ? subskill.remarks : '-'}}</td>
+                              <td style="color:blue;" (click)="openDialogPanel(subskill.truckReqId)">View</td>
+                             </tr>   
+                  </tbody>
+              </table>
+          </div>
+      </div>
+  </div>
+</div>
+</div>
+
+  
+
+
+
+
+
+
+
+
+
+  

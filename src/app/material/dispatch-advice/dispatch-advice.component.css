@@ -1,0 +1,11 @@
+::ng-deep .mat-form-field{
+    width:80% !important;
+  }
+  .example-chip-list {
+    width: 100%;
+  }
+  .display_incenter{
+    display:flex;
+    align-items: center;
+
+  }

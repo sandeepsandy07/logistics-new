@@ -1,0 +1,351 @@
+
+<div class="card-box example-small-box-details" *ngIf="viewRecords">
+    <div class="row">
+        <div class="col-1">  
+            <div class="row">
+                <div class="col-6">
+                    <!-- <mat-icon matListIcon [ngStyle]="{'color':'red'}" (click)="daNavigation(viewRecords.da_id,'/material/billableform')">arrow_back</mat-icon> -->
+                </div>
+                <div class="col-6">
+                    <label>DA No</label>
+                </div>
+            </div>
+           
+        </div>
+        <div class="col-2">  
+            <span>:&nbsp;{{viewRecords.jobcode_da_no}}</span>
+           
+        </div>
+        <div class="col-1">  
+            <label>Date</label>
+           
+        </div>
+        <div class="col-2">  
+            <span>:&nbsp;{{viewRecords.da_date | date}}</span>
+           
+        </div>
+        <div class="col-1">  
+            <label>SO no</label>
+           
+        </div>
+        <div class="col-1">  
+            <span>:&nbsp;{{viewRecords.so_no}}</span>
+           
+        </div>
+        <div class="col-1">  
+            <label>PO no</label>
+           
+        </div>
+        <div class="col-2">  
+            <span>:&nbsp;{{viewRecords.po_no}}</span>
+           
+        </div>
+        <div class="col-1" style="color: red;">
+           
+            <mat-icon (click)="daNavigation(viewRecords.da_id,'material/revisioncreate')">bug_report</mat-icon>
+             <span >*revise</span>
+        </div>
+        </div>
+        <div class="row">
+            <div class="col-1">  
+                <label>Job Code</label>
+               
+            </div>
+            <div class="col-2">  
+                <span>:&nbsp;{{viewRecords.job_code}}</span>
+               
+            </div>
+            <div class="col-1">  
+                <label>Job Name</label>
+               
+            </div>
+            <div class="col-2">  
+                <span>:&nbsp;{{viewRecords.job_name}}</span>
+               
+            </div>
+            <div class="col-1">  
+                <label>Customer</label>
+               
+            </div>
+            <div class="col-5">  
+                <span>:&nbsp;</span>
+               
+            </div>
+
+        </div>
+</div>
+<mat-tab-group dynamicHeight style="position: absolute;top: 88px;width: 100%;">
+    <mat-tab label="Panel/Loose Items">
+
+<div class="container-fluid">
+    
+    <span style="color: rebeccapurple;float: right; font-size: 14px;"><b><span style="color:red;">*</span>Consolidated</b><mat-icon title="Dispatch Check List Consolidated" style="font-size:25px;float:right;cursor: pointer;" (click)="generateDispatchCheckListPDF()">print</mat-icon></span>
+    <div class="mt-2" *ngFor="let card of list;let i = index">
+       
+        <div class="row" *ngIf="isListView">
+            <div class="col-md-2 mb-2" style="text-align: center;" *ngFor="let list of card.panel">
+                <mat-card *ngIf="list.panel_name =='LOOSE SUPPLY' && list.packing_flag != 4" style="cursor: pointer;padding:7px;background: #e9ff37db;" (click)="getFilterList(list.panel_name, list.section)">
+                   
+                    <span style="color: #3f51b5;"><b>{{list.panel_name}}</b></span><br>
+                    <span><b>Progress</b></span>
+                
+                </mat-card>
+                <mat-card *ngIf="list.panel_name =='LOOSE SUPPLY' && list.packing_flag >= 4 " style="cursor: pointer;padding:7px;background: #ffc864d1;" (click)="getFilterList(list.panel_name, list.section)">
+                    
+                    <span style="color: #3f51b5;"><b>{{list.panel_name}}</b></span><br>                   
+                   
+                    <span><b>Packed</b></span>
+                
+                </mat-card>
+                <mat-card *ngIf="list.panel_name !='LOOSE SUPPLY' &&  list.packing_flag >= 4 " style="cursor: pointer;padding:7px;background-color: #ffc864d1;" (click)="getFilterListPanel(list.panel_name, list.section)"  >
+                    <span style="color: #3f51b5;"><b>{{list.component_no}}-{{list.size}}</b></span><br>         
+                    <span style="color: #3f51b5;"><b>{{list.panel_name}}&nbsp;&nbsp;-&nbsp;&nbsp;</b></span>                  
+                    <span style="color:green;"><b>  Packed</b></span><span><mat-icon style="font-size:25px;float:right;color:rebeccapurple" (click)="generateSinglePanelWisePdf(list.panel_name)">print</mat-icon></span>
+                </mat-card>
+                <mat-card *ngIf="list.panel_name !='LOOSE SUPPLY' &&  list.packing_flag == 2 " style="cursor: pointer;padding:7px;background-color: #ffc864d1;"  >
+                    <span style="color: #3f51b5;"><b>{{list.component_no}}-{{list.size}}</b></span><br>         
+                    <span style="color: #3f51b5;"><b><s>{{list.panel_name}}</s>&nbsp;&nbsp;-&nbsp;&nbsp;</b></span>                  
+              
+                    <span style="color:green;"><b>  Verified</b></span> 
+                </mat-card>
+                <mat-card *ngIf="list.panel_name !='LOOSE SUPPLY' &&  list.packing_flag == 0 " style="cursor: pointer;padding:7px;background-color: #afbbaf5c;"  >
+                    <span style="color: #3f51b5;"><b>{{list.component_no}}-{{list.size}}</b></span><br>         
+                    <span style="color: #3f51b5;"><b><s>{{list.panel_name}}</s>&nbsp;&nbsp;-&nbsp;&nbsp;</b></span>                  
+                    <span style="color:green;"><b>  Not Verified</b></span> 
+                </mat-card>
+                <mat-card *ngIf="list.panel_name !='LOOSE SUPPLY' &&  list.packing_flag == 3 " style="cursor: pointer;padding:7px;background-color: #65ff65b8;" (click)="getFilterListPanel(list.panel_name, list.section)"  >
+                    <span style="color: #3f51b5;"><b>{{list.component_no}}-{{list.size}}</b></span><br>         
+                    <span style="color: #3f51b5;"><b>{{list.panel_name}}&nbsp;&nbsp;-&nbsp;&nbsp;</b></span>                  
+                    <span style="color:green;"><b>Approved</b></span><span><mat-icon style="font-size:25px;float:right;color:rebeccapurple" title="Dispatch Check List" (click)="generateSinglePanelWisePdf(list.panel_name)">print</mat-icon></span>
+                </mat-card>
+                <mat-card *ngIf="list.panel_name !='LOOSE SUPPLY' &&  list.packing_flag == 1 " style="cursor: pointer;padding:7px;background-color: #65ff65b8;"  >
+                    <span style="color: #3f51b5;"><b>{{list.component_no}}-{{list.size}}</b></span><br>         
+                    <span style="color: #3f51b5;"><b>{{list.panel_name}}&nbsp;&nbsp;-&nbsp;&nbsp;</b></span>                  
+                    <span style="color:green;"><b>Modification</b></span>                      
+                </mat-card>
+                
+               
+            </div>
+        </div>
+        
+    </div>
+</div>
+</mat-tab>
+
+
+
+
+
+
+
+
+
+
+
+
+<mat-tab label="Completed">
+
+    
+   
+    <h4 style="color:rebeccapurple">Panel Box</h4><span *ngIf="bigbox_details.value.boxLIst_panel.length > 0" style="color: rebeccapurple;float: right; font-size: 14px;"><b><span style="color:red;">*</span>Panel Consolidated</b><mat-icon style="font-size:25px;float:right;cursor: pointer;color:red" (click)="generateConsigneeForm_multiple('Panel')">alternate_email</mat-icon><mat-icon style="font-size:25px;float:right;cursor: pointer;" (click)="generatePackedConsolidatePanelPdf()">print</mat-icon></span>
+        
+    <div class="row" >
+        <div class="col-md-2 mb-2" style="text-align: center;" *ngFor="let list of bigbox_details.value.boxLIst_panel;let i=index;" (click)="getMainBoxDetails_dailog(list.item.items,list.box_list.box_code)" >
+            <mat-card class="icon-rocket"  style="padding: unset;height:100%;cursor: pointer;background-image: url('../assets/images/packingimages5.png');background-size: cover;" >
+                <div class="row">   
+                    <div class="col-12">
+                        <span>
+                            <mat-icon style="font-size:18px;float:right;color:red" (click)="barcodeprint(list.box_list.box_code,list.box_list.box_serial_no,true)" title="Barcode print">blur_linear</mat-icon>
+                            <mat-icon style="font-size:18px;float:right;color:rebeccapurple" (click)="generatePackedPanelPdf(list.box_list.box_code)" title="Packing list cum checklist">print</mat-icon>
+                            <mat-icon style="font-size:18px;float:right;color:red" (click)="generateConsigneeForm_single(list.box_list.box_code,list.panel.component_no,'Panel')" title="Single Box Consignee Print ">alternate_email</mat-icon>
+                        </span>
+                    </div>
+                    <div class="col-12 text-center">
+                        <span style="font-weight: bold;font-size: 12px;">{{list.box_list.box_details.boxSize}}</span>
+                    </div>
+                    <div class="col-12">
+                        <span  class="text-center"style="font-weight: bold;font-size: 12px;" *ngIf="list.panel">{{list.panel.component_no}} - {{list.panel.size}}</span>
+
+
+                    </div>
+                    <div class="col-12">
+                        <span class="text-center" style="font-weight: bold;font-size: 12px;">Box.no ={{list.box_list.box_serial_no}}</span>
+
+                    </div>
+                    <div class="col-12">
+                        <span class="text-center" style="font-weight: bold;font-size: 12px;">{{list.box_list.box_code}}</span>
+
+                    </div>
+                </div>
+
+            </mat-card>
+            
+        </div>
+        
+        
+    </div>
+    <h4 style="color:rebeccapurple">Loose Supply</h4><span *ngIf="bigbox_details.value.boxLIst_loose.length > 0" style="color: rebeccapurple;float: right; font-size: 14px;"><b><span style="color:red;">*</span>Loose Consolidated</b><mat-icon style="font-size:25px;float:right;cursor: pointer;color:red;" (click)="generateConsigneeForm_multiple('Loose Supply')">alternate_email</mat-icon><mat-icon style="font-size:25px;float:right;cursor: pointer;" (click)="generateConsolidateLooseItemPdf()">print</mat-icon></span>
+        
+    <div class="row"   >
+      
+        <div class="col-md-2 mb-2" style="text-align: center;" *ngFor="let list of bigbox_details.value.boxLIst_loose;let i=index;" (click)="getMainBoxDetails_dailog(list.item.items,list.box_list.box_code)" >
+            <mat-card class="icon-rocket"  style="padding: unset;height:100%;cursor: pointer;background-image: url('../assets/images/packingimages5.png');background-size: cover;" >
+                <div class="row">   
+                    <div class="col-12">
+                        <span>
+                            <mat-icon style="font-size:18px;float:right;color:red" (click)="barcodeprint(list.box_list.box_code,list.box_list.box_serial_no,true)"  title="Barcode print">blur_linear</mat-icon>
+                            <mat-icon style="font-size:18px;float:right;color:rebeccapurple" (click)="generateLooseItemPdf(list.box_list.box_code)"  title="Packing list cum checklist">print</mat-icon>
+                            <mat-icon style="font-size:18px;float:right;color:red" (click)="generateConsigneeForm_single(list.box_list.box_code,list.panel.component_no,'Loose Supply')" title="Single Box Consignee Print ">alternate_email</mat-icon>
+                        </span>
+                    </div>
+                    <div class="col-12 text-center">
+                        <span style="font-weight: bold;font-size: 12px;">{{list.box_list.box_details.boxSize}}</span><br>
+                    </div>
+                    <div class="col-12">
+                        <span  class="text-center"style="font-weight: bold;font-size: 12px;">Box.no ={{list.box_list.box_serial_no}}</span>
+
+                    </div>
+                    <div class="col-12">
+                        <span class="text-center" style="font-weight: bold;font-size: 12px;">{{list.box_list.box_code}}</span>
+
+                    </div>
+                </div>
+                
+                          
+               
+                
+              
+            </mat-card>
+            
+        </div>
+        
+        
+    </div>
+
+</mat-tab>
+<mat-tab label="Move Packed Box to load">
+
+
+    <form  [formGroup]="form" >
+        <div class="card-box taskboard-box text-center" >
+            <h4 class="header-title m-t-0 text-warning">Move This DA packed Box for Loading </h4>
+            <div class="col-12 text-center">
+                <div class="form-group  text-center" id="desc">
+                  <mat-form-field class="example-full-width"  appearance="fill">
+                    <mat-label>Remarks</mat-label>
+                    <textarea matInput 
+                           placeholder="" formControlName="remarks"></textarea>
+                    <mat-hint>Remarks</mat-hint>
+                  
+                  </mat-form-field>
+              </div>
+                
+            </div>
+            <br>
+           
+             <div class="text-center">
+              <button mat-raised-button color="primary"(click)="onSubmitPost()" >Move</button>
+            </div>
+          
+           
+            
+        </div>
+    </form>
+
+
+
+</mat-tab>
+
+<mat-tab label="Main Box Delete">
+
+    <h4 style="color:rebeccapurple">Panel Box</h4><span  style="color: rebeccapurple;float: right; font-size: 14px;"><span style="color:red;">*</span><b *ngIf="delete_flag.user_level == 4" (click)="change_series_box(true)">Change the Series of all the Main Box</b></span>
+        
+    <div class="row" >
+        <div class="col-md-2 mb-2" style="text-align: center;" *ngFor="let list of bigbox_details.value.boxLIst_panel;let i=index;" (click)="getMainBoxDetails_dailog(list.item.items,list.box_list.box_code)" >
+            <mat-card class="icon-rocket"  style="padding: unset;height:100%;cursor: pointer;background-image: url('../assets/images/packingimages5.png');background-size: cover;" >
+                <div class="row">   
+                    <div class="col-12">
+                        <span>
+                            <mat-icon style="font-size:18px;float:right;color:red" *ngIf="list.box_list.loaded_flag == false && delete_flag.user_level == 4" (click)="deleteMainBox(list.box_list.box_code)" title="Barcode print">blur_linear</mat-icon>
+                           
+                        </span>
+                    </div>
+                    <div class="col-12 text-center">
+                        <span style="font-weight: bold;font-size: 12px;">{{list.box_list.box_details.boxSize}}</span>
+                    </div>
+                    <div class="col-12">
+                        <span  class="text-center"style="font-weight: bold;font-size: 12px;" *ngIf="list.panel">{{list.panel.component_no}} - {{list.panel.size}}</span>
+
+
+                    </div>
+                    <div class="col-12">
+                        <span class="text-center" style="font-weight: bold;font-size: 12px;">Box.no ={{list.box_list.box_serial_no}}</span>
+
+                    </div>
+                    <div class="col-12">
+                        <span class="text-center" style="font-weight: bold;font-size: 12px;">{{list.box_list.box_code}}</span>
+
+                    </div>
+                </div>
+
+            </mat-card>
+            
+        </div>
+        
+        
+    </div>
+    <h4 style="color:rebeccapurple">Loose Supply</h4><span  style="color: rebeccapurple;float: right; font-size: 14px;"><span style="color:red;">*</span><b  *ngIf="delete_flag.user_level == 4" (click)="change_series_box(false)">Change the Series of all the small Box</b></span>
+        
+    <div class="row"   >
+      
+        <div class="col-md-2 mb-2" style="text-align: center;" *ngFor="let list of bigbox_details.value.boxLIst_loose;let i=index;"  >
+            <mat-card class="icon-rocket"  style="padding: unset;height:100%;cursor: pointer;background-image: url('../assets/images/packingimages5.png');background-size: cover;" >
+                <div class="row">   
+                    <div class="col-12">
+                        <span>
+                            <mat-icon style="font-size:18px;float:right;color:red" *ngIf="list.box_list.loaded_flag == false && delete_flag.user_level == 4" (click)="deleteMainBox(list.box_list.box_code)" title="Delete">delete</mat-icon>
+
+                        </span>
+                    </div>
+                <div class="row" (click)="getMainBoxDetails_dailog(list.item.items,list.box_list.box_code)">   
+                    <div class="col-12 text-center">
+                        <span style="font-weight: bold;font-size: 12px;">{{list.box_list.box_details.boxSize}}</span><br>
+                    </div>
+                    <div class="col-12">
+                        <span  class="text-center"style="font-weight: bold;font-size: 12px;">Box.no ={{list.box_list.box_serial_no}}</span>
+
+                    </div>
+                    <div class="col-12">
+                        <span class="text-center" style="font-weight: bold;font-size: 12px;">{{list.box_list.box_code}}</span>
+
+                    </div>
+                </div>
+                </div>
+                
+                          
+               
+                
+              
+            </mat-card>
+            
+        </div>
+        
+        
+    </div>
+
+
+
+  
+
+
+</mat-tab>
+
+</mat-tab-group>
+
+
+
+
+
+
+
+

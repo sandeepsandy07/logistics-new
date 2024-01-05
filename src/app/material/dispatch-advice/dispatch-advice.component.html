@@ -1,0 +1,1211 @@
+
+<!-- <div *ngIf="success;then showform;else showtable"></div>
+<ng-template #showform> -->
+<div class="wrapper " >
+  <div class="container-fluid">
+      <div class="row">
+          <div class="col-12">
+        
+            <h4 class="" *ngIf="action == 'edit'">
+              <b >Edit DA</b> 
+              <button *ngIf="action == 'edit'"  mat-raised-button color="primary" style="background-color: #3cc81c;float: right;margin-left: 18px;"  (click)="daNavigation(da_no,'/material/billableform')">Billing Details Page  <mat-icon   matListIcon [ngStyle]="{'color':'red'}" style="float: right;" (click)="daNavigation(da_no,'/material/billableform')">arrow_forward</mat-icon></button> 
+              <button *ngIf="action == 'edit'"  mat-raised-button color="primary" style="background-color: #ffae00;float: right;margin-left: 18px;"  (click)="daNavigation(da_no,'/material/billableform')">BOM Page</button> 
+              <button  mat-raised-button color="primary" style="float: right;background-color: #c85827;"  (click)="qtso_upload()">Upload SO</button> 
+            </h4>
+            <h4 class="" *ngIf="action != 'edit'">
+                <b >Create DA</b> 
+               <button  mat-raised-button color="primary" style="float: right;background-color: #ffae00;"  (click)="qtso_upload()">Upload SO</button> 
+               <button  mat-raised-button color="primary" style="float: right;background-color: #cc23f7;margin-right: 18px;"  (click)="Syncc_customer()">Syncc/Update Customer</button> 
+              
+              </h4> 
+         
+          </div>
+      </div>
+      <div class="row" *ngIf="success">
+          <div class="col-12"> 
+              <div class="card-box">
+                 
+                
+                <form  [formGroup]="form" enctype="multipart/form-data"  >
+                  <div style="padding: 20px;border: 3px solid #2582b5;background: #d0dedf26;">
+                  
+                     
+                     
+                      
+                  
+              
+                
+                 <div class="row">
+                  <div class="col-3">
+                    <mat-form-field class="example-full-width" appearance="fill">
+                        <mat-label>Job Code</mat-label>
+                       
+                        <input type="text" matInput  [errorStateMatcher]="matcher" formControlName="job_code"
+                               placeholder="">
+                               <button mat-button matSuffix  mat-icon-button (click)="getJobDetails()">
+                                <mat-icon>search</mat-icon>
+                              </button>
+                              
+                        <mat-hint>Job code 21MC10</mat-hint>
+                        <mat-error *ngIf="f.job_code.errors?.required">
+                          Job code is <strong>required</strong>
+                        </mat-error>
+                        
+                       
+                      </mat-form-field>
+                     
+                       
+                     
+                     
+                    </div>
+                  <div class="col-3">
+                      <mat-form-field class="example-full-width" appearance="fill">
+                         
+                          <mat-label>YGS Project ID</mat-label>
+                          <input type="text" matInput formControlName="ygs_proj_defi" [errorStateMatcher]="matcher"
+                                 placeholder="">
+                                <button mat-button matSuffix  mat-icon-button (click)="getJobDetails_p_id()">
+                                  <mat-icon>search</mat-icon>
+                                </button>
+                                 <mat-hint>Project ID!</mat-hint>
+                        
+                        </mat-form-field>
+                  </div>
+
+                  <div class="col-3">
+                    <mat-form-field class="example-full-width" appearance="fill">
+                        <mat-label>SO No.</mat-label>
+                        <!-- <mat-select formControlName="so_no" > 
+                          <mat-option *ngFor="let subskill of soList" [value]="subskill" (click)="getSoDetails()">
+                               {{subskill }}
+                             </mat-option>
+                     
+                        </mat-select> -->
+
+                        <input type="text" matInput list="codes" formControlName="so_no" autocomplete="off" >
+                        <button mat-button matSuffix  mat-icon-button (click)="getSoDetails_by_p_id()">
+                          <mat-icon>search</mat-icon>  </button>
+                        <datalist id="codes" (click)="getSoDetails_by_p_id()">
+                          <option *ngFor="let subskill of soList" [value]="subskill" (click)="getSoDetails_by_p_id()"> {{subskill}}</option>
+                        </datalist>
+                        <mat-error *ngIf="f.so_no.errors?.required">
+                          SO no is <strong>required</strong>
+                        </mat-error>
+                      </mat-form-field>
+                      </div>
+                 
+                    <div class="col-3">
+                  <mat-form-field class="example-full-width" appearance="fill">
+                      <mat-label>PO No./NOA No.</mat-label>
+                      <input type="text" matInput  [errorStateMatcher]="matcher"
+                             placeholder="" formControlName="po_no">
+                      <mat-hint>PO No./NOA No.</mat-hint>
+                      <mat-error *ngIf="f.po_no.errors?.required">
+                        PO is <strong>required</strong> 
+                       </mat-error>
+                    </mat-form-field>
+                  </div>
+                  
+                </div>
+                <div class="row">
+                  <div class="col-3">
+                    <mat-form-field class="example-full-width" appearance="fill">
+                      <mat-label>Location</mat-label>
+                      
+                       <mat-select formControlName="location_unit"  [(value)]="form.value.location_unit" >
+                        <mat-option value="">Select Option</mat-option>
+                        <mat-option value="Unit-1">Unit-1</mat-option>
+                        <mat-option value="Unit-2">Unit-2</mat-option>      
+                       </mat-select>
+                      <mat-hint>From Where Da is requested</mat-hint>
+                      <mat-error *ngIf="f.location_unit.errors?.required">
+                        to is <strong>required</strong>
+                      </mat-error>
+                    </mat-form-field>
+                   
+                  </div>
+                  <!-- <div class="col-3">
+                    
+                        <mat-form-field class="example-full-width" appearance="fill">
+                            <mat-label>to</mat-label>                            
+                             <mat-select formControlName="da_to" >
+                           
+                              <mat-option value="Logistics">Logistics</mat-option>      
+                             </mat-select>
+                            <mat-hint>logistics company!</mat-hint>
+                            <mat-error *ngIf="f.da_to.errors?.required">
+                              to is <strong>required</strong>
+                            </mat-error>
+                        </mat-form-field>
+                   </div> -->
+            
+                  
+                    <!-- <div class="col-3">
+                      <mat-form-field class="example-full-width" appearance="fill">
+                          <mat-label>CC</mat-label>
+                          
+                                  <mat-select formControlName="da_cc" >
+                              <mat-option value="">Select Option</mat-option>
+                              <mat-option value="Domestic Engineering">Domestic Engineering</mat-option>
+                              <mat-option value="GDCI">GDCI</mat-option>  
+                              <mat-option value="Service">Service</mat-option>  
+                              <mat-option value="OPD">OPD</mat-option>      
+                             </mat-select>
+                          <mat-hint>logistics company!</mat-hint>
+                          <mat-error *ngIf="f.da_cc.errors?.required">
+                            CC is <strong>required</strong>
+                          </mat-error>
+                        </mat-form-field>
+
+                      
+
+
+                      </div> -->
+                     <div class="col-3">
+                    <mat-form-field class="example-full-width" appearance="fill">
+                        <mat-label>From</mat-label>
+                      
+
+                       
+                        <mat-select formControlName="da_from" [(value)]="form.value.da_from"  (selectionChange)="getapprovellist_dept()">
+                          <mat-option>-select-</mat-option>
+                          <mat-option *ngFor="let subskill of subdeptlist" [value]="subskill.sub_dept_id" >
+                            {{subskill.sub_department}}
+                          </mat-option>                       
+                        </mat-select>
+                      </mat-form-field>
+                      <mat-error *ngIf="f.da_from.errors?.required">
+                        da_from is <strong>required</strong>
+                      </mat-error> 
+               </div>
+               <div class="col-3">
+                <mat-form-field class="example-full-width" appearance="fill">
+                  <mat-label>Job Name</mat-label>
+                  <input type="text" matInput formControlName="job_name" [errorStateMatcher]="matcher"
+                         placeholder="">
+                  <mat-hint>Job Name</mat-hint>
+                  <mat-error *ngIf="f.job_name.errors?.required">
+                    Job Name is <strong>required</strong>
+                  </mat-error>
+                  
+                  </mat-form-field>
+           </div>
+           <div class="col-3">
+            <mat-form-field appearance="fill">
+              <mat-label>Mode of Payment</mat-label>
+             
+         <mat-select formControlName="mode_of_payment" [(value)]="form.value.mode_of_payment"> 
+             <!-- <mat-option *ngFor="let subskill of deliveryList" [value]="subskill.delivery_mode_id" >
+                  {{subskill.delivery_name }}
+                </mat-option> -->
+                <mat-option value="">Select Option</mat-option>
+                <mat-option value="Direct">Direct</mat-option>
+                <mat-option value="Through Bank">Through Bank</mat-option>   
+                <mat-option value="COD">COD</mat-option>   
+                <mat-option value="Proforma invoice">Proforma invoice</mat-option>     
+                
+              
+             
+            </mat-select> 
+            </mat-form-field>
+          </div>
+               </div><br>
+
+              
+                <div class="row">
+                  <div class="col-2">
+                   
+                    <mat-radio-group aria-label="Select an option" formControlName="bill_type" >
+                          <mat-radio-button value="billable" color="accent" (change)="getapprovellist_type($event)"  >
+                            Billable 
+                          </mat-radio-button>
+                          <mat-radio-button value="nonbillable" style="padding-left: 10px;" color="accent"(change)="getapprovellist_type($event)"  >
+                            Non Billable
+                          </mat-radio-button>
+                          <mat-error *ngIf="f.bill_type.errors?.required">
+                            Bill Type  is <strong>required</strong>
+                          </mat-error>
+                    
+                    </mat-radio-group>   
+                      
+                          
+                         
+                        
+                  </div>
+                 
+                  <div class="col-3">
+                    <mat-form-field appearance="fill">
+                      <mat-label>Dispatch Mode{{form.value.mode_of_dispatch}}</mat-label>
+                      <mat-select formControlName="mode_of_dispatch" >
+                        <mat-option value="">Select Option</mat-option>
+                        <mat-option *ngFor="let subskill of dispatchList"  [value]="subskill.dm_id" >
+                          {{subskill.dm_name}}
+                        </mat-option>
+                       
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-3">
+                    <mat-form-field appearance="fill">
+                      <mat-label>Mode of Delivery</mat-label>
+                     
+                 <mat-select formControlName="mode_of_delivery" [(value)]="form.value.mode_of_delivery"> 
+                  <mat-option value="">Select Option</mat-option>
+                  <mat-option *ngFor="let subskill of deliveryList" [value]="subskill.delivery_mode_id" >
+                          {{subskill.delivery_name }}
+                        </mat-option>
+                        
+                      
+                     
+                    </mat-select> 
+                    </mat-form-field>
+                  </div>
+                  <div class="col-3">
+                    <mat-form-field class="example-full-width" appearance="fill">
+                      <mat-label>Warranty Type</mat-label>
+                       <mat-select formControlName="warranty_type"  [(value)]="form.value.warranty_type" >
+                        <mat-option value="">Select Option</mat-option>
+                        <mat-option value="Warranty">Warranty</mat-option>
+                        <mat-option value="Out of Warranty">Out of Warranty</mat-option>      
+                       </mat-select>
+                    </mat-form-field>
+                  </div>
+
+                  <div class="col-3">
+                    <mat-form-field class="example-full-width" appearance="fill">
+                      <mat-label>Repair Option</mat-label>
+                       <mat-select formControlName="repair_type"  [(value)]="form.value.repair_type" >
+                        <mat-option value="">Select Option</mat-option>
+                        <mat-option value="With Repair">With Repair</mat-option>
+                        <mat-option value="Without Repair">Without Repair</mat-option> 
+                        <mat-option value="AMC ">AMC </mat-option>       
+                       </mat-select>
+                      <!-- <mat-hint>From Where Da is requested</mat-hint> -->
+                    </mat-form-field>
+                  </div>
+                
+                 
+                </div><br>
+
+                <!-- <div class="row">  
+                <div class="col-3">
+                     
+                      <mat-checkbox formControlName="bom_dispatch" color="primary">
+                        1)BOM For Dispatch
+                      </mat-checkbox>
+              </div>
+              <div class="col-4">
+                        <mat-checkbox formControlName="pwb_material" color="primary">
+                          2)Panel Wise Bill of Material
+                        </mat-checkbox>
+                </div>       
+              <div class="col-5">
+                          <mat-checkbox formControlName="bom_dispatch" color="primary">
+                            2)BOM for Dispatch  of Warranty/Non-Warranty Matrial/Free issue
+                          </mat-checkbox>
+              </div>   
+              
+            </div>   -->
+          </div>   
+          
+                     
+              
+              
+              
+                   
+              
+                   
+              <div style="padding: 20px;border: 3px solid #2582b5;background: #d0dedf26;">
+                    <h4 style="text-align: center; color: #2389d1;"> Customer Details</h4>
+
+                    <div class="row">
+                      <div class="col-3">
+                        <mat-form-field class="example-full-width" appearance="fill">
+                          <mat-label>Customer Code</mat-label>
+                          <input type="text" matInput  [errorStateMatcher]="matcher" formControlName="bill_to_code"
+                                 placeholder="">
+                          <button mat-button matSuffix  mat-icon-button (click)="getCustomerDetails('bill_to_code')">
+                            <mat-icon>search</mat-icon>
+                          </button>         
+                          <mat-hint>Customer Code</mat-hint>
+                          <mat-error *ngIf="f.job_code.errors?.required">
+                            Customer Code is <strong>required</strong>
+                          </mat-error>       
+                        </mat-form-field>
+                      </div>
+                      <div class="col-3">
+                        <mat-form-field class="example-full-width" appearance="fill">
+                          <mat-label>Customer Code</mat-label>
+                          <input type="text" matInput  [errorStateMatcher]="matcher" formControlName="ship_to_code"
+                                 placeholder="">
+                          <button mat-button matSuffix  mat-icon-button (click)="getCustomerDetails('ship_to_code')">
+                            <mat-icon>search</mat-icon>
+                          </button>         
+                          <mat-hint>Customer Code</mat-hint>
+                          <mat-error *ngIf="f.job_code.errors?.required">
+                            Customer Code is <strong>required</strong>
+                          </mat-error>   
+                        </mat-form-field>
+                      </div>
+                      <div class="col-3">
+                        <mat-form-field class="example-full-width" appearance="fill">
+                          <mat-label>Customer Code</mat-label>
+                          <input type="text" matInput  [errorStateMatcher]="matcher" formControlName="sold_to_code"
+                                 placeholder="">
+                          <button mat-button matSuffix  mat-icon-button (click)="getCustomerDetails('sold_to_code')">
+                            <mat-icon>search</mat-icon>
+                          </button>         
+                          <mat-hint>Customer Code</mat-hint>
+                          <mat-error *ngIf="f.job_code.errors?.required">
+                            Customer Code is <strong>required</strong>
+                          </mat-error>   
+                        </mat-form-field>
+                      </div>
+                      <div class="col-3">
+                        <mat-form-field class="example-full-width" appearance="fill">
+                          <mat-label>Customer Code</mat-label>
+                          <input type="text" matInput  [errorStateMatcher]="matcher" formControlName="notify_party_code"
+                                 placeholder="">
+                          <button mat-button matSuffix  mat-icon-button (click)="getCustomerDetails('notify_party_code')">
+                            <mat-icon>search</mat-icon>
+                          </button>         
+                          <mat-hint>Customer Code</mat-hint>
+                          <mat-error *ngIf="f.notify_party_code.errors?.required">
+                            Customer Code is <strong>required</strong>
+                          </mat-error>   
+                        </mat-form-field>
+                      </div>
+
+                    </div>  
+
+
+              
+                   <div class="row">
+                     <div class="col-3">
+                  
+                   
+                        <mat-form-field class="example-full-width" appearance="fill">
+                            <mat-label>Bill to</mat-label>
+                            <textarea matInput  formControlName="bill_to" readonly="" [errorStateMatcher]="matcher"
+                                   placeholder=""></textarea>
+                            <mat-hint>Bill to address</mat-hint>
+                            <input type="hidden"formControlName="customer_id" >
+
+                            <mat-error *ngIf="f.bill_to.errors?.required">
+                              Bill to is <strong>required</strong> 
+                            </mat-error>
+                          </mat-form-field>
+                      </div>
+                      <div class="col-3">
+                        <mat-form-field class="example-full-width" appearance="fill">
+                            <mat-label>Ship to</mat-label>
+                            <textarea matInput matInput formControlName="ship_to" readonly=""  [errorStateMatcher]="matcher"
+                                  placeholder=""></textarea>
+                            <mat-hint>Ship to address</mat-hint>
+                            <mat-error *ngIf="f.ship_to.errors?.required">
+                              Ship to is <strong>required</strong>
+                          </mat-error> 
+                        </mat-form-field>
+                      </div>
+                      <div class="col-3">
+                        <mat-form-field class="example-full-width" appearance="fill">
+                            <mat-label>Sold to</mat-label>
+                            <textarea matInput matInput formControlName="sold_to"  readonly="" 
+                                  placeholder=""></textarea>
+                            <mat-hint>Sold to address</mat-hint>
+                            <mat-error *ngIf="f.sold_to.errors?.required">
+                              Sold to is <strong>required</strong> 
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-3">
+                      <mat-form-field class="example-full-width" appearance="fill">
+                          <mat-label>Notify Party</mat-label>
+                          <textarea matInput matInput formControlName="notify_party_address"  [errorStateMatcher]="matcher"
+                                 placeholder=""></textarea>
+                          <mat-hint>Notify Party</mat-hint>
+                          
+                        </mat-form-field>
+                    </div>
+                    
+               </div>
+               <br>
+
+
+              <div class="row">
+                <div class="col-3">
+                        <mat-form-field class="example-full-width" appearance="fill">
+                            <mat-label>GSTIN</mat-label>
+                            <input type="text" matInput  formControlName="bill_to_gst" [errorStateMatcher]="matcher"
+                                   placeholder="">
+                            <mat-hint>GSTIN for Bill To </mat-hint>
+                            <mat-error *ngIf="f.bill_to_gst.errors?.required">
+                              GSTIN for Bill To is <strong>required</strong> 
+                             </mat-error>
+                        </mat-form-field>
+                      </div>
+                      <div class="col-3">
+                      <mat-form-field class="example-full-width" appearance="fill">
+                          <mat-label>GSTIN</mat-label>
+                          <input type="text" matInput  formControlName="ship_to_gst" [errorStateMatcher]="matcher"
+                                 placeholder="">
+                          <mat-hint>GSTIN for Ship To </mat-hint>
+                          <mat-error *ngIf="f.ship_to_gst.errors?.required">
+                            to is GSTIN for Ship<strong>required</strong>
+                          </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-3">
+                      <mat-form-field class="example-full-width" appearance="fill">
+                          <mat-label>GSTIN</mat-label>
+                          <input type="text" matInput formControlName="sold_to_gst"  [errorStateMatcher]="matcher"
+                                placeholder="">
+                          <mat-hint>GSTIN for Sold To</mat-hint>
+                          <mat-error *ngIf="f.sold_to_gst.errors?.required">
+                            GSTIN for Sold is <strong>required</strong>
+                          </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-3">
+                      <mat-form-field class="example-full-width" appearance="fill">
+                          <mat-label>GSTIN</mat-label>
+                          <input type="text" matInput formControlName="notify_party_gst"  [errorStateMatcher]="matcher"
+                                placeholder="">
+                          <mat-hint>GSTIN for notify party</mat-hint>
+                        
+                        </mat-form-field>
+                    </div>
+                 </div>
+                </div>
+                 
+                 
+              <div style="padding: 20px;border: 3px solid #2582b5;background: #d0dedf26;">
+                <h4 style="text-align: center; color: #2389d1;"> Bill to Customer Details</h4>
+
+                  
+                 <div class="row">
+                      <div class="col-3">
+                        <mat-form-field class="example-full-width" appearance="fill">
+                          <mat-label>E-Mail</mat-label>
+                          <input type="email" matInput  formControlName="email" [errorStateMatcher]="matcher"
+                                 placeholder="">
+                          <mat-hint>Customer E-mail</mat-hint>
+                          <mat-error *ngIf="f.email.errors?.email">
+                            Email is <strong>invalid</strong> 
+                         </mat-error>
+                        </mat-form-field>
+              
+                      </div>
+                      <div class="col-3">
+                        <mat-form-field class="example-full-width"  appearance="fill">
+                          <mat-label>Telephone / Fax No.</mat-label>
+                          <input type="text" matInput  [errorStateMatcher]="matcher"
+                                 placeholder="" formControlName="telephone_no">
+                          <mat-hint>Customer Telephone / Fax No.</mat-hint>
+                          <mat-error *ngIf="f.telephone_no.errors?.pattern">
+                            Telephone / Fax No is <strong>invalid</strong> 
+                          </mat-error>
+                        </mat-form-field>
+              
+                        
+                      </div>
+                      <div class="col-3">
+                        <mat-form-field class="example-full-width" appearance="fill">
+                          <mat-label>Mobile No.</mat-label>
+                          <input type="text" matInput formControlName="mobile_no"  [errorStateMatcher]="matcher"
+                                 placeholder="">
+                          <mat-hint>Customer Mobile No.</mat-hint>
+                          <mat-error *ngIf="f.mobile_no.errors?.required">
+                            Mobile number is <strong>Required</strong> 
+                          </mat-error>
+                        </mat-form-field>
+              
+                        
+                      </div>
+                      <div class="col-3">
+                        <mat-form-field class="example-full-width" appearance="fill">
+                          <mat-label>Contact Person </mat-label>
+                          <input type="text" matInput formControlName="otr_person_name" [errorStateMatcher]="matcher"
+                                 placeholder="">
+                          <mat-hint>Contact Person  Name</mat-hint>
+                          <mat-error *ngIf="f.otr_person_name.errors?.required">
+                            It is <strong>Required</strong>
+                        </mat-error>
+                        </mat-form-field>
+              
+                        
+                    </div>
+                   
+                    </div>
+              
+                  </div>
+                 
+                 
+                  
+                  <div style="padding: 20px;border: 3px solid #2582b5;background: #d0dedf26;">
+                    <h4 style="text-align: center;display: block;color: #2389d1;">Insurance Details</h4>
+                    <div class="row">
+                   
+                    <div class="col-3">
+                        <mat-form-field appearance="fill">
+                          <mat-label>Insurance Scope</mat-label>
+                          <mat-select formControlName="insurance_scope" [(value)]="form.value.insurance_scope">
+                            <mat-option>-select-</mat-option>
+                            <mat-option *ngFor="let subskill of insurencescopelist" [value]="subskill.insurance_scope_id" >
+                              {{subskill.insurance_scope_name}}
+                            </mat-option>
+                           
+                          
+                          </mat-select>
+                          </mat-form-field>
+                    
+                    </div>
+                    <div class="col-3">
+                    
+                        <mat-form-field appearance="fill">
+                          <mat-label>Reimbursible / Non-Reimbursible</mat-label>
+                          <mat-select formControlName="reimbursible">
+                            <mat-option>-select-</mat-option>
+                            <mat-option value="reimbursible">Reimbursible </mat-option>
+                            <mat-option value="nonReimbursible">Non-Reimbursible</mat-option>
+                           
+                           
+                          
+                          </mat-select>
+                          <mat-hint>Select Reimbursible / Non-Reimbursible</mat-hint>
+              
+                          </mat-form-field>
+                    </div>
+                    <div class="col-3">
+                        <mat-form-field class="example-full-width" appearance="fill">
+                          <mat-label>Amount</mat-label>
+                          <input type="text" matInput formControlName="insurance_amt" [errorStateMatcher]="matcher"
+                                 placeholder="">
+                          <mat-hint>Amt ,if its Reimbursible</mat-hint>
+                          <mat-error *ngIf="f.insurance_amt.errors?.pattern">
+                            Amount is <strong>invalid</strong>
+                          </mat-error>
+                        </mat-form-field>
+                    </div>
+                    
+                    <div class="col-3 file-upload">
+                      
+                        
+
+                      <!-- {{fileName || "No file uploaded yet."}} -->
+                   
+                   
+                         <input type="file" #filePicker (change)="onImagePicked($event,'insurance')" multiple>
+                           
+                          
+                  <!-- <div  *ngFor="let obj of files;let i=index">
+                    <div class="row">
+                      <div class="col-4">
+                        {{obj.name}} 
+                      </div>
+                      <div (click)="removefile(i)"class="col-4">
+                        Delete
+                      </div>
+                      <div class="col-4">
+                        Download
+                      </div>
+                    </div>
+                  
+                  
+                  </div> -->
+                     
+                     
+                    
+                  
+                </div>
+
+
+
+                  </div>
+                  <br>
+                  <div class="row">
+
+                    <div class="col-3">
+                      <mat-form-field class="example-full-width" appearance="fill">
+                        <mat-label>Policy No. </mat-label>
+                        <input type="text" matInput formControlName="insurance_no" [errorStateMatcher]="matcher"
+                               placeholder="">
+                        <mat-hint>Policy number</mat-hint>
+                        
+                      </mat-form-field>
+                  </div>
+                      <div class="col-3">
+                        <mat-form-field class="example-full-width" appearance="fill">
+                          <mat-label>Address </mat-label>
+                          <input type="text" matInput formControlName="insurance_address" [errorStateMatcher]="matcher"
+                                 placeholder="">
+                          <mat-hint>address of insurance co</mat-hint>
+                         
+                        </mat-form-field>
+                      </div>
+                      
+                  
+                    <div class="col-3">
+                      <mat-form-field appearance="fill">
+                        <mat-label>Type of Insurance</mat-label>
+                        <mat-select formControlName="insurance_type" [(value)]="form.value.insurance_type">
+                          <mat-option>-select-</mat-option>
+                          <mat-option *ngFor="let subskill of insurenceTypelist" [value]="subskill.insurance_type_id" >
+                            {{subskill.insurance_type_name}}
+                          </mat-option>
+                        </mat-select>
+                        <mat-hint>Select Type of Insurance</mat-hint>
+            
+                        </mat-form-field>
+
+                    </div>
+                    <div class="col-3">
+                      <mat-form-field class="example-full-width" appearance="fill">
+                        <mat-label>Non-billable Value </mat-label>
+                        <input type="text" matInput formControlName="non_billable_value" [errorStateMatcher]="matcher"
+                               placeholder="">
+                        <mat-hint>Non-billable Value </mat-hint>
+                        
+                      </mat-form-field>
+                  </div>
+                    </div>
+              
+              
+                  
+              </div>
+              
+              <div style="padding: 20px;border: 3px solid #2582b5;background: #d0dedf26;">
+                <h4 style="text-align: center;display: block;color: #2389d1;">Other Contact Details</h4>
+
+                <div formArrayName="contact_details">               
+                  <div class="row"   *ngFor="let contactDetail of contactDetails().controls; let i=index" [formGroupName]="i" >
+                    <div class="col-2">                      
+                      <mat-form-field class="example-full-width" appearance="fill">
+                        <mat-label>Contact type</mat-label>
+                        <mat-select formControlName="contact_type" >
+                          <mat-option value="">Select Option</mat-option>
+                          <mat-option value="Insurance">Insurance</mat-option>
+                          <mat-option value="other">other</mat-option>   
+                          <mat-option value="shipto">shipto</mat-option>   
+                          <mat-option value="soldto">soldto</mat-option>   
+                          <mat-option value="billto">billto</mat-option>      
+                         </mat-select>
+                      </mat-form-field>
+                </div>
+                    <div class="col-2">                      
+                          <mat-form-field class="example-full-width" appearance="fill">
+                            <mat-label>Contact Person({{i+1}})</mat-label>
+                            <input type="text" matInput formControlName="name" [errorStateMatcher]="matcher"
+                                   placeholder="">
+                            <mat-hint>Contact Person  name</mat-hint>
+                            <!-- <mat-error *ngIf="f.contact_details.name.errors?.required">
+                              name is <strong>invalid</strong> 
+                            </mat-error> -->
+                          </mat-form-field>
+                    </div>
+                    <div class="col-2">
+                          <mat-form-field class="example-full-width" appearance="fill">
+                            <mat-label>E-Mail ID({{i+1}})</mat-label>
+                            <input type="email" matInput formControlName="email" [errorStateMatcher]="matcher"
+                                   placeholder="">
+                            <mat-hint>Contact Person  E-Mail ID </mat-hint>
+                            <!-- <mat-error *ngIf="f.email.errors?.email">
+                              to is <strong>required</strong>
+                            </mat-error> -->
+                          </mat-form-field>
+                       
+                      </div>
+                      <div class="col-2">
+                          <mat-form-field class="example-full-width" appearance="fill">
+                            <mat-label>Mobile No.({{i+1}}) </mat-label>
+                            <input type="text" matInput formControlName="mobile" [errorStateMatcher]="matcher"
+                                   placeholder="">
+                                   <mat-hint>Mobile number</mat-hint>
+                            <!-- <mat-error *ngIf="f.mobile.errors?.pattern">
+                              to is <strong>required</strong> 
+                        </mat-error> -->
+                          </mat-form-field>
+                        </div>
+                        <div class="col-2">
+                          <mat-form-field class="example-full-width" appearance="fill">
+                            <mat-label>Fax No.({{i+1}})</mat-label>
+                            <input type="text" matInput formControlName="fax_no"  [errorStateMatcher]="matcher"
+                                   placeholder="">
+                                   <mat-hint>Fax number</mat-hint>
+                         
+                            <!-- <mat-error *ngIf="f.insurance_con_fax.errors?.pattern">
+                              Fax No is <strong>invalid</strong>
+                             </mat-error> -->
+                          </mat-form-field>
+                          
+                      </div>
+                      <div class="col-1 display_incenter" >
+                        <mat-icon *ngIf="contactDetails().length != 1"  (click)="removeContactdetails(i)" style="color: red;">delete_forever</mat-icon>
+                        <mat-icon *ngIf="contactDetails().length == (i+1)" (click)="addContactdetails()" style="color: blue;" >add_box</mat-icon>
+                       
+                      </div>
+                    </div>
+                    <br>
+                      </div>
+              </div>
+            
+              <div style="padding: 20px;border: 3px solid #2582b5;background: #d0dedf26;">
+               
+                <h4 style="text-align: center;display: block;color: #2389d1;">Transportation & Other Details</h4>
+               
+               
+
+                <div class="row">
+                  <div class="col-3">
+                    
+                 
+                    <mat-form-field appearance="fill">
+                      <mat-label>Transportation Scope</mat-label>
+                      <mat-select formControlName="transportation_scope" [(value)]="form.value.transportation_scope">
+                        <mat-option>-select-</mat-option>
+                        <mat-option *ngFor="let subskill of transportationlist" [value]="subskill.transportation_scope_id" >
+                          {{subskill.transportation_name}}
+                        </mat-option>
+                      </mat-select>
+                      <mat-hint>Select Transportation Scope</mat-hint>
+              
+                      </mat-form-field>
+                  </div>
+                  <div class="col-3">
+              
+                 
+              
+                  
+                 
+                    <mat-form-field appearance="fill">
+                      <mat-label>Freight Mode </mat-label>
+                      <mat-select formControlName="freight_mode" [(value)]="form.value.freight_mode">
+                        <mat-option>-select-</mat-option>
+                        <mat-option *ngFor="let subskill of freightModelist" [value]="subskill.freight_mode_id" >
+                          {{subskill.freight_name}}
+                        </mat-option>
+                      </mat-select>
+                      <mat-hint>Select Freight Mode </mat-hint>
+              
+                      </mat-form-field>
+                 
+                 
+                  <!-- <span style="float: right;font-size: 17px;padding-right: 12px;">Dispatch Details to be informed to Customer/Insurance Co</span> -->
+                </div>
+                <div class="col-3">
+                    <mat-form-field class="example-full-width" appearance="fill">
+                      <mat-label>Regional Manager  </mat-label>
+                      <input type="text" matInput  formControlName="Fees_manager_name" [errorStateMatcher]="matcher"
+                             placeholder="">
+                             <mat-hint>Name of FES Regional Manager </mat-hint>
+                      <mat-error *ngIf="f.Fees_manager_name.errors?.pattern">
+                        Name is <strong>Invalid</strong>
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-3">
+                    <mat-form-field class="example-full-width" appearance="fill">
+                      <mat-label>Contact No. </mat-label>
+                      <input type="text" matInput formControlName="Fees_manager_mobile" [errorStateMatcher]="matcher"
+                             placeholder="">
+                             <mat-hint>Contact No.</mat-hint>
+                      <!-- <mat-hint>Contact Person  name</mat-hint> -->
+                      <mat-error *ngIf="f.Fees_manager_mobile.errors?.pattern">
+                        Contact No. is <strong>invalid</strong>
+                      </mat-error>
+                    </mat-form-field>
+                 </div>
+                </div>
+                <br>
+                <div class="row">
+                  <div class="col-3">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Packaging Instruction </mat-label>
+                    <mat-select formControlName="packing_instruction" [(value)]="form.value.packing_instruction">
+                      <mat-option>-select-</mat-option>
+                      <mat-option *ngFor="let subskill of packingInstructionlist" [value]="subskill.packing_instruction_id" >
+                        {{subskill.packing_instruction_name}}
+                      </mat-option>
+                    </mat-select>
+                    <mat-hint>Select Packaging Instruction </mat-hint>
+              
+                    </mat-form-field>
+               </div>
+
+              
+              
+              
+              
+              <div class="col-3">
+              
+                  <mat-label>Dispatch Clearance  </mat-label>
+                
+                  <mat-slide-toggle formControlName="dispatch_clearance">Attached</mat-slide-toggle>
+
+                  
+
+
+                      
+                  
+                  
+                   
+               </div>
+               <div class="col-3 file-upload">
+                      
+                        
+
+                <!-- {{fileName || "No file uploaded yet."}} -->
+             
+             
+                   <!-- <input type="file" #filePicker (change)="onFileSelected($event,'dispatch_clearance_files')" multiple> -->
+                   <input type="file"  #filePicker (change)="onImagePicked($event,'dispatch_clearance_files')" multiple>
+                    
+            <!-- <div  *ngFor="let obj of files;let i=index">
+              <div class="row">
+                <div class="col-4">
+                  {{obj.name}} 
+                </div>
+                <div (click)="removefile(i)"class="col-4">
+                  Delete
+                </div>
+                <div class="col-4">
+                  Download
+                </div>
+              </div>
+            
+            
+            </div>
+                -->
+               
+              
+            
+          </div>
+              <div class="col-3">
+               
+              
+                  <mat-form-field appearance="fill">
+                    <mat-label>Job  </mat-label>
+                    <mat-select formControlName="merit_duty_job" multiple>
+                      <mat-option>-select-</mat-option>
+                      <mat-option value="Merit Duty Job"> Merit Duty Job </mat-option>
+                      <mat-option value="License Job">License Job</mat-option>
+                    </mat-select>
+                    <mat-hint>Select job  </mat-hint>
+              
+                    </mat-form-field>
+                  
+              
+                  </div>
+                </div>
+              
+              
+            
+              <div class="row" >
+                <div class="col-3">              
+                  <mat-form-field appearance="fill">
+                    <mat-label>License Type  </mat-label>
+                    <mat-select formControlName="license_type" [(value)]="form.value.license_type">
+                      <mat-option>-select-</mat-option>
+                      <mat-option *ngFor="let subskill of licensetyplist" [value]="subskill.license_type_id" >
+                        {{subskill.license_type_name}}
+                      </mat-option>
+                    </mat-select>
+                    <mat-hint>Select License Type  </mat-hint>
+              
+                  </mat-form-field>
+                  
+              
+                </div>
+                <div class="col-3">              
+                  <mat-form-field appearance="fill">
+                    <mat-label>GST  </mat-label>
+                    
+                    <mat-select formControlName="gst_type" [(value)]="form.value.gst_type">
+                      <mat-option>-select-</mat-option>
+                      <mat-option *ngFor="let subskill_gst of gstlist" [value]="subskill_gst.gst_id" >
+                        {{subskill_gst.gst_name}}
+                      </mat-option>
+
+                    </mat-select>
+                    <mat-hint>Select GST  </mat-hint>
+              
+                  </mat-form-field>
+                  
+              
+                  </div>
+                  <div class="col-3">
+              
+                  <mat-form-field appearance="fill">
+                    <mat-label>TED Refund  </mat-label>
+                    <mat-select formControlName="ted_refund">
+                      <mat-option>-select-</mat-option>
+                      <mat-option value="by_customer"> By Customer </mat-option>
+                      <mat-option value="By_YIL">By YIL</mat-option>
+                    </mat-select>
+                    <mat-hint>Select TED Refund  </mat-hint>
+              
+                    </mat-form-field>
+                  
+              
+                  </div>
+                  <div class="col-3">
+                 
+              </div>
+              </div>
+              
+              
+              <br>
+              <div class="row" >
+                <div class="col-3">
+                  <ul style="font-size: 9px;">
+                    <li >
+                  <mat-checkbox formControlName="time_critical_flag" color="primary">
+                   Time Critical Shipment
+                  </mat-checkbox>
+                  </li><br>
+                </ul>
+              </div>
+              <div class="col-3">
+                <mat-form-field appearance="fill">
+                  <mat-label>Choose a date</mat-label>
+                  <input matInput [matDatepicker]="picker" formControlName="time_critical_date">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </div>
+                <div class="col-6 " style="text-align:center">
+                  <mat-form-field class="example-full-width" appearance="fill">
+                    <mat-label>Any other information </mat-label>
+                    
+                    <textarea matInput matInput formControlName="remarks" [errorStateMatcher]="matcher"
+                           placeholder=""></textarea>
+                           <mat-hint>Any other information........</mat-hint>
+                   
+                  </mat-form-field>
+              </div>
+              </div> </div>
+              
+
+              
+            
+            <div  style="padding: 20px;border: 3px solid #2582b5;background: #d0dedf26;" >
+             
+              <div class="row">
+              <div class="col-6" style="border-right: 4px solid #2582b5;">
+              
+              
+                <h4 style="text-align: center;display: block;color: #2389d1;">Files Uploads</h4>
+               
+                <div formArrayName="da_files">
+                  <div class="row"   *ngFor="let daFile of daFiles().controls; let i=index" [formGroupName]="i" >
+                    
+                     
+                        <div class="col-5">
+                          <mat-form-field class="example-full-width" appearance="fill">
+                            <mat-label>File type ({{i+1}})</mat-label>
+                            
+                             <mat-select formControlName="file_type"  (selectionChange)="show_file_select(i)">
+                              <mat-option value="">Select type</mat-option>
+                              <mat-option *ngFor="let fileType of fileTypes" [value]="fileType.fileTypeId">{{fileType.fileType}}</mat-option>
+                              
+                             </mat-select>
+                            <mat-hint>File Type!</mat-hint>
+                            <!-- <mat-error *ngIf="f.da_to.errors?.required">
+                              to is <strong>required</strong>
+                            </mat-error> -->
+                          </mat-form-field>
+                         
+                           
+                        
+                        </div>
+                        <div class="col-5">
+                           <input type="file" #filePicker *ngIf="file_select[i]" (change)="onSelectFiles($event,i)" multiple>
+
+                        </div>
+                        
+                          <div class="col-2 display_incenter" >
+                            <mat-icon *ngIf="daFiles().length != 1" (click)="removeDaFiles(i)" style="color: red;">delete_forever</mat-icon>
+                            <mat-icon *ngIf="daFiles().length == (i+1)" (click)="addDaFiles()" style="color: blue;" >add_box</mat-icon>
+                            
+                          </div>
+                      
+                      
+                      
+                    </div>
+                   
+                  
+              
+               
+        
+                 
+                </div>
+              </div>
+              <div class="col-6" >
+                <h4 style="text-align: center;display: block;color: #2389d1;">Additional DA Access(optional)</h4>
+                <div class="row">
+                
+               
+                    <div class="col-5">
+                  
+                  
+                      <mat-form-field appearance="fill">
+                        <mat-label>DA Access  </mat-label>
+                        <mat-select formControlName="da_view_employees" multiple>
+                          <mat-option>-select-</mat-option>
+                          <mat-option *ngFor="let subskill of userList" [value]="subskill.id" >
+                            {{subskill.employee_name }}
+                          </mat-option>
+                        </mat-select>
+                        <mat-hint>Select employee name to give DA Access   </mat-hint>
+                  
+                        </mat-form-field>
+                      
+                  
+                      </div>
+                    <div class="col-5">
+                
+                
+                      <mat-form-field appearance="fill">
+                        <mat-label>project Engineer </mat-label>
+                        <mat-select formControlName="da_project_employees" multiple>
+                          <mat-option>-select-</mat-option>
+                          <mat-option *ngFor="let subskill of userList" [value]="subskill.id" >
+                            {{subskill.employee_name }}
+                          </mat-option>
+                        </mat-select>
+                        <mat-hint>Select employee name    </mat-hint>
+                  
+                        </mat-form-field>
+                      
+                  
+                      </div>
+                  </div>
+              </div>
+            </div>
+            </div>
+            
+           
+            <div style="padding: 20px;border: 3px solid #2582b5;background: #d0dedf26;">
+              <div class="row" *ngIf="action == 'edit'">
+                <label> you want to change the Apporval flow or appovers</label>
+                <mat-slide-toggle  (click)="showapperslistedit($event)" >Attached</mat-slide-toggle>
+
+              </div>
+              <h4 style="text-align: center;display: block;color: #2389d1;">Approvers List</h4>
+              <div class="row" *ngIf="edit_approval_flow">
+              <div class="col-2" *ngFor="let approval_list of reponce_approval_list; let i=index" >
+                  <mat-form-field appearance="fill">
+                      <mat-label>{{approval_list.approver}}<span style="color: red">*</span></mat-label>
+                      <mat-select  (selectionChange)="onChangeapproaver($event.value,approval_list.approver,i)" multiple>
+                        <mat-option>-select-</mat-option>
+                        <mat-option value="3">Sandeep DS</mat-option>
+                        <mat-option *ngFor="let subskill of approval_list.wfe[0].emp_id" [value]="subskill.id" >
+                             {{subskill.employee_name}}
+                           </mat-option>
+
+                     
+                      </mat-select>
+                    
+                     
+                     
+                  </mat-form-field>
+                   
+
+                      
+
+
+              </div>
+              </div>
+              <!-- <div class="col-2">
+                  <mat-form-field appearance="fill">
+                      <mat-label>Approve By</mat-label>
+                      <mat-select formControlName="approve_by" > 
+                        <mat-option>-select-</mat-option>
+                        <mat-option *ngFor="let subskill of userList" [value]="subskill.id" >
+                             {{subskill.employee_name }}
+                           </mat-option>
+                     
+                      </mat-select>
+                    </mat-form-field>
+
+              </div>
+              <div class="col-2">
+                <mat-form-field appearance="fill">
+                    <mat-label>QA Test</mat-label>
+                    <mat-select formControlName="mqa_test" > 
+                      <mat-option>-select-</mat-option>
+                      <mat-option *ngFor="let subskill of userList" [value]="subskill.id" >
+                           {{subskill.employee_name }}
+                         </mat-option>
+                   
+                    </mat-select>
+                  </mat-form-field>
+
+            </div>
+              <div class="col-2">
+                  <mat-form-field appearance="fill">
+                      <mat-label>Finance</mat-label>
+                      <mat-select formControlName="qa_test" > 
+                        <mat-option>-select-</mat-option>
+                        <mat-option *ngFor="let subskill of userList" [value]="subskill.id" >
+                             {{subskill.employee_name }}
+                           </mat-option>
+      
+                      </mat-select>
+                    </mat-form-field>
+
+              </div>
+              
+              <div class="col-2">
+                <mat-form-field appearance="fill">
+                    <mat-label>BU Head</mat-label>
+                    <mat-select formControlName="bu_head" > 
+                      <mat-option>-select-</mat-option>
+                      <mat-option *ngFor="let subskill of userList" [value]="subskill.id" >
+                           {{subskill.employee_name }}
+                         </mat-option>
+                  
+                    </mat-select>
+                  </mat-form-field>
+
+            </div> -->
+              
+              
+          </div>
+          <br>
+            <div class="row" >
+              <div class="col-12" style="display: grid;align-items: end;">
+                <mat-grid-list style="text-align:center" cols="2" rowHeight="4:1">
+                  <!-- <button mat-raised-button color="success" class="mx-4" (click)="onSavePost()">Save</button> -->
+                  <button *ngIf="action == 'edit'" mat-raised-button color="primary" [disabled]="!da_submit_button" (click)="onSubmitPost()" >Update</button>
+                  <button *ngIf="action != 'edit'" mat-raised-button color="primary" [disabled]="!da_submit_button" (click)="onSubmitPost()" >Submit</button>
+                  <button mat-raised-button color="danger" style="background-color:#ff3333;color:white;margin-left: 20px;"  (click)="daNavigation('1','/material/da')">Close</button>
+                </mat-grid-list>
+              </div>
+            </div>
+            
+              
+              
+              
+              
+              
+              
+              </form>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+<div class="d-flex justify-content-center">
+  <div class="spinner-border" role="status" >
+    <span  id="loadingform"></span>
+  </div>
+</div>
+<!-- </ng-template>
+
+
+
+<ng-template #showtable>
+ 
+
+</ng-template> -->

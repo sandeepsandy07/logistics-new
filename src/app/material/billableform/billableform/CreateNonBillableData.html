@@ -1,0 +1,145 @@
+<div class="container">
+    <form #myForm="ngForm" (ngSubmit)="createList()">
+    <div style="text-align: center;">
+        <span>
+            <h2 style="font-size: 25px;">Non-Billable Form</h2>
+        </span>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <mat-form-field appearance="fill" class="example-full-width">
+                <mat-label>SAP DA No</mat-label>
+                <input matInput placeholder="SAP DA No" [(ngModel)]="SAPDANo" ngModel name="sapdano" #sapdano="ngModel">
+                <mat-hint style="color:black"></mat-hint>
+            </mat-form-field>
+        </div>
+        <div class="col-md-6">
+            <mat-form-field appearance="fill" class="example-full-width">
+                <mat-label>Customer PO reference no</mat-label>
+                <textarea matInput placeholder="Customer PO reference no" [(ngModel)]="CustomerPoRefNo" ngModel required maxlength="100" name="customerPoRefNo" #customerPoRefNo="ngModel"></textarea>
+                <mat-hint style="color:black"></mat-hint>
+                <mat-error *ngIf="customerPoRefNo.touched && !customerPoRefNo.valid">CustomerPoRefNo is required.</mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <mat-form-field appearance="fill" class="example-full-width">
+                <mat-label>Item Description</mat-label>
+                <textarea matInput placeholder="Item Description" [(ngModel)]="ItemDescription" ngModel required maxlength="255" name="itemDes" #itemDes="ngModel"></textarea>
+                <mat-hint style="color:black"></mat-hint>
+                <mat-error *ngIf="itemDes.touched && !itemDes.valid">Item Description is required.</mat-error>
+            </mat-form-field>
+        </div>
+        <div class="col-md-6">
+            <mat-form-field appearance="fill" class="example-full-width">
+                <mat-label>Model No</mat-label>
+                <input matInput placeholder="Model No" [(ngModel)]="ModelNo" ngModel required maxlength="100" name="modelNo" #modelNo="ngModel" pattern="^[0-9a-zA-Z\s _]+$">
+                <mat-error *ngIf="modelNo.touched && !modelNo.valid">Special Characters are not allowed.</mat-error>
+                <mat-hint style="color:black"></mat-hint>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <mat-form-field appearance="fill" class="example-full-width">
+                <mat-label>Quantity</mat-label>
+                <input matInput placeholder="Total Quantity" [(ngModel)]="TotalQuantity" ngModel required maxlength="30" name="totalQty" #totalQty="ngModel" pattern="^[0-9]+$">
+                <mat-error *ngIf="totalQty.touched && !totalQty.valid">Characters and Special Characters are not allowed.</mat-error>
+                <mat-hint style="color:black"></mat-hint>
+            </mat-form-field>
+        </div>
+        <div class="col-md-6">
+            <mat-form-field appearance="fill" class="example-full-width">
+                <mat-label>UOM</mat-label>
+                <input matInput placeholder="UOM" [(ngModel)]="UOM" ngModel required maxlength="20" name="uom" #uom="ngModel" pattern="^[a-zA-Z\s _]+$">
+                <mat-error *ngIf="uom.touched && !uom.valid">Numbers and Special Characters are not allowed.</mat-error>
+                <mat-hint style="color:black"></mat-hint>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <mat-form-field appearance="fill" class="example-full-width">
+                <mat-label>Unit Price</mat-label>
+                <input matInput placeholder="Unit Price" [(ngModel)]="UnitPrice" ngModel required maxlength="30" name="unitPrice" #unitPrice="ngModel" pattern="^[0-9]+$">
+                <mat-error *ngIf="unitPrice.touched && !unitPrice.valid">Unit Price can accept only Numbers.</mat-error>
+                <mat-hint style="color:black"></mat-hint>
+            </mat-form-field>
+        </div>
+        <div class="col-md-6">
+            <mat-form-field appearance="fill" class="example-full-width">
+                <mat-label>Under W/NW</mat-label>
+                <input matInput placeholder="Under W/NW" [(ngModel)]="UnderWorNW" ngModel required maxlength="100" name="underWorNW" #underWorNW="ngModel" pattern="^[0-9a-zA-Z\s _]+$">
+                <mat-error *ngIf="underWorNW.touched && !underWorNW.valid">Special Characters are not allowed.</mat-error>
+                <mat-hint style="color:black"></mat-hint>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <mat-form-field appearance="fill" class="example-full-width">
+                <mat-label>SGST %</mat-label>
+                <input matInput placeholder="SGST %" [(ngModel)]="SGST" ngModel  name="sGST">
+                <mat-hint style="color:red">SGST can accept only Numbers.</mat-hint>
+                <!-- <input matInput placeholder="SGST %" [(ngModel)]="SGST" ngModel required maxlength="30" #sGST="ngModel" pattern="^[0-9]+$">
+                <mat-error *ngIf="sGST.touched && !sGST.valid">SGST can accept only Numbers.</mat-error>
+                <mat-hint style="color:black"></mat-hint> -->
+            </mat-form-field>
+        </div>
+        <div class="col-md-6">
+            <mat-form-field appearance="fill" class="example-full-width">
+                <mat-label>CGST %</mat-label>
+                <input matInput placeholder="CGST %" [(ngModel)]="CGST" ngModel  name="cGST">
+                <mat-hint style="color:red">CGST can accept only Numbers.</mat-hint>
+                <!-- <input matInput placeholder="CGST %" [(ngModel)]="CGST" ngModel required maxlength="30" #cGST="ngModel" pattern="^[0-9]+$">
+                <mat-error *ngIf="cGST.touched && !cGST.valid">CGST can accept only Numbers.</mat-error> -->
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <mat-form-field appearance="fill" class="example-full-width">
+                <mat-label>IGST %</mat-label>
+                <input matInput placeholder="IGST %" [(ngModel)]="IGST" ngModel name="iGST">
+                <!-- <input matInput placeholder="IGST %" [(ngModel)]="IGST" ngModel required maxlength="30" #iGST="ngModel" pattern="^[0-9]+$">
+                <mat-error *ngIf="iGST.touched && !iGST.valid">IGST can accept only Numbers.</mat-error> -->
+                <mat-hint style="color:red">IGST can accept only Numbers.</mat-hint>
+            </mat-form-field>
+        </div>
+        
+        <div class="col-md-6">
+            <mat-form-field appearance="fill" class="example-full-width">
+                <mat-label>Reason for supplies under Non-Warranty</mat-label>
+                <textarea matInput placeholder="Reason for supplies under Non-Warranty" [(ngModel)]="ReasonForSuppliesNW" ngModel required maxlength="500" name="reasonForSuppliesNW" #reasonForSuppliesNW="ngModel"></textarea>
+                <mat-error *ngIf="reasonForSuppliesNW.touched && !reasonForSuppliesNW.valid">ReasonForSuppliesNW is required.</mat-error>
+                <mat-hint style="color:black"></mat-hint>
+                <mat-hint style="color:black" align="end">maxLength=500</mat-hint>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <mat-form-field appearance="fill" class="example-full-width">
+                <mat-label>Remarks</mat-label>
+                <textarea matInput placeholder="Remarks" [(ngModel)]="NonBillableRemarks" ngModel required maxlength="250" name="nonbillableRemarks" #nonbillableRemarks="ngModel"></textarea>
+                <mat-error *ngIf="nonbillableRemarks.touched && !nonbillableRemarks.valid">Non Billable Remarks is required.</mat-error>
+                <mat-hint style="color:black"></mat-hint>
+                <mat-hint style="color:black" align="end">maxLength=250</mat-hint>
+            </mat-form-field>
+        </div>
+        <div class="col-md-6" mat-dailog-action>
+            <button style="margin-top:1rem;" mat-raised-button color="warn" [mat-dialog-close]="true">Close</button>&nbsp;&nbsp;&nbsp;
+            <!-- <button style="margin-top:1rem;" mat-raised-button color="primary" type="submit" (click)="createList()" >{{actionBtn}}</button> -->
+            <button style="margin-top:1rem;" mat-raised-button color="primary" type="submit" [disabled]="!myForm.valid">Submit</button>
+        </div>
+    </div>
+    </form>
+</div>

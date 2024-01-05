@@ -1,0 +1,225 @@
+
+<div class="wrapper">
+    <div class="container-fluid">
+        <form  [formGroup]="form" enctype="multipart/form-data"  >
+            <div class="card-box" style="padding-top: 0px">
+                
+                <div class="row">
+                    <div class="col-12">
+                        <h4  style="text-align:center">Packing Cost Report</h4>
+                    </div>
+                </div>
+               
+                <div class="col-1">
+                    <button mat-raised-button color="primary" (click)="filter_table()">Filter <mat-icon>search</mat-icon></button>
+                </div>
+                <br/>
+
+                <div *ngIf="filterDataForm">
+                    <div class="row">
+                        <!-- <div class="col-2" style="margin-right: 18px;">
+                            <mat-form-field class="example-full-width" appearance="fill">
+                                    <input type="text" matInput formControlName="project_id" 
+                                    placeholder="Project ID">
+                            </mat-form-field>
+                        </div> -->
+
+                        <!-- <div class="col-2" style="margin-right: 18px;">
+                            <mat-form-field class="example-full-width" appearance="fill">
+                                    <input type="text" matInput formControlName="business_unit" 
+                                    placeholder="Business Unit">
+                            </mat-form-field>
+                        </div> -->
+    
+                        <div class="col-2" style="margin-right: 18px;">
+                            <mat-form-field class="example-full-width" appearance="fill">
+                                    <input type="text" matInput formControlName="ship_to_city" 
+                                    placeholder="Ship To City">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-2" style="margin-right: 18px;">
+                            <mat-form-field class="example-full-width" appearance="fill">
+                                    <input type="text" matInput formControlName="ship_to_party_name" 
+                                    placeholder="Ship To Party Name">
+                            </mat-form-field>
+                        </div>
+    
+                        <!-- <div class="col-2" style="margin-right: 18px;">
+                            <mat-form-field class="example-full-width" appearance="fill">
+                                    <input type="text" matInput formControlName="transporter_name" 
+                                    placeholder="Transporter Name">
+                            </mat-form-field>
+                        </div> -->
+
+                        <div class="col-2" style="margin-right: 18px;">
+                            <mat-form-field appearance="fill">
+                              <mat-label>Transporter Name</mat-label>
+                              <mat-select formControlName="transporter_name" [(value)]="form.value.transporter_name">
+                                <mat-option>-select-</mat-option>
+                                <mat-option *ngFor="let subskill of transportationlist" [value]="subskill.transportationName">
+                                  {{subskill.transportationName}}
+                                </mat-option>
+                              </mat-select>
+                              </mat-form-field>
+                        </div>
+
+                        <div class="col-4" style="margin-right: 18px;">
+                            <mat-form-field class="example-full-width" appearance="fill">
+                                    <input type="text" matInput formControlName="reference_document" 
+                                    placeholder="So no">
+                            </mat-form-field>
+                        </div>
+                        
+                        <div class="col-2" style="margin-right: 18px;">
+                            <mat-form-field class="example-full-width" appearance="fill">
+                                <mat-label>Date Type</mat-label>
+                                      <!-- <mat-select #datetypeselect  [(ngModel)]="date_type" name="date_type" id="date_type" (selectionChange) ='onDateTypeSelected(datetypeselect.value)'> -->
+                                        <mat-select #datetypeselect  formControlName="date_type" (selectionChange) ='onDateTypeSelected(datetypeselect.value)'>
+                                        <mat-option value="LoadingDate">Loading Date</mat-option>
+                                        <!-- <mat-option value="DispatchDate">Dispatch Date</mat-option> -->
+                                        <mat-option value="BillDate">Bill Date</mat-option>
+                                      </mat-select>
+                                    </mat-form-field>
+                        </div>
+
+                        <div  class="col-2" style="margin-right: 18px;">
+                            <mat-form-field>
+                                <mat-label>Enter a date range</mat-label>
+                                <mat-date-range-input [rangePicker]="picker">
+                                  <input matStartDate  placeholder="Start date"  formControlName="fromDate" (ngModelChange)="datePickerChange()">
+                                  <input matEndDate  placeholder="End date"  formControlName="toDate" (ngModelChange)="datePickerChange()">
+                                </mat-date-range-input>
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-date-range-picker #picker></mat-date-range-picker>
+                              </mat-form-field>
+                        </div>
+
+                        <div class="col-2" style="margin-left: 15px;">
+                            <button mat-raised-button color="primary" (click)="getRecordsBasedOnFilterData()">Search</button>
+                            <button style="margin-left:1rem;" mat-raised-button color="primary" (click)="clearAllFilterDataFields()">Clear</button>
+                        </div>
+
+                </div>
+                </div>
+            </div>
+        </form>
+
+
+      <div class="row">
+        <div class="col-12">
+            <div class="card-box table-responsive">
+              <table  class="table table-bordered table-striped table-hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" style="overflow: scroll;">
+                    <thead>
+                        <tr>
+                            <th style="width: 30px;">Sl.no</th>
+                            <th style="width: 130px;">Project ID</th>
+                            <th style="width: 130px;">DA no</th>
+                            <th style="width: 130px;">Business Unit</th>
+                            <th  style="width: 130px;" >Category</th>
+                            <th style="width: 130px;">Godown Storage</th>
+
+                            <th   style="width: 230px;">Loading Date</th>
+                            <!-- <th style="width: 230px;" >Reference Document</th> -->
+                            <th style="width: 230px;" >So no</th>
+                            <!-- <th  style="width: 130px;">Project Id</th> -->
+                            <th style="width: 230px;"> Ship to Party Name </th>
+                            <th style="width: 230px;">Ship to City</th>
+
+                            <th  style="width: 130px;">Transporter Name</th>
+                            <th  style="width: 130px;">LR No /Docket No</th>
+                            <th style="width: 230px;">Truck No./Sec. Truck No</th>
+                            <th style="width: 130px;">Truck Type</th>
+                            <th style="width: 130px;">Remarks</th> 
+
+                            <th style="width: 130px;">Dispatch Date</th>
+                            <th style="width: 230px;">Category of Reference Document</th>
+                            <th style="width: 130px;">Tentative Freight</th>
+                            <th style="width: 130px;">Bill Number</th>
+                            <th style="width: 130px;">Bill Date</th>
+                             
+                            <th style="width: 130px;">Actual Freight</th>
+                            <th style="width: 130px;">Other Charges</th>
+                            <th style="width: 130px;">Final Freight</th>
+                            <th style="width: 230px;">Primary/Confirmation</th>
+                            <th style="width: 130px;">Sec Bill Number</th>
+
+                            <th style="width: 130px;">Sec Bill Date</th>
+                            <th style="width: 130px;">Sec Other Charges</th>
+                            <th style="width: 130px;">Sec Final Freight</th>
+                            <th style="width: 230px;">Secondary/Confirmation</th>
+                            <th style="width: 230px;">Total Transport Cost</th>
+
+                            <th style="width: 130px;">Difference</th>
+                            <th style="width: 130px;">Confirm To Accounts</th>
+                            <th style="width: 230px;">Sec Confirm To Accounts</th>
+                            <th style="width: 130px;">Invoice Scan</th>
+                            <th style="width: 130px;">POD Scan</th>
+                            <th style="width: 130px;">Registered By</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                            <tr *ngFor="let subskill of tablelist;let i=index">
+
+                            <td >{{i+1}}</td>
+                            <td><span *ngIf="subskill.delivery_challan.length != 0">{{subskill.delivery_challan[0].da[0].ygs_proj_defi}}</span></td>
+                            <td><span *ngIf="subskill.delivery_challan.length != 0">{{subskill.delivery_challan[0].da[0].jobcode_da_no}}</span></td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+
+                            <td>{{subskill.loading_date | date : 'dd/MM/yyyy'}}</td>
+                            <td>{{subskill.reference_document}}</td>
+                            <!-- <td>-</td> -->
+                            <td>{{subskill.ship_to_party_name}}</td>
+                            <td>{{subskill.ship_to_city}}</td>
+
+                            <td>{{subskill.transporter_name}}</td>
+                            <td>{{subskill.lr_no_docket_no}}</td>  
+                            <td>{{subskill.vehicle_no}}</td>
+                            <td><span *ngIf="subskill.delivery_challan.length != 0">{{subskill.delivery_challan[0].truck_type}}</span></td>
+                            <!-- <td><span *ngIf="subskill.delivery_challan.length != 0">{{subskill.delivery_challan[0].trucklist[0].truckID_id}}</span></td> -->
+                            <!-- <td>-</td> -->
+                            <td>{{subskill.remarks}}</td>
+
+                            <td><span *ngIf="subskill.delivery_challan.length != 0">{{subskill.delivery_challan[0].trucklist[0].check_out | date : 'dd/MM/yyyy'}}</span></td>
+                            <td>{{subskill.category_of_reference_document}}</td>
+                            <td>-</td>
+                            <td>{{subskill.billing_number}}</td>
+                            <td>{{subskill.billing_create_date | date : 'dd/MM/yyyy'}}</td>
+
+                            <td>{{subskill.freight}}</td>
+                            <td>{{subskill.others}}</td>
+                            <td><span *ngIf="subskill.vehicle_billing_details.length != 0">{{subskill.vehicle_billing_details[0].final_freight}}</span></td>
+                            <td><span *ngIf="subskill.vehicle_billing_details.length != 0">{{subskill.vehicle_billing_details[0].primary_or_confirmation}}</span></td>
+                            <td><span *ngIf="subskill.vehicle_billing_details.length != 0">{{subskill.vehicle_billing_details[0].sec_bill_number}}</span></td>
+
+                            <td><span *ngIf="subskill.vehicle_billing_details.length != 0">{{subskill.vehicle_billing_details[0].sec_bill_date | date : 'dd/MM/yyyy'}}</span></td>
+                            <td><span *ngIf="subskill.vehicle_billing_details.length != 0">{{subskill.vehicle_billing_details[0].sec_other_charges}}</span></td>  
+                            <td><span *ngIf="subskill.vehicle_billing_details.length != 0">{{subskill.vehicle_billing_details[0].sec_final_freight}}</span></td>
+                            <td><span *ngIf="subskill.vehicle_billing_details.length != 0">{{subskill.vehicle_billing_details[0].secondary_or_confirmation}}</span></td>
+                            <td><span *ngIf="subskill.delivery_challan.length != 0">{{subskill.delivery_challan[0].packing_price}}</span></td>
+                            <!-- <td><span *ngIf="subskill.vehicle_billing_details.length != 0">{{subskill.vehicle_billing_details[0].total_transport_cost}}</span></td> -->
+
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>{{subskill.tax_invoice_number}}</td>
+                            <td>-</td>
+                            <td><span *ngIf="subskill.vehicle_billing_details.length != 0">{{subskill.vehicle_billing_details[0].registered_by}}</span></td>
+                        </tr> 
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    </div>
+  </div>
+  <!-- <div class="d-flex justify-content-center">
+    <div class="spinner-border" role="status" >
+      <span  id="loading"></span>
+    </div>
+  </div> -->
+
+  

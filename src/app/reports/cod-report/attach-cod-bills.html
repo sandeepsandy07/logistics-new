@@ -1,0 +1,71 @@
+<div class="row">
+    <div class="col-12">
+      <h4 class=""><b>Upload COD Files</b></h4>
+    </div>
+</div>
+
+<div class="row">
+  <div class="col-12"> 
+      <div class="card-box">
+        <form  [formGroup]="form" enctype="multipart/form-data"  >
+
+          <div class="row" >
+              <div class="col-12" style="border: 1px solid whitesmoke;background: #d0dedf26;">
+                <div class="row">
+                    <div class="col-5" style="margin-top:2px;">
+                        <mat-form-field appearance="fill">
+                            <mat-label>COD Amount</mat-label>
+                            <input type="number" matInput formControlName="cod_amount" 
+                                   placeholder="">
+                            <mat-hint>COD Amount</mat-hint>
+                          </mat-form-field>
+                    </div>
+                    <div class="col-5" style="margin-top:2px;">
+                        <mat-form-field appearance="fill">
+                          <mat-label>COD Amount Received Date</mat-label>
+                          <input matInput  [matDatepicker]="picker1" formControlName="cod_amt_received_date">
+                          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                          <mat-datepicker #picker1></mat-datepicker>
+                        </mat-form-field>
+                  </div>
+                </div>
+                <div formArrayName="da_files">
+                  <div class="row"   *ngFor="let daFile of daFiles().controls; let i=index" [formGroupName]="i" >
+                        <div class="col-5">
+                          <mat-form-field class="example-full-width" appearance="fill">
+                            <mat-label>File type ({{i+1}})</mat-label>
+                            
+                             <mat-select formControlName="file_type" >
+                              <mat-option value="">Select type</mat-option>
+                              <mat-option *ngFor="let fileType of fileTypes" [value]="fileType.fileTypeId">{{fileType.fileType}}</mat-option>
+                              
+                             </mat-select>
+                            <mat-hint>File Type!</mat-hint>
+                          </mat-form-field>
+                        
+                        </div>
+                        <div class="col-5">
+                           <input type="file" #filePicker (change)="onSelectFiles($event,i)" multiple>
+
+                        </div>
+                        
+                          <div class="col-2 display_incenter" >
+                            <mat-icon *ngIf="daFiles().length != 1" (click)="removeDaFiles(i)" style="color: red;">delete_forever</mat-icon>
+                            <mat-icon *ngIf="daFiles().length == (i+1)" (click)="addDaFiles()" style="color: blue;" >add_box</mat-icon>
+                          </div>  
+                    </div>
+                </div>
+              </div>
+              <div class="col-6" style="display: grid;align-items: end;">
+                <mat-grid-list style="text-align:center" cols="2" rowHeight="4:1">
+                  <!-- <button mat-raised-button color="success" class="mx-4" (click)="onSavePost()">Save</button> -->
+                  <button mat-raised-button color="primary" [disabled]="!da_submit_button" (click)="onSubmitPost()" >Submit</button>
+                  <button mat-raised-button color="warn" (click)="dialogClose()" style="margin-left:2rem;">Close</button>
+                 
+                </mat-grid-list>
+              </div>
+            </div>
+  </form>
+  </div>
+  </div>
+  </div>

@@ -1,0 +1,116 @@
+
+    <div class="wrapper " *ngIf="mainForm">
+      <div class="container-fluid">
+          <div class="row">
+              <div class="col-6">
+                <h4 class=""><b>DA Work Details</b></h4>
+              </div>
+              <div class="col-2" style="margin-left:23rem;margin-top:8px;margin-bottom:8px;">
+                  <button mat-raised-button color="primary" (click)="onSubmit()" >Create</button>
+                </div>
+          </div>
+          <div class="row">
+              <div class="col-12"> 
+                <div class="card-box table-responsive">
+                  <table class="table table-bordered table-striped table-hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+                        <thead>
+                          <tr>
+                            <th style="width: 10px;">Sl.no</th>
+                            <th style="width: 30px;">DA no</th>
+                            <th style="width: 30px;">Employee Name</th>
+                            <th style="width: 10px;">Date</th>
+                            <th style="width: 10px;">Remarks</th>
+                            <th style="width: 10px;">Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let subskill of tablelist;let i=index">
+                              <td style="width: 10px;">{{i+1}}</td>
+                              <td style="width: 30px;">{{subskill.job_code_da_no}}</td>
+                              <td style="width: 30px;">{{subskill.emp_name}}</td>
+                              <td style="width: 10px;">{{subskill.date | date}}</td>
+                              <td style="width: 10px;">{{subskill.remarks}}</td>
+                              <td style="width: 10px;">
+                                <mat-icon (click)="editDaRemarksRecord(subskill)" style="color: #5382a3;">edit</mat-icon>
+                                <mat-icon (click)="deleteDaRemarksRecord(subskill.da_remarks_id)" style="color: #5382a3;">delete</mat-icon>
+                              </td>
+                          </tr>
+                        </tbody>
+                    </table>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<div *ngIf="editForm">
+    <div style="text-align: center;">
+      <span>
+          <h2 style="font-size: 25px;">DA Work Details Edit</h2>
+      </span>
+  </div>
+  <br>
+  
+  <div class="row">
+      <div class="col-12"> 
+          <div class="card-box">
+            <form  [formGroup]="form">
+              <div style="border: 1px solid whitesmoke;background: #d0dedf26;">
+             
+              <div class="row">
+  
+              <div class="col-3">
+                  <mat-form-field appearance="fill">
+                    <mat-label>DA no{{form.value.da_no}}</mat-label>
+                    <mat-select formControlName="da_id" >
+                      <mat-option value=''>Select Option</mat-option>
+                      <mat-option *ngFor="let subskill of DaIdList"  [value]="subskill.da_id">
+                        {{subskill.jobcode_da_no}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+              </div>
+  
+              <div class="col-md-3" style="margin-left: 2rem;">
+                  <mat-form-field>
+                  <mat-label>Date</mat-label>
+                  <input matInput [matDatepicker]="datePicker1" formControlName="date">
+                  <!-- <input matInput [matDatepicker]="datePicker1" formControlName="date" (ngModelChange)="startdatePickerChange()"> -->
+                  <mat-datepicker-toggle [for]="datePicker1" matSuffix> </mat-datepicker-toggle>
+                  <mat-datepicker #datePicker1></mat-datepicker>
+                  </mat-form-field>
+              </div>
+  
+              <div class="col-3" style="margin-left: 2rem;">
+                  <mat-form-field class="example-full-width" appearance="fill">
+                      <textarea type="text" matInput formControlName="remarks" 
+                          placeholder="Enter Remarks"></textarea>
+                  </mat-form-field>
+              </div>
+              </div>
+  
+              <!-- <div class="row">
+                  <div class="col-12">
+                      <mat-form-field class="example-full-width" appearance="fill">
+                          <textarea type="text" matInput formControlName="remarks" 
+                              placeholder="Enter Remarks"></textarea>
+                      </mat-form-field>
+                  </div>
+              </div> -->
+              
+              <div class="row">
+                  <div class="col-2" style="margin-left:10rem;">
+                      <button mat-raised-button color="primary" (click)="UpdateEditDaRemarksRecord()" >Update</button>
+                      <button style="margin-left:2rem;" mat-raised-button color="primary" (click)="back()" >Back</button>
+                </div>
+              </div>
+          
+              </div>
+          </form>
+          </div>
+      </div>
+  </div>
+</div>
+  
+    
+    

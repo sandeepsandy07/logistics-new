@@ -1,0 +1,7 @@
+::ng-deep .mat-form-field{
+    width:80% !important;
+  }
+  .example-chip-list {
+    width: 100%;
+  }
+ 

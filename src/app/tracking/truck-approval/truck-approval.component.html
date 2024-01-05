@@ -1,0 +1,329 @@
+<div style="text-align: center" *ngIf="headerForm">
+    <span>
+        <h2 style="font-size: 25px;"><b>Truck Approval Details</b></h2>
+    </span>
+</div>
+
+
+<div class="container" *ngIf="DetailsForm">
+  <div class="row">
+    <div class="col-3">
+      <div  style="margin-left:1rem;margin-right:1rem">
+        <mat-form-field appearance="standard">
+        <mat-label>Search</mat-label>
+            <input matInput (keyup)="applyFilter($event)" #input>
+        </mat-form-field>
+    </div>
+    </div>
+  </div>
+
+                <div style="margin-left:1rem;margin-right:1rem">
+                  <!-- <mat-form-field appearance="standard">
+                    <mat-label>Search</mat-label>
+                    <input matInput (keyup)="applyFilter($event)" #input>
+                  </mat-form-field> -->
+
+                    <table class="lessons-table mat-elevation-z8" mat-table matSort [dataSource]="dataSource" >
+            
+                        <ng-container matColumnDef="Sl.no.">
+                          <th class="bg" mat-header-cell *matHeaderCellDef width="1%">Sl.no.</th>
+                          <td mat-cell *matCellDef="let element;let i=index;">{{i+1}}</td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="DA no">
+                          <th class="bg" mat-header-cell *matHeaderCellDef width ="5%">DA no</th>
+                          <td mat-cell *matCellDef="let element">{{element?.daNo}}</td>
+                        </ng-container>
+  
+                        <ng-container matColumnDef="State">
+                          <th class="bg" mat-header-cell *matHeaderCellDef width ="2%">State</th>
+                          <td mat-cell *matCellDef="let element">{{element?.stateName}}</td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="District">
+                          <th class="bg" mat-header-cell *matHeaderCellDef width ="2%">District</th>
+                          <td mat-cell *matCellDef="let element">{{element?.destination}}</td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="Taluk">
+                          <th class="bg" mat-header-cell *matHeaderCellDef width ="2%">Taluk</th>
+                          <td mat-cell *matCellDef="let element">{{element?.talukName}}</td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="Transportation">
+                          <th class="bg" mat-header-cell *matHeaderCellDef width ="2%">Transportation</th>
+                          <td mat-cell *matCellDef="let element">{{element?.transportName}}</td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="Status">
+                          <th class="bg" mat-header-cell *matHeaderCellDef width ="2%">Status</th>
+                          <td mat-cell *matCellDef="let element">{{element?.status}}</td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="RequestDate">
+                          <th class="bg" mat-header-cell *matHeaderCellDef width ="2%">RequestDate</th>
+                          <td mat-cell *matCellDef="let element">{{element?.request_date | date}}</td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="Remarks">
+                          <th class="bg" mat-header-cell *matHeaderCellDef width ="2%">Remarks</th>
+                          <td mat-cell *matCellDef="let element">{{element?.remarks}}</td>
+                        </ng-container>
+
+                        <!-- <ng-container matColumnDef="DestinationId">
+                          <th class="bg" mat-header-cell *matHeaderCellDef width ="2%">DestinationId</th>
+                          <td mat-cell *matCellDef="let element">{{element?.destinationName}}</td>
+                        </ng-container> -->
+  
+                        <ng-container matColumnDef="RequestedBy">
+                          <th class="bg" mat-header-cell *matHeaderCellDef width ="2%">CreatedBy</th>
+                          <td mat-cell *matCellDef="let element">{{element?.request_by}}</td>
+                        </ng-container>
+  
+                      <ng-container matColumnDef="Approve">
+                        <th class="bg" mat-header-cell *matHeaderCellDef width ="1%">Approve</th>
+                        <td mat-cell *matCellDef="let element"> 
+                            <button mat-icon-button color="primary" (click)="approveData(element)">
+                                <mat-icon class="mat-18">approval</mat-icon>
+                            </button>
+                            <!-- <button mat-icon-button color="primary"  *ngIf={{element?.status!="Approved"}} (click)="approveData(element)">
+                              <mat-icon class="mat-18">approval</mat-icon>
+                            </button>
+                            <button mat-icon-button color="primary" *ngIf={{element?.status=="Approved"}} [disabled]="true" (click)="approveData(element)">
+                             <mat-icon class="mat-18">approval</mat-icon>
+                            </button> -->
+                        </td>
+                    </ng-container>
+
+                  <ng-container matColumnDef="Action">
+                    <th class="bg" mat-header-cell *matHeaderCellDef width ="8%">Action</th>
+                    <td mat-cell *matCellDef="let element"> 
+                        <button mat-icon-button color="primary" (click)="editData(element)">
+                            <mat-icon class="mat-18">edit</mat-icon>
+                        </button>
+                        <button mat-icon-button color="accent" (click)="DeteteData(element?.truckReqId)">
+                          <mat-icon class="mat-18">delete</mat-icon>
+                      </button>
+                    </td>
+                </ng-container>
+
+                <!-- <ng-container matColumnDef="Delete">
+                  <th mat-header-cell *matHeaderCellDef width ="1%">Delete</th>
+                  <td mat-cell *matCellDef="let element"> 
+                      <button mat-icon-button color="accent" (click)="DeteteData(element?.truckReqId)">
+                          <mat-icon class="mat-18">delete</mat-icon>
+                      </button>
+                  </td>
+              </ng-container> -->
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+                    <div *ngIf="resultsLength == 0" class="noRecords">No records found</div>
+                    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+                </div>
+        </div>
+   
+
+<div style="text-align: center" *ngIf="headerFordApprove">
+  <span>
+      <h2 style="font-size: 25px;"><b>Truck Approval Page</b></h2>
+  </span>
+</div>
+
+<div *ngIf="ListForm" class="container">
+  <div class="row">
+    <div class="col-7">
+      <div>
+        <button style="margin-left:1rem;" mat-raised-button (click)="setListForm()" color="primary">Back</button>
+      </div>
+      <div *ngFor="let data of ApprovalTransportationIDlist; let i=index">
+        <table class="table table-bordered table-striped table-hover" style="width:100%">
+      <!-- <table class="table bordered"   *ngFor="let data of ApprovalTransportationIDlist; let i=index"> -->
+        <tr>
+          <th colspan="7">Transportation: {{data.transpotationName}} &nbsp;&nbsp;&nbsp;Destination: {{data.DestinationName}} &nbsp;&nbsp;&nbsp;DA No. :{{data.jobcode_da_no}}</th>
+          <!-- <th></th>
+          <th></th> -->
+        </tr>
+        <tr>
+          <!-- <th colspan="1">SL.NO.</th> -->
+          <th colspan="1">TruckType</th>
+          <th colspan="1">Quantity</th>
+          <th colspan="1">Amount</th>
+          <th colspan="1">Approve</th>
+          <th colspan="1">Attachment</th>
+          <th colspan="1">Status</th>
+        </tr>
+    
+        <tr *ngFor="let element of Approvallist;let j=index;">
+          <ng-container *ngIf="data.transportationID==element.transportationID">
+          <!-- <td>{{j + 1}}</td> -->
+          <td>{{element?.truckName}}</td>
+          <td>{{element?.quantity}}</td>
+          <td><input style="background-color: lightgray;height:40px;width:80px;" matInput placeholder="Enter Amount" [(ngModel)]="element.amount" (change)="add(j,i,element,element.amount)"></td>
+          <!-- <td><input style="background-color: lightgray;height:40px;width:80px;" matInput placeholder="Enter Amount" [(ngModel)]="t1AMount[j]" (change)="add(j,i,element)"></td> -->
+          <td></td>
+          <td></td>
+          <td>{{element?.status}}</td>
+        </ng-container>
+        </tr>
+     
+        <tr>
+          <!-- <td></td> -->
+          <td></td>
+          <td><button mat-raised-button color="primary" type="submit" (click)="clearTotalTextBox(finalTotal[i],i)">Clear</button></td>
+          <td><input style="background-color: lightgray;height:40px;width:80px;" matInput placeholder="Total" [(ngModel)]="finalTotal[i]" value="0"></td>
+          <td>
+            <mat-radio-button *ngIf="statusValue !='Approved'"  style="margin-left: 1px;" value="1" (change)="approveSelect(data.transportationID,data.truckReqID)" name="approve">Approve</mat-radio-button>
+          </td>
+          <td>
+            <mat-radio-button *ngIf="statusValue =='Approved'" [disabled]="true"  style="margin-left: 1px;" value="1" (change)="approveSelect(data.transportationID,data.truckReqID)" name="approve">Approve</mat-radio-button>
+          </td>
+          <!-- <td><input type="file" #filePicker (change)="onImagePicked($event)"></td> -->
+          <td><button mat-raised-button type="submit" (click)="fileUploadFun(data.transportationID,data.truckReqID,data.daID)">Upload File</button></td>
+          <td><button type="submit" color="primary" mat-raised-button (click)="saveApproveDataList()">Submit</button></td>
+        </tr>
+      </table>
+      </div>
+      <!-- <button mat-raised-button color="primary" type="submit" (click)="updateList()">Submit</button><button style="margin-left: 3rem;" mat-raised-button (click)="setListForm()" color="primary">Back</button> -->
+    </div>
+    </div>
+</div>
+
+
+<div style="text-align: center" *ngIf="headerFormEdit">
+  <span>
+      <h2 style="font-size: 25px;"><b>Truck Approval Edit Page</b></h2>
+  </span>
+</div>
+
+<div *ngIf="EditForm" class="container">
+  <!-- <form #myForm="ngForm" (ngSubmit)="saveEditDataList()"> -->
+  <div class="row">
+    <div class="col-6">
+      <div><button mat-raised-button (click)="setupdateEditForm()" color="primary">Back</button></div><br/>
+      <div *ngFor="let data of ApprovalTransportationIDlist; let i=index">
+        <table class="table table-bordered table-striped table-hover" style="width:100%">
+          <tr>
+            <!-- <th th colspan="6">Transportation : {{data.transpotationName}} &nbsp;&nbsp;&nbsp;DA_Id:{{data.daID}}</th> -->
+            <th colspan="6">Transportation: {{data.transpotationName}} &nbsp;&nbsp;&nbsp;Destination: {{data.DestinationName}} &nbsp;&nbsp;&nbsp;DA No. :{{data.jobcode_da_no}}</th>
+          </tr>
+        <tr>
+          <th colspan="1">TruckType</th>
+          <th colspan="1">Quantity</th>
+          <th colspan="1">Amount</th>
+          <th colspan="1">Approve</th>
+          <th colspan="1">Status</th>
+        </tr>
+
+        <tr *ngFor="let element of Approvallist;let j=index;">
+        <ng-container *ngIf="data.transportationID==element.transportationID">
+          <td>{{element?.truckName}}</td>
+          <td>{{element?.quantity}}</td>
+          <td><input style="background-color: lightgray;height:40px;width:80px;"  matInput placeholder="Enter Amount" [(ngModel)]="element.amount"  (change)="edit(element.amount,element,i)"></td>
+          <td></td>
+          <td>{{element?.status}}</td>
+        </ng-container>
+        </tr>
+
+        <tr *ngIf="totalDisplayRow">
+          <td></td>
+          <td><button mat-raised-button color="primary" type="submit" (click)="clearTotalTextBox(Total[i],i)">Clear</button></td>
+          <td><input style="background-color: lightgray;height:40px;width:80px;" matInput placeholder="Total" [(ngModel)]="Total[i]" value="0" pattern="^[0-9]+$" name="TotalVal" id="TotalVal"></td>
+          <td><mat-radio-button style="margin-left: 1px;" value="1" (change)="approveSelect(data.transportationID,data.truckReqID)" [disabled]="true" name="approve">Approve</mat-radio-button></td>
+          <td></td>
+          <td><button type="submit" color="primary" mat-raised-button (click)="saveEditDataList()">Update</button></td>
+        <!--   <td><button type="submit" color="primary" mat-raised-button [disabled]="!myForm.valid">Update</button></td> -->
+        </tr>
+      </table> 
+      </div>
+      <!-- <button mat-raised-button color="primary" type="submit" (click)="updateEditDataList()">Submit</button><button style="margin-left: 3rem;" mat-raised-button (click)="setupdateEditForm()" color="primary">Back</button> -->
+    </div>
+    </div>
+  <!-- </form> -->
+</div>
+
+
+
+
+
+
+
+
+
+<!-- <ng-container matColumnDef="Delete">
+  <th mat-header-cell *matHeaderCellDef width ="1%">Delete</th>
+  <td mat-cell *matCellDef="let element"> 
+      <button mat-icon-button *ngIf="this.userRoleArr['delete_access']" color="accent" (click)="deleteData(element?.module_id)">
+          <mat-icon class="mat-18">delete</mat-icon>
+      </button>
+      <button mat-icon-button *ngIf="!this.userRoleArr['delete_access']" [disabled]="true" color="accent" (click)="deleteData(element?.module_id)">
+        <mat-icon class="mat-18">delete</mat-icon>
+    </button>
+  </td>
+</ng-container> -->
+
+
+
+
+
+
+
+
+
+<!-- <tr *ngFor="let element of Approvallist;let j=index;">
+  <td *ngIf="data.transportationID==element.transportationID">{{j + 1}}</td>
+  <td *ngIf="data.transportationID==element.transportationID">{{element?.truckName}}</td>
+  <td *ngIf="data.transportationID==element.transportationID">{{element?.quantity}}</td>
+  <td *ngIf="data.transportationID==element.transportationID"><input style="background-color: lightgray;height:40px;width:80px;" matInput placeholder="Enter Amount" [(ngModel)]="t1AMount[j]" (change)="add(j,i,element)"></td>
+  <td></td>
+  <td></td>
+</tr> -->
+
+
+
+<!-- <div *ngIf="EditForm" class="container">
+  <div class="row">
+    <div class="col-6">
+      <div *ngFor="let data of ApprovalTransportationIDlist; let i=index">
+        <table class="table table-bordered table-striped table-hover" style="width:100%">
+          <tr>
+            <th th colspan="6">Transportation : {{data.transpotationName}}</th>
+          </tr>
+        <tr> -->
+          <!-- <th colspan="1">SL.NO.</th> -->
+          <!-- <th colspan="1">TruckType</th>
+          <th colspan="1">Quantity</th>
+          <th colspan="1">Amount</th>
+          <th colspan="1">Approve</th>
+          <th colspan="1">Status</th>
+        </tr>
+
+        <tr *ngFor="let element of Approvallist;let j=index;">
+        <ng-container *ngIf="data.transportationID==element.transportationID"> -->
+          <!-- <td>{{j+1}}</td> -->
+          <!-- <td>{{element?.truckName}}</td>
+          <td>{{element?.quantity}}</td>
+          <td><input style="background-color: lightgray;height:40px;width:80px;"  matInput placeholder="Enter Amount" [(ngModel)]="element.amount"  (change)="edit(element.amount,element,i)"></td>
+          <td></td>
+          <td>{{element?.status}}</td>
+        </ng-container>
+        </tr>
+
+        <tr *ngIf="totalDisplayRow"> -->
+          <!-- <td></td> -->
+          <!-- <td></td>
+          <td><button mat-raised-button color="primary" type="submit" (click)="clearTotalTextBox(Total[i],i)">Clear Total</button></td>
+          <td><input style="background-color: lightgray;height:40px;width:80px;" matInput placeholder="Total" [(ngModel)]="Total[i]" value="0"></td>
+          <td><mat-radio-button style="margin-left: 1px;" value="1" (change)="approveSelect(data.transportationID,data.truckReqID)" name="approve">Approve</mat-radio-button></td>
+          <td></td>
+          <td><button type="submit" color="primary" mat-raised-button>Submit</button></td>
+        </tr>
+      </table> 
+      </div>
+      <button mat-raised-button color="primary" type="submit" (click)="updateEditDataList()">Submit</button><button style="margin-left: 3rem;" mat-raised-button (click)="setupdateEditForm()" color="primary">Back</button>
+    </div>
+    </div>
+</div> -->
+
+
+

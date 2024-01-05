@@ -1,0 +1,77 @@
+<div *ngIf="checkOutHeader" style="text-align: center;">
+    <span>
+        <h2 style="font-size: 25px;">Check Out Page</h2>
+    </span>
+</div>
+<br>
+
+<div class="container" *ngIf="checkOutDataForm">
+    <br>
+    <div class="row">
+      <div class="col-2">
+        <label>Vehicle Number</label>
+      </div>
+      <div class="col-2">
+        <span>:&nbsp;<b>{{data.element.vehicle_no}}</b></span>
+      </div>
+      <div class="col-2">
+        <label>Driver Number</label>
+      </div>
+      <div class="col-2">
+        <span>:&nbsp;<b>{{data.element.driver_no}}</b></span>
+      </div>
+      <div class="col-2">
+        <label>Driver Name</label>
+      </div>
+      <div class="col-2">
+        <span>:&nbsp;<b>{{data.element.driver_name}}</b></span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-2">
+        <label>Truck Name </label>
+      </div>
+      <div class="col-2">
+        <span>:&nbsp;<b>{{data.element.truckName}}</b></span>
+      </div>
+      <div class="col-2">
+        <label>CheckedIn Date & Time </label>
+      </div>
+      <div class="col-2">
+        <span>:&nbsp;<b>{{data.element.check_in}}</b></span>
+      </div>
+      <div class="col-2">
+        <label>CheckIn Remarks</label>
+      </div>
+      <div class="col-2">
+        <span>:&nbsp;<b>{{data.element.check_in_remarks}}</b></span>
+      </div>
+    </div>
+    <!-- <label><b>Vehicle Number :  </b><span><u>{{data.element.vehicle_no}}</u></span></label>&nbsp;&nbsp;&nbsp;&nbsp;
+    <label><b>Driver Number :  </b><span><u>{{data.element.driver_no}}</u></span></label>&nbsp;&nbsp;&nbsp;&nbsp;
+    <label><b>Driver Name :  </b> <span><u>{{data.element.driver_name}}</u></span></label>&nbsp;&nbsp;&nbsp;&nbsp;<br/><br/>
+    <label><b>CheckedIn Date & Time :  </b><span><u>{{data.element.check_in}}</u></span></label>&nbsp;&nbsp;&nbsp;&nbsp;
+    <label><b>CheckIn Remarks  </b>  <span><u>{{data.element.check_in_remarks}}</u></span></label>&nbsp;&nbsp;&nbsp;&nbsp;
+    <label><b>Truck Name :  </b> <span><u>{{data.element.truckName}}</u></span> </label>&nbsp;&nbsp;&nbsp;&nbsp; -->
+</div>
+<br>
+  <div class="container" *ngIf="checkOutDataForm">
+    <form #myForm="ngForm" (ngSubmit)="updateCheckOutData()">
+  <div class="row">
+    <div class="col-md-3">
+      <div class="example-container div">
+            <mat-form-field appearance="fill">
+              <mat-label>Check Out Remarks</mat-label>
+              <input matInput placeholder="Check Out Remarks" [(ngModel)]="checkOutRemarks" ngModel required maxlength="500" name="CheckOutRemarks" #CheckOutRemarks="ngModel">
+              <mat-error  *ngIf="CheckOutRemarks.touched && !CheckOutRemarks.valid">CheckOut Remarks is Required.</mat-error>
+            </mat-form-field>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <button mat-raised-button color="primary" type="submit" [disabled]="!myForm.valid">CheckOut</button><button mat-raised-button style="margin-left:1rem;" (click)="closeCheckOutDialog()" color="warn">Close</button>
+      <!-- <button mat-raised-button color="primary" type="submit" (click)="updateCheckOutData()">Submit</button><button mat-raised-button style="margin-left:1rem;" (click)="closeCheckOutDialog()" color="primary">Close</button> -->
+      </div> 
+  </div>
+</form>
+</div>
+

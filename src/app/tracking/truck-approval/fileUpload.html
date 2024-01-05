@@ -1,0 +1,9 @@
+<div class="container">
+    <form  [formGroup]="form" enctype="multipart/form-data">
+      <div class="col-3">
+        <td><input type="file" #filePicker (change)="onImagePicked($event)"></td>
+      </div>
+      <br/>
+      <button mat-raised-button color="primary" type="submit" (click)="saveUploadFiles()">Submit</button><button style="margin-left: 1rem;" mat-raised-button (click)="dialogClose()" color="primary">Close</button>
+</form>
+</div>

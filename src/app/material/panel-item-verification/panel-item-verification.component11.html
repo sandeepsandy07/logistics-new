@@ -1,0 +1,223 @@
+<div class="card-box example-small-box-details" *ngIf="viewRecords">
+    <div class="row">
+        <div class="col-1">  
+            <div class="row">
+                <div class="col-6">
+                    <!-- <mat-icon matListIcon [ngStyle]="{'color':'red'}" (click)="daNavigation(viewRecords.da_id,'/material/billableform')">arrow_back</mat-icon> -->
+                </div>
+                <div class="col-6">
+                    <label>DA No</label>
+                </div>
+            </div>
+           
+        </div>
+        <div class="col-3">  
+            <span>:&nbsp;<a style="color: blue;cursor: pointer;" (click)="daNavigation(viewRecords.da_id,'material/DA-details')">{{viewRecords.jobcode_da_no}}</a></span>
+           <label>(R-{{viewRecords.revision}})</label>
+        </div>
+       
+        <div class="col-2">  
+            <label>Date</label>
+            <span>:&nbsp;{{viewRecords.da_date | date}}</span>
+           
+        </div>
+        <div class="col-1">  
+            <label>SO no</label>
+           
+        </div>
+        <div class="col-1">  
+            <span>:&nbsp;{{viewRecords.so_no}}</span>
+           
+        </div>
+        <div class="col-1">  
+            <label>PO no</label>
+           
+        </div>
+        <div class="col-2">  
+            <span>:&nbsp;{{viewRecords.po_no}}</span>
+           
+        </div>
+        <div class="col-1">  
+           
+           
+        </div>
+        </div>
+        <div class="row">
+            <div class="col-2">  
+                <label>Job Code</label><span>:&nbsp;{{viewRecords.job_code}}</span>
+               
+            </div>
+            <div class="col-1">  
+                <label>Location</label><span>:&nbsp;{{viewRecords.location_unit}}</span>
+               
+            </div>
+           
+            <div class="col-4">  
+                <label>Job Name</label><span>:&nbsp;{{viewRecords.job_name}}</span>
+               
+            </div>
+            <div class="col-1">  
+                <label>Customer</label>
+               
+            </div>
+            <div class="col-3">  
+                <span>:&nbsp;{{viewRecords.customer_name }}</span>
+               
+            </div>
+            <div class="col-1" style="color: red;">
+           
+                <mat-icon (click)="daNavigation(viewRecords.da_id,'material/revisioncreate')">bug_report</mat-icon>
+                 <span >*revise</span>
+            </div>
+
+        </div>
+</div>
+
+<div class="container-fluid">
+    <div class="mt-2" *ngFor="let card of list;let i = index">
+        <div class="row">
+            <div class="col-md-12 mb-2">
+                <mat-card>
+                    <div class="row">
+                        <div class="col-md-5" style="margin-left: 8px;">
+                        </div>
+                        <div class="col-md-7" style="margin-left: inherit;">
+                            <b>SECTION - {{card.section}}&nbsp;&nbsp;<span>({{card.panel.length}}) </span></b>
+                        </div>
+                    </div>
+                </mat-card>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="isListView">
+            <div class="col-md-12 mb-2" style="text-align: center;">
+                <!-- <mat-accordion #accordion="matAccordion" [multi]="true"> -->
+                <mat-accordion>
+                    <mat-expansion-panel *ngFor="let list of card.panel; let i=index;">
+
+                        <mat-expansion-panel-header (click)="clearData()">
+                          
+                                <div class="col-9">
+                                    <mat-panel-title>
+                                        {{list.name}}<span> -{{list.panel_data.component_no}}</span>
+                                       
+                                    </mat-panel-title>
+                                </div>
+                                <div class="col-3">
+                                    <mat-panel-title>
+
+                                        <span  style="font-weight: bold;color: green;">{{list.data[0].status}}</span>
+                                        <!-- <span *ngIf="list.data[0].approved_flag == true || list.data[0].status == 'verified'"><mat-icon style="font-size:25px;float:right;color:rebeccapurple" title="Dispatch Check List" (click)="generateSinglePanelWisePdf(list.name)">print</mat-icon></span> -->
+                                        <span ><mat-icon style="font-size:25px;float:right;color:rebeccapurple" title="Dispatch Check List" (click)="generateSinglePanelWisePdf(list.name)">print</mat-icon></span>
+                                    
+                                    </mat-panel-title>
+                                    
+                                </div>
+                           
+                          
+                           
+                        </mat-expansion-panel-header>
+
+                        <div class="row" mat-list-item >
+                            <div class="col-md-1"><b>SL.NO.</b></div>
+                            <div class="col-md-2"><b>ITEM DESC</b></div>
+                            <div class="col-md-1"><b>MAKE</b></div>
+                            <div class="col-md-1"><b>MODEL</b></div>
+                            <div class="col-md-1"><b>FRONT</b></div>
+                            <div class="col-md-1"><b>REAR</b></div>
+                            <div class="col-md-1"><b>QTY</b></div>
+                            <div class="col-md-1"><b>BOM remarks</b></div>
+                            <div class="col-md-1"><b>REMARKS</b></div>
+                       
+                            <div class="col-md-1"><b>ACCESSORIES</b></div>
+                            <!-- <div class="col-md-1"><b>VIEW</b></div> -->
+                            <hr>
+                        </div>
+
+                        <div class="row" mat-list-item *ngFor="let data of list.data;let i=index;">
+                            <div class="col-md-1">{{i + 1 }}</div>
+                            <div class="col-md-2">{{data.item_desc == null ? '-' : data.item_desc}}</div>
+                            <div class="col-md-1">{{data.make == null ? '-' : data.make}}</div>
+                            <div class="col-md-1">{{data.model == null ? '-' : data.model}}</div>
+                            <div class="col-md-1" *ngIf="data.verified_flag != false "><input  disabled type="text" size="4" (keyup)="qtyFront(data, i, list.name)" value="{{data.front}}" ></div>
+                            <div class="col-md-1" *ngIf="data.verified_flag != false "><input  disabled type="text" size="4" (keyup)="qtyRear(data, i, list.name)" value="{{data.rear}}"  ></div>
+                            <div class="col-md-1" *ngIf="data.verified_flag == false "><input [disabled]="( list.name == 'LOOSE SUPPLY' ) ? !toggle[i]: toggle[i]" type="text" size="4"  value="{{data.front}}"(keyup)="qtyFront(data, i, list.name)" [(ngModel)]="front[i]" ></div>
+                            <div class="col-md-1" *ngIf="data.verified_flag == false"><input [disabled]="( list.name == 'LOOSE SUPPLY' )  ? !toggle[i]: toggle[i]" type="text" size="4" value="{{data.rear}}" (keyup)="qtyRear(data, i, list.name)" [(ngModel)]="rear[i]" ></div>
+                            <div class="col-md-1">{{data.qty == null ? '-' : data.qty}}</div>
+                            <div class="col-md-1">{{data.panel_remarks == null ? '-' : data.panel_remarks}}</div>
+                            <div class="col-md-1"><textarea [disabled]="data.verified_flag == true ? !toggle[i]: toggle[i]" type="text" rows="1" cols="10" [(ngModel)]="remarks[i]" (keyup)="add_remarks(data, i, list.name)"></textarea></div>
+                            <div class="col-md-1"><mat-icon style="cursor: pointer;" (click)="openDialog(data.id)">add_circle</mat-icon></div>
+                            <div class="col-md-1" *ngIf="data.accessories_flag == true"><mat-icon style="cursor: pointer;">preview</mat-icon></div>
+                            
+                            <hr>
+                        </div>
+                        <div class="row">
+                            <div class="col-12" *ngIf=" list.panel_data.remarks != null">
+                                
+                                <div class="col-8"  align="left">
+                                   <label>Approver Remarks: </label> {{list.panel_data.remarks}}
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row mt-5" mat-list-item>
+                            <div class="col-md-3">
+                                <mat-form-field class="example-full-width" appearance="fill">
+                                    <mat-label>Sl.No</mat-label>
+                                    <input type="text" [(ngModel)]="panel_serial_no" matInput f [errorStateMatcher]="matcher"
+                                           placeholder="" value="{{list.panel_serial_no}}">
+                                  
+                                    <!-- <mat-error *ngIf="f.da_from.errors?.required">
+                                      da_from is <strong>required</strong>
+                                    </mat-error> -->
+                                  </mat-form-field>
+                            </div>
+                            <div class="col-md-3">
+                                <mat-form-field class="example-full-width" appearance="fill">
+                                    <mat-label>Shipping clearance label no.</mat-label>
+                                    <input type="text" [(ngModel)]="shipping_clearance_no" matInput f [errorStateMatcher]="matcher"
+                                           placeholder="" value="{{list.shipping_clearance_no}}">
+                                  
+                                    <!-- <mat-error *ngIf="f.da_from.errors?.required">
+                                      da_from is <strong>required</strong>
+                                    </mat-error> -->
+                                  </mat-form-field>
+                            </div>
+                            <div class="col-md-3">
+
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Approver </mat-label>
+                                    <mat-select [(ngModel)]="approver"  multiple >
+                                      <mat-option *ngFor="let data of userList" [value]="data.id"  >
+                                        {{data.employee_name}}
+                                      </mat-option>
+                                      <mat-option [value]="3"  >
+                                        Sandeep
+                                      </mat-option>
+                                    </mat-select>
+                                    <mat-hint>Please select Approver   </mat-hint>
+                              
+                                </mat-form-field>
+
+                                <!-- <select  style="float: right; width: 200px; height: 35px;">
+                                    <option value=""></option>
+                                    <option *ngFor="let data of userList" value="{{data.employee_name}}">{{data.employee_name}}</option>
+                                </select> -->
+                            </div>
+                            <div class="col-md-3"><button mat-raised-button color="primary" type="submit" style="float: left;" (click)="onSubmit(list.data)">Submit</button></div>
+                        </div>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+

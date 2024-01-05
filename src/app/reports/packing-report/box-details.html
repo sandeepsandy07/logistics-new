@@ -1,0 +1,63 @@
+<!-- <div>
+    <p style="text-align:center;color:blue;">Box Details</p>
+</div> -->
+<div class="row">
+    <div class="col-12">
+      <h4 style="text-align:center;" class=""><b>Box Details</b></h4>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card-box table-responsive">
+          <table  class="table table-bordered table-striped table-hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" style="overflow: scroll;">
+                <thead>
+                    <tr>
+                        <th style="width: 30px;">Sl.no</th>
+                        <th style="width: 130px;">Box Type</th>
+                        <th style="width: 230px;">Box Size</th>
+                        <th style="width: 130px;">Height</th>
+                        <th style="width: 130px;">Length</th>
+                        <th style="width: 130px;">Breadth</th>
+                        <th style="width: 130px;">Gross_Weight</th>
+                        <th style="width: 130px;">Net_Weight</th>
+                        <th style="width: 130px;">Service Type</th>
+                        <th style="width: 130px;">Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                        <tr *ngFor="let subskill of tablelist;let i=index">
+                        <td >{{i+1}}</td>
+                        <!-- <td>{{subskill.boxTypeID}}</td> -->
+                        <td><span *ngIf="subskill.box_details != null">{{subskill.box_details.boxtype_details.boxType}}</span></td>
+                        <td><span *ngIf="subskill.box_details != null">{{subskill.box_details.boxSize}}</span></td>
+                        <!-- <td>{{subskill.boxSizeID}}</td> -->
+                        <td>{{subskill.height}}</td>
+                        <td>{{subskill.length}}</td>
+                        <td>{{subskill.breadth}}</td>
+                        <td>{{subskill.gross_weight}}</td>
+                        <td>{{subskill.net_weight}}</td>
+                        <td>{{subskill.service_type}}</td>
+                        <td style="text-align: right;">{{subskill.priceDetails | number:'1.2-2'}}</td>
+                    </tr> 
+                    <tr>
+                        <td style="color:blue;size:25px;">Sum</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td style="text-align: right;">{{totalSum | number:'1.2-2'}}
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-12" align="center">  
+        <button mat-raised-button color="warn" mat-dialog-close style="margin-left:20px;" (click)="dialogClose()">Close</button>
+    </div> 
+</div>

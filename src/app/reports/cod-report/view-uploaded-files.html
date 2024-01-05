@@ -1,0 +1,23 @@
+<div class="wrapper">
+    <div class="container-fluid">
+        <div class="row"  >  
+<div class="col-md-4 mb-4" style="padding:5px ;text-align: center;" *ngFor="let list of multi_files" >
+    <mat-card  class="icon-rocket"  style="padding:0px">
+        <label><b>{{list.file_type}}</b></label>
+    <div class="row" >
+        <div class="col-4" *ngFor="let list_files of list.file_list">
+            <label style="margin-bottom:0px;">{{list_files.file_name}}
+                <mat-icon style="color: #3f51b5;" (click)="download_documents(list_files)">cloud_download</mat-icon>
+                <mat-icon style="color:red;" (click)="deletemultifile(list_files.id)">delete</mat-icon></label><br> 
+        </div>                    
+    </div>
+    </mat-card>
+    </div>
+    </div>
+    </div>
+
+    <div>
+        <button mat-raised-button color="warn" (click)="dialogClose()" style="margin-left:2rem;">Close</button>
+    </div>
+
+

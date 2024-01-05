@@ -1,0 +1,92 @@
+<div class="wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-3">
+              <h4 class=""><b>Other Transactions</b></h4>
+            </div>
+            <div class="col-3">
+              <button type="submit" style="margin-top:1px;margin-left:44rem;" mat-raised-button color="primary" (click)="onSubmit()">Upload Sap Data</button>
+            </div>
+        </div>
+      <div class="row">
+        <div class="col-12">
+            <div class="card-box table-responsive">
+              <table class="table table-bordered table-striped table-hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+                    <thead>
+                        <tr>
+                            <th style="width: 30px;">Sl.no</th>
+                            <th style="width:1500px;">Actions</th>
+                            <th style="width: 130px;" >Challan No</th>
+                            <th style="width: 230px;">Challan Created Date</th>
+                            <!-- <th style="width: 130px;" >Reference Document</th> -->
+                            <th style="width: 130px;" >So No</th>
+                            <th style="width: 130px;" >Delivery</th>
+                            <th style="width: 130px;" >Billing Number</th>
+                            <th style="width: 230px;">Billing Create Date</th>
+                            <th style="width: 130px;" >Tax Invoice Number</th>
+                            <th style="width: 230px;">Tax Invoice Date</th>
+                            <th style="width: 130px;" >Ship-to Party Name</th>
+                            <th style="width: 130px;" >Ship-to City</th>
+                            <th style="width: 130px;" >Transporter Name</th>
+                            <th style="width: 130px;" >LR No./Docket No.</th>
+                            <th style="width: 130px;" >Tax Invoice Assessable Value</th>
+                            <th style="width: 130px;" >Tax Invoice Total Tax Value</th>  
+                            <th style="width: 130px;" >Tax Invoice Total Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                            <tr *ngFor="let subskill of tablelist;let i=index">
+                            <td style="text-align: center;">{{i + 1}}</td>
+                            <td>
+                              <!-- <button *ngIf="subskill.dispatch_flag == 1" style="color:green" mat-icon-button color="primary" (click)="UserInputWindow(subskill.id)">Add
+                                <mat-icon  class="mat-18" style="color:green">add_circle</mat-icon>
+                            </button> -->
+                              <mat-icon style="color:green" *ngIf="subskill.dispatch_flag != '0'" class="mat-18" (click)="UserInputWindow(subskill.id)">add_circle</mat-icon>
+                              <mat-icon color="primary"  *ngIf="subskill.dispatch_flag != '1'" class="mat-18" (click)="UserInputWindow(subskill.id)">add_circle</mat-icon>
+                            <mat-icon  style="font-size:25px;float:center" (click)="generateDispatchDetailsPdf(subskill.id)">print</mat-icon>
+                            </td>
+                            <td >{{subskill.challan_no}}</td>
+                            <td style="width: 130px;">{{subskill.challan_create_date | date : 'dd/MM/yyyy'}}</td>
+                            <td>{{subskill.reference_document}}</td>
+                            <td >{{subskill.delivery}}</td>
+                            <td >{{subskill.billing_number}}</td>
+                            <td >{{subskill.billing_create_date | date : 'dd/MM/yyyy'}}</td>
+                            <td >{{subskill.tax_invoice_number}}</td>
+                            <td>{{subskill.tax_invoice_date | date : 'dd/MM/yyyy'}}</td>
+
+                            <td>{{subskill.ship_to_party_name}}</td>
+                            <td>{{subskill.ship_to_city}}</td>
+                            <td>{{subskill.transporter_name}}</td>
+                            <td>{{subskill.lr_no_docket_no}}</td>
+                            <td style="text-align: right;">{{subskill.totalAccessableValue | number:'1.2-2'}}</td>
+                            <td style="text-align: right;">{{subskill.totalTaxValue | number:'1.2-2'}}</td>
+                            <td style="text-align: right;">{{subskill.finalTotalValue | number:'1.2-2'}}</td>
+
+                            <!-- <td style="text-align: right;">{{subskill.tax_invoice_assessable_value | number:'1.2-2'}}</td>
+                            <td style="text-align: right;">{{subskill.tax_invoice_total_tax_value | number:'1.2-2'}}</td>
+                            <td style="text-align: right;">{{subskill.tax_invoice_total_value | number:'1.2-2'}}</td> -->
+                           
+                           <!-- <mat-icon *ngIf="subskill.status != 'loaded'" (click)="daNavigation(subskill.truckListId,'/loading/truckdeliverychallan','edit','false','true')" style="color: #5382a3;">edit</mat-icon>
+                           <mat-icon  *ngIf="subskill.status != 'loaded'"  (click)="daNavigation(subskill.truckListId,'/loading/truckdeliverychallan','View','true','true')" style="color: #5382a3;">visibility</mat-icon>
+                         
+                           <button  *ngIf="subskill.status == 'loaded'" type="button" class="btn btn-success" (click)="daNavigation(subskill.truckListId,'/loading/truckdeliverychallan','Create','false','true')">Enter DC</button>
+                           <mat-icon  *ngIf="subskill.status != 'loaded'" style="font-size:25px;float:right" (click)="generateDispatchDetailsPdf(subskill.truckListId,subskill.da_id[0])">print</mat-icon>
+                           <mat-icon  *ngIf="subskill.status != 'loaded'" style="font-size:25px;float:right" (click)="generateAnnexurePdf(subskill.truckListId)">print</mat-icon> -->
+                        
+                         
+                               </tr>
+  
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+  
+    </div>
+  </div>
+  <!-- <div class="d-flex justify-content-center">
+    <div class="spinner-border" role="status" >
+      <span  id="loading"></span>
+    </div>
+  </div> -->
+

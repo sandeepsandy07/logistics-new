@@ -1,0 +1,77 @@
+<div class="card-box example-small-box-details" *ngFor="let subskill of tablelist">
+    <div class="row">
+        <div class="col-1"> 
+            <div class="row">
+                <!-- <div class="col-6">
+                    <a [routerLink]="'/material/DAcreate'" style="font-size:13px;" >   <mat-icon matListIcon [ngStyle]="{'color':'red'}"  >arrow_back</mat-icon></a>
+                </div> -->
+                <div class="col-6">
+                    <label>DA No</label>
+                </div>
+            </div> 
+            
+           
+            
+           
+        </div>
+        <div class="col-2">  
+            <span>:&nbsp;{{subskill.jobcode_da_no}}</span>
+           
+        </div>
+        <div class="col-1">  
+            <label>Date</label>
+           
+        </div>
+        <div class="col-2">  
+            <span>:&nbsp;{{subskill.da_date | date}}</span>
+           
+        </div>
+        <div class="col-1">  
+            <label>SO no</label>
+           
+        </div>
+        <div class="col-1">  
+            <span>:&nbsp;{{subskill.so_no}}</span>
+           
+        </div>
+        <div class="col-1">  
+            <label>PO no</label>
+           
+        </div>
+        <div class="col-2">  
+            <span>:&nbsp;{{subskill.po_no}}</span>
+           
+        </div>
+        <!-- <div class="col-1">  
+            <mat-icon matListIcon [ngStyle]="{'color':'red'}" (click)="daNavigation(passedDANo,'/material/panelwisematerial')">arrow_forward</mat-icon>
+           
+        </div> -->
+        </div>
+        <div class="row">
+            <div class="col-1">  
+                <label>Job Code</label>
+               
+            </div>
+            <div class="col-2">  
+                <span>:&nbsp;{{subskill.job_code}}</span>
+               
+            </div>
+            <div class="col-1">  
+                <label>Job Name</label>
+               
+            </div>
+            <div class="col-2">  
+                <span>:&nbsp;{{subskill.job_name}}</span>
+               
+            </div>
+            <div class="col-1">  
+                <label>Customer</label>
+               
+            </div>
+            <div class="col-5">  
+                <span>:&nbsp;</span>
+               
+            </div>
+
+        </div>
+</div>

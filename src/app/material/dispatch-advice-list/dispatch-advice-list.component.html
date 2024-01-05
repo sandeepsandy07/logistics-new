@@ -1,0 +1,138 @@
+
+    
+    <div class="d-flex justify-content-center">
+      <div class="spinner-border" role="status" >
+        <span  id="loading"></span>
+      </div>
+    </div>
+ 
+    <form  [formGroup]="form" enctype="multipart/form-data"  >
+      <div class="row" style="margin: unset;" >
+        <div class="col-1">
+          <button mat-raised-button color="primary" (click)="showfilter= !showfilter">Filter <mat-icon>search</mat-icon></button>
+        </div>
+        <div class="col-11" *ngIf="showfilter">
+          <div class="row" >
+            
+              <div class="col-2" >
+                <mat-form-field class="example-full-width" appearance="fill">
+                        <input type="text" matInput formControlName="da_no" 
+                        placeholder="DA No">
+                </mat-form-field>
+              </div>
+      
+              <div class="col-2" >
+                <mat-form-field class="example-full-width" appearance="fill">
+                        <input type="text" matInput formControlName="so_no" 
+                        placeholder="So No">
+                </mat-form-field>
+              </div>
+              <div class="col-2" >
+                <mat-form-field class="example-full-width" appearance="fill">
+                        <input type="text" matInput formControlName="job_code" 
+                        placeholder="Job Code">
+                </mat-form-field>
+              </div>
+              <div class="col-2" >
+                <mat-form-field class="example-full-width" appearance="fill">
+                        <input type="text" matInput formControlName="ygs_proj_defi" 
+                        placeholder="Project ID">
+                </mat-form-field>
+              </div>
+              <div  class="col-2" >
+                <mat-form-field style="display: block;">
+                    <mat-label>Enter DA date range</mat-label>
+                    <mat-date-range-input [rangePicker]="picker">
+                      <input matStartDate  placeholder="Start date"  formControlName="fromdate" >
+                      <input matEndDate  placeholder="End date"  formControlName="todate" >
+                    </mat-date-range-input>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-date-range-picker #picker></mat-date-range-picker>
+                  </mat-form-field>
+              </div>
+              <div class="col-2">
+               
+                  
+                     <button  mat-raised-button color="primary" (click)="getRecordsBasedOnFilterData()" style="background-color: #30dc1d;"><mat-icon>search</mat-icon></button>
+
+                  
+                    <button  mat-raised-button color="primary" (click)="clearAllFilterDataFields()" style="    background-color: #f11515bd;">Clear</button>
+                    
+                 
+  
+                
+
+
+    
+
+            
+          </div>
+
+          
+        </div>
+        
+
+        </div>
+      </div>
+      </form>
+    <div class="wrapper">
+      <div class="container-fluid">
+    
+          
+        <div class="row">
+          <div class="col-12">
+              <div class="card-box table-responsive">
+                
+                
+              
+                <table class="table table-bordered table-striped table-hover" datatable [dtOptions]="dtOptions2" [dtTrigger]="dtTrigger2">
+                      <thead>
+                          <tr>
+                             
+                              <th  width="10%">Date</th>
+                              <th  width="10%">DA no</th>
+                              <th  width="12%">Customer</th>
+                              <th  width="9%">Job Code</th>
+                              <th  width="10%">Job Name</th>
+                              <th  width="8%">So no.</th>
+                              <th  width="8%">Po No.</th>
+                              <th  width="10%">Type </th>
+                              <th  width="10%">Status </th>
+                             
+                          </tr>
+                      </thead>
+                      <tbody>
+                         
+                              <tr *ngFor="let subskill of tablelist_completed">
+                              
+                              <td>{{subskill.da_date | date}}</td>
+                              <td *ngIf="subskill.da_stage <= 2" >{{subskill.da_id}}</td>
+                              
+                              <td *ngIf="subskill.da_stage == 3"  (click)="daNavigation(subskill.da_id,'material/DA-details')">{{subskill.jobcode_da_no}}</td>
+                              <td>{{subskill.ship_to_customer_name}}</td>
+                              <td>{{subskill.job_code}}</td>
+                              <td>{{subskill.job_name}}</td>
+                              <td>{{subskill.so_no}}</td>
+                              <td>{{subskill.po_no}}</td>
+                              <td>{{subskill.bill_type}}</td>
+                             
+                              
+                             <td  >
+                            <label>{{subskill.status}}</label>
+                            </td>
+                           
+                          
+                                 </tr>
+    
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      </div>
+    
+      </div>
+    </div>
+   
+ 
+
+

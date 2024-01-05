@@ -1,0 +1,1106 @@
+<style>
+       ol.progtrckr {
+    margin: 0;
+    padding: 0;
+    list-style-type :none;
+}
+
+ol.progtrckr li {
+    display: inline-block;
+    text-align: center;
+    line-height: 3.5em;
+}
+
+
+
+ol.progtrckr li.progtrckr-done {
+    color: black;
+    border-bottom: 4px solid yellowgreen;
+}
+ol.progtrckr li.progtrckr-todo {
+    color: silver; 
+    border-bottom: 4px solid silver;
+}
+
+ol.progtrckr li:after {
+    content: "\00a0\00a0";
+}
+ol.progtrckr li:before {
+    position: relative;
+    bottom: -2.5em;
+    float: left;
+    left: 50%;
+    line-height: 1em;
+}
+ol.progtrckr li.progtrckr-done:before {
+    content: "\2713";
+    color: white;
+    background-color: yellowgreen;
+    height: 1.2em;
+    width: 1.2em;
+    line-height: 1.2em;
+    border: none;
+    border-radius: 1.2em;
+}
+ol.progtrckr li.progtrckr-todo:before {
+    /* content: "\039F"; */
+    color: silver;
+    background-color: white;
+    font-size: 1.2em;
+    bottom: -1.2em;
+}
+
+
+
+
+
+</style>
+<div class="" *ngIf="MainForm">
+    <div class="row" style="margin: unset;">
+        <div class="col-1" style="padding: unset;margin-top: unset;">
+            <button   mat-raised-button color="primary" style="margin-top: unset;background-color: #3cc81c;height: 100%;width: 100%;" (click)="daNavigation_da(passedDANo,'/material/DAcreate','edit')"><span>First page </span><br><span><mat-icon   matListIcon [ngStyle]="{'color':'red'}" >arrow_back</mat-icon></span> </button>
+        </div>
+        <div class="col-10" style="padding: unset;">
+            <div class="card-box example-small-box-details" style="margin-bottom: unset;padding: unset;padding-top: 12px;">
+            
+                    <table>
+                        <thead>
+                            <th style="border: unset; " width="5%"></th>
+                            <th style="border: unset; "width="5%"></th>
+                            <th style="border: unset; " width="5%"></th>
+                            <th  style="border: unset; "width="5%"></th>
+                            <th style="border: unset; " width="5%"></th>
+                            <th style="border: unset; "width="5%"></th>
+                            <th  style="border: unset; "width="5%"></th>
+                            <th style="border: unset; " width="5%"></th>
+                            <th  style="border: unset; "width="5%"></th>
+                            <th  style="border: unset; "width="5%"></th>
+                            <th  style="border: unset; "width="5%"></th>
+                            <th  style="border: unset; "width="5%"></th>
+                            <th style="border: unset; " width="5%"></th>
+                            <th style="border: unset; " width="5%"></th>
+                            <th style="border: unset; "width="5%"></th>
+                            <th style="border: unset; "width="5%"></th>
+                            <th style="border: unset; "width="5%"></th>
+                            <th style="border: unset; "width="5%"></th>
+                            <th style="border: unset; "width="5%"></th>
+                            <th style="border: unset; "width="5%"></th>
+                           
+                        </thead>
+                        
+                        <tbody>
+                            <tr>
+                                <td style="border: unset;text-align: right;color:#0d5d8f "><label>DA No:</label></td>
+                                
+                           
+                                <td  style="border: unset; " colspan="4"><label>{{DANO}}</label></td>
+                                <td style="border: unset;text-align: right;color:#0d5d8f"><label>Date:</label></td>
+                            
+                                <td style="border: unset; " colspan="2"><label>{{DADate | date}}</label></td>
+                                <td style="border: unset;text-align: right;color:#0d5d8f "colspan="2"><label >Job Code:</label></td>
+                                <td style="border: unset; " colspan="3"><label>{{JobCode}}</label></td>
+                                <td style="border: unset;text-align: right;color:#0d5d8f "><label>SO no:</label></td>
+                                <td style="border: unset; " colspan="2"> <label>{{SONo}}</label></td>
+                                <td style="border: unset;text-align: right;color:#0d5d8f "><label>Location:</label></td>
+                                <td style="border: unset; "> <label>unit-1</label></td>
+                                <td style="border: unset;text-align: right;color:#0d5d8f "><label>Revision</label></td>
+                                <td style="border: unset; "> <label>{{revision}}</label></td>
+                            </tr>
+                            <tr>
+                                <td style="border: unset;text-align: right;color:#0d5d8f "><label>PO</label></td>
+                                <td style="border: unset; " colspan="4"><span>:&nbsp;{{PONo}}</span> <span>({{PODate}})</span></td>
+                                <td style="border: unset;text-align: right;color:#0d5d8f " colspan="2"><label>Job Name</label></td>
+                                <td style="border: unset; " colspan="6"><span>:&nbsp;{{JobName}}</span></td>
+                                <td style="border: unset;text-align: right;color:#0d5d8f ">  <label>Customer</label></td>
+                                <td  style="border: unset; "colspan="6"><span>:&nbsp;{{customer_name}}</span></td>
+                            </tr>
+
+                           
+
+                        </tbody>
+                    </table>
+            </div>
+        </div>
+        <div class="col-1" style="padding: unset;margin-top: unset;">
+            <button   mat-raised-button color="primary" style="margin-top: unset;background-color: #3cc81c;height: 100%;width: 100%;" (click)="daNavigation_bom(passedDANo,'/material/panelwisematerial','creater')"><span>BOM page </span><br><span><mat-icon   matListIcon [ngStyle]="{'color':'red'}" >arrow_forward</mat-icon></span> </button>
+
+            
+        </div>
+    </div>
+    
+</div>
+
+<div class="todo-tasklist-item-text"  style=" border-top: 2px solid whitesmoke;" *ngIf="records">
+                                        
+    <ol class="progtrckr" data-progtrckr-steps="3" >
+            
+
+            <!-- <li class="progtrckr-done"  
+                 [ngClass]="{'progtrckr-done': approverslists.status === 'approved', 'progtrckr-todo' : approverslists.status === 'pending' }"> -->
+            <li class=" status-text" [ngClass]="{'progtrckr-done': records.da_stage >= 1}" style="width: 33%;" >
+                <b><span style="color: #00000047">DA Details( Step-1 )</span></b>
+            </li>  
+            <li class=" status-text" [ngClass]="{'progtrckr-done': records.da_stage >= 2, 'progtrckr-todo' : records.da_stage < 2 }" style="width: 33%;" >
+               <b><span style="color: #227eb1;font-size: 20px;"> Billing Details</span> <span style="color: #3cc81c">( Step-2 )</span> </b>
+            </li>  
+            <li class=" status-text"  [ngClass]="{'progtrckr-done': records.da_stage >= 3, 'progtrckr-todo' : records.da_stage < 3 }"  style="width: 33%;">
+                <b (click)="daNavigation_bom(passedDANo,'/material/panelwisematerial','creater')"><span style="color: #00000047">BOM-Items For Logistics to pack and </span><span style="color: red"> DA Submission </span><span style="color: #3cc81c">( Step-3 )</span></b>
+            </li>  
+
+    </ol>
+</div>
+
+<div class="container-fluid">
+   
+   
+    <div class="row">
+        
+            <div class="col-6">
+                <mat-card>
+                <div class="row">
+
+                   
+                    <div class="col-6">
+                        <button  mat-raised-button color="primary"  (click)="OpenDialogAddSoDetails();" >ADD SO Item (Details From SAP)</button>
+
+                    </div>
+                    <div class="col-6">
+                        <span style="color:#c85827">(In case of <span style="color:red">item is not showing in ADD SO Item </span>,you can download QTSO(ZGSDR00006) report and Upload here)</span>
+                        <button  mat-raised-button color="primary" style="float: right;background-color: #c85827;margin: unset;"  (click)="qtso_upload()">Upload SO</button> 
+                        
+                    </div>
+                </div>
+                </mat-card>
+            </div>
+       
+        <div class="col-6" >
+        <mat-card>
+            <form [formGroup]="uploadForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data" #myForm="ngForm">
+                <!-- <div class="row" *ngIf="(this.user_data.dept_id == '1' || this.user_data.dept_id ==  '4' ) "> -->
+                   
+                    <div class="row" >
+                
+                    <div class="col-md-5">
+                    
+                        <h4 style="color: #ff4081;"><span >*</span> upload format<mat-icon (click)="download_bom_temp_csd()">cloud_download</mat-icon></h4>
+                
+                    </div>
+                    <div class="col-md-5">
+                        <div ng-controller="AppController" class="upload">
+                            <h4 style="color: #ff7a25;">Manual data File Upload</h4>
+                            <input type="file" class="" name="panel_wise_material" #takeInput
+                            (change)="OnFileSelect($event,'panel_wise_material')" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit" mat-raised-button color="primary" style="background-color:#ff7a25 ;" >Upload</button>
+                    </div>
+                
+                </div>
+            </form>
+        </mat-card>
+            
+        </div>
+            
+        </div>
+   
+   
+</div>
+
+<div class="container-fluid" *ngIf="BillableForm">
+    <div class="row">
+    <div class="col-md-6">
+        <b>Add Line Items:</b><button mat-icon-button color="accent" (click)="openBillableDialog()">
+            <mat-icon class="mat-18">add_circle</mat-icon>
+        </button>
+    </div>
+    <div class="col-md-3">
+       
+    </div>
+    <div class="col-md-3">
+        <button class="button" mat-raised-button color="primary" type="submit" (click)="exportToExcel()">Export Data to Excel</button>
+    </div>
+    </div>
+        <div>
+            <!-- <mat-form-field appearance="standard">
+                <mat-label>Filter</mat-label>
+                <input matInput (keyup)="applyFilter($event)" placeholder="Ex.mia" #input>
+            </mat-form-field> -->
+            <table class="lessons-table mat-elevation-z8" mat-table [dataSource]="dataSource">
+
+                <ng-container matColumnDef="Sl.no.">
+                    <th class="bg" mat-header-cell *matHeaderCellDef>Sl.no.</th>
+                    <td mat-cell *matCellDef="let element;let i=index;">{{i+1}}</td>
+                    <td mat-footer-cell *matFooterCellDef> </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Description">
+                    <th class="bg" mat-header-cell *matHeaderCellDef >Description</th>
+                    <td mat-cell *matCellDef="let element"><div><b>SAPDANo : </b>{{element?.sap_ref_item_no}}</div><div><b>CustomerPoRefNo : </b>{{element?.customerPoRefNo}}</div><div><b>ItemDescription : </b>{{element?.item_desc}}</div><div><b>ModelNo : </b>{{element?.model}}</div><div><b>Remarks : </b>{{element?.billableRemark}}</div></td>
+                    <td mat-footer-cell *matFooterCellDef> </td>
+                </ng-container>
+                  
+                <ng-container matColumnDef="TotalQty & UOM">
+                    <th class="bg" mat-header-cell *matHeaderCellDef width="10%">TotalQty & UOM</th>
+                    <td mat-cell *matCellDef="let element"><div>Total Qty : {{element?.total_qty}}</div> <div>UOM : {{element?.uom}}</div></td>
+                    <td mat-footer-cell *matFooterCellDef> </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Total & BalanceQty">
+                    <th class="bg" mat-header-cell *matHeaderCellDef width="10%">Total & BalanceQty</th>
+                    <td mat-cell *matCellDef="let element"><div>Total : {{element?.total}}</div><div>Balance Qty : {{element?.balance_qty}}</div></td>
+                    <td mat-footer-cell *matFooterCellDef> </td>
+                </ng-container>
+
+                <ng-container matColumnDef="UnitPrice">
+                    <th class="bg" mat-header-cell *matHeaderCellDef>UnitPrice</th>
+                    <td mat-cell *matCellDef="let element">{{element?.unit_price}}</td>
+                    <td mat-footer-cell *matFooterCellDef><b>Total Amount</b> </td>
+                </ng-container>
+
+                <ng-container matColumnDef="TotalAmount">
+                    <th class="bg" mat-header-cell *matHeaderCellDef>TotalAmount</th>
+                    <td mat-cell *matCellDef="let element">{{element?.total_amt == null ? '0.00' : element?.total_amt | number: '1.2-2'}}</td>
+                    <td mat-footer-cell *matFooterCellDef><span>{{billableTotalAmt == null ? '0.00' : billableTotalAmt | number: '1.2-2' }}</span> </td>
+                </ng-container>
+
+                <ng-container matColumnDef="SGST & CGST & IGST">
+                    <th class="bg" mat-header-cell *matHeaderCellDef>SGST & CGST & IGST</th>
+                    <td mat-cell *matCellDef="let element"><div>SGST : {{element?.sgst_amt == null ? '--' : element?.sgst_amt}}</div><div>CGST : {{element?.cgst_amt == null ? '--' : element?.cgst_amt}}</div><div>IGST : {{element?.igst_amt == null ? '--' : element?.igst_amt}}</div></td><br>
+                    <td mat-footer-cell *matFooterCellDef> </td>
+                </ng-container>
+
+                <ng-container matColumnDef="GSTAmt">
+                    <th class="bg" mat-header-cell *matHeaderCellDef width="8%">GSTAmt</th>
+                    <td mat-cell *matCellDef="let element"><div>GST: {{element?.gst_amt == null ? '0.00' : element?.gst_amt | number: '1.2-2'}}</div></td><br>
+                    <td mat-footer-cell *matFooterCellDef><b>Total Price</b> </td>
+                </ng-container>
+
+                <ng-container matColumnDef="TotalPrice">
+                    <th class="bg" mat-header-cell *matHeaderCellDef>TotalPrice</th>
+                    <td mat-cell *matCellDef="let element">{{element?.total_amt_gst == null ? '0.00' : element?.total_amt_gst | number: '1.2-2'}}</td>
+                    <td mat-footer-cell *matFooterCellDef><span>{{billableTotalPrice == null ? '0.00' : billableTotalPrice | number:'1.2-2' }}</span> </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Action">
+                    <th class="bg" mat-header-cell *matHeaderCellDef width="1%">Action</th>
+                    <td mat-cell *matCellDef="let element"> 
+                        <button mat-icon-button color="primary" (click)="updateBillable(element)">
+                            <mat-icon class="mat-18">edit</mat-icon>
+                        </button>
+                        <button mat-icon-button color="warn" (click)="deleteBillData(element?.id)">
+                            <mat-icon class="mat-18">delete</mat-icon>
+                        </button>
+                    </td>
+                    <td mat-footer-cell *matFooterCellDef> </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                <tr mat-footer-row *matFooterRowDef="displayedColumns;"></tr>
+            </table>
+            <!-- <div class="row">
+                <div class="footerdiv4"><b>Grand Total  </b><span class="footerdiv2">{{billableTotalAmt == null ? '0.00' : billableTotalAmt | number: '1.2-2' }}</span><span class="footerdiv5">{{billableTotalPrice == null ? '0.00' : billableTotalPrice | number:'1.2-2' }}</span></div>
+            </div> -->
+            <!-- <mat-paginator [pageSizeOptions]="[2,4,6,8,10]" aria-label="Select Page of Users"></mat-paginator> -->
+        </div>
+</div>
+
+<div  *ngIf="BillableEditForm">
+    <div class="container">
+        <form #myForm="ngForm" (ngSubmit)="updateListBillable()" id="submitform">
+        <div style="text-align: center;">
+            <span>
+                <h2 style="font-size: 25px;">Billable Form - Edit</h2>
+            </span>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <mat-form-field appearance="fill" class="example-full-width">
+                    <mat-label>SAP DA No</mat-label>
+                    <input  matInput placeholder="SAP DA No" [(ngModel)]="BSAPDANo" ngModel name="sapdano" #sapdano="ngModel">
+                    <mat-hint style="color:black"></mat-hint>
+                </mat-form-field> 
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="fill" class="example-full-width">
+                    <mat-label>Customer PO reference no</mat-label>
+                    <textarea matInput placeholder="Customer PO reference no" [(ngModel)]="BCustomerPoRefNo" ngModel  maxlength="100" name="customerPoRefNo" #customerPoRefNo="ngModel"></textarea>
+                   
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="fill" class="example-full-width">
+                    <mat-label>Item Description</mat-label>
+                    <textarea matInput placeholder="Item Description" [(ngModel)]="BItemDescription" ngModel required maxlength="255" name="itemDes" #itemDes="ngModel"></textarea>
+                    <mat-error *ngIf="itemDes.touched && !itemDes.valid">Item Description is required.</mat-error>
+                    <mat-hint style="color:black"></mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+    
+        <div class="row">
+            <div class="col-md-4">
+                <mat-form-field appearance="fill" class="example-full-width">
+                    <mat-label>Model No</mat-label>
+                    <input matInput placeholder="Model No" [(ngModel)]="BModelNo" ngModel required maxlength="100" name="modelNo" #modelNo="ngModel" pattern="^[0-9a-zA-Z\s _]+$">
+                    <mat-error *ngIf="modelNo.touched && !modelNo.valid">Special Characters are not allowed.</mat-error>
+                    <mat-hint style="color:black"></mat-hint>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="fill" class="example-full-width">
+                    <mat-label>Total Quantity</mat-label>
+                    <input matInput placeholder="Total Quantity" [(ngModel)]="BTotalQuantity" name="totalQty" ngModel required maxlength="30" #totalQty="ngModel" pattern="^[0-9]+$">
+                    <mat-error *ngIf="totalQty.touched && !totalQty.valid">Characters and Special Characters are not allowed.</mat-error>
+                    <mat-hint style="color:black"></mat-hint>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="fill" class="example-full-width">
+                    <mat-label>UOM</mat-label>
+                    <input matInput placeholder="UOM" [(ngModel)]="BUOM" ngModel required maxlength="20" name="uom" #uom="ngModel" pattern="^[a-zA-Z\s _]+$">
+                    <mat-error *ngIf="uom.touched && !uom.valid">Numbers and Special Characters are not allowed.</mat-error>
+                    <mat-hint style="color:black"></mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+    
+            <div class="row">
+            <div class="col-md-4">
+                <mat-form-field appearance="fill" class="example-full-width">
+                    <mat-label>Total</mat-label>
+                    <input matInput placeholder="Total" [(ngModel)]="BTotal" ngModel required maxlength="30" name="total" #total="ngModel" pattern="^[0-9]+$">
+                    <mat-error *ngIf="total.touched && !total.valid">Total can accept only Numbers.</mat-error>
+                    <mat-hint style="color:black"></mat-hint>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="fill" class="example-full-width">
+                    <mat-label>Balance Quantity</mat-label>
+                    <input matInput placeholder="Balance Quantity" [(ngModel)]="BBalanceQuantity" ngModel  maxlength="30" name="balanceQty" #balanceQty="ngModel" pattern="^[0-9]+$">
+                    
+                    <mat-hint style="color:black"></mat-hint>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="fill" class="example-full-width">
+                    <mat-label>Unit Price</mat-label>
+                    <input matInput placeholder="Unit Price" [(ngModel)]="BUnitPrice" ngModel required maxlength="30" name="unitPrice" #unitPrice="ngModel" pattern="^[0-9]+$">
+                    <mat-error *ngIf="unitPrice.touched && !unitPrice.valid">Unit Price can accept only Numbers.</mat-error>
+                    <mat-hint style="color:black"></mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+    
+        <div class="row">
+            <div class="col-md-4">
+                <mat-form-field appearance="fill" class="example-full-width">
+                    <mat-label>SGST %</mat-label>
+                    <input matInput placeholder="SGST %" [(ngModel)]="SGST" ngModel  name="sGST">
+                    <mat-hint style="color:red">SGST can accept only Numbers.</mat-hint>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="fill" class="example-full-width">
+                    <mat-label>CGST %</mat-label>
+                    <input matInput placeholder="CGST %" [(ngModel)]="CGST" ngModel  name="cGST">
+                    <mat-hint style="color:red">CGST can accept only Numbers.</mat-hint>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="fill" class="example-full-width">
+                    <mat-label>IGST %</mat-label>
+                    <input matInput placeholder="IGST %" [(ngModel)]="IGST" ngModel name="iGST">
+                    <mat-hint style="color:red">IGST can accept only Numbers.</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+    
+        <div class="row">
+            <div class="col-md-6">
+                <mat-form-field appearance="fill" class="example-full-width">
+                    <mat-label>Remarks</mat-label>
+                    <textarea matInput placeholder="Remarks" [(ngModel)]="BBillableRemarks" ngModel  maxlength="250" name="billableRemarks" #billableRemarks="ngModel"></textarea>
+                    
+                    <mat-hint style="color:black" align="end">maxLength=250</mat-hint>
+                </mat-form-field>
+            </div>
+            <div class="col-md-6" mat-dailog-action>
+                <!-- <button style="margin-top:1rem;" mat-raised-button color="warn" [mat-dialog-close]="true" cdkFocusInitial>Close</button>&nbsp;&nbsp;&nbsp; -->
+                <button style="margin-top:1rem;" mat-raised-button color="primary" [disabled]="!myForm.valid" type="submit">Update</button> 
+                <button style="margin-left:3rem;" mat-raised-button (click)="setBillableEditForm()" color="primary">Back</button>
+                <!-- <button style="margin-top:1rem;" mat-raised-button color="primary" type="submit" (click)="createList()" >{{actionBtn}}</button> correct one  -->
+                <!-- <button mat-raised-button color="primary" type="submit" (click)="createList()" >Submit</button> -->
+            </div>
+    </div>
+    </form>
+    </div>
+</div>
+
+<div *ngIf="NonBillableForm">
+<div class="row">
+    <div class="col-md-6">
+        <b>Add Line Items:</b><button mat-icon-button color="accent" (click)="openNonBillDialog()">
+            <mat-icon class="mat-18">add_circle</mat-icon>
+        </button>
+    </div>
+    <div class="col-md-3"></div>
+    <div class="col-md-3">
+        <button class="button" mat-raised-button color="primary" type="submit" (click)="exportToExcel()">Export Data to Excel</button>
+    </div>
+</div>
+    <div class="col-12">
+        <table class="lessons-table mat-elevation-z8" mat-table [dataSource]="dataSource2">
+
+            <ng-container matColumnDef="Sl.no.">
+                <th class="bg" mat-header-cell *matHeaderCellDef width="1%">Sl.no.</th>
+                <td mat-cell *matCellDef="let element;let i=index;">{{i+1}}</td>
+                <td mat-footer-cell *matFooterCellDef> </td>
+              </ng-container>
+
+              <ng-container matColumnDef="Description">
+                <th class="bg" mat-header-cell *matHeaderCellDef>Description</th>
+                <td mat-cell *matCellDef="let element"><div><b>SAPDANo : </b>{{element?.da_id}}</div><div><b>CustomerPoRefNo : </b>{{element?.customerPoRefNo}}</div><div><b>ItemDescription : </b>{{element?.item_desc}}</div><div><b>ModelNo : </b>{{element?.model}}</div><div><b>ReasonForSuppliesNW : </b>{{element?.reasonForSuppliesNW}}</div><div><b>UnderWorNW : </b>{{element?.underWorNW}}</div></td>
+                <td mat-footer-cell *matFooterCellDef> </td>
+            </ng-container>
+
+            <ng-container matColumnDef="TotalQty & UOM">
+                <th class="bg" mat-header-cell *matHeaderCellDef width="10%">TotalQty & UOM</th>
+                <td mat-cell *matCellDef="let element"><div>TotalQty : {{element?.total_qty}}</div><div>UOM : {{element?.uom}}</div></td>
+                <td mat-footer-cell *matFooterCellDef> </td>
+            </ng-container>
+
+            <ng-container matColumnDef="UnitPrice">
+                <th class="bg" mat-header-cell *matHeaderCellDef>UnitPrice</th>
+                <td mat-cell *matCellDef="let element">{{element?.unit_price}}</td>
+                <td mat-footer-cell *matFooterCellDef><b>Total Amount</b></td>
+            </ng-container>
+
+            <ng-container matColumnDef="TotalAmount">
+                <th class="bg" mat-header-cell *matHeaderCellDef>TotalAmount</th>
+                <td mat-cell *matCellDef="let element">{{element?.total_amt == null ? '0.00' : element?.total_amt | number: '1.2-2'}}</td>
+                <td mat-footer-cell *matFooterCellDef><span>{{NonBillTotalAmt == null ? '0.00' : NonBillTotalAmt | number: '1.2-2' }}</span></td>
+            </ng-container>
+
+            <ng-container matColumnDef="SGST & CGST & IGST">
+                <th class="bg" mat-header-cell *matHeaderCellDef>SGST & CGST & IGST</th>
+                <td mat-cell *matCellDef="let element"><div>SGST : {{element?.sgst_amt == null ? '--' : element?.sgst_amt}}</div><div>CGST : {{element?.cgst_amt == null ? '--' : element?.cgst_amt}}</div><div>IGST : {{element?.igst_amt == null ? '--' : element?.igst_amt}}</div></td><br>
+                <td mat-footer-cell *matFooterCellDef> </td>
+            </ng-container>
+
+            <ng-container matColumnDef="GSTAmt">
+                <th class="bg" mat-header-cell *matHeaderCellDef width="8%">GSTAmt</th>
+                <td mat-cell *matCellDef="let element"><div>GST : {{element?.gst_amt == null ? '0.00' : element?.gst_amt | number: '1.2-2'}}</div></td><br>
+                <td mat-footer-cell *matFooterCellDef><b>Total Price</b> </td>
+            </ng-container>
+
+            <ng-container matColumnDef="TotalPrice">
+                <th class="bg" mat-header-cell *matHeaderCellDef>TotalPrice</th>
+                <td mat-cell *matCellDef="let element">{{element?.total_amt_gst == null ? '0.00' : element?.total_amt_gst | number: '1.2-2'}}</td>
+                <td mat-footer-cell *matFooterCellDef><span>{{NonBillTotalPrice == null ? '0.00' : NonBillTotalPrice | number:'1.2-2' }}</span></td>
+            </ng-container>
+
+            <ng-container matColumnDef="Action">
+                <th class="bg" mat-header-cell *matHeaderCellDef width="1%">Action</th>
+                <td mat-cell *matCellDef="let element"> 
+                    <button mat-icon-button color="primary" (click)="updateNonBillable(element)">
+                        <mat-icon class="mat-18">edit</mat-icon>
+                    </button>
+                    <button mat-icon-button color="warn" (click)="deleteNonBillData(element?.id)">
+                        <mat-icon class="mat-18">delete</mat-icon>
+                    </button>
+                </td>
+                <td mat-footer-cell *matFooterCellDef> </td>
+            </ng-container>
+            
+            <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+            <tr mat-footer-row *matFooterRowDef="displayedColumns2;"></tr>
+        </table>
+        <!-- <div class="row">
+            <div class="footerdiv"><b>Grand Total  </b><span class="footerdiv2">{{NonBillTotalAmt == null ? '0.00' : NonBillTotalAmt | number: '1.2-2' }}</span><span class="footerdiv3">{{NonBillTotalPrice == null ? '0.00' : NonBillTotalPrice | number:'1.2-2' }}</span></div>
+        </div> -->
+        <!-- <mat-paginator [pageSizeOptions]="[2,4,6,8,10]" aria-label="Select Page of Users"></mat-paginator> -->
+    </div>
+</div>
+<br/><br/><br/>
+
+<div *ngIf="NonBillableForm">
+    <div class="row">
+        <div class="col-md-6">
+                <mat-form-field class="example-full-width" appearance="fill">
+                    <mat-label>Enter Remarks</mat-label>
+                    <textarea matInput placeholder="Enter Remarks" [(ngModel)]="Remarks"></textarea>
+                    <mat-hint style="color:black"></mat-hint>
+                  </mat-form-field>
+        </div>
+        <div class="col-md-6">
+            <button class="button" mat-raised-button color="primary" type="submit" (click)="submitNonBillRemarks()" >Submit</button>
+        </div>
+    </div>
+</div>
+
+<div class="container" *ngIf="NonBillableEditForm">
+    <div class="container">
+        <form #myForm="ngForm" (ngSubmit)="updateListNonBillable()">
+        <div style="text-align: center;">
+            <span>
+                <h2 style="font-size: 25px;">Non-Billable Form - Edit</h2>
+            </span>
+        </div>
+    
+        <div class="row">
+            <div class="col-md-4">
+                <mat-form-field appearance="fill" class="example-full-width">
+                    <mat-label>SAP DA No</mat-label>
+                    <input matInput placeholder="SAP DA No" [(ngModel)]="SAPDANo" ngModel name="sapdano" #sapdano="ngModel">
+                    <mat-hint style="color:black"></mat-hint>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="fill" class="example-full-width">
+                    <mat-label>Customer PO reference no</mat-label>
+                    <textarea matInput placeholder="Customer PO reference no" [(ngModel)]="CustomerPoRefNo" ngModel  maxlength="100" name="customerPoRefNo" #customerPoRefNo="ngModel"></textarea>
+                  
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="fill" class="example-full-width">
+                    <mat-label>Item Description</mat-label>
+                    <textarea matInput placeholder="Item Description" [(ngModel)]="ItemDescription" ngModel required maxlength="255" name="itemDes" #itemDes="ngModel"></textarea>
+                    <mat-hint style="color:black"></mat-hint>
+                    <mat-error *ngIf="itemDes.touched && !itemDes.valid">Item Description is required.</mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+    
+        <div class="row">
+            <div class="col-md-4">
+                <mat-form-field appearance="fill" class="example-full-width">
+                    <mat-label>Model No</mat-label>
+                    <input matInput placeholder="Model No" [(ngModel)]="ModelNo" ngModel required maxlength="100" name="modelNo" #modelNo="ngModel" pattern="^[0-9a-zA-Z\s _]+$">
+                    <mat-error *ngIf="modelNo.touched && !modelNo.valid">Special Characters are not allowed.</mat-error>
+                    <mat-hint style="color:black"></mat-hint>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="fill" class="example-full-width">
+                    <mat-label>Quantity</mat-label>
+                    <input matInput placeholder="Total Quantity" [(ngModel)]="TotalQuantity" ngModel required maxlength="30" name="totalQty" #totalQty="ngModel" pattern="^[0-9]+$">
+                    <mat-error *ngIf="totalQty.touched && !totalQty.valid">Characters and Special Characters are not allowed.</mat-error>
+                    <mat-hint style="color:black"></mat-hint>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="fill" class="example-full-width">
+                    <mat-label>UOM</mat-label>
+                    <input matInput placeholder="UOM" [(ngModel)]="UOM" ngModel required maxlength="20" name="uom" #uom="ngModel" pattern="^[a-zA-Z\s _]+$">
+                    <mat-error *ngIf="uom.touched && !uom.valid">Numbers and Special Characters are not allowed.</mat-error>
+                    <mat-hint style="color:black"></mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+    
+        <div class="row">
+            <div class="col-md-4">
+                <mat-form-field appearance="fill" class="example-full-width">
+                    <mat-label>Unit Price</mat-label>
+                    <input matInput placeholder="Unit Price" [(ngModel)]="UnitPrice" ngModel required maxlength="30" name="unitPrice" #unitPrice="ngModel" pattern="^[0-9]+$">
+                    <mat-error *ngIf="unitPrice.touched && !unitPrice.valid">Unit Price can accept only Numbers.</mat-error>
+                    <mat-hint style="color:black"></mat-hint>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="fill" class="example-full-width">
+                    <mat-label>Under W/NW</mat-label>
+                    <input matInput placeholder="Under W/NW" [(ngModel)]="UnderWorNW" ngModel required maxlength="100" name="underWorNW" #underWorNW="ngModel" pattern="^[0-9a-zA-Z\s _]+$">
+                    <mat-error *ngIf="underWorNW.touched && !underWorNW.valid">Special Characters are not allowed.</mat-error>
+                    <mat-hint style="color:black"></mat-hint>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="fill" class="example-full-width">
+                    <mat-label>SGST %</mat-label>
+                    <input matInput placeholder="SGST %" [(ngModel)]="SGST" ngModel  name="sGST">
+                    <mat-hint style="color:red">SGST can accept only Numbers.</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+    
+        <div class="row">
+            <div class="col-md-4">
+                <mat-form-field appearance="fill" class="example-full-width">
+                    <mat-label>CGST %</mat-label>
+                    <input matInput placeholder="CGST %" [(ngModel)]="CGST" ngModel  name="cGST">
+                    <mat-hint style="color:red">CGST can accept only Numbers.</mat-hint>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="fill" class="example-full-width">
+                    <mat-label>IGST %</mat-label>
+                    <input matInput placeholder="IGST %" [(ngModel)]="IGST" ngModel name="iGST">
+                    <!-- <input matInput placeholder="IGST %" [(ngModel)]="IGST" ngModel required maxlength="30" #iGST="ngModel" pattern="^[0-9]+$">
+                    <mat-error *ngIf="iGST.touched && !iGST.valid">IGST can accept only Numbers.</mat-error> -->
+                    <mat-hint style="color:red">IGST can accept only Numbers.</mat-hint>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="fill" class="example-full-width">
+                    <mat-label>Reason for supplies under Non-Warranty</mat-label>
+                    <textarea matInput placeholder="Reason for supplies under Non-Warranty" [(ngModel)]="ReasonForSuppliesNW" ngModel  maxlength="500" name="reasonForSuppliesNW" #reasonForSuppliesNW="ngModel"></textarea>
+                   
+                    <mat-hint style="color:black" align="end">maxLength=500</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+    
+        <div class="row">
+            <div class="col-md-6">
+                <mat-form-field appearance="fill" class="example-full-width">
+                    <mat-label>Remarks</mat-label>
+                    <textarea matInput placeholder="Remarks" [(ngModel)]="NonBillableRemarks" ngModel  maxlength="250" name="nonbillableRemarks" #nonbillableRemarks="ngModel"></textarea>
+                    
+                    <mat-hint style="color:black" align="end">maxLength=250</mat-hint>
+                </mat-form-field>
+            </div>
+            <div class="col-md-6" mat-dailog-action>
+                <!-- <button style="margin-top:1rem;" mat-raised-button color="warn" [mat-dialog-close]="true">Close</button>&nbsp;&nbsp;&nbsp; -->
+                <!-- <button style="margin-top:1rem;" mat-raised-button color="primary" type="submit" (click)="createList()" >{{actionBtn}}</button> -->
+                <button style="margin-top:1rem;" mat-raised-button color="primary" type="submit" [disabled]="!myForm.valid">Submit</button>
+                <button style="margin-left:3rem;" mat-raised-button (click)="setNonBillableEditForm()" color="primary">Back</button>
+            </div>
+        </div>
+        </form>
+    </div>
+</div>
+
+<div class="d-flex justify-content-center">
+    <div class="spinner-border" role="status" >
+      <span  id="loadingform" ></span>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <div class="container" *ngIf="MainForm">
+<br>
+<label><b>Job Name : </b><span><u>PRIVI SPECIALITY CHEMICALS LIMITED</u></span></label>&nbsp;&nbsp;&nbsp;&nbsp;
+<label><b>Job Code : </b><span><u>21MC10</u></span></label>&nbsp;&nbsp;&nbsp;&nbsp;
+<label><b>SO No. :</b> <span><u>2007472649</u></span></label>&nbsp;&nbsp;&nbsp;&nbsp;
+<label><b>DA No. </b><span><u>21MC10-GT1-PDA-003</u></span></label>&nbsp;&nbsp;&nbsp;&nbsp;
+<label><b>PM :</b>  <span><u>Empty</u></span></label><br><br>&nbsp;&nbsp;&nbsp;&nbsp;
+<label><b>P.O.No :</b> <span><u>2022002505</u></span> </label>&nbsp;&nbsp;&nbsp;&nbsp;
+<label><b>P.O. Date :</b> <span><u>17/1/2019</u></span> </label>&nbsp;&nbsp;&nbsp;&nbsp;
+<label><b>DA Date :</b> <span><u>2/09/2018</u></span></label>&nbsp;&nbsp;&nbsp;&nbsp;
+<label><b>GM :</b> <span><u>EMPTY</u></span></label>&nbsp;&nbsp;&nbsp;&nbsp;
+</div>
+<br> -->
+
+<!--<div class="container" *ngIf="MainForm">
+    <div class="row">
+        <div class="col-md-4">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Job Name</mat-label>
+                    <input matInput placeholder="Job Name" [(ngModel)]="JobName">
+                    <mat-hint style="color:black"></mat-hint>
+                  </mat-form-field>
+
+        </div>
+        <div class="col-md-4">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Job Code</mat-label>
+                    <input style="width: 100px;" matInput placeholder="Job Code" [(ngModel)]="JobCode">
+                    <mat-hint style="color:black"></mat-hint>
+                  </mat-form-field>
+            </div>
+        <div class="col-md-4">
+                <mat-form-field>
+                    <mat-label>S.O No</mat-label>
+                    <input matInput placeholder="S.O No" [(ngModel)]="SONo">
+                    <mat-hint style="color:black"></mat-hint>
+                  </mat-form-field>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <mat-form-field>
+                <mat-label>DA No</mat-label>
+                <input matInput placeholder="DA No" [(ngModel)]="DANo">
+                <mat-hint style="color:black"></mat-hint>
+            </mat-form-field>
+    </div>
+        <div class="col-md-3">
+                <mat-form-field>
+                    <mat-label>PM</mat-label>
+                    <input matInput placeholder="PM" [(ngModel)]="PM">
+                    <mat-hint style="color:black"></mat-hint>
+                </mat-form-field>
+        </div>
+        <div class="col-md-3">
+                <mat-form-field >
+                    <mat-label>P.O No</mat-label>
+                    <input matInput placeholder="P.O No" [(ngModel)]="PONo">
+                    <mat-hint style="color:black"></mat-hint>
+                </mat-form-field>
+        </div>
+        
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <mat-form-field >
+                <mat-label>P.O.Date</mat-label>
+                <input matInput placeholder="P.O.Date" [(ngModel)]="PODate">
+                <mat-hint style="color:black"></mat-hint>
+            </mat-form-field>
+    </div>
+    <div class="col-md-3">
+            <mat-form-field>
+                <mat-label>DADate</mat-label>
+                <input matInput placeholder="DADate" [(ngModel)]="DADate">
+                <mat-hint style="color:black"></mat-hint>
+            </mat-form-field>
+    </div>
+        <div class="col-md-3">
+                <mat-form-field>
+                  <mat-label>GM</mat-label>
+                  <input matInput placeholder="GM" [(ngModel)]="GM">
+                  <mat-hint style="color:black"></mat-hint>
+                </mat-form-field>
+        </div><br><hr>
+    </div>
+</div> -->
+
+<!-- <ng-container matColumnDef="SAP.DA.No">
+                    <th class="bg" mat-header-cell *matHeaderCellDef width="5%">SAP.DA.No</th>
+                    <td mat-cell *matCellDef="let element">{{element?.da_no}}</td>
+                </ng-container>
+
+ <ng-container matColumnDef="UnitPrice & TotalAmount">
+                <th class="bg" mat-header-cell *matHeaderCellDef width="20%">UnitPrice & TotalAmount & UnderWorNW</th>
+                <td mat-cell *matCellDef="let element"><div>UnitPrice : {{element?.unit_price}}</div><div>TotalAmount : {{element?.total_amt == null ? '0.00' : element?.total_amt | number: '1.2-2'}}</div></td>
+            </ng-container>
+
+                <ng-container matColumnDef="TotalPrice">
+                    <th class="bg" mat-header-cell *matHeaderCellDef>TotalPrice</th>
+                    <td mat-cell *matCellDef="let element">{{element?.total_amt_gst == null ? '0.00' : element?.total_amt_gst | number: '1.2-2'}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="Remarks">
+                    <th class="bg" mat-header-cell *matHeaderCellDef>Remarks</th>
+                    <td mat-cell *matCellDef="let element">{{element?.billableRemark}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="CustomerPoRefNo">
+                    <th class="bg" mat-header-cell *matHeaderCellDef width="5%">CustomerPoRefNo</th>
+                    <td mat-cell *matCellDef="let element">{{element?.customerPoRefNo}}</td> 
+                </ng-container>
+
+                <ng-container matColumnDef="ItemDescription">
+                    <th class="bg" mat-header-cell *matHeaderCellDef width="5%">ItemDescription</th>
+                    <td mat-cell *matCellDef="let element">{{element?.item_desc}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="ModelNo">
+                    <th class="bg" mat-header-cell *matHeaderCellDef width="6%">ModelNo</th>
+                    <td mat-cell *matCellDef="let element">{{element?.model}}</td>
+                </ng-container> -->
+
+                <!-- <ng-container matColumnDef="TotalQuantity">
+                    <th class="bg" mat-header-cell *matHeaderCellDef width="5%">TotalQuantity</th>
+                    <td mat-cell *matCellDef="let element">{{element?.total_qty}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="UOM">
+                    <th class="bg" mat-header-cell *matHeaderCellDef width="5%">UOM</th>
+                    <td mat-cell *matCellDef="let element">{{element?.uom}}</td>
+                </ng-container> -->
+
+                <!-- <ng-container matColumnDef="SGST">
+                    <th class="bg" mat-header-cell *matHeaderCellDef width="5%">SGST</th>
+                    <td mat-cell *matCellDef="let element">{{element?.sgst_amt}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="CGST">
+                    <th class="bg" mat-header-cell *matHeaderCellDef width="5%">CGST</th>
+                    <td mat-cell *matCellDef="let element">{{element?.cgst_amt}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="IGST">
+                    <th class="bg" mat-header-cell *matHeaderCellDef width="5%">IGST</th>
+                    <td mat-cell *matCellDef="let element">{{element?.igst_amt}}</td>{{element?.total_amt == null ? '0.00' : element?.total_amt | number: '1.2-2'}}
+                </ng-container> -->
+
+                <!--<td mat-cell *matCellDef="let element">{{element?.sgst_amt || element?.cgst_amt ||element?.igst_amt}}</td>-->
+                <!-- <ng-container matColumnDef="edit">
+                    <th class="bg" mat-header-cell *matHeaderCellDef width="5%">Edit</th>
+                    <td mat-cell *matCellDef="let element"> 
+                        <button mat-icon-button color="primary" (click)="update(element)">
+                            <mat-icon class="mat-18">edit</mat-icon>
+                        </button>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="delete">
+                    <th class="bg" mat-header-cell *matHeaderCellDef width="5%">Delete</th>
+                    <td mat-cell *matCellDef="let element"> 
+                        <button mat-icon-button color="warn" (click)="deleteData(element?.id)">
+                            <mat-icon class="mat-18">delete</mat-icon>
+                        </button>
+                    </td>
+                </ng-container> -->
+
+                <!-- <ng-container matColumnDef="Total">
+                    <th class="bg" mat-header-cell *matHeaderCellDef>Total</th>
+                    <td mat-cell *matCellDef="let element">{{element?.total}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="BalanceQuantity">
+                    <th class="bg" mat-header-cell *matHeaderCellDef>BalanceQuantity</th>
+                    <td mat-cell *matCellDef="let element">{{element?.balance_qty == null ? '0' : element?.balance_qty}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="UnitPrice">
+                    <th class="bg" mat-header-cell *matHeaderCellDef>UnitPrice</th>
+                    <td mat-cell *matCellDef="let element">{{element?.unit_price}}</td>
+                </ng-container> -->
+
+                <!-- <ng-container matColumnDef="TotalAmount">
+                    <th class="bg" mat-header-cell *matHeaderCellDef>TotalAmount</th>
+                    <td mat-cell *matCellDef="let element">{{element?.total_amt == null ? '0.00' : element?.total_amt | number: '1.2-2'}}</td>
+                </ng-container> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <div class="container" *ngIf="MainForm">
+<br>
+<label><b>Job Name : </b><span><u>PRIVI SPECIALITY CHEMICALS LIMITED</u></span></label>&nbsp;&nbsp;&nbsp;&nbsp;
+<label><b>Job Code : </b><span><u>21MC10</u></span></label>&nbsp;&nbsp;&nbsp;&nbsp;
+<label><b>SO No. :</b> <span><u>2007472649</u></span></label>&nbsp;&nbsp;&nbsp;&nbsp;
+<label><b>DA No. </b><span><u>21MC10-GT1-PDA-003</u></span></label>&nbsp;&nbsp;&nbsp;&nbsp;
+<label><b>PM :</b>  <span><u>Empty</u></span></label><br><br>&nbsp;&nbsp;&nbsp;&nbsp;
+<label><b>P.O.No :</b> <span><u>2022002505</u></span> </label>&nbsp;&nbsp;&nbsp;&nbsp;
+<label><b>P.O. Date :</b> <span><u>17/1/2019</u></span> </label>&nbsp;&nbsp;&nbsp;&nbsp;
+<label><b>DA Date :</b> <span><u>2/09/2018</u></span></label>&nbsp;&nbsp;&nbsp;&nbsp;
+<label><b>GM :</b> <span><u>EMPTY</u></span></label>&nbsp;&nbsp;&nbsp;&nbsp;
+</div>
+<br> -->
+
+<!--<div class="container" *ngIf="MainForm">
+    <div class="row">
+        <div class="col-md-4">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Job Name</mat-label>
+                    <input matInput placeholder="Job Name" [(ngModel)]="JobName">
+                    <mat-hint style="color:black"></mat-hint>
+                  </mat-form-field>
+
+        </div>
+        <div class="col-md-4">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Job Code</mat-label>
+                    <input style="width: 100px;" matInput placeholder="Job Code" [(ngModel)]="JobCode">
+                    <mat-hint style="color:black"></mat-hint>
+                  </mat-form-field>
+            </div>
+        <div class="col-md-4">
+                <mat-form-field>
+                    <mat-label>S.O No</mat-label>
+                    <input matInput placeholder="S.O No" [(ngModel)]="SONo">
+                    <mat-hint style="color:black"></mat-hint>
+                  </mat-form-field>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <mat-form-field>
+                <mat-label>DA No</mat-label>
+                <input matInput placeholder="DA No" [(ngModel)]="DANo">
+                <mat-hint style="color:black"></mat-hint>
+            </mat-form-field>
+    </div>
+        <div class="col-md-3">
+                <mat-form-field>
+                    <mat-label>PM</mat-label>
+                    <input matInput placeholder="PM" [(ngModel)]="PM">
+                    <mat-hint style="color:black"></mat-hint>
+                </mat-form-field>
+        </div>
+        <div class="col-md-3">
+                <mat-form-field >
+                    <mat-label>P.O No</mat-label>
+                    <input matInput placeholder="P.O No" [(ngModel)]="PONo">
+                    <mat-hint style="color:black"></mat-hint>
+                </mat-form-field>
+        </div>
+        
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <mat-form-field >
+                <mat-label>P.O.Date</mat-label>
+                <input matInput placeholder="P.O.Date" [(ngModel)]="PODate">
+                <mat-hint style="color:black"></mat-hint>
+            </mat-form-field>
+    </div>
+    <div class="col-md-3">
+            <mat-form-field>
+                <mat-label>DADate</mat-label>
+                <input matInput placeholder="DADate" [(ngModel)]="DADate">
+                <mat-hint style="color:black"></mat-hint>
+            </mat-form-field>
+    </div>
+        <div class="col-md-3">
+                <mat-form-field>
+                  <mat-label>GM</mat-label>
+                  <input matInput placeholder="GM" [(ngModel)]="GM">
+                  <mat-hint style="color:black"></mat-hint>
+                </mat-form-field>
+        </div><br><hr>
+    </div>
+</div> -->
+
+<!-- <ng-container matColumnDef="SAP.DA.No">
+                    <th class="bg" mat-header-cell *matHeaderCellDef width="5%">SAP.DA.No</th>
+                    <td mat-cell *matCellDef="let element">{{element?.da_no}}</td>
+                </ng-container>
+
+ <ng-container matColumnDef="UnitPrice & TotalAmount">
+                <th class="bg" mat-header-cell *matHeaderCellDef width="20%">UnitPrice & TotalAmount & UnderWorNW</th>
+                <td mat-cell *matCellDef="let element"><div>UnitPrice : {{element?.unit_price}}</div><div>TotalAmount : {{element?.total_amt == null ? '0.00' : element?.total_amt | number: '1.2-2'}}</div></td>
+            </ng-container>
+
+                <ng-container matColumnDef="TotalPrice">
+                    <th class="bg" mat-header-cell *matHeaderCellDef>TotalPrice</th>
+                    <td mat-cell *matCellDef="let element">{{element?.total_amt_gst == null ? '0.00' : element?.total_amt_gst | number: '1.2-2'}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="Remarks">
+                    <th class="bg" mat-header-cell *matHeaderCellDef>Remarks</th>
+                    <td mat-cell *matCellDef="let element">{{element?.billableRemark}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="CustomerPoRefNo">
+                    <th class="bg" mat-header-cell *matHeaderCellDef width="5%">CustomerPoRefNo</th>
+                    <td mat-cell *matCellDef="let element">{{element?.customerPoRefNo}}</td> 
+                </ng-container>
+
+                <ng-container matColumnDef="ItemDescription">
+                    <th class="bg" mat-header-cell *matHeaderCellDef width="5%">ItemDescription</th>
+                    <td mat-cell *matCellDef="let element">{{element?.item_desc}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="ModelNo">
+                    <th class="bg" mat-header-cell *matHeaderCellDef width="6%">ModelNo</th>
+                    <td mat-cell *matCellDef="let element">{{element?.model}}</td>
+                </ng-container> -->
+
+                <!-- <ng-container matColumnDef="TotalQuantity">
+                    <th class="bg" mat-header-cell *matHeaderCellDef width="5%">TotalQuantity</th>
+                    <td mat-cell *matCellDef="let element">{{element?.total_qty}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="UOM">
+                    <th class="bg" mat-header-cell *matHeaderCellDef width="5%">UOM</th>
+                    <td mat-cell *matCellDef="let element">{{element?.uom}}</td>
+                </ng-container> -->
+
+                <!-- <ng-container matColumnDef="SGST">
+                    <th class="bg" mat-header-cell *matHeaderCellDef width="5%">SGST</th>
+                    <td mat-cell *matCellDef="let element">{{element?.sgst_amt}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="CGST">
+                    <th class="bg" mat-header-cell *matHeaderCellDef width="5%">CGST</th>
+                    <td mat-cell *matCellDef="let element">{{element?.cgst_amt}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="IGST">
+                    <th class="bg" mat-header-cell *matHeaderCellDef width="5%">IGST</th>
+                    <td mat-cell *matCellDef="let element">{{element?.igst_amt}}</td>{{element?.total_amt == null ? '0.00' : element?.total_amt | number: '1.2-2'}}
+                </ng-container> -->
+
+                <!--<td mat-cell *matCellDef="let element">{{element?.sgst_amt || element?.cgst_amt ||element?.igst_amt}}</td>-->
+                <!-- <ng-container matColumnDef="edit">
+                    <th class="bg" mat-header-cell *matHeaderCellDef width="5%">Edit</th>
+                    <td mat-cell *matCellDef="let element"> 
+                        <button mat-icon-button color="primary" (click)="update(element)">
+                            <mat-icon class="mat-18">edit</mat-icon>
+                        </button>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="delete">
+                    <th class="bg" mat-header-cell *matHeaderCellDef width="5%">Delete</th>
+                    <td mat-cell *matCellDef="let element"> 
+                        <button mat-icon-button color="warn" (click)="deleteData(element?.id)">
+                            <mat-icon class="mat-18">delete</mat-icon>
+                        </button>
+                    </td>
+                </ng-container> -->
+
+                <!-- <ng-container matColumnDef="Total">
+                    <th class="bg" mat-header-cell *matHeaderCellDef>Total</th>
+                    <td mat-cell *matCellDef="let element">{{element?.total}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="BalanceQuantity">
+                    <th class="bg" mat-header-cell *matHeaderCellDef>BalanceQuantity</th>
+                    <td mat-cell *matCellDef="let element">{{element?.balance_qty == null ? '0' : element?.balance_qty}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="UnitPrice">
+                    <th class="bg" mat-header-cell *matHeaderCellDef>UnitPrice</th>
+                    <td mat-cell *matCellDef="let element">{{element?.unit_price}}</td>
+                </ng-container> -->
+
+                <!-- <ng-container matColumnDef="TotalAmount">
+                    <th class="bg" mat-header-cell *matHeaderCellDef>TotalAmount</th>
+                    <td mat-cell *matCellDef="let element">{{element?.total_amt == null ? '0.00' : element?.total_amt | number: '1.2-2'}}</td>
+                </ng-container> -->

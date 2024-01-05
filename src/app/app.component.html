@@ -1,0 +1,36 @@
+<!-- <ng-template *ngIf="mainpage">
+    <app-main ></app-main>
+</ng-template>
+<ng-template *ngIf="mainpage == false"> background-image:url(../assets/images/logistics.jpg) -->
+
+<div *ngIf="!mainpage" style="height: 80vh; " class="bg">
+
+    <!-- <img src="assets/images/logistics.jpg"> -->
+    <div style="text-align: center;margin-top:2rem;">
+        <span>
+            <h2 style="font-size: 25px;font-weight: bold;background-color: white;">Welcome to the Logistics Portal</h2>
+        </span>
+    </div>
+       <mat-card class=" my-card bg2" style="width: 15%;margin-left: 43%;margin-top: 14%;background: #ffffffc9;">
+      
+         <mat-card-actions style="    text-align: center;">
+            <span style="    font-size: 20px; font-weight: bolder;">YOKOGAWA</span><img src="assets/images/yokogawa.png"><br>
+           
+            <button mat-raised-button (click)="login()" color="primary">LOGIN</button>
+         </mat-card-actions>
+      </mat-card>
+</div>
+<div *ngIf="mainpage">
+
+
+    <app-main ></app-main>
+       
+</div>
+<!-- 
+</ng-template> -->
+<!--  -->
+
+    
+    
+
+

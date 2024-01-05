@@ -1,0 +1,57 @@
+<style>
+    .mat-header-cell {
+        /* background:#91999140; */
+        color: white;
+        background: #3f51b5;
+    }
+    tr.mat-header-row{
+        height: 22px;
+    }
+    .mat-row {
+        height: 22px;
+        background:#d0e3f363;
+    }
+    .buttonsizereduce{
+        line-height: 22px;
+    }
+    .table td{
+        padding:1px;
+        vertical-align: middle;
+    }
+</style>
+
+<div class="row">
+    <div class="col-12">
+        <mat-dialog-content>
+            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table" width="100%">
+        
+                <ng-container matColumnDef="slno">
+                    <th mat-header-cell *matHeaderCellDef>SL.NO.</th>
+                    <td mat-cell *matCellDef="let element; let i=index">&nbsp;{{i + 1}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Moved To Godown">
+                    <th mat-header-cell *matHeaderCellDef>Moved To Godown</th>
+                    <td mat-cell *matCellDef="let element">&nbsp; {{element.da_jobcode == null ? '-' : element.da_jobcode}} </td>
+                </ng-container>
+                
+                <ng-container matColumnDef="Moved From Godown">
+                    <th mat-header-cell *matHeaderCellDef>Moved From Godown</th>
+                    <td mat-cell *matCellDef="let element">&nbsp; {{element.quantity == null ? '-' : element.quantity}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Remarks">
+                    <th mat-header-cell *matHeaderCellDef>Remarks</th>
+                    <td mat-cell *matCellDef="let element">&nbsp; {{element.status == null ? '-' : element.status}} </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </mat-dialog-content>
+    </div>
+</div> 
+
+<div class="col-12" align="center">  
+    <button mat-raised-button mat-dialog-close style="margin-left:20px;" (click)="dialogClose()">Close</button>
+</div>

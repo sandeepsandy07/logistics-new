@@ -1,0 +1,967 @@
+<div *ngIf="success;then showtable;else showform"></div>
+<ng-template #showtable>
+<div class="wrapper ">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+          
+              <h4 class=""><b>  Finance Approval DA List</b></h4>
+             
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12"> 
+              <div class="card-box table-responsive">
+          
+                <table class="table table-bordered table-striped table-hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+                      <thead>
+                        <tr>
+                       
+                          <th>Date</th>
+                          <th>DA no</th>
+                          <th>Job Code</th>
+                          <th>Job Name</th>
+                          <th>So no.</th>
+                          <th>Po No.</th>
+                          <th>Type </th>
+                          <th>Status </th>
+                          <th>Actions</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                         
+                        <tr *ngFor="let subskill of tablelist">
+                        
+                          <td>{{subskill.da_date | date}}</td>
+                          <td>{{subskill.jobcode_da_no}}</td>
+                          <td>{{subskill.job_code}}</td>
+                          <td>{{subskill.job_name}}</td>
+                          <td>{{subskill.so_no}}</td>
+                          <td>{{subskill.po_no}}</td>
+                          <td>{{subskill.bill_type}}</td>
+                          <td>{{subskill.status}}</td>
+                              <td>
+                                <button class="form-control success" (click)="showapprove_form(subskill.da_id)" style="background-color: #25e74fd1;">Approve</button>
+                             
+                              <!-- <button class="form-control success" (click)="showapprovepage(subskill.da_id)" style="background-color: #25e74fd1;">Approve</button> -->
+                              
+                             </td>
+                             
+    
+                      </tbody>
+                  </table>
+              </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  </ng-template>
+  <ng-template #showform>
+    
+<!-- <div *ngIf="showdata;then showform;else showtable"></div>
+<ng-template #showform> -->
+  <div class="card-box example-small-box-details"   *ngIf="viewRecords" style="position: fixed;width: 100%;z-index: 100;margin:0px ">
+    <div class="row">
+        <div class="col-1">  
+            <label>DA No</label>
+           
+        </div>
+        <div class="col-2">  
+            <span>:&nbsp;{{viewRecords.records.jobcode_da_no}}</span>
+           
+        </div>
+        <div class="col-1">  
+            <label>Date</label>
+           
+        </div>
+        <div class="col-2">  
+            <span>:&nbsp;{{viewRecords.records.da_date | date}}</span>
+           
+        </div>
+        <div class="col-1">  
+            <label>SO no</label>
+           
+        </div>
+        <div class="col-1">  
+            <span>:&nbsp;{{viewRecords.records.so_no}}</span>
+           
+        </div>
+        <div class="col-1">  
+            <label>PO no</label>
+           
+        </div>
+        <div class="col-2">  
+            <span>:&nbsp;{{viewRecords.records.po_no}}</span>
+           
+        </div>
+        </div>
+        <div class="row">
+            <div class="col-1">  
+                <label>Job Code</label>
+               
+            </div>
+            <div class="col-2">  
+                <span>:&nbsp;{{viewRecords.records.job_code}}</span>
+               
+            </div>
+            <div class="col-1">  
+                <label>Job Name</label>
+               
+            </div>
+            <div class="col-2">  
+                <span>:&nbsp;{{viewRecords.records.job_name}}</span>
+               
+            </div>
+            <div class="col-1">  
+                <label>Customer</label>
+               
+            </div>
+            <div class="col-5">  
+                <span>:&nbsp;</span>
+               
+            </div>
+  
+        </div>
+  </div>
+  
+  <mat-tab-group dynamicHeight style="position: absolute;top: 88px;width: 100%;"  >
+    <mat-tab label="Approval">
+      <style>
+        /* Add styles to the form container */
+    .form-container {
+      max-width: 100%;
+      padding: 10px;
+      background-color: #a8c5da;
+    }
+    
+    /* Full-width textarea */
+    .form-container textarea {
+      width: 100%;
+     
+      border: none;
+      background: #f1f1f1;
+      resize: none;
+     /* min-height: 200px;*/
+    }
+    
+    /* When the textarea gets focus, do something */
+    .form-container textarea:focus {
+      background-color: #ddd;
+      outline: none;
+    }
+    
+    /* Set a style for the submit/send button */
+    .chat-form-btn {
+        
+     background-color: #4CAF50;
+        color: white;
+        /* padding: 16px 20px; */
+        border: none;
+        cursor: pointer;
+        width: 30%;
+        margin-bottom: 10px;
+        opacity: 0.8;
+    }
+    
+    /* Add a red background color to the cancel button */
+    .form-container .cancel {
+      background-color: red;
+    }
+    
+    /* Add some hover effects to buttons */
+    .form-container .btn:hover, .open-button:hover {
+      opacity: 1;
+    }
+    
+    
+    
+    
+    
+    
+    @media screen and (max-width: 767px){
+      .progtrckr{ width: 14%;font-size: small;display: inline; }
+    
+       .chat-popup {
+            width: 75%;
+            height: 75%;
+          }
+          .chat_head{
+            display: none;
+          }
+          .open-button {
+            font-size: 50px !important;
+          }
+    }
+    
+        
+        ol.progtrckr {
+        margin: 0;
+        padding: 0;
+        list-style-type :none;
+    }
+    
+    ol.progtrckr li {
+        display: inline-block;
+        text-align: center;
+        line-height: 3.5em;
+    }
+    
+    
+    
+    ol.progtrckr li.progtrckr-done {
+        color: black;
+        border-bottom: 4px solid yellowgreen;
+    }
+    ol.progtrckr li.progtrckr-todo {
+      color: black;
+        border-bottom: 4px solid silver;
+    }
+    
+    ol.progtrckr li:after {
+        content: "\00a0\00a0";
+    }
+    ol.progtrckr li:before {
+        position: relative;
+        bottom: -2.5em;
+        float: left;
+        left: 50%;
+        line-height: 1em;
+    }
+    ol.progtrckr li.progtrckr-done:before {
+        content: "\2713";
+        color: white;
+        background-color: yellowgreen;
+        height: 1.2em;
+        width: 1.2em;
+        line-height: 1.2em;
+        border: none;
+        border-radius: 1.2em;
+    }
+    ol.progtrckr li.progtrckr-todo:before {
+      content: "\2713";
+        color: white;
+        background-color: silver;
+        height: 1.2em;
+        width: 1.2em;
+        line-height: 1.2em;
+        border: none;
+        border-radius: 1.2em;
+    }
+    
+    
+    </style>
+      <div class="wrapper">
+        <div class="container-fluid">
+      
+          <div class="row">
+              <div class="col-8">
+                  <div class="card-box taskboard-box">
+                      <!-- <h4 class="header-title m-t-0  text-primary"> DA : <a [routerLink]="'/material/DA-details'" >21DP01-GT1-PDA-001(21DP01) </a>
+                     </h4> -->
+                      <!-- <button class="form-control" >View DA</button>  -->
+                  
+                      <!-- <button id="request_threads_show" (click)="showmore()">View More</button> -->
+                      <div class="todo-tasklist-item-text"  >
+                                   
+                          <ol class="progtrckr" data-progtrckr-steps="9" >
+                                      
+  
+                              <li class="progtrckr-done"  *ngFor="let approverslists of approverslist" [ngClass]="{'progtrckr-done': approverslists.status === 'approved', 'progtrckr-todo' : approverslists.status === 'pending' }">{{approverslists.approver}}-{{approverslists.level}}<br>{{approverslists.emp_name}}</li>  
+                              
+                                               
+                     
+                     </ol>
+                  </div> 
+      
+                      <div class="todo-tasklist" *ngIf="success">
+    
+    
+                              <div *ngFor="let threaddata of threadList" class="todo-tasklist-item todo-tasklist-item-border-red" style="display: table;">
+                                  
+                                      <!-- <img class="todo-userpic pull-left" src="" width="27px" height="27px"> -->
+                                      <mat-icon>person</mat-icon>
+                                 
+                                  <div class="todo-tasklist-item-title"  style="display: grid;">
+                                      <a href="javascript:;" class="header-title text-primary">{{threaddata.user}}</a>
+                                  </div>
+                                   
+                                  <div class="todo-tasklist-item-text"  style="display: grid;">
+                                    {{threaddata.remarks}}
+                                  </div>
+                                 
+                                  <div class="todo-tasklist-item-text" >
+                                     
+                                  
+                             
+                                   
+                                           
+                                      
+                                  
+                                  
+                                  </div>
+                                  
+                                  <div class="todo-tasklist-controls pull-left"  style="display: grid;">
+                                      <span class="todo-tasklist-date"><mat-icon style="font-size: 14px;">calendar_today</mat-icon>{{threaddata.created_at | date}}</span>
+                                      <span class="badge badge-pill badge-success">{{threaddata.status}}</span>
+                                  </div>
+                              </div>
+                              <!-- <div class="todo-tasklist-item todo-tasklist-item-border-red" style="display: table;">
+                                  
+                                <img class="todo-userpic pull-left" src="" width="27px" height="27px">
+                           
+                            <div class="todo-tasklist-item-title"  style="display: grid;">
+                                <a href="javascript:;" class="header-title text-primary">Senthil</a>
+                            </div>
+                             
+                            <div class="todo-tasklist-item-text"  style="display: grid;">
+                                Dispatch descri
+                            </div>
+                           
+                            <div class="todo-tasklist-item-text" >
+                               
+                            
+                       
+                                     
+                                
+                            
+                            
+                            </div>
+                            
+                            <div class="todo-tasklist-controls pull-left"  style="display: grid;">
+                                <span class="todo-tasklist-date"><i class="fa fa-calendar"></i>08-02-2022 10:00 AM</span>
+                                <span class="badge badge-pill badge-success">Approved</span>
+                            </div>
+                        </div> -->
+                               <div class="todo-tasklist-item todo-tasklist-item-border-red" style="display: table;">
+      
+      
+      
+      
+                               </div>
+      
+      
+                             
+      
+      
+                        
+      
+                      </div>
+          
+        </div>
+      </div>
+      <div class="col-4">
+          <form  [formGroup]="form" >
+            <div class="card-box taskboard-box">
+                <h4 class="header-title m-t-0 text-warning">Update Status</h4>
+                <div class="col-12">
+                    <div class="form-group row">
+                        
+                        <mat-form-field appearance="fill"  >
+                            <mat-label>Status</mat-label>
+                            <mat-select formControlName="status">
+                              <!-- <mat-option *ngFor="let subskill of dynamicList.dispatch.subskills" >
+                                {{subskill.name}}
+                              </mat-option> -->
+                              <mat-option value="approved" >
+                                Approve for Dispatch DA
+                              </mat-option>
+                              
+                            
+                            </mat-select>
+                            
+                          </mat-form-field>
+                          
+    
+                                
+                        
+                      
+                    </div>
+                    
+                 
+    
+                    
+                     
+                
+                   
+                   
+                         
+                   
+               
+                    <div class="form-group row" id="desc">
+                      <mat-form-field class="example-full-width"  appearance="fill">
+                        <mat-label>Discription</mat-label>
+                        <textarea matInput 
+                               placeholder="" formControlName="remarks"></textarea>
+                        <mat-hint>Discription</mat-hint>
+                        <!-- <mat-error *ngIf="f.to.errors?.required">
+                          to is <strong>required</strong> -->
+                        <!-- </mat-error> -->
+                      </mat-form-field>
+                  </div>
+                    
+                </div>
+                <br>
+               
+                 <div class="text-center">
+              <button mat-raised-button color="primary"(click)="onSubmitPost()" >Submit</button>
+                </div>
+              
+               
+                
+            </div>
+        </form>
+        
+    </div>
+    
+    
+      </div>
+      </div>
+      </div>
+  </mat-tab>
+    <mat-tab label="DA"  >
+      <div class="example-small-box mat-elevation-z4 " *ngIf="viewRecords">
+        <div class="row">
+        <div style="width:47% " >
+            <div class="card-box" >
+            <div class="row">
+                <div class="col-6">
+                    <div class="row">
+                        <div class="col-4 viewda-table-background">
+                            <label>To</label>
+                        </div>
+                        <div class="col-8">
+                            <span>: &nbsp;{{viewRecords.records.da_to}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="row">
+                        <div class="col-4 viewda-table-background">
+                            <label>From</label>
+                        </div>
+                        <div class="col-8">
+                            <span>: &nbsp;{{viewRecords.records.da_from}}</span>
+                        </div>
+                    </div>
+                </div>
+             </div>
+             <div class="row">
+                <div class="col-6">
+                    <div class="row">
+                        <div class="col-4 viewda-table-background">
+                            <label>CC</label>
+                        </div>
+                        <div class="col-8">
+                            <span>: &nbsp;{{viewRecords.records.da_cc}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="row">
+                        <div class="col-4 viewda-table-background">
+                            <label>Bill Type</label>
+                        </div>
+                        <div class="col-8">
+                            <span>: &nbsp;{{viewRecords.records.bill_type}}</span>
+                        </div>
+                    </div>
+                </div>
+             </div>
+             <div class="row">
+                <div class="col-6">
+                    <div class="row">
+                        <div class="col-4 viewda-table-background">
+                            <label>Po Date</label>
+                        </div>
+                        <div class="col-8">
+                            <span>: &nbsp;{{viewRecords.records.da_id}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="row">
+                        <div class="col-4 viewda-table-background">
+                            <label>YGS Project Definition</label>
+                        </div>
+                        <div class="col-8">
+                            <span>: &nbsp;{{viewRecords.records.da_id}}</span>
+                        </div>
+                    </div>
+                </div>
+             </div>
+             <div class="row">
+                <div class="col-6">
+                    <div class="row">
+                        <div class="col-4 viewda-table-background">
+                            <label>Dispatch Mode</label>
+                        </div>
+                        <div class="col-8">
+                            <span>: &nbsp;{{viewRecords.mode_of_dispatch_name}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="row">
+                        <div class="col-4 viewda-table-background">
+                            <label>Mode of Delivery</label>
+                        </div>
+                        <div class="col-8">
+                            <span>: &nbsp;{{viewRecords.mode_of_delivery_name}}</span>
+                        </div>
+                    </div>
+                </div>
+             </div>
+            </div>
+            <div class="card-box" >
+                <div class="row">
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-4 viewda-table-background">
+                                <label>Insurance Scope</label>
+    
+                            </div>
+                            <div class="col-8">
+                                <span>: &nbsp;{{viewRecords.insurance_scope_name}}</span>
+    
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-4 viewda-table-background">
+                                <label>Reimbursible</label>
+    
+                            </div>
+                            <div class="col-8">
+                                <span>: &nbsp;{{viewRecords.records.reimbursible}}</span>
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+                 <div class="row">
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-4 viewda-table-background">
+                                <label>Amount</label>
+                            </div>
+                            <div class="col-8">
+                                <span>: &nbsp;{{viewRecords.records.insurance_amt}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-4 viewda-table-background">
+                                <label>file</label>
+                            </div>
+                            <div class="col-8">
+                                <span>: &nbsp;{{viewRecords.records.da_id}}</span>
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+                 <div class="row">
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-4 viewda-table-background">
+                                <label>Policy No.</label>
+                            </div>
+                            <div class="col-8">
+                                <span>: &nbsp;{{viewRecords.records.insurance_no}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-4 viewda-table-background">
+                                <label>Type of Insurance</label>
+    
+                            </div>
+                            <div class="col-8">
+                                <span>: &nbsp;{{viewRecords.license_type_name}}</span>
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+                 <div class="row">
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-4 viewda-table-background">
+                                <label>Insurance Address</label>
+    
+                            </div>
+                            <div class="col-8">
+                                <span>: &nbsp;{{viewRecords.records.insurance_address}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-4 viewda-table-background">
+                                <label>Contact Person</label>
+    
+                            </div>
+                            <div class="col-8">
+                                <span>: &nbsp;{{viewRecords.records.insurance_c_person}}</span>
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+                 </div>
+            <div class="card-box">
+                <div class="col-2 viewda-table-background">
+                    <label>Any other information</label>
+    
+                </div>
+                <div class="col-10">
+                    <span>: &nbsp;{{viewRecords.records.remarks}}</span>
+    
+                </div>
+    
+  
+            </div>
+            
+         
+        </div>
+        <div  style="width:1%">
+            
+        </div>
+       
+        <div style="width:50%">
+            <div class="card-box" >
+            <div class="row">
+                <div class="col-6">
+                    <div class="row">
+                        <div class="col-4 viewda-table-background">
+                            <label>Bill to</label>
+                        </div>
+                        <div class="col-8">
+                            <span>: &nbsp;{{viewRecords.records.bill_to}}</span><br>
+  
+                        </div>
+                        <div class="col-4 viewda-table-background">
+                            <label>GSTIN</label>
+                        </div>
+                        <div class="col-8">
+                            <span>: &nbsp;{{viewRecords.records.bill_to_gst}} </span>
+  
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="row">
+                        <div class="col-4 viewda-table-background">
+                            <label> Ship to</label>
+                        </div>
+                        <div class="col-8">
+                            <span>: &nbsp;{{viewRecords.records.ship_to}}</span><br>
+  
+                        </div>
+                        <div class="col-4 viewda-table-background">
+                            <label>GSTIN</label>
+                        </div>
+                        <div class="col-8">
+                            <span>: &nbsp;{{viewRecords.records.ship_to_gst}} </span>
+  
+                        </div>
+                        
+                    </div>
+                </div>
+             </div>
+             <div class="row">
+                <div class="col-6">
+                    <div class="row">
+                        <div class="col-4 viewda-table-background">
+                            <label>E-Mail</label>
+                        </div>
+                        <div class="col-8">
+                            <span>: &nbsp;{{viewRecords.records.email}}</span><br>
+  
+                        </div>
+                        <div class="col-4 viewda-table-background">
+                            <label>Tel/Fax No.</label>
+                        </div>
+                        <div class="col-8">
+                            <span>: &nbsp;{{viewRecords.records.telephone_no}}</span><br>
+  
+                        </div>
+                        <div class="col-4 viewda-table-background">
+                            <label>Mobile No.</label>
+  
+                        </div>
+                        <div class="col-8">
+                            <span>: &nbsp;{{viewRecords.records.mobile_no}} </span>
+  
+                        </div>
+                       
+                       
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="row">
+                        <div class="col-4 viewda-table-background">
+                            <label> Sold to</label>
+                        </div>
+                        <div class="col-8">
+                            <span>: &nbsp;{{viewRecords.records.sold_to}}</span><br>
+  
+                        </div>
+                        <div class="col-4 viewda-table-background">
+                            <label>GSTIN</label>
+                        </div>
+                        <div class="col-8">
+                            <span>: &nbsp;{{viewRecords.records.ship_to_gst}} </span>
+  
+                        </div>
+                        <div class="col-4 viewda-table-background" >
+                            <label>Other Contact Person</label>
+  
+                        </div>
+                        <div class="col-8">
+                            <span>: &nbsp;{{viewRecords.records.otr_person_name}} </span>
+  
+                        </div>
+                    </div>
+                </div>
+             </div>
+    
+    
+  
+  
+                    
+                 
+               
+             </div>
+  
+             
+  
+  
+  
+  
+  
+  
+  
+  
+             <div class="card-box" >
+                <div class="row">
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-4 viewda-table-background">
+                                <label>Transportation Scope</label>
+    
+                            </div>
+                            <div class="col-8">
+                                <span>: &nbsp;{{viewRecords.transportation_scope_name}}</span>
+    
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-4 viewda-table-background">
+                                <label>Freight Mode</label>
+    
+                            </div>
+                            <div class="col-8">
+                                <span>: &nbsp;{{viewRecords.records.reimbursible}}</span>
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+                 <div class="row">
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-4 viewda-table-background">
+                                <label>Packaging Instruction</label>
+                            </div>
+                            <div class="col-8">
+                                <span>: &nbsp;{{viewRecords.packing_instruction_name}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-4 viewda-table-background">
+                                <label>Dispatch Clearance</label>
+                            </div>
+                            <div class="col-8">
+                                <span>: &nbsp;{{viewRecords.records.dispatch_clearance}}</span>
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+                 <div class="row">
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-4 viewda-table-background">
+                                <label>Job</label>
+                            </div>
+                            <div class="col-8">
+                                <span>: &nbsp;{{viewRecords.records.merit_duty_job}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-4 viewda-table-background">
+                                <label>License Type</label>
+    
+    
+                            </div>
+                            <div class="col-8">
+                                <span>: &nbsp;{{viewRecords.license_type_name}}</span>
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+                 <div class="row">
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-4 viewda-table-background">
+                                <label>GST</label>
+    
+    
+                            </div>
+                            <div class="col-8">
+                                <span>: &nbsp;{{viewRecords.gst_type_name}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-4 viewda-table-background">
+                                <label>TED Refund</label>
+    
+    
+                            </div>
+                            <div class="col-8">
+                                <span>: &nbsp;{{viewRecords.records.ted_refund}}</span>
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+                 <div class="row">
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-4 viewda-table-background">
+                                <label>Time Critical Shipment</label>
+    
+    
+                            </div>
+                            <div class="col-8">
+                                <span>: &nbsp;{{viewRecords.records.time_critical_flag}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-4 viewda-table-background">
+                                <label>Date</label>
+    
+    
+                            </div>
+                            <div class="col-8">
+                                <span></span>
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+             </div>
+  
+             <div class="card-box">
+                <div *ngFor="let contact_detail of viewRecords.contact_details; let i=index;">
+                     <h4 style="font-size: 13px; margin: 0px; text-align: center;">Contact person {{i+1}}</h4>
+                    
+                  
+                <div class="row">
+                   
+                    <div class="col-6">
+                       <div class="row">
+                           <div class="col-4 viewda-table-background">
+                               <label> Name</label>
+   
+                           </div>
+                           <div class="col-8">
+                               <span>:{{contact_detail.name}} &nbsp;</span>
+   
+                           </div>
+                       </div>
+  
+                    </div>
+                    <div class="col-6">
+                       <div class="row">
+                           <div class="col-4 viewda-table-background">
+                               <label>Number</label>
+   
+                           </div>
+                           <div class="col-8">
+                               <span>: {{contact_detail.mobile}}&nbsp;</span>
+   
+                           </div>
+                       </div>
+                        
+                   </div>
+                </div>
+                <div class="row">
+                   <div class="col-6">
+                      <div class="row">
+                          <div class="col-4 viewda-table-background">
+                              <label> Email</label>
+  
+                          </div>
+                          <div class="col-8">
+                              <span>: {{contact_detail.email}}&nbsp;</span>
+  
+                          </div>
+                      </div>
+  
+                   </div>
+                   <div class="col-6">
+                      <div class="row">
+                          <div class="col-4 viewda-table-background">
+                              <label>Fax no</label>
+  
+                          </div>
+                          <div class="col-8">
+                              <span>: {{contact_detail.fax_no}}&nbsp;</span>
+  
+                          </div>
+                      </div>
+                       
+                  </div>
+               </div>
+               </div>
+            </div>
+  
+  
+  
+            </div>
+            
+            
+            
+        </div>
+      
+        
+       
+       
+  
+  
+  
+        
+       
+        
+      </div>
+    </mat-tab>
+   
+    
+   
+  </mat-tab-group>
+  
+  
+  
+  
+  
+    
+  
+
+  </ng-template>

@@ -1,0 +1,155 @@
+<div style="text-align: center;" *ngIf="mainFormHeader">
+    <span>
+        <h2 style="font-size: 25px;">Box Type</h2>
+    </span>
+</div>
+
+<div *ngIf="CreateForm">
+    <div class="container">
+      <form #myForm="ngForm" (ngSubmit)="createList()">
+      <p class="p">Create New</p>
+      <hr>
+      <div class="row">
+          <div class="col-md-3">
+            <div class="example-container div">
+                  <mat-form-field appearance="fill">
+                    <mat-label>BoxType</mat-label>
+                    <input matInput placeholder="Box Type" [(ngModel)]="BoxType" ngModel name="boxType" required maxlength="500" #boxType="ngModel" pattern="^[a-zA-Z\s _]+$">
+                    <mat-hint style="color:black">eg.Plywood,Triwall</mat-hint>
+                    <mat-hint style="color:black" align="end">maxLength=500</mat-hint>
+                    <mat-error  *ngIf="boxType.touched && !boxType.valid">Box Type Value must be a Character Value. Number and Special Characters are not allowed.</mat-error>
+                  </mat-form-field>
+            </div>
+          </div>
+          <div class="col-md-3">
+             <button mat-raised-button color="primary" type="submit" [disabled]="!myForm.valid" >Submit</button>
+          </div>
+          <div class="col-3"></div>
+          <div class="col-3">
+            <mat-form-field style="margin-left:3rem;" appearance="standard">
+              <mat-label>Search</mat-label>
+              <input matInput (keyup)="applyFilter($event)" #input>
+            </mat-form-field>
+          </div>
+      </div>
+      <hr>
+    </form>
+  </div>
+</div>
+
+<div *ngIf="ListForm">
+  <div style="margin-left:2rem;margin-right:2rem">
+                    <table class="lessons-table mat-elevation-z8" mat-table matSort [dataSource]="dataSource">
+            
+                        <ng-container matColumnDef="Sl.no.">
+                          <th class="bg" mat-header-cell *matHeaderCellDef width="1%">Sl.no.</th>
+                          <td mat-cell *matCellDef="let element;let i=index;">{{i+1}}</td>
+                        </ng-container>
+  
+                        <ng-container matColumnDef="BoxType">
+                          <th class="bg" mat-header-cell *matHeaderCellDef width ="2%">BoxType</th>
+                          <td mat-cell *matCellDef="let element">{{element?.boxType}}</td>
+                        </ng-container>
+
+  
+                        <ng-container matColumnDef="CreatedBy">
+                          <th class="bg" mat-header-cell *matHeaderCellDef width ="2%">CreatedBy</th>
+                          <td mat-cell *matCellDef="let element">{{element?.created_by}}</td>
+                        </ng-container>
+  
+                        <ng-container matColumnDef="UpdatedBy">
+                          <th class="bg" mat-header-cell *matHeaderCellDef width ="2%">UpdatedBy</th>
+                          <td mat-cell *matCellDef="let element">{{element?.updated_by}}</td>
+                        </ng-container>
+     
+                        <ng-container matColumnDef="Action">
+                          <th class="bg" mat-header-cell *matHeaderCellDef width ="2%">Action</th>
+                          <td mat-cell *matCellDef="let element"> 
+                              <button mat-icon-button color="primary" (click)="viewData(element?.boxTypeId)">
+                                  <mat-icon class="mat-18">visibility</mat-icon>
+                              </button>
+                              <button mat-icon-button color="primary" (click)="update(element)">
+                                <mat-icon class="mat-18">edit</mat-icon>
+                            </button>
+                            <button mat-icon-button color="accent" (click)="deleteData(element?.boxTypeId)">
+                              <mat-icon class="mat-18">delete</mat-icon>
+                          </button>
+                          </td>
+                      </ng-container>
+  
+                      <!-- <ng-container matColumnDef="Edit">
+                        <th class="bg" mat-header-cell *matHeaderCellDef width ="1%">Edit</th>
+                        <td mat-cell *matCellDef="let element"> 
+                            <button mat-icon-button color="primary" (click)="update(element)">
+                                <mat-icon class="mat-18">edit</mat-icon>
+                            </button>
+                        </td>
+                    </ng-container> -->
+                       
+                    <!-- <ng-container matColumnDef="Delete">
+                      <th mat-header-cell *matHeaderCellDef width ="1%">Delete</th>
+                      <td mat-cell *matCellDef="let element"> 
+                          <button mat-icon-button color="accent" (click)="deleteData(element?.boxTypeId)">
+                              <mat-icon class="mat-18">delete</mat-icon>
+                          </button>
+                      </td>
+                  </ng-container> -->
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+                    <div *ngIf="resultsLength == 0" class="noRecords">No records found</div>
+                    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+                </div>
+        </div>
+  
+
+<div style="text-align: center;" *ngIf="viewFormHeader">
+    <span>
+        <h2 style="font-size: 25px;">Box Type - View Page</h2>
+    </span>
+</div>
+
+  <div  class="div" *ngIf="ViewForm">
+    <mat-card class="example-card">
+      <mat-card-title>Box Type Details</mat-card-title>
+      <mat-card-content>
+        <p>BoxTypeId : {{viewRecords.boxTypeId}}</p>
+        <p>BoxType : {{viewRecords.boxType}}</p>
+      </mat-card-content>
+      <mat-card-actions>
+          <button mat-raised-button (click)="setViewForm()" color="primary">Back</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+  
+ 
+  
+<div style="text-align: center;" *ngIf="editFormHeader">
+    <span>
+        <h2 style="font-size: 25px;">Box Type - Edit Page</h2>
+    </span>
+</div>
+<div class="container" *ngIf="EditForm">
+    <!-- <div class="row"> -->
+      <form #myForm="ngForm" (ngSubmit)="updateList()">
+        <div class="row">
+        <div class="col-md-3">
+            <div class="example-container div">
+                  <mat-form-field appearance="fill">
+                    <mat-label>BoxType</mat-label>
+                    <input matInput placeholder="Box Type" [(ngModel)]="boxType" ngModel name="BoxType" required maxlength="500" #BoxType="ngModel" pattern="^[a-zA-Z\s _]+$">
+                    <mat-hint style="color:black">eg.Plywood,Triwall</mat-hint>
+                    <mat-hint style="color:black" align="end">maxLength=500</mat-hint>
+                    <mat-error *ngIf="BoxType.touched && !BoxType.valid">Box Type Value must be a Character Value. Number and Special Characters are not allowed.</mat-error>
+                  </mat-form-field>
+            </div>
+          </div>
+          <br/><br/>
+          <div class="col-md-3">
+           <button mat-raised-button color="primary" type="submit" [disabled]="!myForm.valid">Submit</button><button style="margin-left: 3rem;" mat-raised-button (click)="setEditForm()" color="primary">Back</button>
+        </div>
+      </div>
+        </form>
+    <!-- </div> -->
+</div>
+  

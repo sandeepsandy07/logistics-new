@@ -1,0 +1,249 @@
+
+  <style>
+    /* Add styles to the form container */
+.form-container {
+  max-width: 100%;
+  padding: 10px;
+  background-color: #a8c5da;
+}
+
+/* Full-width textarea */
+.form-container textarea {
+  width: 100%;
+  border: none;
+  background: #f1f1f1;
+  resize: none;
+ /* min-height: 200px;*/
+}
+
+/* When the textarea gets focus, do something */
+.form-container textarea:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+/* Set a style for the submit/send button */
+.chat-form-btn {
+ background-color: #4CAF50;
+    color: white;
+    /* padding: 16px 20px; */
+    border: none;
+    cursor: pointer;
+    width: 30%;
+    margin-bottom: 10px;
+    opacity: 0.8;
+}
+
+/* Add a red background color to the cancel button */
+.form-container .cancel {
+  background-color: red;
+}
+
+/* Add some hover effects to buttons */
+.form-container .btn:hover, .open-button:hover {
+  opacity: 1;
+}
+
+
+@media screen and (max-width: 767px){
+  .progtrckr{ width: 14%;font-size: small;display: inline; }
+   .chat-popup {
+        width: 75%;
+        height: 75%;
+      }
+      .chat_head{
+        display: none;
+      }
+      .open-button {
+        font-size: 50px !important;
+      }
+}
+
+    
+    ol.progtrckr {
+    margin: 0;
+    padding: 0;
+    list-style-type :none;
+}
+
+ol.progtrckr li {
+    display: inline-block;
+    text-align: center;
+    line-height: 3.5em;
+}
+
+
+
+ol.progtrckr li.progtrckr-done {
+    color: black;
+    border-bottom: 4px solid yellowgreen;
+}
+ol.progtrckr li.progtrckr-todo {
+    color: silver; 
+    border-bottom: 4px solid silver;
+}
+
+ol.progtrckr li:after {
+    content: "\00a0\00a0";
+}
+ol.progtrckr li:before {
+    position: relative;
+    bottom: -2.5em;
+    float: left;
+    left: 50%;
+    line-height: 1em;
+}
+ol.progtrckr li.progtrckr-done:before {
+    content: "\2713";
+    color: white;
+    background-color: yellowgreen;
+    height: 1.2em;
+    width: 1.2em;
+    line-height: 1.2em;
+    border: none;
+    border-radius: 1.2em;
+}
+ol.progtrckr li.progtrckr-todo:before {
+    content: "\2713";
+    color: white;
+    background-color: silver;
+    height: 1.2em;
+    width: 1.2em;
+    line-height: 1.2em;
+    border: none;
+    border-radius: 1.2em;
+
+    /* content: "\039F";
+    color: silver;
+    background-color: white;
+    font-size: 1.2em;
+    bottom: -1.2em; */
+}
+
+
+</style>
+<div class="wrapper">
+    <div class="container-fluid">
+        
+        <div class="row" *ngFor="let resulttruck of loaded_truck_list;">            
+            <div class="col-md-3 mb-3" style="text-align: center;height: 97px;" 
+               (click)="daNavigation(resulttruck.truckListId,'/loading/truckdeliverychallan')">
+
+                <mat-card  class="icon-rocket" 
+                style="height: 100%; padding: 1px; /* padding: unset; */ ;cursor: pointer; background-image: url('../assets/images/truckimg2.png'); background-size: contain; width: 210px;background-repeat: no-repeat;">
+                    <div class="row">
+
+                        <div class="col-8">
+                            
+                            <span style="font-weight: bold;font-size: 12px;">{{resulttruck.vehicle_no}}</span>
+                        </div>
+                        <div class="col-4">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-8">
+                            <span style="font-weight: bold;font-size: 12px;">{{resulttruck.truckName}}</span>
+                        </div>
+                        <div class="col-4">
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-8">
+                            <span style="font-weight: bold;font-size: 12px;" *ngIf="resulttruck.delivery_challan.length != 0">LRN No: {{resulttruck.delivery_challan[0].lrn_no}}</span>
+                        </div>
+                        <div class="col-4">
+                    </div>
+                    </div>
+                       
+                </mat-card>        
+            </div>
+           
+            <div class="col-md-8 mb-2">
+               
+                <div class="card-box taskboard-box row" style="height: 77px;padding: 0px;">
+
+                  
+                         <div class="todo-tasklist-item-text col-5">
+                                    
+                           <ol class="progtrckr" data-progtrckr-steps="9">
+                                 
+                              
+                                    <li class="  progtrckr-done">Shipped</li>  
+                                    <li class="  progtrckr-done">Transit</li> 
+                                    <li [ngClass]="{'progtrckr-done': resulttruck.tracking_status.current_status === 'Delivered', 'progtrckr-todo' : resulttruck.tracking_status.current_status != 'Delivered' }"  >Delivered</li>
+                                    <!-- <li ><mat-icon color="primary" (click)="openDialogPanel('asdsa')" title="View More">visibility</mat-icon></li> -->
+                                    <!-- <li ><mat-icon color="primary" (click)="openDialogPanel(161)" title="View More">visibility</mat-icon></li>         -->
+                                    <li ><mat-icon color="primary" (click)="openDialogPanel(resulttruck.truckListId)" title="View More">visibility</mat-icon></li> 
+                                    <li ><mat-icon color="primary" (click)="openTruckDeliveryDetailsAdd(resulttruck.truckListId)" title="Add Delivery Details">add_circle</mat-icon></li>                   
+                           </ol>
+                           </div>
+                           <div class="col-1">
+                           
+                        </div>
+                        <!-- <div class=" col-6" *ngFor="let status of statusList;"> -->
+                     <!-- <ng-container  *ngFor="let status of statusList;">    -->
+                        <div class=" col-6">
+                            <h4 style="margin: 0px">Last Transit</h4>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <label>Date Time:</label>
+                                        <span style="font-weight: bold;font-size: 12px;">{{resulttruck.tracking_status.current_datetime  | date }}</span>
+                                        <!-- <span>{{truck_track[truck_track.length - 1 ].current_datetime  }}</span> -->
+                                    </div>
+                                    <!-- <div class="col-6">
+                                        <label> Status:</label>
+                                        <span style="font-weight: bold;font-size: 12px;">{{status.current_status}}</span>
+                                    </div> -->
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <label> Status:</label>
+                                        <span style="font-weight: bold;font-size: 12px;">{{resulttruck.tracking_status.current_status}}</span>
+                                    </div>
+                                    <div class="col-6">
+                                        <label>Location:</label>
+                                        <span style="font-weight: bold;font-size: 12px;">{{resulttruck.tracking_status.current_location}}</span>
+                                    </div>
+                                </div>
+                        </div>
+            </div>           
+        </div>
+        
+        
+        <div class="col-md-1 mb-2">
+            <button mat-fab color="primary" (click)="callvehicledetailsapi(resulttruck.truckListId)" aria-label="Example icon button with a home icon">
+                <mat-icon >settings_backup_restore</mat-icon>
+              </button>
+              
+
+        </div>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+  
+  </div>
+  <!-- <div class="d-flex justify-content-center">
+    <div class="spinner-border" role="status" >
+      <span  id="loading"></span>
+    </div>
+  </div> -->

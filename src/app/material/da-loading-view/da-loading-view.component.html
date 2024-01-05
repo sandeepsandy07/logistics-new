@@ -1,0 +1,43 @@
+<div class="row"  *ngIf="loading.view_access" >
+            
+    <h4  *ngIf="!loaded_truck_list" style="text-align:center">Loading is not started</h4>
+
+    <div class="col-md-3 mb-2" style="text-align: center;height: 150px;" *ngFor="let resulttruck of loaded_truck_list;"
+       (click)="showtruckdetails(resulttruck.truckListId)">
+
+        <mat-card  class="icon-rocket" 
+            style="height: 100%;padding: 20px;/* padding: unset; */ ;cursor: pointer; background-image: url('../assets/images/truckimg2.png'); background-size: cover;width: 280px;" >
+
+          
+            <div >
+            <div class="row">
+                <div class="col-8">
+                    <span style="font-weight: bold;font-size: 16px;">{{resulttruck.vehicle_no}}</span>
+                </div>
+                <div class="col-4">
+                 
+                    <!-- <button  (click)="daNavigation(resulttruck.truckListId,'/loading/trucklist')" style="background-color: #0d0d0d; border: none; box-shadow: 2px 2px 23px 6px black;border-radius: 4px;color: white;">DC</button> -->
+
+                    
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-8">
+                    <span style="font-weight: bold;font-size: 16px;">{{resulttruck.truckName}}</span>
+                </div>
+                <div class="col-4">
+                   
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-8">
+                    <span style="font-weight: bold;font-size: 16px;" *ngFor="let delivery_challan of resulttruck;">{{delivery_challan.lrn_no}}</span>
+                </div>
+                <div class="col-4">
+                   
+                </div>
+            </div>
+        </div>
+        </mat-card>
+    </div>
+</div>

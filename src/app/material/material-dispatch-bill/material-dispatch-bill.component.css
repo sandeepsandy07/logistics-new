@@ -1,0 +1,47 @@
+.example-radio-button{margin-left: 7px;}
+mat-grid-tile {
+  background:rgb(241, 224, 230);
+}
+.width-50{width: 49%;}
+.ml-1{margin-left: 1%;}
+.ml-2{margin-left: 2%;}
+.width-100{width: 100%;}
+.width-25{width: 25%;}
+
+.example-card {
+  margin-top: 4rem;
+  margin-left: 5rem;
+  margin-bottom:5rem;
+  max-width: 800px;
+}
+.p
+{
+  font-size: medium;
+  color:blue;
+}
+.example-full-width {
+  border: 1px;
+  width: 100%;
+}
+.add{
+  margin-top: 1rem;
+}
+/* td {
+  width: 1000rem;
+  text-align: center;
+  border: 1px solid black;
+  padding: 5px;
+} */
+
+.example-full-width {
+  width: 100%;
+}
+
+.ex
+{
+  width:150%;
+}
+
+td {
+  padding-right: 8px;
+}

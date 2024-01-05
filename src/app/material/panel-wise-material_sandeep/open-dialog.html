@@ -1,0 +1,49 @@
+<mat-dialog-content>
+
+    <mat-card>
+        <span><b>SECTION:&nbsp;&nbsp;</b>{{list[0].section}}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+        <span><b>PANEL NAME:&nbsp;&nbsp;</b>{{list[0].panel_name}}</span>
+    </mat-card>
+
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" width="100%">
+
+        <ng-container matColumnDef="slno">
+            <th mat-header-cell *matHeaderCellDef> SL.NO. </th>
+            <td mat-cell *matCellDef="let element; let i=index"> {{i + 1}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="qty">
+            <th mat-header-cell *matHeaderCellDef> QTY </th>
+            <td mat-cell *matCellDef="let element"> {{element.qty == null ? '-' : element.qty}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="item_desc">
+            <th mat-header-cell *matHeaderCellDef> Item Description </th>
+            <td mat-cell *matCellDef="let element"> {{element.item_desc == null ? '-' : element.item_desc}} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="make">
+            <th mat-header-cell *matHeaderCellDef> Make </th>
+            <td mat-cell *matCellDef="let element"> {{element.make == null ? '-' : element.make}} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="model">
+            <th mat-header-cell *matHeaderCellDef> Model </th>
+            <td mat-cell *matCellDef="let element"> {{element.model == null ? '-' : element.model}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="remarks">
+            <th mat-header-cell *matHeaderCellDef> Remarks </th>
+            <td mat-cell *matCellDef="let element"> {{element.remark == null ? '-' : element.remark}} </td>
+        </ng-container>
+    
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    </table>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-raised-button mat-dialog-close (click)="dialogClose()">Close</button>
+</mat-dialog-actions>

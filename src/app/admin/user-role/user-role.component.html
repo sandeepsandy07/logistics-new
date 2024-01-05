@@ -1,0 +1,325 @@
+<div style="text-align: center;" *ngIf="MainFormHeader">
+  <span>
+      <h2 style="font-size: 25px;">User Role</h2>
+  </span>
+</div>
+
+<div *ngIf="CreateForm">
+    <div class="container">
+      <p class="p">Create New</p>
+      <hr>
+    <div class="row">
+      <div class="col-3">
+        <mat-form-field appearance="fill">
+          <mat-label>Role Name</mat-label>
+          <mat-select [(ngModel)]="RoleId" name="RoleId" id="RoleId">
+            <mat-option *ngFor="let val of RoleIdList" value="{{val.role_id}}">
+              {{val.role_name}}
+            </mat-option>
+          </mat-select>
+          <mat-hint style="color:black">eg.Manager</mat-hint>
+        </mat-form-field>
+      </div>
+       
+      <div class="col-3">
+        <mat-form-field appearance="fill">
+          <mat-label>Module Name</mat-label>
+          <mat-select [(ngModel)]="ModuleId"  name="ModuleId" id="ModuleId" >
+            <mat-option *ngFor="let val of ModuleIdList" value="{{val.module_id}}">{{val.module_name}} </mat-option>
+          </mat-select>
+          <mat-hint style="color:black">eg.Material Receipt</mat-hint>
+        </mat-form-field>
+      </div>
+    <div class="col-3">
+    <mat-checkbox #addaccess class="example-section" [ngModel]="addaccess" [checked]="addAccess" (change)="onaddAccessChanged(addaccess.checked)">Add Access</mat-checkbox>&nbsp;&nbsp;
+    <mat-checkbox #deleteaccess class="example-section" [ngModel]="deleteaccess" [checked]="deleteAccess" (change)="ondeleteAccessChanged(deleteaccess.checked)">Delete Access</mat-checkbox>&nbsp;&nbsp;
+    <mat-checkbox #viewAccess class="example-section" [ngModel]="viewAccess" [checked]="viewaccess" (change)="onviewAccessChanged(viewAccess.checked)">View Access</mat-checkbox>&nbsp;&nbsp;
+    <mat-checkbox #editAccess class="example-section" [ngModel]="editAccess" [checked]="editaccess" (change)="oneditAccessChanged(editAccess.checked)">Edit Access</mat-checkbox>&nbsp;&nbsp;
+    </div>
+    <div class="col-3">
+      <button mat-raised-button color="primary" type="submit"  (click)="createList()" >Submit</button>
+      <mat-form-field  appearance="standard" style="margin-left:1rem;">
+        <mat-label>Search</mat-label>
+        <!-- <mat-icon>search</mat-icon> -->
+        <input matInput (keyup)="applyFilter($event)" #input>
+      </mat-form-field>
+    </div>
+  </div>
+</div>
+</div>
+
+    <div *ngIf="ListForm">
+      <!-- <mat-form-field style="margin-left:3rem;" appearance="standard">
+        <mat-label>Search</mat-label>
+        <mat-icon>search</mat-icon>
+        <input matInput (keyup)="applyFilter($event)" #input>
+      </mat-form-field> -->
+
+          <div style="margin-left:2rem;margin-right:2rem">
+                 
+            <table class="lessons-table mat-elevation-z8" matSort mat-table [dataSource]="dataSource">
+              
+                        <ng-container matColumnDef="Sl.no.">
+                          <th class="bg" mat-header-cell *matHeaderCellDef width="1%">Sl.no.</th>
+                          <td mat-cell *matCellDef="let element;let i=index;">{{i+1}}</td>
+                        </ng-container>
+
+                          <ng-container matColumnDef="RoleName">
+                            <th class="bg" mat-header-cell *matHeaderCellDef width="3%">RoleName</th>
+                            <td mat-cell *matCellDef="let element">{{element?.role_name}}</td>
+                          </ng-container>
+    
+                          <ng-container matColumnDef="ModuleName">
+                            <th class="bg" mat-header-cell *matHeaderCellDef width ="3%">ModuleName</th>
+                            <td mat-cell *matCellDef="let element">{{element?.module_name}}</td>
+                          </ng-container>
+    
+                          <ng-container matColumnDef="CreatedBy">
+                            <th class="bg" mat-header-cell *matHeaderCellDef width ="3%">CreatedBy</th>
+                            <td mat-cell *matCellDef="let element">{{element?.created_by}}</td>
+                          </ng-container>
+    
+                          <ng-container matColumnDef="UpdatedBy">
+                            <th class="bg" mat-header-cell *matHeaderCellDef width ="3%">UpdatedBy</th>
+                            <td mat-cell *matCellDef="let element">{{element?.updated_by}}</td>
+                          </ng-container>
+
+                          <ng-container matColumnDef="AddAccess">
+                            <th class="bg" mat-header-cell *matHeaderCellDef width ="3%">AddAccess</th>
+                            <td mat-cell *matCellDef="let element">
+                            <mat-checkbox [checked]="element.add_access" [value]="element.user_id" (click)="ADDAccess(element)"></mat-checkbox>
+                            </td>
+                          </ng-container>
+
+                          <ng-container matColumnDef="ViewAccess">
+                            <th class="bg" mat-header-cell *matHeaderCellDef width ="3%">ViewAccess</th>
+                            <td mat-cell *matCellDef="let element">
+                            <mat-checkbox [checked]="element.view_access" [value]="element.user_id" (click)="VIEWAccess(element)"></mat-checkbox>
+                            </td>
+                          </ng-container>
+
+                          <ng-container matColumnDef="EditAccess">
+                            <th class="bg" mat-header-cell *matHeaderCellDef width ="3%">EditAccess</th>
+                            <td mat-cell *matCellDef="let element">
+                            <mat-checkbox [checked]="element.edit_access" [value]="element.user_id" (click)="EDITAccess(element)"></mat-checkbox>
+                          </td>
+                          </ng-container>
+
+                          <ng-container matColumnDef="DeleteAccess">
+                            <th class="bg" mat-header-cell *matHeaderCellDef width ="3%">DeleteAccess</th>
+                            <td mat-cell *matCellDef="let element">
+                            <mat-checkbox [checked]="element.delete_access" [value]="element.user_id" (click)="DELETEAccess(element)"></mat-checkbox>
+                          </td>
+                          </ng-container>
+
+                          <ng-container matColumnDef="Action">
+                            <th class="bg" mat-header-cell *matHeaderCellDef width ="5%">Action</th>
+                            <td mat-cell *matCellDef="let element"> 
+                                <button mat-icon-button color="primary" (click)="viewData(element?.user_id)">
+                                    <mat-icon class="mat-18">visibility</mat-icon>
+                                </button>
+                                <button mat-icon-button color="primary" (click)="update(element)">
+                                  <mat-icon class="mat-18">edit</mat-icon>
+                              </button>
+                              <button mat-icon-button color="accent" (click)="deleteData(element?.user_id)">
+                                <mat-icon class="mat-18">delete</mat-icon>
+                            </button>
+                            </td>
+                          </ng-container>
+    
+                        <!-- <ng-container matColumnDef="Edit">
+                          <th mat-header-cell *matHeaderCellDef width ="1%">Edit</th>
+                          <td mat-cell *matCellDef="let element"> 
+                              <button mat-icon-button color="accent" (click)="update(element)">
+                                  <mat-icon class="mat-18">edit</mat-icon>
+                              </button>
+                          </td>
+                      </ng-container> -->
+    
+                      <!-- <ng-container matColumnDef="Delete">
+                        <th mat-header-cell *matHeaderCellDef width ="1%">Delete</th>
+                        <td mat-cell *matCellDef="let element"> 
+                            <button mat-icon-button color="accent" (click)="deleteData(element?.user_id)">
+                                <mat-icon class="mat-18">delete</mat-icon>
+                            </button>
+                        </td>
+                    </ng-container> -->
+    
+                          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                      </table>
+                      <br>
+                      <br>
+                      <div *ngIf="resultsLength == 0" class="noRecords">No records found</div>
+                      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+                  </div>
+          </div>
+    
+
+    <div  class="div" *ngIf="ViewForm">
+      <mat-card class="example-card">
+        <mat-card-title>Details</mat-card-title>
+        <mat-card-content>
+          <p>Role ID: {{viewRecords.role_id}}</p>
+          <p>Module ID: {{viewRecords.module_id}}</p>
+          <p>Add Access: {{viewRecords.add_access}}</p>
+          <p>View Access: {{viewRecords.view_access}}</p>
+          <p>Edit Access: {{viewRecords.edit_access}}</p>
+          <p>Delete Access: {{viewRecords.delete_access}}</p>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-raised-button (click)="setViewForm()" color="primary">Back</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+    
+    <div *ngIf="EditForm" style="text-align: center;">
+      <span>
+          <h2 style="font-size: 25px;">User Role - Edit</h2>
+      </span>
+    </div>
+
+    <div class="container" *ngIf="EditForm">
+      <div class="row">
+        <div class="col-md-3">
+          <mat-form-field appearance="fill">
+            <mat-label>Module Name</mat-label>
+            <mat-select [(ngModel)]="module_id" name="module_id" id="module_id">
+              <mat-option value="">Select Option</mat-option>
+              <mat-option *ngFor="let val of ModuleIdList" [value]="val.module_id" selected>{{val.module_name}}</mat-option>
+            </mat-select>
+            <mat-hint style="color:black">eg.Material Receipt</mat-hint>
+          </mat-form-field>
+        </div>
+
+        <div class="col-3">
+          <mat-form-field appearance="fill">
+            <mat-label>Role Name</mat-label>
+            <mat-select  [(ngModel)]="role_ID" >
+              <mat-option value="">Select Option</mat-option>
+              <mat-option *ngFor="let val of RoleIdList" [value]="val.role_id" selected>{{val.role_name}}</mat-option>
+            </mat-select>
+            <mat-hint style="color:black">eg.Manager</mat-hint>
+          </mat-form-field>
+        </div>
+        <div class="col-3">
+          <button mat-raised-button color="primary" type="submit" (click)="updateList()">Submit</button><button style="margin-left: 3rem;" mat-raised-button (click)="setEditForm()" color="primary">Back</button>
+        </div>
+        </div>
+        </div>
+
+
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <!-- <label for="RoleId">Role ID  :  </label>
+      <select [(ngModel)]="RoleId"  name="RoleId" id="RoleId">  
+          <option *ngFor="let val of RoleIdList" value="{{val.role_id}}">{{val.role_name}}</option>
+      </select>
+      <label for="RoleId">Module ID:</label>
+        <select [(ngModel)]="ModuleId"  name="ModuleId" id="ModuleId">  
+            <option *ngFor="let val of ModuleIdList" value="{{val.module_id}}">{{val.module_name}}</option>
+        </select> -->
+
+        <!-- <label for="module_id">Employee ID  :</label>
+            <select [(ngModel)]="editInput.module_id"  name="module_id" id="module_id">  
+                <option *ngFor="let val of ModuleIdList" value="{{val.module_id}}">{{val.module_name}}</option>
+            </select>
+
+            <label for="role_id">Role ID  :</label>
+            <select [(ngModel)]="editInput.role_id"  name="role_id" id="role_id">  
+                <option *ngFor="let val of RoleIdList" value="{{val.role_id}}">{{val.role_name}}</option>
+            </select> -->
+
+
+            <!-- <mat-form-field appearance="fill">
+              <mat-label>Role Name</mat-label>
+              <mat-select  [(ngModel)]="role_id" name="role_id" id="role_id">
+                <mat-option value="">Select Option</mat-option>
+                <mat-option *ngFor="let val of RoleIdList" value="{{val.role_id}}" selected> {{val.role_name}} </mat-option> -->
+                <!-- <mat-option *ngFor="let val of RoleIdList" [value]="val.role_id" >{{val.role_name}}</mat-option> -->
+              <!-- </mat-select>
+              <mat-hint style="color:black">eg.Manager</mat-hint>
+            </mat-form-field>
+          </div> -->
+
+
+          <!-- <div class="container" *ngIf="EditForm">
+            <div class="row">
+              <div class="col-md-6">
+                <mat-form-field appearance="fill">
+                  <mat-label>Module Name</mat-label>
+                  <mat-select [(ngModel)]="module_id" name="module_id" id="module_id">
+                    <mat-option value="">Select Option</mat-option>
+                    <mat-option *ngFor="let val of ModuleIdList" [value]="val.module_id" selected>{{val.module_name}}</mat-option>
+                  </mat-select>
+                  <mat-hint style="color:black">eg.Material Receipt</mat-hint>
+                </mat-form-field>
+                &nbsp;&nbsp;
+                -->
+                <!-- <mat-form-field appearance="fill">
+                  <mat-label>Role Name</mat-label>
+                  <mat-select [(ngModel)]="role_ID">
+                    <mat-option *ngFor="let val of RoleIdList" value="{{val.role_ID}}" selected>
+                      {{val.role_name}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-hint style="color:black">eg.Manager</mat-hint>
+                </mat-form-field> -->
+    
+                <!-- <mat-form-field appearance="fill">
+                  <mat-label>Role Name</mat-label>
+                  <mat-select  [(ngModel)]="role_id">
+                    <mat-option value="">Select Option</mat-option>
+                    <mat-option *ngFor="let val of RoleIdList" [value]="val.role_id" selected>{{val.role_name}}</mat-option>
+                  </mat-select>
+                  <mat-hint style="color:black">eg.Manager</mat-hint>
+                </mat-form-field> -->
+              <!-- </div>
+              </div> -->
+              <!-- <div class="col-3">
+                <mat-form-field appearance="fill">
+                  <mat-label>Role Name</mat-label>
+                  <mat-select [(ngModel)]="RoleId" name="RoleId" id="RoleId">
+                    <mat-option *ngFor="let val of RoleIdList" value="{{val.role_id}}">
+                      {{val.role_name}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-hint style="color:black">eg.Manager</mat-hint>
+                </mat-form-field>
+              </div> -->
+              <!-- <mat-checkbox #addaccess class="example-section" [ngModel]="addaccess" [checked]="addAccess" (change)="onaddAccessChanged(addaccess.checked)">Add Access</mat-checkbox>&nbsp;&nbsp;
+              <mat-checkbox #deleteaccess class="example-section" [ngModel]="deleteaccess" [checked]="deleteAccess" (change)="ondeleteAccessChanged(deleteaccess.checked)">Delete Access</mat-checkbox>&nbsp;&nbsp;
+              <mat-checkbox #viewAccess class="example-section" [ngModel]="viewAccess" [checked]="viewaccess" (change)="onviewAccessChanged(viewAccess.checked)">View Access</mat-checkbox>&nbsp;&nbsp;
+             <mat-checkbox #editAccess class="example-section" [ngModel]="editAccess" [checked]="editaccess" (change)="oneditAccessChanged(editAccess.checked)">Edit Access</mat-checkbox>&nbsp;&nbsp;
+             <br> -->
+              <!-- <br>
+                  <button mat-raised-button color="primary" type="submit" (click)="updateList()">Submit</button><button style="margin-left: 3rem;" mat-raised-button (click)="setEditForm()" color="primary">Back</button>
+          </div>
+           -->
+    

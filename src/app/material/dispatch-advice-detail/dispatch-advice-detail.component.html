@@ -1,0 +1,1031 @@
+<style>
+/* Add styles to the form container */
+
+.form-container {
+  max-width: 100%;
+  padding: 10px;
+  background-color: #a8c5da;
+}
+
+.status-text{
+    color:  #408fc5 !important;
+    font-weight: bold;
+}
+
+/* Full-width textarea */
+.form-container textarea {
+  width: 100%;
+  border: none;
+  background: #f1f1f1;
+  resize: none;
+ /* min-height: 200px;*/
+}
+
+/* When the textarea gets focus, do something */
+.form-container textarea:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+/* Set a style for the submit/send button */
+ 
+.chat-form-btn {
+    background-color: #4CAF50;
+    color: white;
+    /* padding: 16px 20px; */
+    border: none;
+    cursor: pointer;
+    width: 30%;
+    margin-bottom: 10px;
+    opacity: 0.8;
+}
+ 
+/* Add a red background color to the cancel button */
+.form-container .cancel {
+  background-color: red;
+}
+
+/* Add some hover effects to buttons */
+.form-container .btn:hover, .open-button:hover {
+  opacity: 1;
+}
+
+
+
+
+
+
+@media screen and (max-width: 767px){
+  .progtrckr{ width: 14%;font-size: small;display: inline; }
+
+   .chat-popup {
+        width: 75%;
+        height: 75%;
+      }
+
+      .chat_head {
+        display: none;
+      }
+
+      .open-button {
+        font-size: 50px !important;
+      }
+}
+
+    
+    ol.progtrckr {
+    margin: 0;
+    padding: 0;
+    list-style-type :none;
+}
+
+ol.progtrckr li {
+    display: inline-block;
+    text-align: center;
+    line-height: 3.5em;
+}
+
+
+
+ol.progtrckr li.progtrckr-done {
+    color: black;
+    border-bottom: 4px solid yellowgreen;
+}
+ol.progtrckr li.progtrckr-todo {
+    color: silver; 
+    border-bottom: 4px solid silver;
+}
+
+ol.progtrckr li:after {
+    content: "\00a0\00a0";
+}
+ol.progtrckr li:before {
+    position: relative;
+    bottom: -2.5em;
+    float: left;
+    left: 50%;
+    line-height: 1em;
+}
+
+ol.progtrckr li.progtrckr-done:before {
+    content: "\2713";
+    color: white;
+    background-color: yellowgreen;
+    height: 1.2em;
+    width: 1.2em;
+    line-height: 1.2em;
+    border: none;
+    border-radius: 1.2em;
+}
+
+ol.progtrckr li.progtrckr-todo:before {
+    /* content: "\039F"; */
+    color: silver;
+    background-color: white;
+    font-size: 1.2em;
+    bottom: -1.2em;
+}
+
+.da-view-details{
+    border: 2px solid white;
+}
+
+
+</style>
+
+<div class="card-box example-small-box-details" style="position: fixed;width: 100%;z-index: 100;margin:0px " *ngIf="viewRecords">
+    <div class="row">
+        <div class="col-1">  
+            <label>DA No</label>
+           
+        </div>
+        <div class="col-3">  
+            <span>:&nbsp;{{viewRecords.records.jobcode_da_no}}</span>
+            <label>(R-{{viewRecords.records.revision}})</label>
+           
+        </div>
+  
+        <div class="col-2">  
+          <label>Date</label>
+            <span>:&nbsp;{{viewRecords.records.da_date | date}}</span>
+           
+        </div>
+        <div class="col-1">  
+            <label>SO no</label>
+           
+        </div>
+        <div class="col-1">  
+            <span>:&nbsp;{{viewRecords.records.so_no}}</span>
+           
+        </div>
+        <div class="col-1">  
+            <label>PO no</label>
+           
+        </div>
+        <div class="col-2">  
+            <span>:&nbsp;{{viewRecords.records.po_no}}-</span><span>&nbsp;{{viewRecords.records.po_date}}</span>
+           
+        </div>
+        </div>
+        <div class="row">
+            <div class="col-2">  
+                <label>Job Code</label><span>:&nbsp;{{viewRecords.records.job_code}}</span>
+               
+            </div>
+            <div class="col-1">  
+              <label>Location</label><span>:&nbsp;{{viewRecords.records.location_unit}}</span>
+                
+               
+            </div>
+           
+            <div class="col-4">  
+              <label>Job Name</label><span>:&nbsp;{{viewRecords.records.job_name}}</span>
+              
+               
+            </div>
+            <div class="col-1">  
+                <label>Customer</label>
+               
+            </div>
+            <div class="col-4">  
+                <span>:&nbsp;{{viewRecords.records.customer_name}}</span>
+               
+            </div>
+  
+        </div>
+
+
+
+        <div class="todo-tasklist-item-text"  style=" border-top: 2px solid whitesmoke;">
+                                        
+        <ol class="progtrckr" data-progtrckr-steps="9">
+                
+
+                <!-- <li class="progtrckr-done"  
+                     [ngClass]="{'progtrckr-done': approverslists.status === 'approved', 'progtrckr-todo' : approverslists.status === 'pending' }"> -->
+                <li class=" status-text" [ngClass]="{'progtrckr-done': viewRecords.records.da_status_number >= 1, 'progtrckr-todo' : viewRecords.records.da_status_number < 1 }" style="width: 10%;" >
+                    DA Submitted
+                </li>  
+                <li class=" status-text" [ngClass]="{'progtrckr-done': viewRecords.records.da_status_number >= 2, 'progtrckr-todo' : viewRecords.records.da_status_number < 2 }" style="width: 13%;" >
+                    Approval in Progress
+                </li>  
+                <li class=" status-text"  [ngClass]="{'progtrckr-done': viewRecords.records.da_status_number >= 3, 'progtrckr-todo' : viewRecords.records.da_status_number < 3 }"  style="width: 8%;">
+                    Approved
+                </li>  
+                <li class="  status-text" [ngClass]="{'progtrckr-done': viewRecords.records.da_status_number >= 4, 'progtrckr-todo' : viewRecords.records.da_status_number < 4 }" style="width: 9%;" >
+                   Aknowledge
+                </li>   
+                <li class=" status-text" [ngClass]="{'progtrckr-done': viewRecords.records.da_status_number >= 5, 'progtrckr-todo' : viewRecords.records.da_status_number < 5 }" style="width: 12%;" >
+                    Packing Initiated
+                </li>  
+                <li class=" status-text"  [ngClass]="{'progtrckr-done': viewRecords.records.da_status_number >= 6, 'progtrckr-todo' : viewRecords.records.da_status_number < 6 }" style="width: 8%;" >
+                    Packed
+                </li>  
+                <li class=" status-text"  [ngClass]="{'progtrckr-done': viewRecords.records.da_status_number >= 7, 'progtrckr-todo' : viewRecords.records.da_status_number < 7 }" style="width: 13%;" >
+                    Loading Completed
+                </li>  
+                <li class=" status-text " style="width: 9%;" [ngClass]="{'progtrckr-done': viewRecords.records.da_status_number >= 8, 'progtrckr-todo' : viewRecords.records.da_status_number < 8 }" >
+                    Dispatched
+                </li>  
+
+                <li class="status-text" style="width: 9%;" [ngClass]="{'progtrckr-done': viewRecords.records.da_status_number >= 9, 'progtrckr-todo' : viewRecords.records.da_status_number < 9 }" >
+                    Delivered
+                </li>  
+                <li class="status-text" style="width: 8%;" [ngClass]="{'progtrckr-done': viewRecords.records.da_status_number >= 10, 'progtrckr-todo' : viewRecords.records.da_status_number < 10 }" >
+                    Closed
+                </li>  
+                
+                                    
+        
+        </ol>
+    </div> 
+</div>
+<!-- <div class="row" style="
+z-index: 10000;
+position: sticky;
+top: 90%;
+float: right;
+padding-right: 24px;
+">-->
+
+
+
+
+
+   
+
+<div style="position: fixed;z-index: 1001;top: 90%;left: 90%;">
+    <mat-icon style="font-size: 50px; color: #1adf3bc4;" (click)="da_chat_open()" matBadge="{{unread_chat_count}}" matBadgeColor="accent" > chat</mat-icon>
+  </div> 
+<mat-tab-group dynamicHeight style="position: absolute;top: 145px;width: 100%;">
+    <!-- <mat-tab-group dynamicHeight style="top: 88px;width: 100%;"  > -->
+    <mat-tab label="DA">
+        
+      <div class="example-small-box mat-elevation-z4 " *ngIf="viewRecords">
+        <div class="row">
+           
+        <div style="width:47% " >
+            <div class="card-box" style="border: 3px solid #589dcc;" >
+                <h4></h4>
+            <div class="row da-view-details" >
+                <div class="col-6 da-view-details">
+                    <div class="row ">
+                        <div class="col-4 viewda-table-background  ">
+                            <label>To</label>
+                        </div>
+                        <div class="col-8">
+                            <span>: &nbsp;Manufacturing</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 da-view-details">
+                    <div class="row  ">
+                        <div class="col-4 viewda-table-background ">
+                            <label>From</label>
+                        </div>
+                        <div class="col-8">
+                            <span>: &nbsp;{{viewRecords.Sub_dept_name}}</span>
+                        </div>
+                    </div>
+                </div>
+             </div>
+             <div class="row da-view-details">
+                <div class="col-6 da-view-details">
+                    <div class="row  ">
+                        <div class="col-4 viewda-table-background">
+                            <label>CC</label>
+                        </div>
+                        <div class="col-8">
+                            <span>: &nbsp;Logistics</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 da-view-details">
+                    <div class="row  ">
+                        <div class="col-4 viewda-table-background">
+                            <label>Bill Type</label>
+                        </div>
+                        <div class="col-8">
+                            <span>: &nbsp;{{viewRecords.records.bill_type}}</span>
+                        </div>
+                    </div>
+                </div>
+             </div>
+             <div class="row da-view-details">
+                <div class="col-6 da-view-details">
+                    <div class="row ">
+                        <div class="col-4 viewda-table-background">
+                            <label>Location</label>
+                        </div>
+                        <div class="col-8">
+                            <span>: &nbsp;{{viewRecords.records.location_unit}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 da-view-details">
+                    <div class="row ">
+                        <div class="col-4 viewda-table-background">
+                            <label> Project ID</label>
+                        </div>
+                        <div class="col-8">
+                            <span>: &nbsp;{{viewRecords.records.ygs_proj_defi}}</span>
+                        </div>
+                    </div>
+                </div>
+             </div>
+             <div class="row da-view-details">
+                <div class="col-6 da-view-details">
+                    <div class="row ">
+                        <div class="col-4 viewda-table-background">
+                            <label>Dispatch Mode</label> 
+                           
+                        </div>
+                        <div class="col-8">
+                            <span>: &nbsp;{{viewRecords.mode_of_dispatch_name}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="row da-view-details">
+                        <div class="col-4 viewda-table-background">
+                            <label>Mode of Delivery</label>
+                        </div>
+                        <div class="col-8">
+                            <span>: &nbsp;{{viewRecords.mode_of_delivery_name}}</span>
+                        </div>
+                    </div>
+                </div>
+             </div>
+             <div class="row da-view-details">
+                <div class="col-6 da-view-details">
+                    <div class="row ">
+                        <div class="col-4 viewda-table-background">
+                            <label>Mode of Payment</label> 
+                           
+                        </div>
+                        <div class="col-8">
+                            <span>: &nbsp;{{viewRecords.mode_of_payment}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 da-view-details">
+                    <div class="row ">
+                        <div class="col-4 viewda-table-background">
+                            <label>Warranty Type</label> 
+                        </div>
+                        <div class="col-8">
+                            <span>: &nbsp;{{viewRecords.records.warranty_type}}</span>
+                        </div>
+                    </div>
+                </div>
+             </div>
+
+             <div class="row da-view-details">
+                <div class="col-6">
+                    <div class="row da-view-details">
+                        <div class="col-4 viewda-table-background">
+                            <label>Repair Type</label>
+                        </div>
+                        <div class="col-8">
+                            <span>: &nbsp;{{viewRecords.records.repair_type}}</span>
+                        </div>
+                    </div>
+                </div>
+             </div>
+
+
+             <div class="row da-view-details">
+                <div class="col-6 da-view-details">
+                    <div class="row ">
+                        <div class="col-4 viewda-table-background">
+                            <label>Name of the person at site</label> 
+                           
+                        </div>
+                        <div class="col-8">
+                            <span>: &nbsp;{{viewRecords.records.Fees_manager_name}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="row da-view-details">
+                        <div class="col-4 viewda-table-background">
+                            <label>Mobile(person at site)</label>
+                        </div>
+                        <div class="col-8">
+                            <span>: &nbsp;{{viewRecords.records.Fees_manager_mobile}}</span>
+                        </div>
+                    </div>
+                </div>
+             </div>
+
+            </div>
+
+            <div class="card-box" style="background-color: #d5cdff;" >
+                <div class="row da-view-details">
+                    <div class="col-6 da-view-details ">
+                        <div class="row ">
+                            <div class="col-4 viewda-table-background">
+                                <label>Insurance Scope</label>
+    
+                            </div>
+                            <div class="col-8">
+                                <span>: &nbsp;{{viewRecords.insurance_scope_name}}</span>
+    
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 da-view-details">
+                        <div class="row">
+                            <div class="col-4 viewda-table-background">
+                                <label>Reimbursible</label>
+                            </div>
+                            <div class="col-8">
+                                <span>: &nbsp;{{viewRecords.records.reimbursible}}</span>
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+                 <div class="row da-view-details">
+                    <div class="col-6 da-view-details">
+                        <div class="row">
+                            <div class="col-4 viewda-table-background">
+                                <label>Amount</label>
+                            </div>
+                            <div class="col-8">
+                                <span>: &nbsp;{{viewRecords.records.insurance_amt}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 da-view-details">
+                        <div class="row">
+                            <div class="col-4 viewda-table-background">
+                                <label>Non billable value</label>
+                            </div>
+                            <div class="col-8">
+                                <span>: &nbsp;{{viewRecords.records.non_billable_value}}</span>
+                            </div>
+                           
+                        </div>
+                    </div>
+                 </div>
+                 <div class="row da-view-details">
+                    <div class="col-6 da-view-details">
+                        <div class="row">
+                            <div class="col-4 viewda-table-background">
+                                <label>Policy No.</label>
+                            </div>
+                            <div class="col-8">
+                                <span>: &nbsp;{{viewRecords.records.insurance_no}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 da-view-details">
+                        <div class="row">
+                            <div class="col-4 viewda-table-background">
+                                <label>Type of Insurance</label>
+    
+                            </div>
+                            <div class="col-8">
+                                <span>: &nbsp;{{viewRecords.license_type_name}}</span>
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+                 <div class="row da-view-details">
+                    <div class="col-6 da-view-details">
+                        <div class="row">
+                            <div class="col-4 viewda-table-background">
+                                <label>Insurance Address</label>
+    
+                            </div>
+                            <div class="col-8">
+                                <span>: &nbsp;{{viewRecords.records.insurance_address}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 da-view-details">
+                        <div class="row">
+                            <div class="col-4 viewda-table-background">
+                                <label>Contact Person</label>
+    
+                            </div>
+                            <div class="col-8">
+                                <span>: &nbsp;{{viewRecords.records.insurance_c_person}}</span>
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+                 </div>
+            <div class="card-box">
+                <div class="col-2 viewda-table-background">
+                    <label>Any other information</label>
+    
+                </div>
+                <div class="col-10">
+                    <span>: &nbsp;{{viewRecords.records.remarks}}</span>
+    
+                </div>
+    
+
+            </div>
+            
+         
+        </div>
+        <div  style="width:1%">
+            
+        </div>
+       
+        <div style="width:50%">
+            <mat-icon (click)="getDispatchParticular(viewRecords.records.da_id)" style="position: absolute;margin-left: 45%;color: blue;">cloud_download</mat-icon>
+            <div class="card-box" >
+                
+            <div class="row">
+                <div class="col-6" style="border: 1px solid; background-color: #fffde0;border-bottom: unset !important;">
+                    
+                    <div class="row">
+                        <div class="col-4 viewda-table-background">
+                            <label>Customer Code</label>
+                        </div>
+                        <div class="col-8">
+                            <span>: &nbsp;{{viewRecords.records.bill_to_code}}</span><br>
+
+                        </div>
+                        <div class="col-4 viewda-table-background">
+                            <label>Bill to</label>
+                        </div>
+                        <div class="col-8">
+                            <span>: &nbsp;{{viewRecords.records.bill_to}}</span><br>
+
+                        </div>
+                        <div class="col-4 viewda-table-background">
+                            <label>GSTIN</label>
+                        </div>
+                        <div class="col-8">
+                            <span>: &nbsp;{{viewRecords.records.bill_to_gst}} </span>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6" style="border: 1px solid; background-color: #fff9a4;">
+                    <div class="row">
+                        <div class="col-4 viewda-table-background">
+                            <label>Customer Code</label>
+                        </div>
+                        <div class="col-8">
+                            <span>: &nbsp;{{viewRecords.records.ship_to_code}}</span><br>
+
+                        </div>
+                        <div class="col-4 viewda-table-background">
+                            <label> Ship to</label>
+                        </div>
+                        <div class="col-8">
+                            <span>: &nbsp;{{viewRecords.records.ship_to}}</span><br>
+
+                        </div>
+                        <div class="col-4 viewda-table-background">
+                            <label>GSTIN</label>
+                        </div>
+                        <div class="col-8">
+                            <span>: &nbsp;{{viewRecords.records.ship_to_gst}} </span>
+
+                        </div>
+                        
+                    </div>
+                </div>
+             </div>
+             <div class="row">
+                <div class="col-6" style="border: 1px solid; background-color: #fffde0;border-top: unset !important;">
+                    <div class="row">
+                        <div class="col-4 viewda-table-background">
+                            <label>E-Mail</label>
+                        </div>
+                        <div class="col-8">
+                            <span>: &nbsp;{{viewRecords.records.email}}</span><br>
+
+                        </div>
+                        <div class="col-4 viewda-table-background">
+                            <label>Tel/Fax No.</label>
+                        </div>
+                        <div class="col-8">
+                            <span>: &nbsp;{{viewRecords.records.telephone_no}}</span><br>
+
+                        </div>
+                        <div class="col-4 viewda-table-background">
+                            <label>Mobile No.</label>
+
+                        </div>
+                        <div class="col-8">
+                            <span>: &nbsp;{{viewRecords.records.mobile_no}} </span>
+
+                        </div>
+                        <div class="col-4 viewda-table-background">
+                            <label>Notify Party:Code</label>
+
+                        </div>
+                        <div class="col-8">
+                            <span>: &nbsp;{{viewRecords.records.notify_party_code}} </span>
+
+                        </div>
+                        <div class="col-4 viewda-table-background">
+                            <label>Notify Party:Address</label>
+
+                        </div>
+                        <div class="col-8">
+                            <span>: &nbsp;{{viewRecords.records.notify_party_address}} </span>
+
+                        </div>
+                       
+                       
+                    </div>
+                </div>
+                <div class="col-6" style="border: 1px solid; background-color: #e8ffbf;">
+                    <div class="row">
+                        <div class="col-4 viewda-table-background">
+                            <label>Customer Code</label>
+                        </div>
+                        <div class="col-8">
+                            <span>: &nbsp;{{viewRecords.records.sold_to_code}}</span><br>
+
+                        </div>
+                        <div class="col-4 viewda-table-background">
+                            <label> Sold to</label>
+                        </div>
+                        <div class="col-8">
+                            <span>: &nbsp;{{viewRecords.records.sold_to}}</span><br>
+
+                        </div>
+                        <div class="col-4 viewda-table-background">
+                            <label>GSTIN</label>
+                        </div>
+                        <div class="col-8">
+                            <span>: &nbsp;{{viewRecords.records.ship_to_gst}} </span>
+
+                        </div>
+                        <div class="col-4 viewda-table-background" >
+                            <label>Other Contact Person</label>
+
+                        </div>
+                        <div class="col-8">
+                            <span>: &nbsp;{{viewRecords.records.otr_person_name}} </span>
+
+                        </div>
+                    </div>
+                </div>
+             </div>
+    
+    
+
+
+                    
+                 
+               
+             </div>
+
+             
+
+
+
+
+
+
+
+
+             <div class="card-box" >
+                <div class="row">
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-4 viewda-table-background">
+                                <label>Transportation Scope</label>
+    
+                            </div>
+                            <div class="col-8">
+                                <span>: &nbsp;{{viewRecords.transportation_scope_name}}</span>
+    
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-4 viewda-table-background">
+                                <label>Freight Mode</label>
+    
+                            </div>
+                            <div class="col-8">
+                                <span>: &nbsp;{{viewRecords.freight_mode_name}}</span>
+                            </div>
+                            <!-- <div class="col-8">
+                                <span>: &nbsp;{{viewRecords.records.reimbursible}}</span>
+                            </div> -->
+                        </div>
+                    </div>
+                 </div>
+                 <div class="row">
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-4 viewda-table-background">
+                                <label>Packaging Instruction</label>
+                            </div>
+                            <div class="col-8">
+                                <span>: &nbsp;{{viewRecords.packing_instruction_name}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-4 viewda-table-background">
+                                <label>Dispatch Clearance</label>
+                            </div>
+                            <div class="col-8">
+                                <span>: &nbsp;{{viewRecords.records.dispatch_clearance}}</span>
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+                 <div class="row">
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-4 viewda-table-background">
+                                <label>Job</label>
+                            </div>
+                            <div class="col-8">
+                                <span>: &nbsp;{{viewRecords.records.merit_duty_job}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-4 viewda-table-background">
+                                <label>License Type</label>
+    
+    
+                            </div>
+                            <div class="col-8">
+                                <span>: &nbsp;{{viewRecords.license_type_name}}</span>
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+                 <div class="row">
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-4 viewda-table-background">
+                                <label>GST</label>
+    
+    
+                            </div>
+                            <div class="col-8">
+                                <span>: &nbsp;{{viewRecords.gst_type_name}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-4 viewda-table-background">
+                                <label>TED Refund</label>
+    
+    
+                            </div>
+                            <div class="col-8">
+                                <span>: &nbsp;{{viewRecords.records.ted_refund}}</span>
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+                 <div class="row">
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-4 viewda-table-background">
+                                <label>Time Critical Shipment</label>
+    
+    
+                            </div>
+                            <div class="col-8">
+                                <span>: &nbsp;{{viewRecords.records.time_critical_flag}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-4 viewda-table-background">
+                                <label>Date</label>
+    
+    
+                            </div>
+                            <div class="col-8">
+                                <span>{{viewRecords.records.time_critical_date}}</span>
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+             </div>
+
+             <div class="card-box">
+                <div *ngFor="let contact_detail of viewRecords.records.contact_details; let i=index;">
+                     <h4 style="font-size: 13px; margin: 0px; text-align: center;">Contact person {{i+1}}()</h4>
+                    
+                  
+                <div class="row">
+                   
+                    <div class="col-6">
+                       <div class="row">
+                           <div class="col-4 viewda-table-background">
+                               <label> Name</label>
+   
+                           </div>
+                           <div class="col-8">
+                               <span>:{{contact_detail.name}} &nbsp;</span>
+   
+                           </div>
+                       </div>
+
+                    </div>
+                    <div class="col-6">
+                       <div class="row">
+                           <div class="col-4 viewda-table-background">
+                               <label>Mobile Number</label>
+   
+                           </div>
+                           <div class="col-8">
+                               <span>: {{contact_detail.mobile}}&nbsp;</span>
+   
+                           </div>
+                       </div>
+                        
+                   </div>
+                </div>
+                <div class="row">
+                   <div class="col-6">
+                      <div class="row">
+                          <div class="col-4 viewda-table-background">
+                              <label> Email</label>
+  
+                          </div>
+                          <div class="col-8">
+                              <span>: {{contact_detail.email}}&nbsp;</span>
+  
+                          </div>
+                      </div>
+
+                   </div>
+                   <div class="col-6">
+                      <div class="row">
+                          <div class="col-4 viewda-table-background">
+                              <label>Fax no</label>
+  
+                          </div>
+                          <div class="col-8">
+                              <span>: {{contact_detail.fax_no}}&nbsp;</span>
+  
+                          </div>
+                      </div>
+                       
+                  </div>
+               </div>
+               </div>
+            </div>
+
+
+
+            </div>
+            
+            
+            
+        </div>
+      
+        
+       
+       
+
+
+
+        
+       
+        
+      </div>
+    </mat-tab>
+    <mat-tab  label="Billing" >
+      <div class="example-small-box mat-elevation-z4"  >
+        <app-bom-view  ></app-bom-view>
+      </div>
+    </mat-tab>
+    <mat-tab label="BOM" >
+        <div class="example-small-box mat-elevation-z4 ">
+            <app-panel-wise-material-view  ></app-panel-wise-material-view>
+        </div>
+    </mat-tab>
+    <mat-tab label="Status" >
+      
+          <div class="wrapper">
+            <div class="container-fluid">
+          
+              <div class="row">
+                  <div class="col-12">
+                      <div class="card-box taskboard-box">
+                       <!--  <h4 class="header-title m-t-0  text-primary"> DA : <a [routerLink]="'/material/DA-details'" >21DP01-GT1-PDA-001(21DP01) </a>
+                      </h4> -->
+                          <!-- <button class="form-control" >View DA</button>  -->
+                      
+                          <!-- <button id="request_threads_show" (click)="showmore()">View More</button> --> 
+                            <div class="todo-tasklist-item-text">
+                                       
+                                    <ol class="progtrckr" data-progtrckr-steps="9" >
+                                            
+
+                                            <li class="progtrckr-done"  *ngFor="let approverslists of approverslist" [ngClass]="{'progtrckr-done': approverslists.status === 'approved', 'progtrckr-todo' : approverslists.status === 'pending' }">{{approverslists.approver}}-{{approverslists.level}}<br>{{approverslists.emp_name}}</li>  
+                                            
+                                                                
+                                    
+                                    </ol>
+                             </div> 
+          
+                          <div class="todo-tasklist">
+        
+                                <div class="row">
+                                  <div *ngFor="let threaddata of threadList" class="todo-tasklist-item todo-tasklist-item-border-red col-3 ml-5" >
+                                      
+                                          <!-- <img class="todo-userpic pull-left" src="" width="27px" height="27px"> -->
+                                          <mat-icon>person</mat-icon>
+                                     
+                                            <div class="todo-tasklist-item-title"  style="display: grid;">
+                                                <a href="javascript:;" class="header-title text-primary">{{threaddata.user}}</a>
+                                            </div>
+                                       
+                                            <div class="todo-tasklist-item-text"  style="display: grid;">
+                                                {{threaddata.remarks}}
+                                            </div>
+                                            
+                                            <div class="todo-tasklist-item-text" >
+                                         
+                                      
+                                 
+                                       
+                                               
+                                          
+                                      
+                                      
+                                             </div>
+                                      
+                                            <div class="todo-tasklist-controls pull-left"  style="display: grid;">
+                                                <span class="todo-tasklist-date"><mat-icon style="font-size: 14px;">calendar_today</mat-icon>{{threaddata.created_at | date: "MM-dd-yyyy HH:mm"}}</span>
+                                                <span class="badge badge-pill badge-success">{{threaddata.status}}</span>
+                                            </div>
+                                  </div>
+                                </div>
+                                 
+                                   <div class="todo-tasklist-item todo-tasklist-item-border-red" style="display: table;">
+          
+          
+          
+          
+                                   </div>
+          
+          
+                                 
+          
+          
+                            
+          
+                          </div>
+              
+            </div>
+          </div>
+          
+        
+        
+          </div>
+          </div>
+          </div>
+    </mat-tab>
+    <mat-tab label="Packing" >
+        <div class=" mat-elevation-z4" >
+            <app-da-packing-view>
+                
+            </app-da-packing-view>
+        </div>
+    </mat-tab>
+    <mat-tab label="Loading" >
+        <div class="example-large-box mat-elevation-z4" >
+            
+            <app-da-loading-view >
+
+            </app-da-loading-view>
+        </div>
+    </mat-tab>
+
+    <mat-tab label="Tracking" >
+        <div class="example-large-box mat-elevation-z4" >
+            <app-vehicle-tracking-view>
+
+            </app-vehicle-tracking-view>
+        </div>
+    </mat-tab>
+    <mat-tab label="Documents" >
+        <div class="example-large-box mat-elevation-z4" >
+            <app-document-details >
+
+            </app-document-details>
+        </div>
+    </mat-tab>
+  </mat-tab-group>
+  
+  

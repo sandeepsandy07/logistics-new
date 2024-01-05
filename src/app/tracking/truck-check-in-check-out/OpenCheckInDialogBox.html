@@ -1,0 +1,61 @@
+<div *ngIf="detailsAddFormHeader" style="text-align: center;">
+    <span>
+        <h2 style="font-size: 25px;">Add - Truck Details</h2>
+    </span>
+</div>
+
+<div class="container" *ngIf="detailsAddForm">
+<form #myForm="ngForm" (ngSubmit)="addDetailsData()">
+<div class="row">
+    <div class="col-md-3">
+        <div class="example-container div">
+              <mat-form-field appearance="fill">
+                <mat-label>Vehicle Number</mat-label>
+                <input matInput placeholder="Vehicle Number" [(ngModel)]="vehicleNumber" ngModel required maxlength="50" name="VehicleNumber" #VehicleNumber="ngModel">
+                <mat-hint style="color:black">KA 09 g 6754</mat-hint>
+                <mat-error  *ngIf="VehicleNumber.touched && !VehicleNumber.valid">Vehicle Number Field is required.</mat-error>
+              </mat-form-field>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="example-container div">
+              <mat-form-field appearance="fill">
+                <mat-label>Driver Name</mat-label>
+                <input matInput placeholder="Driver Name" [(ngModel)]="driverName" ngModel required maxlength="50" name="DriverName" #DriverName="ngModel" pattern="^[a-zA-Z\s _]+$">
+                <mat-hint style="color:black">Kishan Raj</mat-hint>
+                <mat-error  *ngIf="DriverName.touched && !DriverName.valid">Driver Name must be a Character Value, Numbers and Special Characters are not allowed. Field Cannot be empty.</mat-error>
+              </mat-form-field>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="example-container div">
+              <mat-form-field appearance="fill">
+                <mat-label>Driver Phone Number</mat-label>
+                <input matInput placeholder="Driver Phone Number" [(ngModel)]="driverPhoneNumber" ngModel required maxlength="50" name="DriverPhoneNumber" #DriverPhoneNumber="ngModel" pattern="^[0-9]+$">
+                <mat-hint style="color:black">9700008900</mat-hint>
+                <mat-error  *ngIf="DriverPhoneNumber.touched && !DriverPhoneNumber.valid">Driver Phone Number Cannot contain Characters and Special Character value. Field Cannot be empty.</mat-error>
+              </mat-form-field>
+        </div>
+      </div>
+</div>
+<br/>
+<div class="row">
+    <br/><br/>
+    <div class="col-md-3">
+      <div class="example-container div">
+            <mat-form-field appearance="fill">
+              <mat-label>Check In Remarks</mat-label>
+              <input matInput placeholder="Check In Remarks" [(ngModel)]="checkInRemarks" ngModel required maxlength="500" name="CheckInRemarks" #CheckInRemarks="ngModel">
+                <mat-error  *ngIf="CheckInRemarks.touched && !CheckInRemarks.valid">Check In Remarks is Required.</mat-error>
+            </mat-form-field>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <button mat-raised-button color="primary" type="submit" [disabled]="!myForm.valid">Submit</button><button style="margin-left: 1rem;" mat-raised-button (click)="dialogClose()" color="primary">Close</button>
+    <!-- <button mat-raised-button color="primary" type="submit" (click)="addDetailsData()">Submit</button><button style="margin-left: 1rem;" mat-raised-button (click)="dialogClose()" color="primary">Close</button> -->
+    </div> 
+</div>
+</form>
+</div>

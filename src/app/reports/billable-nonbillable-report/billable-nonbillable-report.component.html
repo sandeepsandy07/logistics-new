@@ -1,0 +1,269 @@
+<div class="wrapper">
+    <div class="container-fluid">
+        <form  [formGroup]="form" enctype="multipart/form-data"  >
+            <div class="card-box" style="padding-top: 0px">
+                <div class="row">
+                    <div class="col-12">
+                        <h4  style="text-align:center">Billable/Non Billable Report</h4>
+                    </div>
+                </div>
+                <div class="row">
+                  <div class="col-1">
+                    <button mat-raised-button color="primary" (click)="filter_table()">Filter <mat-icon>search</mat-icon></button>
+                </div>
+                <!-- <div class="col-2">
+                  <button type="submit" style="margin-top:1px;margin-left:2rem;" mat-raised-button color="primary" (click)="getErrorList()">Get Error List Values</button>
+                </div> -->
+                <!-- <div class="col-2">
+                  <button type="submit" style="margin-top:1px;margin-left:2rem;" mat-raised-button color="primary" (click)="updateDeliveryChallanDaID()">Update delivery challan da id</button>
+                </div> -->
+                <!-- <div class="col-2">
+                  <button type="submit" style="margin-top:1px;margin-left:2rem;" mat-raised-button color="primary" (click)="updateTruckListTransportationID()">Update Truck List Transportation ID</button>
+                </div> -->
+                <div class="col-4">
+                    <button type="submit" style="margin-top:1px;margin-left:4rem;" mat-raised-button color="primary" (click)="onSubmit()">Upload SAP DATA File</button>
+                  </div>
+                <div class="col-4">
+                  <button type="submit" style="margin-top:1px;margin-left:25rem;" mat-raised-button color="primary" (click)="updateShipToPartyAndSoldToPartyNames()">Update Customer Name Value</button>
+                </div>
+                </div>
+                <br/>
+
+                <div *ngIf="filterDataForm">
+                    <div class="row">
+                        <div class="col-2" style="margin-right: 18px;">
+                          <mat-form-field class="example-full-width" appearance="fill">
+                                  <input type="text" matInput formControlName="project_id" 
+                                  placeholder="Project Id">
+                                  <mat-hint>Project Id</mat-hint>
+                          </mat-form-field>
+                        </div>
+      
+                        <div class="col-2" style="margin-right: 18px;">
+                          <mat-form-field class="example-full-width" appearance="fill">
+                                  <input type="text" matInput formControlName="so_no" 
+                                  placeholder="So No">
+                                  <mat-hint>So No.</mat-hint>
+                          </mat-form-field>
+                      </div>
+      
+                    <div class="col-2" style="margin-right: 18px;">
+                      <mat-form-field appearance="fill" >
+                        <mat-label>Bill Type</mat-label>
+                        <mat-select formControlName="billtype" [(value)]="form.value.billtype">
+                          <mat-option value="billable">Billable</mat-option>
+                          <mat-option value="nonbillable">Non Billable</mat-option>
+                        </mat-select>
+                        <mat-hint>Bill Type</mat-hint>
+                      </mat-form-field>
+                    </div>
+      
+                      <div class="col-2" style="margin-right: 18px;">
+                          <mat-form-field appearance="fill">
+                            <mat-label>Business Unit</mat-label>
+                            <mat-select formControlName="business_unit" [(value)]="form.value.business_unit" multiple>
+                              <mat-option>-select-</mat-option>
+                              <mat-option *ngFor="let subskill of business_unit_list" [value]="subskill.sub_dept_id">
+                                {{subskill.sub_department}}
+                              </mat-option>
+                            </mat-select>
+                            <mat-hint>Business Unit</mat-hint>
+                            </mat-form-field>
+                      </div>
+
+                      <div class="col-2" style="margin-right: 18px;">
+                        <mat-form-field class="example-full-width" appearance="fill">
+                                <input type="text" matInput formControlName="delivery_challan_no" 
+                                placeholder="Delivery Challan No">
+                                <mat-hint>Delivery Challan No.</mat-hint>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-2" style="margin-right: 18px;">
+                        <mat-form-field class="example-full-width" appearance="fill">
+                                <input type="text" matInput formControlName="tax_inv_no" 
+                                placeholder="Tax inv no">
+                                <mat-hint>Tax inv no</mat-hint>
+                        </mat-form-field>
+                    </div>
+
+                      <div class="col-2" style="margin-right: 18px;">
+                        <mat-form-field class="example-full-width" appearance="fill">
+                                <input type="text" matInput formControlName="lr_no" 
+                                placeholder="LR No">
+                                <mat-hint>LR No</mat-hint>
+                        </mat-form-field>
+                    </div>
+
+                      <div class="col-md-2" style="margin-right: 18px;">
+                        <mat-form-field class="example-full-width" appearance="fill">
+                          <mat-label>Search Customer Name</mat-label>
+                          <input type="text" matInput list="codes" formControlName="customer_name" autocomplete="off" multiple>
+                          <datalist id="codes">
+                            <option *ngFor="let val of customer_name_list" value="{{val.customer_name}}">{{val.customer_name}}</option>
+                          </datalist>
+                          <mat-hint>Customer Name</mat-hint>
+                        </mat-form-field>
+                      </div>
+
+                        <div class="col-2" style="margin-right: 18px;">
+                          <mat-form-field class="example-full-width" appearance="fill">
+                              <mat-label>Data Type</mat-label>
+                                      <!-- <mat-select #datetypeselect  formControlName="date_type" (selectionChange) ='onDateTypeSelected(datetypeselect.value)' multiple> -->
+                                      <mat-select #datetypeselect  formControlName="date_type" (selectionChange) ='onDateTypeSelected(datetypeselect.value)'>
+                                      <mat-option value="TaxInvDate">Tax Invoice</mat-option>
+                                      <mat-option value="ChallanCreatedDate">Challan Created</mat-option>
+                                      <mat-option value="TaxChallanDate">Both</mat-option>
+                                    </mat-select>
+                            </mat-form-field>
+                          </div>
+      
+                          <div  class="col-2" style="margin-right: 18px;">
+                              <mat-form-field style="width:160px">
+                                  <mat-label>Enter a date range</mat-label>
+                                  <mat-date-range-input [rangePicker]="picker">
+                                    <input matStartDate  placeholder="Start date"  formControlName="fromDate" (ngModelChange)="datePickerChange()">
+                                    <input matEndDate  placeholder="End date"  formControlName="toDate" (ngModelChange)="datePickerChange()">
+                                  </mat-date-range-input>
+                                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                  <mat-date-range-picker #picker></mat-date-range-picker>
+                                </mat-form-field>
+                          </div>
+      
+                          <div class="col-3">
+                              <button style="margin-left:1rem;" mat-raised-button color="primary" (click)="getRecordsBasedOnFilterData()">Search</button>
+                              <button style="margin-left:1rem;" mat-raised-button color="primary" (click)="clearAllFilterDataFields()">Clear</button>
+                          </div>
+                          </div>
+                      </div>   
+                </div>
+        </form>
+    <!-- </div> -->
+      <div class="row">
+        <div class="col-12">
+            <div class="card-box table-responsive">
+              <!-- <div class="dataTables_ScrollBody" style="position: relative;overflow-x: hidden;width: 100%;height: 300px;">  -->
+              <table  class="table table-bordered table-striped" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+                    <thead>
+                        <tr>
+                            <th style="width: 30px;">Sl.no</th>
+                            <th style="width: 130px;">Project ID</th>
+                            <th style="width: 130px;">So no</th>
+                            <th  style="width: 130px;" >Billing no.</th>
+                            <th style="width: 130px;">Tax inv no.</th>
+                            <th   style="width: 130px;">Tax inv Date</th>
+                            <th style="width: 130px;" >Challan no.</th>
+                            <th  style="width: 130px;">Challan Created Date</th>
+                            <th style="width: 230px;"> LR No</th>
+                            <th  style="width: 130px;">Job Code </th>
+                            <th style="width: 130px;" >Business Unit</th>
+                            <th  style="width: 130px;">Billable/ NonBillable</th>
+                            <th style="width: 230px;">Destination</th>
+                            <th style="width: 230px;"> Ship to Party Name </th>
+                            <th style="width: 230px;">Sold to Party </th>
+
+                            <th  style="width: 130px;">Invoice Amount</th>
+                            <th  style="width: 130px;">Truck Amount</th>
+                            <th  style="width: 130px;">SAP Assessable Value</th>
+                            <th  style="width: 130px;">SAP Tax Value</th>
+                            <th  style="width: 130px;">SAP Total Value</th>
+
+                            <th  style="width: 130px;">Difference</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                            <tr *ngFor="let subskill of tablelist;let i=index">
+                                <td >{{i+1}}</td>
+                                <td style="width:100px;"><span *ngIf="subskill.delivery_challan.length != 0">{{subskill.delivery_challan[0].da[0].ygs_proj_defi}}</span></td>
+                                <td>{{subskill.reference_document}}</td>
+                                <td>{{subskill.billing_number}}</td>
+                                <td>{{subskill.tax_invoice_number}}</td>
+    
+                                <td>{{subskill.tax_invoice_date | date : 'dd/MM/yyyy'}}</td>
+                                <td>{{subskill.challan_no}}</td>
+                                <td>{{subskill.challan_create_date | date : 'dd/MM/yyyy'}}</td>
+                                <td><span *ngIf="subskill.delivery_challan.length != 0">{{subskill.delivery_challan[0].lrn_no}}</span></td>
+    
+                                <td>{{subskill.job_code}}</td>
+                                <td>{{subskill.business_unit}}</td>
+                                <td>{{subskill.bill_type}}</td>
+                                <td><span *ngIf="subskill.delivery_challan.length != 0">{{subskill.delivery_challan[0].district}}</span></td>
+                                
+                                <td>{{subskill.ship_to_party_name}}</td>
+                                <td>{{subskill.sold_to_party_name}}</td>
+                               
+                                <td style="text-align: right;"><span *ngIf="subskill.delivery_challan.length != 0">{{ subskill.delivery_challan[0].inv_amount | number:'1.2-2'}}</span></td>
+                                <td style="text-align: right;"><span *ngIf="subskill.delivery_challan.length != 0">{{ subskill.delivery_challan[0].truck_amount | number:'1.2-2'}}</span></td>
+                                <td style="text-align: right;">{{ subskill.totalAccessableValue.tax_invoice_assessable_value__sum | number:'1.2-2'}}</td> 
+                                <td style="text-align: right;">{{ subskill.totalTaxValue.tax_invoice_total_tax_value__sum | number:'1.2-2'}}</td> 
+                                <td style="text-align: right;">{{ subskill.finalTotalValue.tax_invoice_total_value__sum | number:'1.2-2'}}</td> 
+                                <td style="text-align: right;"><span *ngIf="subskill.delivery_challan.length != 0">{{ subskill.delivery_challan[0].inv_no != null ? (subskill.finalTotalValue.tax_invoice_total_value__sum - subskill.delivery_challan[0].inv_amount | number:'1.2-2')  : (subskill.finalTotalValue.tax_invoice_total_value__sum - subskill.delivery_challan[0].truck_amount | number:'1.2-2')}}</span></td>
+                               </tr>
+                               
+                               <tr>
+                                <td style="color:blue;size:25px;">Sum</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                               
+                                <td></td>
+                                <td></td>
+                               
+                                <td></td>
+                                <td style="text-align: right;">{{portalTotalInvoiceAmount | number:'1.2-2'}}</td>
+                                
+                                <td style="text-align: right;">{{portalTotalTruckAmount | number:'1.2-2'}}</td>
+                                <td></td>
+                                <td style="color:blue;size:25px;">Total Sap Amount</td>
+                                <td style="text-align: right;">{{sapTotalValue | number:'1.2-2'}}</td>
+                                <td></td>
+                               </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+  </div>
+  </div>
+
+    
+  
+
+
+
+
+
+
+
+
+    <!--<td>{{ subskill.finalTotalValue.tax_invoice_total_value__sum - subskill.delivery_challan[0].inv_amount  | number:'1.2-2'}}</td> -->
+                                <!-- <td>{{ subskill.finalTotalValue.tax_invoice_total_value__sum - subskill.delivery_challan[0].inv_amount  | number:'1.2-2'}}</td>  -->
+    
+                                <!-- <td><span *ngIf="subskill.delivery_challan.length != 0">{{subskill.delivery_challan[0].inv_amount != null? subskill.delivery_challan[0].inv_amount : subskill.delivery_challan[0].truck_amount | number:'1.2-2'}}</span></td>
+                                <td><span *ngIf="subskill.delivery_challan.length != 0">-</span></td>
+                                <td><span *ngIf="subskill.delivery_challan.length != 0">{{subskill.delivery_challan[0].inv_amount != null ? subskill.delivery_challan[0].inv_amount : subskill.delivery_challan[0].truck_amount | number:'1.2-2'}}</span></td>
+                                 -->
+                                <!-- <td>{{ subskill.totalAccessableValue.tax_invoice_assessable_value__sum != 0 ? subskill.totalAccessableValue.tax_invoice_assessable_value__sum  : subskill.delivery_challan[0].inv_amount }}</td> 
+                                <td>{{ subskill.totalTaxValue.tax_invoice_total_tax_value__sum != 0 ? subskill.totalTaxValue.tax_invoice_total_tax_value__sum  : '-' }}</td> 
+                                <td>{{ subskill.finalTotalValue.tax_invoice_total_value__sum != 0 ? subskill.finalTotalValue.tax_invoice_total_value__sum  : subskill.delivery_challan[0].inv_amount }}</td> -->
+
+                                <!-- <td><span *ngIf="subskill.delivery_challan.length != 0">{{subskill.delivery_challan[0].inv_amount}}</span></td>
+                                <td><span *ngIf="subskill.delivery_challan.length != 0">-</span></td>
+                                <td><span *ngIf="subskill.delivery_challan.length != 0">{{subskill.delivery_challan[0].inv_amount}}</span></td> -->
+
+                                <!-- <td><span *ngIf="subskill.delivery_challan.length != 0">{{subskill.delivery_challan[0].inv_amount}}/{{subskill.delivery_challan[0].truck_amount}}</span></td>
+                                <td><span *ngIf="subskill.delivery_challan.length != 0">-</span></td>
+                                <td><span *ngIf="subskill.delivery_challan.length != 0">{{subskill.delivery_challan[0].inv_amount}}/{{subskill.delivery_challan[0].truck_amount}}</span></td>
+                                 -->
+                                <!-- <td>{{subskill.tax_invoice_assessable_value != 0 ? subskill.tax_invoice_assessable_value  : subskill.delivery_challan[0].inv_amount }}</td>  -->
+                                <!-- <td><span *ngIf="subskill.delivery_challan.length != 0">{{subskill.delivery_challan[0].inv_amount}}</span></td>  -->
+                                <!-- <td>{{ subskill.tax_invoice_total_tax_value != 0 ? subskill.tax_invoice_total_tax_value  : '-' }}</td> 
+                                <td>{{ subskill.tax_invoice_total_value != 0 ? subskill.tax_invoice_total_value  : subskill.delivery_challan[0].inv_amount }}</td>  -->

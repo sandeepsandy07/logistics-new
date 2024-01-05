@@ -1,0 +1,121 @@
+<form [formGroup]="form"  enctype="multipart/form-data" #myForm="ngForm">
+    <div class="row">
+        <div class="col-12">
+            <h4 style="text-align: center;color:blue;">Create/Upload Customer Details</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Customer Code</mat-label>
+            <input type="text" matInput  formControlName="customer_no"
+                   placeholder="">
+            <button mat-button matSuffix  mat-icon-button (click)="getCustomerDetailsSyncc()">
+              <mat-icon>search</mat-icon>
+            </button>         
+            <mat-hint>Customer Code</mat-hint>
+            
+          </mat-form-field>
+        </div>
+        <div class="col-4">                      
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>Customer Name</mat-label>
+              <input type="text" matInput formControlName="customer_name" 
+                     placeholder="">
+              <mat-hint>Customer Name</mat-hint>
+             
+            </mat-form-field>
+      </div>
+      <div class="col-4">                      
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>City and State</mat-label>
+              <input type="text" matInput formControlName="city" 
+                     placeholder="">
+              <mat-hint>City and State</mat-hint>
+             
+            </mat-form-field>
+      </div>
+      <div class="col-4">                      
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>Address 1</mat-label>
+              <textarea type="text" matInput formControlName="street1" 
+                     placeholder=""></textarea>
+              <mat-hint>Address 1</mat-hint>
+             
+            </mat-form-field>
+      </div>
+       <div class="col-4">                      
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>Address 2</mat-label>
+              <textarea type="text" matInput formControlName="street2" 
+                     placeholder=""></textarea>
+              <mat-hint>Address 2</mat-hint>
+             
+            </mat-form-field>
+      </div>
+       <div class="col-4">                      
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>Address 3</mat-label>
+              <textarea type="text" matInput formControlName="street3" 
+                     placeholder=""></textarea>
+              <mat-hint>Address 3</mat-hint>
+             
+            </mat-form-field>
+      </div>
+
+      <div class="col-2">                      
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>Postal Code</mat-label>
+              <input type="text" matInput formControlName="postal_code"
+                     placeholder="">
+              <mat-hint>Postal Code</mat-hint>
+             
+            </mat-form-field>
+      </div>
+      <div class="col-4">                      
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>GST No</mat-label>
+          <input type="text" matInput formControlName="gstin" 
+                 placeholder="">
+          <mat-hint>GST No</mat-hint>
+         
+        </mat-form-field>
+        </div>
+        <div class="col-4">                      
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>Region Code</mat-label>
+              <input type="text" matInput formControlName="region_no" 
+                     placeholder="">
+              <mat-hint>Region Code</mat-hint>
+             
+            </mat-form-field>
+        </div>
+        <div class="col-4">                      
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>Country </mat-label>
+              <input type="text" matInput formControlName="country_name" 
+                     placeholder="">
+              <mat-hint>Country</mat-hint>
+             
+            </mat-form-field>
+      </div>
+      
+
+    </div>
+    <div class="row" >
+        <div class="col-12" style="display: grid;align-items: end;">
+          <mat-grid-list style="text-align:center" cols="2" rowHeight="4:1">
+          
+            <button mat-raised-button color="primary"  (click)="onSubmit()" >Update/Create</button>
+           
+            <button mat-raised-button color="danger" (click)="dialogClose()" style="background-color:#ff3333;color:white;margin-left: 20px;"  >Close</button>
+          </mat-grid-list>
+        </div>
+      </div>
+      <b><span style="color:#1500ff8f"><span style="color:red">Note*:</span><br>
+        
+        1) Update-Please enter Customer Code and click on Search , data will fill automatically then you can change and click on update button<br>
+        2) Create-Enter all the required fields and click on submit
+        </span>
+    </b>
+</form>

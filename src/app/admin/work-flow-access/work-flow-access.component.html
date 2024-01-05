@@ -1,0 +1,207 @@
+<div *ngIf="success;then showform;else showtable"></div>
+<ng-template #showform>
+  <div class="wrapper " >
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+          
+              <h4 class=""><b>Work Flow Create </b></h4>
+             
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12"> 
+                <div class="card-box">
+                   
+                  
+                  <form  [formGroup]="form" >
+                    <div style="border: 1px solid whitesmoke;background: #d0dedf26;">
+
+                   <div class="row">
+                    <div class="col-3">
+                      <mat-form-field class="example-full-width" appearance="fill">
+                        <mat-label>WorkFlow Type</mat-label>
+                        <mat-select formControlName="wf_id" [(value)]="form.value.wf_id" > 
+                          <mat-option>-select-</mat-option>
+                          <mat-option *ngFor="let subskill of workflowList" [value]="subskill.wf_id" >
+                               {{subskill.wf_name }}
+                             </mat-option>
+                      
+                        </mat-select>
+                       
+                      </mat-form-field>
+                      </div>
+                    <div class="col-3">
+                      <mat-form-field class="example-full-width" appearance="fill">
+                        <mat-label>Department</mat-label>
+                        
+                         <mat-select formControlName="dept_code"  [(value)]="form.value.dept_code">
+                          <mat-option>-select-</mat-option>
+                          <mat-option *ngFor="let subskill of subdeptlist" [value]="subskill.sub_dept_id" >
+                            {{subskill.sub_department}}
+                          </mat-option>
+                        </mat-select>
+                        <mat-hint> select Department!</mat-hint>
+                      
+                      </mat-form-field>
+                    </div>
+                    <div class="col-3">
+                      <mat-form-field class="example-full-width" appearance="fill">
+                        <mat-label>Bill Type</mat-label>
+                         
+                        <mat-select formControlName="bill_type"   [(value)]="form.value.bill_type" >
+                          <mat-option value="">Select Option</mat-option>
+                          <mat-option value="billable">billable</mat-option>
+                          <mat-option value="nonbillable">nonbillable</mat-option>      
+                         </mat-select>
+                       
+                      </mat-form-field>
+                      </div>
+                      <div class="col-3">
+                        <mat-form-field class="example-full-width" appearance="fill">
+                          <mat-label>Panel Verifer</mat-label>
+                          <mat-select formControlName="panel_verifer" multiple> 
+                            <mat-option>-select-</mat-option>
+                            <mat-option *ngFor="let subskill of userList_verifier" [value]="subskill.id" >
+                                 {{subskill.employee_name }}
+                            </mat-option>   
+                            <mat-option value="3">Sandeep</mat-option>                          
+                          </mat-select>                             
+                        </mat-form-field>
+                      </div>
+                      <div class="col-3">
+                        <mat-form-field class="example-full-width" appearance="fill">
+                          <mat-label>Packing Approver</mat-label>
+                         
+                          <mat-select formControlName="packing_approver" multiple> 
+                            <mat-option>-select-</mat-option>
+                            <mat-option *ngFor="let subskill of userList_loading" [value]="subskill.id" >
+                                 {{subskill.employee_name }}
+                            </mat-option>      
+                            <mat-option value="3">Sandeep</mat-option>                       
+                          </mat-select>                             
+                        </mat-form-field>
+                      </div>
+                      <div class="col-3">
+                        <mat-form-field class="example-full-width" appearance="fill">
+                          <mat-label>Loading Employee</mat-label>
+                         
+                          <mat-select formControlName="loading_employee" multiple> 
+                            <mat-option>-select-</mat-option>
+                            <mat-option *ngFor="let subskill of userList_loading" [value]="subskill.id" >
+                                 {{subskill.employee_name }}
+                            </mat-option>      
+                            <mat-option value="3">Sandeep</mat-option>                       
+                          </mat-select>                             
+                        </mat-form-field>
+                      </div>
+                      <div class="col-3">
+                        <mat-form-field class="example-full-width" appearance="fill">
+                          <mat-label>DA view employee</mat-label>
+                         
+                          <mat-select formControlName="da_view_employee" multiple> 
+                            <mat-option>-select-</mat-option>
+                            <mat-option *ngFor="let subskill of userList" [value]="subskill.id" >
+                                 {{subskill.employee_name }}
+                            </mat-option>
+                            <mat-option value="3">Sandeep</mat-option>                           
+                          </mat-select>                             
+                        </mat-form-field>
+                      </div>
+  
+                    
+                   
+                      
+                    
+                  </div>
+                  <div class="row" style="display: grid;align-items: end;">
+                    <mat-grid-list style="text-align:center" cols="2" rowHeight="4:1">
+                      <!-- <button mat-raised-button color="success" class="mx-4" (click)="onSavePost()">Save</button> -->
+                      <button mat-raised-button color="primary"(click)="onSubmitPost()" >Submit</button>
+                     
+                    </mat-grid-list>
+                  </div>
+                  </div>
+                 
+                 
+              </form>
+            </div>
+          </div>
+        </div>
+    </div>
+    </div>
+
+</ng-template>
+<ng-template #showtable>
+    <div class="wrapper">
+        <div class="container-fluid">
+      
+            <div class="row" style="padding: 5px;">
+                <div class="col-6">
+              
+                  <h4 class=""><b>Work Flow</b></h4>
+                 
+                </div>
+                <div class="col-6">
+                  
+                  <button mat-raised-button color="primary"(click)="createWorkFlow()"  style="float:right">Create</button>
+                 
+                </div>
+            </div>
+          <div class="row">
+            <div class="col-12">
+                <div class="card-box table-responsive">
+                  
+                
+                  <table class="table table-bordered table-striped table-hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+                        <thead>
+                            <tr>
+                               
+                                <th  width="10%">Sl.no</th>
+                                <th  width="10%">Work Flow Name</th>
+                                <th  width="12%">Department</th>
+                                
+                               
+                                <th  width="10%">Bill Type </th>
+                                <th  width="10%">created_by </th>
+                                <th  width="10%">Action </th>
+                              
+                            </tr>
+                        </thead>
+                        <tbody>
+                           
+                              <tr *ngFor="let subskill of tablelist;let i=index;">
+                                
+                                <td>{{i+1}}</td>
+                               
+                                
+                                <td >{{subskill.wf_name}}</td>
+                                <td>{{subskill.dept_name}}</td>
+                                <td>{{subskill.bill_type}}</td>
+                                <td>{{subskill.created_by}}</td>
+                                                            
+                                <td> 
+                                  <mat-icon (click)="onEditMode(subskill.wfa_id)">edit</mat-icon>
+                                </td>  
+                              
+
+                              </tr>
+       
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+      
+        </div>
+      </div>
+
+</ng-template>
+
+
+
+
+
+
+
+

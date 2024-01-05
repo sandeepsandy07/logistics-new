@@ -1,0 +1,110 @@
+
+<div class="wrapper " >
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+          
+              <h4 class=""><b>Truck file upload </b></h4>
+             
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12"> 
+                <div class="card-box">
+                  
+                    <div class="row" *ngIf="truck_details" style="font-size: 16px;">
+                        <div class="col-3">
+                        <label> 
+                            Truck No.:
+                        </label>
+                        <span>
+                            {{truck_details.vehicle_no}}
+                        </span>
+                        
+                        </div>
+                        <div class="col-3">
+                        <label>
+                            Truck Type:
+                        </label>
+                        <span>{{truck_details.truckName}}</span>
+                        </div>
+                        <div class="col-3">
+                        <label>
+                            DA No.:
+                        </label>
+                        <span>{{truck_details.da_jobcode}}</span>
+                        </div>
+                    </div>
+                    <div class="row"  >   
+                        <h4>Truck Files </h4> 
+                    </div>
+                    <div class="row"  >          
+                        <div class="col-md-2 mb-2" style="padding:5px ;text-align: center;" *ngFor="let list of multi_files" >
+                            <mat-card  class="icon-rocket"  style="padding:0px">
+                            <label style="margin-bottom:0px;"><mat-icon style="color: #3f51b5;" (click)="download_documents(list.files)">cloud_download</mat-icon></label><br>
+                            <label><b>{{list.module_name}}-{{list.type_name}}</b></label>
+                             </mat-card>          
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <form  [formGroup]="form" >
+                        <div class="col-5">
+                            <div formArrayName="da_files">
+                                <div class="row"   *ngFor="let daFile of daFiles().controls; let i=index" [formGroupName]="i" >
+                                  
+                                   
+                                      <div class="col-5">
+                                        <mat-form-field class="example-full-width" appearance="fill">
+                                          <mat-label>File type ({{i+1}})</mat-label>
+                                          
+                                           <mat-select formControlName="file_type" >
+                                            <mat-option value="">Select type</mat-option>
+                                            <mat-option *ngFor="let fileType of fileTypes" [value]="fileType.fileTypeId">{{fileType.fileType}}</mat-option>
+                                            
+                                           </mat-select>
+                                          <mat-hint>File Type!</mat-hint>
+                                          <!-- <mat-error *ngIf="f.da_to.errors?.required">
+                                            to is <strong>required</strong>
+                                          </mat-error> -->
+                                        </mat-form-field>
+                                       
+                                         
+                                      
+                                      </div>
+                                      <div class="col-5">
+                                         <input type="file" #filePicker (change)="onSelectFiles($event,i)" multiple>
+              
+                                      </div>
+                                      
+                                        <div class="col-2 display_incenter" >
+                                          <mat-icon *ngIf="daFiles().length != 1" (click)="removeDaFiles(i)" style="color: red;">delete_forever</mat-icon>
+                                          <mat-icon *ngIf="daFiles().length == (i+1)" (click)="addDaFiles()" style="color: blue;" >add_box</mat-icon>
+                                          
+                                        </div>
+                                    
+                                    
+                                    
+                                  </div>
+                                 
+                                
+                            
+                             
+                      
+                               
+                              </div>
+
+                        </div>
+                        <div class="col-12" align="center">  
+                            <button mat-raised-button mat-dialog-close  class="btn btn-success" (click)="onfileUpload()">Upload</button>
+                            <button mat-raised-button mat-dialog-close style="margin-left:20px;" (click)="dialogClose()">Close</button>
+                        </div> 
+
+
+                    </form>
+                    
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>

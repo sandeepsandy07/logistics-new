@@ -1,0 +1,162 @@
+
+
+<div class="wrapper">
+    <div class="container-fluid">
+        <form  [formGroup]="form" enctype="multipart/form-data"  >
+            <div class="card-box" style="padding-top: 0px">
+                <div class="row">
+                    <div class="col-12">
+                        <h4  style="text-align:center">Billable Report</h4>
+                    </div>
+                </div>
+                <div class="row">
+                    
+                
+                        <div class="col-2" style="margin-right: 18px;">
+                            <mat-form-field class="example-full-width" appearance="fill">
+                            
+                                <mat-label>DA No</mat-label>
+                                    <input type="text" matInput list="codes" formControlName="da_date" 
+                                    placeholder="">
+                                    
+                                    <mat-hint>DA No</mat-hint>
+                                    <datalist  id="codes">
+                                        <option  >DA-01</option>
+                                        <option >DA-02</option>
+                                        <option >DA-03</option>
+                                    </datalist>
+                                
+                                
+                            </mat-form-field>
+                        </div>
+                        <div class="col-2" style="margin-right: 18px;">
+                            <mat-form-field class="example-full-width" appearance="fill">
+                            
+                                <mat-label>SO No</mat-label>
+                                    <input type="text" matInput list="so_list" formControlName="so_no" 
+                                    placeholder="">
+                                    
+                                    <mat-hint>SO No</mat-hint>
+                                    <datalist  id="so_list">
+                                        <option  >DA-01</option>
+                                        <option >DA-02</option>
+                                        <option >DA-03</option>
+                                    </datalist>
+                                
+                                
+                            </mat-form-field>
+                        </div>
+                        <div class="col-2" style="margin-right: 18px;">
+                          <mat-form-field appearance="fill">
+                            <mat-label>From date</mat-label>
+                            <input matInput [matDatepicker]="fromdate" formControlName="time_critical_date">
+                            <mat-datepicker-toggle matSuffix [for]="fromdate"></mat-datepicker-toggle>
+                            <mat-datepicker #fromdate></mat-datepicker>
+                          </mat-form-field>
+                        </div>
+                        <div class="col-2" style="margin-right: 18px;">
+                           
+                            
+                              <mat-form-field appearance="fill">
+                                <mat-label>To date</mat-label>
+                                <input matInput [matDatepicker]="todate" formControlName="time_critical_date">
+                                <mat-datepicker-toggle matSuffix [for]="todate"></mat-datepicker-toggle>
+                                <mat-datepicker #todate></mat-datepicker>
+                              </mat-form-field>
+                                
+                                
+                            
+                        </div>
+                        <div class="col-2" style="margin-right: 18px;">
+                            <mat-form-field class="example-full-width" appearance="fill">
+                            
+                                <mat-label>Customer</mat-label>
+                                    <input type="text" matInput list="customer" formControlName="customer_no" 
+                                    placeholder="">
+                                    
+                                    <mat-hint>Customer</mat-hint>
+                                    <datalist  id="customer_list">
+                                        <option  >DA-01</option>
+                                        <option >DA-02</option>
+                                        <option >DA-03</option>
+                                    </datalist>
+                                
+                                
+                            </mat-form-field>
+                        </div>
+                        <div class="col-1">
+                            
+                            
+                                <button mat-raised-button color="primary" (click)="filter_table()"  >Filter <mat-icon>search</mat-icon></button>
+                                
+                                
+                            
+                        </div>
+                    
+                
+                </div>
+            </div>
+        </form>
+      <div class="row">
+        <div class="col-12">
+            <div class="card-box table-responsive">
+              
+              
+            
+              <table  class="table table-bordered table-striped table-hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" style="overflow: scroll;">
+                    <thead>
+                        <tr>
+                           
+                            <th style="width: 30px;">Sl.no</th>
+                            <th style="width: 130px;">Project ID</th>
+                            <th style="width: 130px;">So no</th>
+                            <th  style="width: 130px;" >Billing no.</th>
+                            <th style="width: 130px;">Tax inv no.</th>
+
+                            <th   style="width: 130px;">Tax inv Date</th>
+                            <th style="width: 130px;" >Challan no.</th>
+                            <th  style="width: 130px;">Challan Created Date</th>
+                            <th style="width: 230px;"> Ship to Party Name </th>
+                            <th style="width: 230px;">Sold to Party </th>
+
+                            <th  style="width: 130px;">Job Code </th>
+                         
+                            <th  style="width: 130px;">Tax invoice total tax value </th>
+                            <th style="width: 130px;">Tax invoice total value </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                            <tr *ngFor="let subskill of tablelist;let i=index">
+                            
+                            
+                            <td >{{i+1}}</td>
+                            <td></td>
+                            <td ></td>
+                            <td>{{subskill.billing_number}}</td>
+                            <td>{{subskill.tax_invoice_number}}</td>
+
+                            <td>{{subskill.tax_invoice_date}}</td>
+                            <td>{{subskill.challan_no}}</td>
+                            <td>{{subskill.challan_create_date}}</td>
+                            <td>{{subskill.ship_to_party_name}}</td>
+                            <td>{{subskill.sold_to_party_name}}</td>
+
+                            <td></td>
+                            <td></td>  
+                            <td></td>
+                               </tr> 
+                            
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+  
+    </div>
+  </div>
+  <!-- <div class="d-flex justify-content-center">
+    <div class="spinner-border" role="status" >
+      <span  id="loading"></span>
+    </div>
+  </div> -->

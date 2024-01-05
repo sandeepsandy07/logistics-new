@@ -1,0 +1,33 @@
+<h4 style="font-weight: bold;color: 2f92c5;text-align: center;font-size: 20px;">{{month_year}}</h4>
+<div class="row">
+   
+        <div class="col-3 mt-2"  *ngFor="let subskill of passed_result_list;let i=index">
+            <!-- <mat-card  class="icon-rocket" style="text-align: center;" (click)="daNavigation_da_report('/material/DA-details-report',subskill.records)"> -->
+                <mat-card  class="icon-rocket" style="text-align: center;" (click)="show_billing_da_details(subskill.records)">
+                
+                <div class="col-12">
+                    <h4 style="background-color: #2f92c5;font-weight: bold;color: white;text-align: center;font-size: 20px;">{{subskill.dept}}</h4>
+                </div>
+                <div class="row">
+                    <div class="col-12" style="display: flex;">
+                        <div class="col-12 mr-2" style="background-color:white; border-radius: 50px;color:  #64a7f7; font-weight: bold;">
+                            <div class="col-12" style="font-size: 16px;" >
+                                <span>{{subskill.dept_wise_total_amt | number}}</span>
+                            </div>
+                                                   
+                        </div>
+                       
+                        
+                    
+                    </div>
+        
+                </div>
+               
+            </mat-card>
+        </div>
+    
+</div>
+
+<div class="col-12" align="center">  
+    <button color="warn" mat-raised-button mat-dialog-close style="margin-left:20px;" (click)="dialogClose()">Close</button>
+</div> 

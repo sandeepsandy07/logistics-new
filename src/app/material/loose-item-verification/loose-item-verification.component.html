@@ -1,0 +1,122 @@
+<div style="text-align: center;margin-top:10px;">
+    <span>
+        <h2 style="font-size: 25px;">Items Verification</h2>
+    </span>
+</div>
+
+
+
+<div class="">
+  <div class="row">
+    <div class="col-md-6">
+      <button *ngIf="itemVerficationPage != true" (click)="changePage()" mat-raised-button color="primary" type="submit">Click to Items Verification Page</button>                          
+      <button *ngIf="itemVerifiedPage != true" (click)="changePage()" mat-raised-button color="primary" type="submit">Click to Items Verified Page</button>                         
+    </div>  
+    <div class="col-md-6" style="text-align: right;">
+      <button mat-raised-button color="primary" type="submit" (click)="submitData()">Submit</button>                         
+    </div>                            
+  </div>
+    <div *ngIf="ListForm">
+        <div class="row mt-3">
+            <div class="col-md-12" *ngIf="itemVerficationPage == true"> 
+                <table class="lessons-table mat-elevation-z8" mat-table [dataSource]="dataSource">
+                  
+                  <ng-container matColumnDef="SLNo.">
+                      <th mat-header-cell *matHeaderCellDef width="3%">SLNo.</th>
+                      <td mat-cell *matCellDef="let element;let i=index;">{{i+1}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="ItemID">
+                        <th mat-header-cell *matHeaderCellDef width="3%" >ItemID</th>
+                        <td mat-cell *matCellDef="let element">{{element?.id}}</td>
+                    </ng-container>
+
+                      <ng-container matColumnDef="Item Description" class="item">
+                        <th mat-header-cell *matHeaderCellDef width="10%">Item Description</th>
+                        <td mat-cell *matCellDef="let element">{{element?.item_desc}}</td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="TotalQty">
+                        <th mat-header-cell *matHeaderCellDef width="5%">TotalQty</th>
+                        <td mat-cell *matCellDef="let element">{{element?.qty}}</td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="PendingQty">
+                        <th mat-header-cell *matHeaderCellDef width="5%">PendingQty</th>
+                        <td mat-cell *matCellDef="let element">{{element?.pending_qty == null ? element?.qty : element?.pending_qty}}</td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="Checked Qty">
+                        <th mat-header-cell *matHeaderCellDef width="5%">Checked Qty</th>
+                        <td mat-cell *matCellDef="let element;let i=index;">
+                            <input class="qty full-appearance" matInput placeholder="Qty" [(ngModel)]="checkedQty[i]" (keyup)="checkedQTY(element, i)"  required minlength="1"></td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="Remarks">
+                        <th mat-header-cell *matHeaderCellDef width="5%">Remarks</th>
+                        <td mat-cell *matCellDef="let element;let i=index;">
+                            <textarea class="full-appearance" matInput placeholder="Enter Remarks" [(ngModel)]="remarks[i]"  ngModel required minlength="1"></textarea></td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="Verify">
+                        <th mat-header-cell *matHeaderCellDef width="5%">Verify</th>
+                        <td mat-cell *matCellDef="let element;let i=index">
+                          <mat-checkbox [checked]="false" #checkbox (click)="setCheckbox(element, i, !checkbox.checked)"></mat-checkbox>
+                        </td>
+                      </ng-container>
+                      
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    
+                </table>
+            </div>
+
+
+            <div class="col-md-12" *ngIf="itemVerifiedPage == true"> 
+              <table class="lessons-table mat-elevation-z8" mat-table [dataSource]="verifiedItems">
+                
+                <ng-container matColumnDef="SLNo.">
+                    <th mat-header-cell *matHeaderCellDef width="3%">SLNo.</th>
+                    <td mat-cell *matCellDef="let element;let i=index;">{{i+1}}</td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="ItemID">
+                      <th mat-header-cell *matHeaderCellDef width="3%" >ItemID</th>
+                      <td mat-cell *matCellDef="let element">{{element?.item_id}}</td>
+                  </ng-container>
+
+                    <ng-container matColumnDef="Item Description">
+                      <th mat-header-cell *matHeaderCellDef width="10%">Item Description</th>
+                      <td mat-cell *matCellDef="let element">{{element?.item_desc}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Status">
+                      <th mat-header-cell *matHeaderCellDef width="5%">Status</th>
+                      <td mat-cell *matCellDef="let element">{{element?.status}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Remarks">
+                      <th mat-header-cell *matHeaderCellDef width="5%">Remarks</th>
+                      <td mat-cell *matCellDef="let element;let i=index;">{{element?.remarks}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="CreatedAt">
+                      <th mat-header-cell *matHeaderCellDef width="5%">Created Date</th>
+                      <td mat-cell *matCellDef="let element;let i=index;">{{element?.created_at | date: 'dd/MM/yyyy'}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="CreatedBy">
+                      <th mat-header-cell *matHeaderCellDef width="5%">Created By</th>
+                      <td mat-cell *matCellDef="let element;let i=index;">{{element?.user}}</td>
+                    </ng-container>
+                    
+                  <tr mat-header-row *matHeaderRowDef="verifiedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: verifiedColumns;"></tr>
+                  
+              </table>
+          </div>
+        </div>
+      </div>
+</div>
+
+

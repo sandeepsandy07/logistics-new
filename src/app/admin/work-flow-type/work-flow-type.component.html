@@ -1,0 +1,250 @@
+<div *ngIf="success;then showform;else showtable"></div>
+<ng-template #showform>
+  <div class="wrapper " >
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+          
+              <h4 class=""><b>Work Flow Create </b></h4>
+             
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12"> 
+                <div class="card-box">
+                   
+                  
+                  <form  [formGroup]="form" >
+                    <div style="border: 1px solid whitesmoke;background: #d0dedf26;">
+
+                   <div class="row">
+                    <div class="col-3">
+                      <mat-form-field class="example-full-width" appearance="fill">
+                          <mat-label>Work Flow Name</mat-label>
+                         
+                          <input type="text" matInput  [errorStateMatcher]="matcher" (keyup)="check_for_name($event)" formControlName="wf_name"
+                                 placeholder="">
+                         
+                                
+                          <mat-hint>Job code 21MC10</mat-hint>
+                          <mat-error *ngIf="f.wf_name.errors?.required">
+                            Job code is <strong>required</strong>
+                          </mat-error>
+                          
+                         
+                        </mat-form-field>
+
+                      </div>
+                    <div class="col-3">
+                        <mat-form-field class="example-full-width" appearance="fill">
+                            <mat-label>Slug Name</mat-label>
+                            <input type="text" matInput formControlName="slug_name" [errorStateMatcher]="matcher"
+                                   placeholder="">
+                            <mat-hint>Job Name</mat-hint>
+                            <mat-error *ngIf="f.slug_name.errors?.required">
+                              Job Name is <strong>required</strong>
+                            </mat-error>
+                          </mat-form-field>
+                    </div>
+  
+                    
+                   
+                      
+                    
+                  </div>
+                  <br>
+                  <br>
+                  <br>
+                  <div formArrayName="flow_details">               
+                    <div class="row"   *ngFor="let contactDetail of contactDetails().controls; let i=index" [formGroupName]="i" >
+                      <div class="col-2">                      
+                        <mat-form-field class="example-full-width" appearance="fill">
+                          <mat-label>Approval</mat-label>
+                          
+                           <mat-select formControlName="approver" >
+                            <mat-option value="">Select Option</mat-option>
+                            <mat-option value="CMN">Checker</mat-option>
+                            <mat-option value="Logistics">PM</mat-option>
+                            <mat-option value="GM">GM</mat-option>
+                            <mat-option value="QA">QA</mat-option>  
+                            <mat-option value="BU">BU</mat-option> 
+                            <mat-option value="Finance">Finance</mat-option> 
+                            <mat-option value="CMM">CMM</mat-option> 
+                            <mat-option value="Production Manager">Production Manager</mat-option>
+                            <mat-option value="MQA">MQA</mat-option> 
+
+                           </mat-select>
+                          <mat-hint> Approval!</mat-hint>
+                         
+                        </mat-form-field>
+                      </div>
+                      <div class="col-2">
+                            <mat-form-field class="example-full-width" appearance="fill">
+                              <mat-label>level</mat-label>
+                              <input type="number" matInput formControlName="level" [errorStateMatcher]="matcher" 
+                                     placeholder="" readonly>
+                              <mat-hint>Approve Level </mat-hint>
+                              <!-- <mat-error *ngIf="f.email.errors?.email">
+                                to is <strong>required</strong>
+                              </mat-error> -->
+                            </mat-form-field>
+                         
+                        </div>
+                        <div class="col-3" *ngIf="contactDetails().length == (i+1)">
+                          <mat-checkbox formControlName="parallel" color="primary" >
+                            parallel
+                          </mat-checkbox>
+                         
+                          <mat-form-field class="example-full-width" appearance="fill" style="width: 90px;">
+                            <mat-label>Parallel Count</mat-label>
+                            <input type="number" matInput formControlName="stage" [errorStateMatcher]="matcher" 
+                                   placeholder="" >
+                                   <!-- <mat-hint>Same level count </mat-hint> -->
+                          
+                          </mat-form-field>
+                          </div>
+                          <div class="col-3" *ngIf="contactDetails().length != (i+1)">
+                           
+                            <mat-checkbox formControlName="parallel" color="primary" [disabled]="true" >
+                              parallel
+                            </mat-checkbox>
+                            <mat-form-field class="example-full-width" appearance="fill" style="width: 90px;">
+                              <mat-label>Parallel Count</mat-label>
+                              <input type="number" matInput formControlName="stage" [errorStateMatcher]="matcher" 
+                                     placeholder="" readonly>
+                              <!-- <mat-hint>Same level count </mat-hint> -->
+                            
+                            </mat-form-field>
+                            </div>
+                          <div class="col-2">
+                            <mat-form-field class="example-full-width" appearance="fill">
+                              <mat-label>Approver{{form.value.flow_details[i].emp_id[0]}}</mat-label>
+                              
+                              <mat-select formControlName="emp_id" multiple [(value)]="form.value.flow_details[i].emp_id"> 
+                                <mat-select-trigger>
+                                  {{form.value.flow_details[i].emp_id ? form.value.flow_details[i].emp_id[0] : ''}}
+                                  <span *ngIf="form.value.flow_details[i].emp_id?.length > 1" class="example-additional-selection">
+                                    (+{{form.value.flow_details[i].emp_id.length - 1}} {{form.value.flow_details[i].emp_id?.length === 2 ? 'other' : 'others'}})
+                                  </span>
+                                </mat-select-trigger>
+                                <mat-option>-select-</mat-option>
+                                <mat-option *ngFor="let subskill of userList" [value]="subskill.id" >
+                                     {{subskill.employee_name }}
+                                </mat-option>
+                            
+                              </mat-select>
+                             
+                            </mat-form-field>
+                          
+                            
+                          </div>
+                          <div class="col-2">
+                            <mat-form-field class="example-full-width" appearance="fill">
+                              <mat-label>Notification{{form.value.flow_details[i].notify_emp_id[0]}}</mat-label>
+                              
+                              <mat-select formControlName="notify_emp_id" multiple [(value)]="form.value.flow_details[i].notify_emp_id"> 
+                                <mat-select-trigger>
+                                  {{form.value.flow_details[i].notify_emp_id ? form.value.flow_details[i].notify_emp_id[0] : ''}}
+                                  <span *ngIf="form.value.flow_details[i].notify_emp_id?.length > 1" class="example-additional-selection">
+                                    (+{{form.value.flow_details[i].notify_emp_id.length - 1}} {{form.value.flow_details[i].notify_emp_id?.length === 2 ? 'other' : 'others'}})
+                                  </span>
+                                </mat-select-trigger>
+                                <mat-option>-select-</mat-option>
+                                <mat-option *ngFor="let subskill of userList" [value]="subskill.id" >
+                                     {{subskill.employee_name }}
+                                </mat-option>
+                            
+                              </mat-select>
+                             
+                            </mat-form-field>
+                          
+                            
+                          </div>
+                        <div class="col-1 display_incenter" >
+                          <mat-icon *ngIf="contactDetails().length == (i+1)"  (click)="removeContactdetails(i)" style="color: red;">delete_forever</mat-icon>
+                          <mat-icon *ngIf="contactDetails().length == (i+1)" (click)="addContactdetails(i)" style="color: blue;" >add_box</mat-icon>
+                         
+                        </div>
+                      </div>
+                      <br>
+                      
+                        </div>
+                </div>
+                <div class="row" style="display: grid;align-items: end;">
+                  <mat-grid-list style="text-align:center" cols="2" rowHeight="4:1">
+                    <!-- <button mat-raised-button color="success" class="mx-4" (click)="onSavePost()">Save</button> -->
+                    <button mat-raised-button color="primary"(click)="onSubmitPost()" >Submit</button>
+                   
+                  </mat-grid-list>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+    </div>
+    </div>
+
+</ng-template>
+<ng-template #showtable>
+    <div class="wrapper">
+        <div class="container-fluid">
+      
+            <div class="row" style="padding: 5px;">
+                <div class="col-6">
+              
+                  <h4 class=""><b>Work Flow</b></h4>
+                 
+                </div>
+                <div class="col-6">
+                  
+                  <button mat-raised-button color="primary"(click)="createWorkFlow()"  style="float:right">Create</button>
+                 
+                </div>
+            </div>
+          <div class="row">
+            <div class="col-12">
+                <div class="card-box table-responsive">
+                  
+                
+                  <table class="table table-bordered table-striped table-hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+                        <thead>
+                            <tr>                               
+                               <th  width="10%">Sl.no</th>
+                                <th  width="10%">Work Flow Name</th>
+                                <th  width="12%">Total Levels</th>                               
+                                <th  width="10%">created_by </th>
+                                <th  width="10%">Action </th>
+                              
+                            </tr>
+                        </thead>
+                        <tbody>
+                           
+                              <tr *ngFor="let subskill of tablelist;let i=index;">
+                                
+                                <td>{{i+1}}</td>                               
+                                <td >{{subskill.wf_name}}</td>
+                                <td>{{subskill.total_level}}</td>
+                                <td>{{subskill.created_by}}</td>                            
+                                <td> 
+                                  <mat-icon (click)="onEditMode(subskill.wf_id)">edit</mat-icon>
+                                </td>  
+                              </tr>
+       
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+      
+        </div>
+      </div>
+
+</ng-template>
+
+
+
+
+
+
+
+

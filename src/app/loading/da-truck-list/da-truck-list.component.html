@@ -1,0 +1,215 @@
+<mat-tab-group   >
+
+  <mat-tab label="Delivery Challan">
+ 
+
+<div class="wrapper">
+    <div class="container-fluid">
+      <div>
+        <div class="col-3">
+
+           <button type="submit" style="margin-top:1px;margin-left:40rem;" mat-raised-button color="primary" (click)="getTruckDetails()">Truck Details Pdf</button>
+          
+          </div>
+      </div>
+  
+       
+
+      <div class="row">
+        <div class="col-12">
+            <div class="card-box table-responsive">
+              
+            
+              <table class="table table-bordered table-striped table-hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+                    <thead>
+                        <tr>
+                            <th >Sl.no</th>
+                            <th  >Vehicle No.</th>
+                            <th  >Truck Type</th>
+                            <th >DA No</th>
+                            <th>SO No</th>
+                            <th>Customer Name</th>
+                            <th>LR No</th>
+                            <th >Status</th>  
+                            <th style="width:150px;" >Actions</th>
+                            <th >upload file</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                            <tr *ngFor="let subskill of tablelist;let i=index">
+                            <td>{{i + 1}}</td>
+                            <td >{{subskill.vehicle_no}}</td>
+                            <td>{{subskill.truckName}}</td>
+                            <td><span >{{subskill.da_jobcode}}</span></td>
+                            <td >{{subskill.sono}}</td>
+                            <td >{{subskill.customer_name}}</td>
+                            <td >{{subskill.LRNo}}</td>
+                            <td>{{subskill.status}}</td>
+                           <td>
+                           <mat-icon *ngIf="subskill.status != 'loaded'" (click)="daNavigation(subskill.truckListId,'/loading/truckdeliverychallan','edit','false','true')" style="color: #5382a3;">edit</mat-icon>
+                           <mat-icon  *ngIf="subskill.status != 'loaded'"  (click)="daNavigation(subskill.truckListId,'/loading/truckdeliverychallan','View','true','true')" style="color: #5382a3;">visibility</mat-icon>
+                           <!-- <mat-icon  *ngIf="subskill.status != 'loaded'"  (click)="dalistNavigation(subskill.truckListId,'/loading/truckdeliverychallan','View','true')" style="color: #5382a3;">visibility</mat-icon> -->
+                           <button  *ngIf="subskill.status == 'loaded'" type="button" class="btn btn-success" (click)="daNavigation(subskill.truckListId,'/loading/truckdeliverychallan','Create','false','true')">Enter DC</button>
+                           <mat-icon  *ngIf="subskill.status != 'loaded'" style="font-size:25px;float:right" (click)="generateDispatchDetailsPdf(subskill.truckListId,subskill.da_id[0])">print</mat-icon>
+                           <mat-icon  *ngIf="subskill.status != 'loaded'" style="font-size:25px;float:right" (click)="generateAnnexurePdf(subskill.truckListId)">print</mat-icon>
+                          </td>
+                           <button   type="button" class="btn " style="background-color: #f7d324;" (click)="openTruckFileUploadView(subskill.truckListId)">upload/view</button>
+                           <td></td>
+                         
+                          <!-- <td>
+                           <a [routerLink]="['/material/da/',subskill.da_id]">  <mat-icon>edit</mat-icon></a>
+
+                            <mat-icon  (click)="daNavigation(subskill.da_id,'material/DA-details')">visibility</mat-icon>
+                         
+                         </td> -->
+                               </tr>
+  
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+  
+    </div>
+  </div>
+</mat-tab>
+<mat-tab label="Created Delivery Challan">
+  <form  [formGroup]="form" enctype="multipart/form-data"  >
+    <div class="row" style="margin: unset;" >
+      <div class="col-1">
+        <button mat-raised-button color="primary" (click)="showfilter= !showfilter">Filter <mat-icon>search</mat-icon></button>
+      </div>
+      <div class="col-11" *ngIf="showfilter">
+        <div class="row" >
+          
+            <div class="col-2" >
+              <mat-form-field class="example-full-width" appearance="fill">
+                      <input type="text" matInput formControlName="da_no" 
+                      placeholder="DA No">
+              </mat-form-field>
+            </div>
+    
+            <div class="col-2" >
+              <mat-form-field class="example-full-width" appearance="fill">
+                      <input type="text" matInput formControlName="so_no" 
+                      placeholder="So No">
+              </mat-form-field>
+            </div>
+            <div class="col-2" >
+              <mat-form-field class="example-full-width" appearance="fill">
+                      <input type="text" matInput formControlName="vehicle_no" 
+                      placeholder="Vehicle No">
+              </mat-form-field>
+            </div>
+            <div class="col-2" >
+              <mat-form-field class="example-full-width" appearance="fill">
+                      <input type="text" matInput formControlName="lrn_no" 
+                      placeholder="LRN No">
+              </mat-form-field>
+            </div>
+            <div  class="col-2" >
+              <!-- <mat-form-field style="display: block;">
+                  <mat-label>Enter DA date range</mat-label>
+                  <mat-date-range-input [rangePicker]="picker">
+                    <input matStartDate  placeholder="Start date"  formControlName="fromdate" >
+                    <input matEndDate  placeholder="End date"  formControlName="todate" >
+                  </mat-date-range-input>
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-date-range-picker #picker></mat-date-range-picker>
+                </mat-form-field> -->
+            </div>
+            <div class="col-2">
+             
+                
+                   <button  mat-raised-button color="primary" (click)="getRecordsBasedOnFilterData()" style="background-color: #30dc1d;"><mat-icon>search</mat-icon></button>
+
+                
+                  <button  mat-raised-button color="primary" (click)="clearAllFilterDataFields()" style="    background-color: #f11515bd;">Clear</button>
+                  
+               
+
+              
+
+
+  
+
+          
+        </div>
+
+        
+      </div>
+      
+
+      </div>
+    </div>
+    </form>
+    <div class="wrapper">
+      <div class="container-fluid">
+    
+         
+  
+        <div class="row">
+          <div class="col-12">
+              <div class="card-box table-responsive">
+                
+              
+                <table class="table table-bordered table-striped table-hover" datatable [dtOptions]="dtOptions2" [dtTrigger]="dtTrigger2">
+                      <thead>
+                          <tr>
+                              <th >Sl.no</th>
+                              <th  >Vehicle No.</th>
+                              <th  >Truck Type</th>
+                              <th >DA No</th>
+                              <th>SO No</th>
+                              <th>Customer Name</th>
+                              <th>LR No</th>
+                              <th >Status</th>  
+                              <th style="width:150px;" >Actions</th>
+                              <th >upload file</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                              <tr *ngFor="let subskill of tablelist2;let i=index">
+                              <td>{{i + 1}}</td>
+                              <td >{{subskill.vehicle_no}}</td>
+                              <td>{{subskill.truckName}}</td>
+                              <td><span >{{subskill.da_jobcode}}</span></td>
+                              <td >{{subskill.sono}}</td>
+                              <td >{{subskill.customer_name}}</td>
+                              <td >{{subskill.LRNo}}</td>
+                              <td>{{subskill.status}}</td>
+                             <td>
+                             <mat-icon *ngIf="subskill.status != 'loaded'" (click)="daNavigation(subskill.truckListId,'/loading/truckdeliverychallan','edit','false','true')" style="color: #5382a3;">edit</mat-icon>
+                             <mat-icon  *ngIf="subskill.status != 'loaded'" (click)="daNavigation_tab(subskill.truckListId,'material/DA-details')"    style="color: #5382a3;">visibility</mat-icon>
+                             <!-- <mat-icon  *ngIf="subskill.status != 'loaded'"  (click)="dalistNavigation(subskill.truckListId,'/loading/truckdeliverychallan','View','true')" style="color: #5382a3;">visibility</mat-icon> -->
+                             <button  *ngIf="subskill.status == 'loaded'" type="button" class="btn btn-success" (click)="daNavigation(subskill.truckListId,'/loading/truckdeliverychallan','Create','false','true')">Enter DC</button>
+                             <mat-icon  *ngIf="subskill.status != 'loaded'" style="font-size:25px;float:right" (click)="generateDispatchDetailsPdf(subskill.truckListId,subskill.da_id[0])">print</mat-icon>
+                             <mat-icon  *ngIf="subskill.status != 'loaded'" style="font-size:25px;float:right" (click)="generateAnnexurePdf(subskill.truckListId)">print</mat-icon>
+                            </td>
+                             <button   type="button" class="btn " style="background-color: #f7d324;" (click)="openTruckFileUploadView(subskill.truckListId)">upload/view</button>
+                             <td></td>
+                           
+                            <!-- <td>
+                             <a [routerLink]="['/material/da/',subskill.da_id]">  <mat-icon>edit</mat-icon></a>
+  
+                              <mat-icon  (click)="daNavigation(subskill.da_id,'material/DA-details')">visibility</mat-icon>
+                           
+                           </td> -->
+                                 </tr>
+    
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      </div>
+    
+      </div>
+    </div>
+</mat-tab>
+
+</mat-tab-group>
+  <div class="d-flex justify-content-center">
+    <div class="spinner-border" role="status" >
+      <span  id="loading"></span>
+    </div>
+  </div>

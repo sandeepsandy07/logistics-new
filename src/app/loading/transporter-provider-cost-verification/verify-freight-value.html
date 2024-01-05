@@ -1,0 +1,171 @@
+<div style="text-align: center;">
+    <span>
+        <h2 style="font-size: 25px;">Verify Freight Amount</h2>
+    </span>
+</div>
+<br>
+
+<div class="container">
+    <br>
+    <div class="row">
+      <div class="col-2">
+        <label>Challan No</label>
+      </div>
+      <div class="col-2">
+        <span>:&nbsp;<b>{{data.element.challan_number}}</b></span>
+      </div>
+      <div class="col-2">
+        <label>Invoice No</label>
+      </div>
+      <div class="col-2">
+        <span>:&nbsp;<b>{{data.element.inv_no}}</b></span>
+      </div>
+      <div class="col-2">
+        <label>LRNO</label>
+      </div>
+      <div class="col-2">
+        <span>:&nbsp;<b>{{data.element.lrn_no}}</b></span>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-2">
+        <label>LR Date</label>
+      </div>
+      <div class="col-2">
+        <span>:&nbsp;<b>{{data.element.lrn_date | date}}</b></span>
+      </div>
+      <div class="col-2">
+        <label>Transporter </label>
+      </div>
+      <div class="col-2">
+        <span>:&nbsp;<b>{{data.element.transporter}}</b></span>
+      </div>
+      <div class="col-2">
+        <label>Bill Submission Date to YIL</label>
+      </div>
+      <div class="col-2">
+        <span>:&nbsp;<b>{{data.element.bill_submission_date_to_yil | date}}</b></span>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-2">
+        <label>Transporter Bill Date</label>
+      </div>
+      <div class="col-2">
+        <span>:&nbsp;<b>{{data.element.transporter_bill_date}}</b></span>
+      </div>
+      <div class="col-2">
+        <label>Transporter Bill Number </label>
+      </div>
+      <div class="col-2">
+        <span>:&nbsp;<b>{{data.element.transporter_bill_number}}</b></span>
+      </div>
+      <div class="col-2">
+        <label>Approved Date</label>
+      </div>
+      <div class="col-2">
+        <span>:&nbsp;<b>{{data.element.approved_date | date}}</b></span>
+      </div>
+    </div>
+
+    <div class="row">
+        <div class="col-2">
+          <label style="background-color:rgb(199, 229, 239);font-size:small;">Freight Amount</label>
+        </div>
+        <div class="col-2">
+          <span>:&nbsp;<b>{{data.element.freight_amount}}</b></span>
+        </div>
+        <div class="col-2">
+          <label style="background-color:rgb(199, 229, 239);font-size:small;">Other charges </label>
+        </div>
+        <div class="col-2">
+          <span>:&nbsp;<b>{{data.element.other_charges}}</b></span>
+        </div>
+        <div class="col-2">
+          <label style="background-color:rgb(199, 229, 239);font-size:small;">Total Freight</label>
+        </div>
+        <div class="col-2">
+          <span>:&nbsp;<b>{{data.element.total_freight}}</b></span>
+        </div>
+      </div>
+
+<div class="row">
+  <div class="col-2">
+    <label style="background-color:rgb(240, 181, 166);font-size:small;">Revised Freight Amount</label>
+  </div>
+  <div class="col-2">
+    <span>:&nbsp;<b>{{data.element.sec_freight_amount}}</b></span>
+  </div>
+  <div class="col-2">
+    <label style="background-color:rgb(240, 181, 166);font-size:small;">Revised Other charges </label>
+  </div>
+  <div class="col-2">
+    <span>:&nbsp;<b>{{data.element.sec_other_charges}}</b></span>
+  </div>
+  <div class="col-2">
+    <label style="background-color:rgb(240, 181, 166);font-size:small;">Revised Total Freight</label>
+  </div>
+  <div class="col-2">
+    <span>:&nbsp;<b>{{data.element.sec_total_freight}}</b></span>
+  </div>
+</div>
+
+</div>
+<br>
+
+
+<form [formGroup]="uploadForm"  enctype="multipart/form-data" #myForm="ngForm">
+  <div class="row">
+    <div class="col-3">
+        <mat-form-field class="example-full-width" appearance="fill">
+                <input type="text" matInput formControlName="reductionAmount" 
+                placeholder="Enter Amount to Reduce">
+        </mat-form-field>
+    </div>
+    <div class="col-3">
+        <mat-form-field class="example-full-width" appearance="fill">
+                <input type="text" matInput formControlName="remarks" 
+                placeholder="Enter Remarks">
+        </mat-form-field>
+    </div>
+
+    <div class="col-md-3">
+        <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Status</mat-label>
+                    <mat-select #statustypeselect  formControlName="status" (selectionChange) ='onStatusTypeSelected(statustypeselect.value)'>
+                    <mat-option value="Approved">Approved</mat-option>
+                    <!-- <mat-option value="Returned For Modification">Returned For Modification</mat-option> -->
+                    <mat-option value="Hold">Hold</mat-option>
+                </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-3">
+          <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>Bill Type</mat-label>
+                      <mat-select #billtypeselect  formControlName="bill_type" (selectionChange) ='onBillTypeSelected(billtypeselect.value)'>
+                      <mat-option value="PrimaryBill">Primary Bill</mat-option>
+                      <mat-option value="SecondaryBill">Secondary Bill</mat-option>
+                  </mat-select>
+            </mat-form-field>
+          </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3">
+            <button type="submit" mat-raised-button color="primary" (click)="updateTransportationProviderFinalFreight()">Submit</button>
+        </div>
+
+      <div class="col-3">
+          <button mat-raised-button (click)="closeCheckOutDialog()" color="warn">Close</button>
+      </div>
+      </div>
+ </form>
+
+
+
+ 
+
+

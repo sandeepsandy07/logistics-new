@@ -1,0 +1,192 @@
+
+<mat-dialog-content>
+    
+    <!-- <span style="cursor: pointer;" (click)="addvalue()"><h4>ADD</h4>&nbsp;&nbsp;<mat-icon>add_box</mat-icon></span>
+
+    <div *ngFor="let value of values; let i = index"> 
+        <span>ITEM NAME :</span><input matInput type="text" [(ngModel)]="value.item_description" #name="ngModel" name="value{{i}}">&nbsp;&nbsp;&nbsp;&nbsp;
+        <span>ITEM QTY :</span><input matInput type="text" [(ngModel)]="value.item_qty" #name="ngModel" name="value{{i}}">&nbsp;&nbsp;&nbsp;&nbsp;
+        <span style="cursor: pointer; vertical-align: top;"><mat-icon (click)="removevalue(i)">highlight_off</mat-icon></span><br><br> -->
+     <!-- <div formArrayName="contact_details">               
+                  <div class="row"   *ngFor="let contactDetail of contactDetails().controls; let i=index" [formGroupName]="i" >
+                    <div class="col-3">                      
+                          <mat-form-field class="example-full-width" appearance="fill">
+                            <mat-label>Contact Person({{i+1}})</mat-label>
+                            <input type="text" matInput formControlName="name" 
+                                   placeholder="">
+                            <mat-hint>Contact Person  name</mat-hint> -->
+                            <!-- <mat-error *ngIf="f.contact_details.name.errors?.required">
+                              name is <strong>invalid</strong> 
+                            </mat-error> -->
+                        <!-- </mat-form-field>
+                    </div>
+                    <div class="col-3">
+                          <mat-form-field class="example-full-width" appearance="fill">
+                            <mat-label>E-Mail ID({{i+1}})</mat-label>
+                            <input type="email" matInput formControlName="email" 
+                                   placeholder="">
+                            <mat-hint>Contact Person  E-Mail ID </mat-hint> -->
+                            <!-- <mat-error *ngIf="f.email.errors?.email">
+                              to is <strong>required</strong>
+                            </mat-error> -->
+                          <!-- </mat-form-field>
+                       
+                      </div>
+                      <div class="col-3">
+                          <mat-form-field class="example-full-width" appearance="fill">
+                            <mat-label>Mobile No.({{i+1}}) </mat-label>
+                            <input type="text" matInput formControlName="mobile" 
+                                   placeholder="">
+                                   <mat-hint>Mobile number</mat-hint> -->
+                            <!-- <mat-error *ngIf="f.mobile.errors?.pattern">
+                              to is <strong>required</strong> 
+                        </mat-error> -->
+                          <!-- </mat-form-field>
+                        </div>
+                        <div class="col-2">
+                          <mat-form-field class="example-full-width" appearance="fill">
+                            <mat-label>Fax No.({{i+1}})</mat-label>
+                            <input type="text" matInput formControlName="fax_no" 
+                                   placeholder="">
+                                   <mat-hint>Fax number</mat-hint> -->
+                         
+                            <!-- <mat-error *ngIf="f.insurance_con_fax.errors?.pattern">
+                              Fax No is <strong>invalid</strong>
+                             </mat-error> -->
+                          <!-- </mat-form-field>
+                          
+                      </div>
+                      <div class="col-1 display_incenter" >
+                        <mat-icon *ngIf="contactDetails().length != 1"  (click)="removeContactdetails(i)" style="color: red;">delete_forever</mat-icon>
+                        <mat-icon *ngIf="contactDetails().length == (i+1)" (click)="addContactdetails()" style="color: blue;" >add_box</mat-icon>
+                       
+                      </div>
+                    </div>
+                    <br>
+                      </div> -->
+    <!-- <div class="mt-2">
+        <span>Item Name :</span><input matInput type="text" [(ngModel)]="itemDescription">&nbsp;&nbsp;&nbsp;&nbsp;
+        <span>ITEM QTY :</span><input matInput type="text" [(ngModel)]="itemQty">&nbsp;&nbsp;&nbsp;&nbsp;
+    </div>
+
+    <div class="mt-4">
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" width="100%">
+
+            <ng-container matColumnDef="item_id">
+                <th mat-header-cell *matHeaderCellDef> ITEM NO </th>
+                <td mat-cell *matCellDef="let element; let i=index"> {{element.item_id}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="item_name">
+                <th mat-header-cell *matHeaderCellDef> ITEM NAME </th>
+                <td mat-cell *matCellDef="let element; let i=index"> {{element.item_description}} </td>
+            </ng-container>
+    
+            <ng-container matColumnDef="item_qty">
+                <th mat-header-cell *matHeaderCellDef> ITEM QTY </th>
+                <td mat-cell *matCellDef="let element; let i=index"> {{element.item_qty}} </td>
+            </ng-container>
+        
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    
+        </table>
+    </div> -->
+<div class="row">
+    <div class="col-6">
+
+        <div class="row">
+            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" width="100%">
+    
+                <ng-container matColumnDef="sl_no">
+                    <th mat-header-cell *matHeaderCellDef> sl no. </th>
+                    <td mat-cell *matCellDef="let element; let i=index"> {{i + 1}} </td>
+                </ng-container>
+    
+                <ng-container matColumnDef="item_name">
+                    <th mat-header-cell *matHeaderCellDef>Item Name </th>
+                    <td mat-cell *matCellDef="let element; let i=index"> {{element.item_name}} </td>
+                </ng-container>
+        
+                <ng-container matColumnDef="qty">
+                    <th mat-header-cell *matHeaderCellDef> Qty </th>
+                    <td mat-cell *matCellDef="let element; let i=index"> {{element.qty}} </td>
+                </ng-container>
+                <ng-container matColumnDef="remarks">
+                    <th mat-header-cell *matHeaderCellDef> Remarks </th>
+                    <td mat-cell *matCellDef="let element; let i=index"> {{element.remark}} </td>
+                </ng-container>
+            
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        
+            </table>
+    
+        </div>
+    </div>
+    <div class="col-6">
+        <form [formGroup]="empForm" (ngSubmit)="onSubmit()">
+            <div formArrayName="employees">
+                <div *ngFor="let employee of employees().controls; let empIndex=index">
+                <div [formGroupName]="empIndex" class="row" >
+    
+                    <div class="col-4">
+                        <mat-form-field class="example-full-width" appearance="fill" >
+                            <mat-label>Item name </mat-label>
+                            <input type="text" matInput formControlName="item_name" 
+                                   placeholder="">
+                            
+                           
+                          </mat-form-field>
+                    </div>
+                    <div class="col-2">
+                        <mat-form-field class="example-full-width" appearance="fill" style="width: 80px;">
+                            <mat-label>Qty</mat-label>
+                            <input type="text" matInput formControlName="qty" 
+                                   placeholder="">
+                           
+                           
+                          </mat-form-field>
+                        
+                    </div>
+                    <div class="col-4">
+                        <mat-form-field class="example-full-width" appearance="fill">
+                            <mat-label>Remarks</mat-label>
+                            <input type="text" matInput formControlName="remarks" 
+                                   placeholder="">
+                             
+                           
+                          </mat-form-field>
+                        
+                    </div>
+                    <div class="col-1">
+                        <mat-icon *ngIf="employees().length != 1"  (click)="removeEmployee(empIndex)" style="color: red;">delete_forever</mat-icon>
+                        <mat-icon *ngIf="employees().length == (empIndex+1)" (click)="addEmployee()" style="color: blue;" >add_box</mat-icon>
+                       
+                        
+                    </div>
+                    
+                    
+                  
+             
+                    
+                </div>
+                </div>
+               
+                </div>
+            
+        </form>
+    </div>
+</div>
+   
+  
+
+    
+   
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-raised-button color="primary" (click)="onSubmit()">Submit</button>
+    <button mat-raised-button mat-dialog-close (click)="dialogClose()">Close</button>
+</mat-dialog-actions>

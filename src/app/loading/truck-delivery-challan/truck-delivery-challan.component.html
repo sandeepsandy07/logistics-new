@@ -1,0 +1,249 @@
+<div class="wrapper " >
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+              <h4 class=""><b>{{action}}  Delivery Challan </b></h4>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12"> 
+                <div class="card-box">
+                  <form  [formGroup]="form" >
+                    <div style="border: 1px solid whitesmoke;background: #d0dedf26;">                 
+                        <div class="row" *ngIf="truck_details">
+                         <div class="col-3">
+                            <label> 
+                                Truck No.:
+                            </label>
+                            <span>
+                                {{truck_details.vehicle_no}}
+                            </span>
+                            
+                         </div>
+                         <div class="col-3">
+                            <label>
+                                Truck Type:
+                            </label>
+                            <span>{{truck_details.truckName}}</span>
+                         </div>
+                         <div class="col-3">
+                            <label>
+                                DA No.:
+                            </label>
+                            <span>{{truck_details.da_jobcode}}</span>
+                         </div>
+                        </div>
+                    </div>
+                    <br>
+                    
+
+                    <div style="border: 1px solid whitesmoke;background: #d0dedf26;">
+                   <div class="row">
+                    <div class="col-2" style="margin-right: 18px;">
+                        <mat-form-field class="example-full-width" appearance="fill">
+                            <mat-label>INVOICE NO</mat-label>
+                            <input type="text" maxlength="12" readonly="{{isReadOnly}}" matInput formControlName="inv_no" [errorStateMatcher]="matcher"
+                                   placeholder="">
+                            <mat-hint>INVOICE NO. MaxLength=12 characters</mat-hint>
+                          </mat-form-field>
+                    </div>
+                    <div class="col-2" style="margin-right: 28px;">
+                        <mat-form-field>
+                            <mat-label>INVOICE  date</mat-label>
+                            <input matInput readonly="{{isReadOnly}}" [matDatepicker]="picker" formControlName="inv_date">
+                            <mat-datepicker-toggle disabled="{{isReadOnly}}" matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                          </mat-form-field>
+                    </div>
+                    <div class="col-2" style="margin-right: 28px;">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Invoice Value</mat-label>
+                            <input type="number" readonly="{{isReadOnly}}" matInput formControlName="inv_amount" [errorStateMatcher]="matcher"
+                                   placeholder="">
+                            <mat-hint>Invoice Value</mat-hint>
+                          </mat-form-field>
+                    </div>
+                    <div class="col-2" style="margin-right: 18px;">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Truck Value</mat-label>
+                            <input type="number" readonly="{{isReadOnly}}" matInput formControlName="truck_amount" [errorStateMatcher]="matcher"
+                                   placeholder="">
+                            <mat-hint>Truck Value</mat-hint>
+                            <mat-error *ngIf="f.truck_amount.errors?.required">
+                                Truck Value is <strong>required</strong>
+                            </mat-error>
+                          </mat-form-field>
+                    </div>
+
+                    <div class="col-2" style="margin-right: 18px;">
+                        <mat-form-field appearance="fill" >
+                          <mat-label>Godown Type</mat-label>
+                          <mat-select formControlName="transportation_type" [(value)]="form.value.transportation_type" required>
+                            <mat-option value="DoorDelivery">Door Delivery</mat-option>
+                            <mat-option value="GodownDelivery">Godown Delivery</mat-option>
+                          </mat-select>
+                          <mat-hint>Transportation Mode</mat-hint>
+                        </mat-form-field>
+                      </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-3">
+                        <mat-form-field class="example-full-width" appearance="fill">
+                            <mat-label>E-way Bill No.</mat-label>
+                            <input type="text" readonly="{{isReadOnly}}" matInput formControlName="eway_bill_no" [errorStateMatcher]="matcher"
+                                   placeholder="">
+                            <mat-hint>E-way Bill No.</mat-hint>
+                            <mat-error *ngIf="f.eway_bill_no.errors?.required">
+                                E-way Bill No. is <strong>required</strong>
+                            </mat-error>
+                          </mat-form-field>
+                    </div>
+                    <div class="col-3">
+                        <mat-form-field class="example-full-width" appearance="fill">
+                            <mat-label>LRN No.</mat-label>
+                            <input type="text" readonly="{{isReadOnly}}" matInput formControlName="lrn_no" [errorStateMatcher]="matcher"
+                                   placeholder="">
+                            <mat-hint>LRN No.</mat-hint>
+                            <mat-error *ngIf="f.lrn_no.errors?.required">
+                                LRN No. is <strong>required</strong>
+                            </mat-error>
+                          </mat-form-field>
+                    </div>
+                    <div class="col-3">
+                          <mat-form-field appearance="fill">
+                            <mat-label>LRN date</mat-label>
+                            <input matInput readonly="{{isReadOnly}}" [matDatepicker]="picker1" formControlName="lrn_date">
+                            <mat-datepicker-toggle matSuffix [for]="picker1" disabled="{{isReadOnly}}"></mat-datepicker-toggle>
+                            <mat-datepicker #picker1></mat-datepicker>
+                          </mat-form-field>
+                    </div>
+                    <div class="col-3">
+                        <mat-form-field class="example-full-width" appearance="fill">
+                            <mat-label>Qty</mat-label>
+                            <input type="text" readonly="{{isReadOnly}}" matInput formControlName="qty" [errorStateMatcher]="matcher"
+                                   placeholder="">
+                            <mat-hint>Qty</mat-hint>
+                            <mat-error *ngIf="f.qty.errors?.required">
+                                Qty is <strong>required</strong>
+                            </mat-error>
+                          </mat-form-field>
+                    </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-3">
+                            <mat-form-field class="example-full-width" appearance="fill">
+                                <mat-label>Challan NO</mat-label>
+                                <input type="text" readonly="{{isReadOnly}}" matInput formControlName="challen_no" [errorStateMatcher]="matcher"
+                                       placeholder="" maxlength="11">
+                                <mat-error *ngIf="f.challen_no.errors?.maxlength"> 
+                                    Challan No can be max 11 characters long.
+                                </mat-error> 
+                                <mat-hint>Challan NO. MaxLength=11 characters</mat-hint>
+                                <mat-error *ngIf="f.challen_no.errors?.required">
+                                    Challan NO is <strong>required</strong>
+                                </mat-error>
+                              </mat-form-field>
+                        </div>
+
+                        <!-- <div class="col-3">
+                            <mat-form-field class="example-full-width" appearance="fill">
+                                <mat-label>Challan Date</mat-label>
+                                <input type="text" readonly="{{isReadOnly}}" matInput formControlName="challen_date" [errorStateMatcher]="matcher"
+                                       placeholder="">
+                                <mat-hint>Challan Date</mat-hint>
+                                <mat-error *ngIf="f.challen_date.errors?.required">
+                                    Challan Date is <strong>required</strong>
+                                </mat-error>
+                              </mat-form-field>
+                        </div> -->
+
+                        <div class="col-3">
+                            <mat-form-field appearance="fill">
+                              <mat-label>Challan date</mat-label>
+                              <input matInput readonly="{{isReadOnly}}" [matDatepicker]="picker3" formControlName="challen_date">
+                              <mat-datepicker-toggle matSuffix [for]="picker3" disabled="{{isReadOnly}}"></mat-datepicker-toggle>
+                              <mat-datepicker #picker3></mat-datepicker>
+                            </mat-form-field>
+                      </div>
+                      <div class="col-2" style="margin-right: 18px;">
+                        <mat-form-field class="example-full-width" appearance="fill">
+                            <mat-label>INVOICE 2 NO</mat-label>
+                            <input type="text" maxlength="12" readonly="{{isReadOnly}}" matInput formControlName="inv_no2" [errorStateMatcher]="matcher"
+                                   placeholder="">
+                            <mat-hint>INVOICE NO. MaxLength=12 characters</mat-hint>
+                          </mat-form-field>
+                    </div>
+                    <div class="col-2" style="margin-right: 28px;">
+                        <mat-form-field>
+                            <mat-label>INVOICE 2  date</mat-label>
+                            <input matInput readonly="{{isReadOnly}}" [matDatepicker]="picker" formControlName="inv_date2">
+                            <mat-datepicker-toggle disabled="{{isReadOnly}}" matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                          </mat-form-field>
+                    </div>
+                    <div class="col-2" style="margin-right: 28px;">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Invoice 2 Value</mat-label>
+                            <input type="number" readonly="{{isReadOnly}}" matInput formControlName="inv_amount2" [errorStateMatcher]="matcher"
+                                   placeholder="">
+                            <mat-hint>Invoice Value</mat-hint>
+                          </mat-form-field>
+                    </div>
+
+                            <div class="col-5">
+                                <div formArrayName="da_files">
+                                    <div class="row"   *ngFor="let daFile of daFiles().controls; let i=index" [formGroupName]="i" >
+                                          <div class="col-5">
+                                            <mat-form-field class="example-full-width" appearance="fill">
+                                              <mat-label>File type ({{i+1}})</mat-label>
+                                              
+                                               <mat-select formControlName="file_type" >
+                                                <mat-option value="">Select type</mat-option>
+                                                <mat-option *ngFor="let fileType of fileTypes" [value]="fileType.fileTypeId">{{fileType.fileType}}</mat-option>
+                                                
+                                               </mat-select>
+                                              <mat-hint>File Type!</mat-hint>
+                                              <!-- <mat-error *ngIf="f.da_to.errors?.required">
+                                                to is <strong>required</strong>
+                                              </mat-error> -->
+                                            </mat-form-field>
+                                          </div>
+                                          <div class="col-5" style="margin-left:3rem;">
+                                             <input type="file" #filePicker (change)="onSelectFiles($event,i)" multiple>                 
+                                          </div>                                         
+                                            <div class="col-2 display_incenter" >
+                                              <mat-icon *ngIf="daFiles().length != 1" (click)="removeDaFiles(i)" style="color: red;">delete_forever</mat-icon>
+                                              <mat-icon *ngIf="daFiles().length == (i+1)" (click)="addDaFiles()" style="color: blue;" >add_box</mat-icon>
+                                            </div>
+                                      </div>
+                                  </div>
+                            </div>
+                        </div>  
+                    </div>
+
+                  
+                    <div class="col-12" style="display: grid;align-items: end;">
+
+
+                        <mat-grid-list style="text-align:center" cols="2" rowHeight="4:1">
+                          <!-- <button mat-raised-button color="success" class="mx-4" (click)="onSavePost()">Save</button> -->
+                          <button disabled="{{isReadOnly}}" mat-raised-button color="primary"(click)="onSubmitPost()" >Submit</button>
+                          <button style="margin-left:2rem;" mat-raised-button color="primary"(click)="back()">Back</button>
+                          <button disabled="{{screenvalue}}" style="margin-left:2rem;" mat-raised-button color="primary" (click)="moveTruckToGoDown()" >Move From GoDown</button>
+
+                          
+                          <!-- <button *ngIf="'{{screenvalue}} === godownScreen'" style="margin-left:2rem;" mat-raised-button color="primary" >Move To GoDown</button> -->
+                          
+                        </mat-grid-list>
+                    </div>
+                </form>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+  

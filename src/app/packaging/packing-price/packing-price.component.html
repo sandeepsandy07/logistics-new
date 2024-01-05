@@ -1,0 +1,152 @@
+<div class="wrapper" *ngIf="MainForm">
+  <div class="container-fluid">
+
+      <div class="row">
+          <div class="col-4">
+            <h4 style="text-align:center;" class=""><b>Packing Price Master</b></h4>
+          </div>
+          <div class="col-4">
+            <h4 style="color: #ff4081;margin-left:13rem;"><span >*</span> upload format<mat-icon (click)="download_packing_price_upload_format()">cloud_download</mat-icon></h4>
+        </div>
+          <div class="col-4">
+            <button type="submit" style="margin-top:1rem;margin-left:10rem;" mat-raised-button color="primary" (click)="onSubmit()">Upload Packing Price</button>
+          </div>
+      </div>
+
+    <div class="row">
+      <div class="col-12">
+          <div class="card-box table-responsive">
+            <table class="table table-bordered table-striped table-hover" datatable [dtTrigger]="dtTrigger" [dtOptions]="dtOptions">
+                  <thead>
+                      <tr>
+                          <th width="10%">Sl.no</th>
+                          <th  width="10%">Box Sixe</th>
+                          <th  width="10%">Box Description</th>
+                          <th  width="10%">Box Type</th>
+                          <th  width="10%">Domestic Price</th>
+                          <th  width="10%">Exports Price</th>
+                          <th  width="10%">Valid From</th>
+                          <th  width="10%">Valid To</th>
+                          <th  width="10%">Actions</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                          <tr *ngFor="let subskill of tablelist;let i=index">
+                          <td >{{i + 1}}</td>
+                          <td>{{subskill.boxSize == null ? '-' : subskill.boxSize}}</td>
+                          <td>{{subskill.boxDescription == null ? '-' : subskill.boxDescription}}</td>
+                          <td>{{subskill.boxType == null ? '-' : subskill.boxType}}</td>
+                          <td style="text-align: right;">{{subskill.domestic_price == null ? '-' : subskill.domestic_price}}</td>
+                          <td style="text-align: right;">{{subskill.exports_price == null ? '-' : subskill.exports_price}}</td>
+                          <td>{{subskill.validFrom == null ? '-' : subskill.validFrom | date : 'dd/MM/yyyy'}}</td>
+                          <td >{{subskill.validTo == null ? '-' : subskill.validTo | date : 'dd/MM/yyyy'}}</td>
+                          <td><button mat-icon-button color="accent" (click)="editData(subskill)"><mat-icon class="mat-8">edit</mat-icon></button>
+                              <button mat-icon-button color="warn" (click)="DeteteData(subskill.packingPriceId)"><mat-icon class="mat-8">delete</mat-icon></button>
+                          </td>
+                      </tr>
+                  </tbody>
+              </table>
+          </div>
+      </div>
+  </div>
+  </div>
+</div>
+
+<div class="wrapper " *ngIf="EditForm">
+  <div class="container-fluid">
+      <div class="row">
+          <div class="col-12">
+            <h4 class=""><b>Packing Price - Edit</b></h4>
+          </div>
+      </div>
+
+      <div class="row">
+          <div class="col-12"> 
+              <div class="card-box">
+                <form  [formGroup]="form" >
+
+                 <div class="row">
+                  <div class="col-2" style="margin-right: 18px;">
+                    <mat-form-field appearance="fill">
+                      <mat-label>Box Size</mat-label>
+                      <mat-select readonly="true" formControlName="boxId" [(value)]="form.value.boxId">
+                        <mat-option disabled>-select-</mat-option>
+                        <mat-option disabled *ngFor="let subskill of BoxSizeIdList" [value]="subskill.boxId">
+                          {{subskill.boxSize}}
+                        </mat-option>
+                      </mat-select>
+                      <mat-hint>eg.900 x 700 x 2200</mat-hint>
+                      </mat-form-field>
+                </div>
+
+                <div class="col-2" style="margin-right: 18px;">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Box Type</mat-label>
+                    <mat-select readonly="true" formControlName="boxTypeId" [(value)]="form.value.boxTypeId">
+                      <mat-option disabled>-select-</mat-option>
+                      <mat-option disabled *ngFor="let subskill of BoxTypeIdList" [value]="subskill.boxTypeId">
+                        {{subskill.boxType}}
+                      </mat-option>
+                    </mat-select>
+                    <mat-hint>eg.Triwall</mat-hint>
+                    </mat-form-field>
+              </div>
+              
+                  <div class="col-2" style="margin-right: 28px;">
+                      <mat-form-field>
+                          <mat-label>Valid From</mat-label>
+                          <input readonly="true" matInput readonly="true" [matDatepicker]="picker" formControlName="validFrom">
+                          <mat-datepicker-toggle disabled="true" matSuffix [for]="picker"></mat-datepicker-toggle>
+                          <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                  </div>
+
+                  <div class="col-2" style="margin-right: 28px;">
+                    <mat-form-field>
+                        <mat-label>Valid To</mat-label>
+                        <input readonly="true" matInput readonly="true" [matDatepicker]="picker" formControlName="validTo">
+                        <mat-datepicker-toggle disabled="true" matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                      </mat-form-field>
+                  </div>
+              </div>
+
+              <div class="row">
+                <div class="col-2" style="margin-right: 18px;">
+                  <mat-form-field appearance="fill">
+                      <mat-label>Exports Price</mat-label>
+                      <input type="number" matInput formControlName="exports_price" [errorStateMatcher]="matcher"
+                             placeholder="">
+                      <mat-hint>1000</mat-hint>
+                      <mat-error *ngIf="f.exports_price.errors?.required">
+                        Exports Price is <strong>required</strong>
+                      </mat-error>
+                    </mat-form-field>
+              </div>
+              <div class="col-2" style="margin-right: 18px;">
+                <mat-form-field appearance="fill">
+                    <mat-label>Domestic Price</mat-label>
+                    <input type="number" matInput formControlName="domestic_price" [errorStateMatcher]="matcher"
+                           placeholder="">
+                    <mat-hint>2000</mat-hint>
+                    <mat-error *ngIf="f.domestic_price.errors?.required">
+                      Domestic Price is <strong>required</strong>
+                    </mat-error>
+                  </mat-form-field>
+            </div>
+
+            <div class="col-3" style="margin-right: 18px;">
+              <button mat-raised-button color="primary"(click)="onSubmitPost()" >Submit</button>
+              <button style="margin-left:2rem;" mat-raised-button color="primary"(click)="back()">Back</button>
+            </div>
+            </div>
+
+              </form>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+
+

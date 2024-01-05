@@ -1,0 +1,253 @@
+<!-- <div class="container-fluid" *ngIf="isListView">
+    <div class="mt-2">
+        <mat-card>
+            <form [formGroup]="uploadForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data" #myForm="ngForm">
+                <div class="row justify-content-center">
+                    <div class="col-md-12">
+                    <div ng-controller="AppController" class="upload">
+                        <h4>File Upload</h4>
+                        <input type="file" class="" name="panel_wise_material" #takeInput
+                        (change)="OnFileSelect($event,'panel_wise_material')" accept=".csv, text/plain, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                    </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center mt-2">
+                    <button type="submit" mat-raised-button color="primary" class="col-sm-2">Upload</button>
+                </div>
+            </form>
+        </mat-card>
+    </div>
+  </div> -->
+
+<div class="container-fluid">
+    <div class="mt-2">
+        <mat-card>
+            <div class="row">
+                <div class="col-md-4 mt-2" style="margin-left: 8px;">
+                    <span style="cursor: pointer;"><mat-icon *ngIf="isListView" (click)="isListView=false">reorder</mat-icon></span>
+                    <span style="cursor: pointer;"><mat-icon *ngIf="!isListView" (click)="isListView=true">grid_view</mat-icon></span>
+                </div>
+                <div class="col-md-4 mt-2" style="text-align: center; margin-left: inherit;">
+                    <span *ngIf="isListView"><b>PANEL WISE MATERIAL (GRID VIEW)</b></span>
+                    <span *ngIf="!isListView"><b>PANEL WISE MATERIAL APPROVAL (LIST VIEW)</b></span>
+                </div>
+                <div class="col-md-4 mt-2" style="text-align: end;">
+                    <span style="cursor: pointer;" *ngIf="expandbtn"><mat-icon *ngIf="!isListView"  (click)="openAllPanels()">unfold_more</mat-icon></span>
+                    <span style="cursor: pointer;" *ngIf="!expandbtn"><mat-icon *ngIf="!isListView" (click)="closeAllPanels()">unfold_less</mat-icon></span>
+                </div>
+            </div>
+        </mat-card>
+    </div>
+
+    <div class="mt-2" *ngFor="let card of list;let i = index">
+        <!-- <div class="row">
+            <div class="col-md-12 mb-2">
+                <mat-card>
+                    <div class="row">
+                        <div class="col-md-5" style="margin-left: 8px;">
+                           <mat-icon>picture_as_pdf</mat-icon>
+                        </div>
+                        <div class="col-md-7" style="margin-left: inherit;">
+                            <b>SECTION - {{card.section}}&nbsp;&nbsp;<span>({{card.panel.length}})</span></b>
+                        </div>
+                    </div>
+                </mat-card>
+            </div>
+        </div> -->
+        <div class="row" *ngIf="isListView">
+            <div class="col-md-2 mb-2" style="text-align: center;" *ngFor="let list of card.panel">
+                <mat-card style="cursor: pointer;" (click)="getFilterList(list.name, card.section)">{{list.name}}<br><span>({{list.data.length}})</span></mat-card>
+            </div>
+        </div>
+        <div class="row" *ngIf="!isListView">
+            <div class="col-md-12 mb-2" style="text-align: center;">
+                <mat-accordion #accordion="matAccordion" [multi]="true">
+                    <mat-expansion-panel *ngFor="let list of card.panel">
+
+                        <mat-expansion-panel-header style="background: #c0c0c04f;">
+                            <mat-panel-title>
+                                <!-- <mat-icon (click)="generatePDF(list.name, card.section)">picture_as_pdf</mat-icon> -->
+                                &nbsp;&nbsp;&nbsp;&nbsp;DA-00-001<span>({{list.data.length}})</span>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                               
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                Panel -    &nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                Total-30
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                Approved-10
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                Pending-10
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                               Button
+                               <!-- <mat-form-field class="example-full-width" appearance="fill">
+                                <mat-label>Panel ID</mat-label>
+                             
+                                       <button mat-button matSuffix  mat-icon-button >
+                                        <mat-icon>search</mat-icon>
+                                      </button>
+                            </mat-form-field> -->
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+
+                        <!-- <div class="row" mat-list-item >
+                            <div class="col-md-1"><b>SL.NO.</b></div>
+                            <div class="col-md-2"><b>Panel ID</b></div>
+                            <div class="col-md-1"><b>Panel Name </b></div>
+                            <div class="col-md-1"><b>QTY</b></div>
+                            <div class="col-md-1"><b>Status</b></div>
+                            <div class="col-md-1"><b>Approved By</b></div>
+                            <hr>
+                        </div>
+
+                        <div class="row" mat-list-item *ngFor="let data of list.data; let i=index">
+                            <div class="col-md-1">{{i + 1}}</div>
+                            <div class="col-md-2">HISO00{{i + 1}}</div>
+                            <div class="col-md-1">Panel Name</div>
+                            <div class="col-md-1">{{data.qty == null ? '-' : data.qty}}</div>
+                            <div class="col-md-1">Approved</div>
+                            <div class="col-md-1">Senthil</div>
+                            <hr>
+                        </div> -->
+                        <div class="row">
+                            <div class="col-10">
+
+                            </div>
+                             <div class="col-2">
+                                 
+                                <input type="text" class="form-control"  [(ngModel)]="Panel_search_text" (keyup)="functionkeypu()"
+                              >
+
+                            </div>
+
+                        </div>
+                      
+
+                        <mat-expansion-panel *ngFor="let list of card.panel ; let san=index;"  >
+
+                            <!-- <mat-expansion-panel-header style="background:#c0c0c01a;" *ngIf="list.name || Panel_search == '' "> -->
+                             <mat-expansion-panel-header style="background:#c0c0c01a;"  *ngIf="list.name == Panel_search_text && Panel_search == true ">
+
+                                <mat-panel-title>
+                                    <!-- <mat-icon (click)="generatePDF(list.name, card.section)">picture_as_pdf</mat-icon> -->
+                                    &nbsp;&nbsp;&nbsp;&nbsp;{{list.name}}<span>({{list.data.length}})</span>
+                                  
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+
+                                    <span *ngIf="san != 2 " style="color: green;">Approved</span>
+                                    <span *ngIf="san == 2" style="color: red;">Pending</span>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                               
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+    
+                            <div class="row" mat-list-item >
+                            <div class="col-md-1"><b>SL.NO.</b></div>
+                            <div class="col-md-2"><b>Panel ID</b></div>
+                            <div class="col-md-1"><b>Panel Name </b></div>
+                            <div class="col-md-1"><b>QTY</b></div>
+                            <div class="col-md-1"><b>Status</b></div>
+                            <div class="col-md-1"><b>Approved By</b></div>
+                            <hr>
+                        </div>
+
+                        <div class="row" mat-list-item *ngFor="let data of list.data; let i=index">
+                            <div class="col-md-1">{{i + 1}}</div>
+                            <div class="col-md-2">HISO00{{i + 1}}</div>
+                            <div class="col-md-1">Panel Name</div>
+                            <div class="col-md-1">{{data.qty == null ? '-' : data.qty}}</div>
+                            <div class="col-md-1">Approved</div>
+                            <div class="col-md-1">Senthil</div>
+                            <hr>
+                        </div>
+
+                            </mat-expansion-panel>
+                        </mat-expansion-panel>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    
+
+
+
+
+
+
+
+
+
+                </mat-accordion>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+

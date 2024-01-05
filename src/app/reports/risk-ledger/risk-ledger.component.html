@@ -1,0 +1,510 @@
+<div class="wrapper">
+  <div class="container-fluid">
+    <div *ngIf="MainForm">  
+      <div class="row">
+          <div class="col-3">
+            <h4 style="text-align:left;">Risk Ledger</h4>
+          </div>
+          <div class="col-3">
+            <button style="margin-left:43rem;" mat-icon-button color="primary" (click)="onSubmit()">Create New
+                <mat-icon class="mat-18">add_circle</mat-icon>
+            </button>
+          </div>
+      </div>
+     
+      <div class="row">
+          <div class="col-12"> 
+            <div class="card-box table-responsive">
+        
+              <table class="table table-bordered table-striped table-hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" style="overflow: scroll;">
+                    <thead>
+                      <tr>
+                        <th style="width: 30px;white-space: nowrap;">Sl.no</th>
+                        <th style="width: 330px;white-space: nowrap;">Job Name</th>
+                        <th style="width: 30px;">Job Code /SO No</th>
+                        <th style="width: 330px;">Probale Risk</th>
+                        <th style="width: 330px;" >Detailed Description of Risk</th>
+                        <th style="width: 130px;white-space: nowrap;">Type of Risk</th>
+                        <th  style="width: 130px;">Impact</th>
+                        <th style="width: 130px;">Severity of Risk </th>
+                        <th style="width: 230px;">Mitigation Plan</th>
+                        <th style="width: 230px;">Contigency Plan</th>
+                        <th style="width: 330px;">Risk status</th>
+                        <th style="width: 330px;">Remark</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let subskill of riskLedgerList;let i=index">
+                        <td >{{i+1}}</td>
+                        <td>{{subskill.job_name}}</td>
+                        <td>{{subskill.job_code}} /{{subskill.so_no}}</td>
+                        <td>{{subskill.probale_risk}}</td>
+                        <td>{{subskill.detailed_description_risk}}</td>
+                        <td>{{subskill.type_of_risk}}</td>
+                        <td>{{subskill.impact}}</td>
+                        <td>{{subskill.severity_of_risk}}</td>
+                        <td>{{subskill.countermeasure_mitigation_plan}}</td>
+                        <td>{{subskill.contigency_plan_value}}</td>
+                        <td>{{subskill.risk_status}}</td>
+                        <td>{{subskill.remarks}}</td>
+                        <td>
+                          <mat-icon (click)="update(subskill)" style="color: #5382a3;">edit</mat-icon>
+                          <mat-icon (click)="delete(subskill.risk_ledger_id)" style="color: #5382a3;">delete</mat-icon>
+                        </td>
+                     </tr> 
+                    </tbody>
+                </table>
+            </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="row" *ngIf="EditForm">
+      <div>
+            <h2 style="font-size: 25px;margin-left:2rem;">Risk Ledger - Edit</h2>
+    </div>
+        <div class="col-12"> 
+            <div class="card-box">
+              <form  [formGroup]="form">
+                <div style="border: 1px solid whitesmoke;background: #d0dedf26;">
+                <div class="row">
+                  <div class="col-3">
+                    <mat-form-field appearance="fill">
+                      <mat-label>DA No {{form.value.da_id}}</mat-label>
+                      <mat-select formControlName="da_id" >
+                        <mat-option value=''>Select Option</mat-option>
+                        <mat-option *ngFor="let subskill of DaIdList"  [value]="subskill.da_id">
+                          {{subskill.jobcode_da_no}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                </div>
+    
+                <div class="col-3">
+                  <mat-form-field class="example-full-width" appearance="fill">
+                      <mat-label>Job Name</mat-label>
+                      <input type="text" readonly="True" matInput formControlName="job_name"
+                             placeholder="">
+                      <mat-hint>Job Name</mat-hint>
+                    </mat-form-field>
+              </div>
+    
+              <div class="col-3">
+                <mat-form-field class="example-full-width" appearance="fill">
+                    <mat-label>Job Code</mat-label>
+                    <input type="text" readonly="True" matInput formControlName="job_code"
+                           placeholder="">
+                    <mat-hint>Job Code</mat-hint>
+                  </mat-form-field>
+            </div>
+    
+                <div class="col-3">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Probale Risk</mat-label>
+                    <mat-select formControlName="probale_risk_Id">
+                      <mat-option value=''>Select Option</mat-option>
+                      <mat-option *ngFor="let subskill of probaleList"  [value]="subskill.probaleRiskId">
+                        {{subskill.probaleRisk}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+              </div>
+    
+              <div class="col-3">
+                <mat-form-field appearance="fill">
+                    <textarea type="text" matInput formControlName="detailed_description_risk" 
+                        placeholder="Detailed Description of Risk"></textarea>
+                        <mat-hint>Detailed Description of Risk</mat-hint>
+                </mat-form-field>
+            </div>
+    
+              <div class="col-3">
+                <mat-form-field appearance="fill">
+                  <mat-label>Type of Risk </mat-label>
+                  <mat-select formControlName="type_of_risk_Id">
+                    <mat-option value=''>Select Option</mat-option>
+                    <mat-option *ngFor="let subskill of typeofriskList"  [value]="subskill.typeOfRiskId">
+                      {{subskill.typeOfRisk}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+            </div>
+    
+            <div class="col-3">
+              <mat-form-field appearance="fill">
+                  <textarea type="text" matInput formControlName="impact" 
+                      placeholder="Impact"></textarea>
+                      <mat-hint>Impact</mat-hint>
+              </mat-form-field>
+          </div>
+    
+          <div class="col-3">
+            <mat-form-field appearance="fill">
+              <mat-label>Severity of Risk </mat-label>
+              <mat-select formControlName="severity_of_risk_Id">
+                <mat-option value=''>Select Option</mat-option>
+                <mat-option *ngFor="let subskill of severityriskList"  [value]="subskill.severityOfRiskId">
+                  {{subskill.severityOfRisk}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+        </div>
+    
+        <div class="col-3">
+          <mat-form-field appearance="fill">
+              <textarea type="text" matInput formControlName="countermeasure_mitigation_plan" 
+                  placeholder="Countermeasure/Mitigation Plan"></textarea>
+                  <mat-hint>Countermeasure/Mitigation Plan</mat-hint>
+          </mat-form-field>
+      </div>
+    
+      <div class="col-3">
+        <mat-form-field appearance="fill">
+            <textarea type="text" matInput formControlName="contigency_plan_value" 
+                placeholder="Contigency Plan"></textarea>
+                <mat-hint>Contigency Plan</mat-hint>
+        </mat-form-field>
+    </div>
+    
+    <div class="col-3">
+      <mat-form-field appearance="fill">
+        <mat-label>Risk status</mat-label>
+        <mat-select formControlName="risk_status_Id">
+          <mat-option value=''>Select Option</mat-option>
+          <mat-option *ngFor="let subskill of riskStatusList"  [value]="subskill.riskStatusId">
+            {{subskill.riskStatus}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    
+    <div class="col-3">
+      <mat-form-field appearance="fill">
+          <textarea type="text" matInput formControlName="remarks" 
+              placeholder="Remarks"></textarea>
+              <mat-hint>Remarks</mat-hint>
+      </mat-form-field>
+    </div>
+                <div class="col-2" style="margin-left:1rem;margin-top:1rem;">
+                  <button mat-raised-button color="primary" (click)="onSubmitPost()" >Submit</button>
+              </div>
+              <div class="col-2" style="margin-top:1rem;">
+                <button mat-raised-button color="primary" (click)="back()" >Back</button>
+            </div>
+    
+            </div>
+        </div>
+      </form>
+      </div>
+    </div>
+    </div>
+
+    </div>
+</div>
+
+
+
+
+
+
+<!-- <div class="wrapper ">
+  <div class="container-fluid">
+
+<div *ngIf="MainForm">  
+<div class="row">
+  <div class="col-3">
+    <span>
+        <h2 style="font-size: 25px;">Risk Ledger</h2>
+    </span>
+  </div>
+  <div class="col-3">
+    <button style="margin-left:43rem;" mat-icon-button color="primary" (click)="onSubmit()">Create New
+        <mat-icon class="mat-18">add_circle</mat-icon>
+    </button>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12">
+      <div class="card-box table-responsive">
+        <table  class="table table-bordered table-striped table-hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" style="overflow: scroll;">
+              <thead>
+                  <tr>
+                      <th style="width: 30px;white-space: nowrap;">Sl.no</th>
+                      <th style="width: 330px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">Job Name</th>
+                      <th style="width: 130px;white-space: nowrap;">Job code / SO No</th>
+                      <th style="width: 330px;white-space: nowrap;">Probale Risk</th>
+                      <th  style="width: 330px;white-space: nowrap;" >Detailed Description of Risk</th>
+                      <th style="width: 130px;white-space: nowrap;">Type of Risk</th>
+
+                      <th   style="width: 130px;">Impact</th>
+                      <th style="width: 130px;white-space: nowrap;" >Severity of Risk </th>
+                      <th style="width: 230px;white-space: nowrap;">Countermeasure / Mitigation Plan</th>
+                      <th style="width: 230px;white-space: nowrap;">Contigency Plan</th>
+                      <th  style="width: 330px;white-space: nowrap;">Risk status</th>
+                      <th  style="width: 330px;">Remark</th>
+                      <th>Actions</th>
+                  </tr>
+              </thead>
+              <tbody>
+                      <tr *ngFor="let subskill of riskLedgerList;let i=index">
+                      <td >{{i+1}}</td>
+                      <td>{{subskill.job_name}}</td>
+                      <td>{{subskill.job_code}}/{{subskill.so_no}}</td>
+                      <td>{{subskill.probale_risk}}</td>
+                      <td>{{subskill.detailed_description_risk}}</td>
+                      <td>{{subskill.type_of_risk}}</td>
+
+                      <td>{{subskill.impact}}</td>
+                      <td>{{subskill.severity_of_risk}}</td>
+                      <td>{{subskill.countermeasure_mitigation_plan}}</td>
+                      <td>{{subskill.contigency_plan_value}}</td>
+                      <td>{{subskill.risk_status}}</td>
+                      <td>{{subskill.remarks}}</td>
+                      <td>
+                        <mat-icon (click)="update(subskill)" style="color: #5382a3;">edit</mat-icon>
+                        <mat-icon (click)="delete(subskill.risk_ledger_id)" style="color: #5382a3;">delete</mat-icon>
+                      </td>
+                   </tr> 
+              </tbody>
+          </table>
+      </div>
+  </div>
+</div>
+</div>
+
+
+</div>
+</div> -->
+
+
+<!-- <div class="row" *ngIf="EditForm">
+  <div>
+        <h2 style="font-size: 25px;margin-left:2rem;">Risk Ledger - Edit</h2>
+</div>
+    <div class="col-12"> 
+        <div class="card-box">
+          <form  [formGroup]="form">
+            <div style="border: 1px solid whitesmoke;background: #d0dedf26;">
+            <div class="row">
+              <div class="col-3">
+                <mat-form-field appearance="fill">
+                  <mat-label>DA No {{form.value.da_id}}</mat-label>
+                  <mat-select formControlName="da_id" >
+                    <mat-option value=''>Select Option</mat-option>
+                    <mat-option *ngFor="let subskill of DaIdList"  [value]="subskill.da_id">
+                      {{subskill.jobcode_da_no}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="col-3">
+              <mat-form-field class="example-full-width" appearance="fill">
+                  <mat-label>Job Name</mat-label>
+                  <input type="text" readonly="True" matInput formControlName="job_name"
+                         placeholder="">
+                  <mat-hint>Job Name</mat-hint>
+                </mat-form-field>
+          </div>
+
+          <div class="col-3">
+            <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Job Code</mat-label>
+                <input type="text" readonly="True" matInput formControlName="job_code"
+                       placeholder="">
+                <mat-hint>Job Code</mat-hint>
+              </mat-form-field>
+        </div>
+
+            <div class="col-3">
+              <mat-form-field appearance="fill">
+                <mat-label>Probale Risk</mat-label>
+                <mat-select formControlName="probale_risk_Id">
+                  <mat-option value=''>Select Option</mat-option>
+                  <mat-option *ngFor="let subskill of probaleList"  [value]="subskill.probaleRiskId">
+                    {{subskill.probaleRisk}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+          </div>
+
+          <div class="col-3">
+            <mat-form-field appearance="fill">
+                <textarea type="text" matInput formControlName="detailed_description_risk" 
+                    placeholder="Detailed Description of Risk"></textarea>
+                    <mat-hint>Detailed Description of Risk</mat-hint>
+            </mat-form-field>
+        </div>
+
+          <div class="col-3">
+            <mat-form-field appearance="fill">
+              <mat-label>Type of Risk </mat-label>
+              <mat-select formControlName="type_of_risk_Id">
+                <mat-option value=''>Select Option</mat-option>
+                <mat-option *ngFor="let subskill of typeofriskList"  [value]="subskill.typeOfRiskId">
+                  {{subskill.typeOfRisk}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div class="col-3">
+          <mat-form-field appearance="fill">
+              <textarea type="text" matInput formControlName="impact" 
+                  placeholder="Impact"></textarea>
+                  <mat-hint>Impact</mat-hint>
+          </mat-form-field>
+      </div>
+
+      <div class="col-3">
+        <mat-form-field appearance="fill">
+          <mat-label>Severity of Risk </mat-label>
+          <mat-select formControlName="severity_of_risk_Id">
+            <mat-option value=''>Select Option</mat-option>
+            <mat-option *ngFor="let subskill of severityriskList"  [value]="subskill.severityOfRiskId">
+              {{subskill.severityOfRisk}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+    </div>
+
+    <div class="col-3">
+      <mat-form-field appearance="fill">
+          <textarea type="text" matInput formControlName="countermeasure_mitigation_plan" 
+              placeholder="Countermeasure/Mitigation Plan"></textarea>
+              <mat-hint>Countermeasure/Mitigation Plan</mat-hint>
+      </mat-form-field>
+  </div>
+
+  <div class="col-3">
+    <mat-form-field appearance="fill">
+        <textarea type="text" matInput formControlName="contigency_plan_value" 
+            placeholder="Contigency Plan"></textarea>
+            <mat-hint>Contigency Plan</mat-hint>
+    </mat-form-field>
+</div>
+
+<div class="col-3">
+  <mat-form-field appearance="fill">
+    <mat-label>Risk status</mat-label>
+    <mat-select formControlName="risk_status_Id">
+      <mat-option value=''>Select Option</mat-option>
+      <mat-option *ngFor="let subskill of riskStatusList"  [value]="subskill.riskStatusId">
+        {{subskill.riskStatus}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
+<div class="col-3">
+  <mat-form-field appearance="fill">
+      <textarea type="text" matInput formControlName="remarks" 
+          placeholder="Remarks"></textarea>
+          <mat-hint>Remarks</mat-hint>
+  </mat-form-field>
+</div>
+
+             
+
+            <div class="col-2" style="margin-left:1rem;margin-top:1rem;">
+              <button mat-raised-button color="primary" (click)="onSubmitPost()" >Submit</button>
+          </div>
+          <div class="col-2" style="margin-top:1rem;">
+            <button mat-raised-button color="primary" (click)="back()" >Back</button>
+        </div>
+
+        </div>
+    </div>
+  </form>
+  </div>
+</div>
+</div> -->
+
+<!-- </div>
+</div> -->
+
+
+
+
+
+
+
+
+
+
+ <!-- <div class="col-3">
+                <mat-form-field appearance="fill">
+                    <textarea type="text" matInput formControlName="enroute_hold_up_issues_remarks" 
+                        placeholder="Enter Enroute Hold up Issues Remarks"></textarea>
+                        <mat-hint>Enroute Hold up Issues</mat-hint>
+                </mat-form-field>
+            </div>
+
+            <div class="col-3">
+              <mat-form-field appearance="fill">
+                  <textarea type="text" matInput formControlName="no_supply_of_packing_material_remarks" 
+                      placeholder="Enter No Supply of packing material Remarks"></textarea>
+                      <mat-hint>No Supply of packing material</mat-hint>
+              </mat-form-field>
+          </div>
+
+          <div class="col-3">
+            <mat-form-field appearance="fill">
+                <textarea type="text" matInput formControlName="statutory_regulations_remarks" 
+                    placeholder="Enter Statutory Regulations Remarks"></textarea>
+                    <mat-hint>Statutory Regulations Remarks</mat-hint>
+            </mat-form-field>
+        </div> -->
+
+
+
+            <!-- <div class="col-3">
+                <mat-form-field appearance="fill">
+                  <mat-label>SO NO</mat-label>
+                  <mat-select formControlName="so_no" >
+                    <mat-option value=''>Select Option</mat-option>
+                    <mat-option *ngFor="let subskill of DaIdList"  [value]="subskill.so_no">
+                      {{subskill.so_no}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+            </div> -->
+
+            <!-- <div class="col-3">
+                <mat-form-field appearance="fill">
+                  <mat-label>JOB CODE</mat-label>
+                  <mat-select formControlName="job_code" >
+                    <mat-option value=''>Select Option</mat-option>
+                    <mat-option *ngFor="let subskill of DaIdList"  [value]="subskill.job_code">
+                      {{subskill.job_code}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+            </div> -->
+
+            <!-- <div class="col-3">
+                <mat-form-field appearance="fill">
+                  <mat-label>JOB NAME</mat-label>
+                  <mat-select formControlName="job_name">
+                    <mat-option value=''>Select Option</mat-option>
+                    <mat-option *ngFor="let subskill of DaIdList"  [value]="subskill.job_name">
+                      {{subskill.job_name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+            </div> -->
+
+          
+
+            <!-- <div class="row">
+                <div class="col-2" style="margin-left:1rem;">
+                  <button mat-raised-button color="primary" (click)="onSubmitPost()" >Submit</button>
+              </div>
+            </div> -->
+        
+            
+  
+

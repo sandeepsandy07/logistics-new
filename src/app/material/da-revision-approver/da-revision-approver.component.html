@@ -1,0 +1,294 @@
+
+
+
+<div class="card-box example-small-box-details" *ngIf="viewRecords">
+    <div class="row">
+        <div class="col-1">  
+            <div class="row">
+                <div class="col-6">
+                    <!-- <mat-icon matListIcon [ngStyle]="{'color':'red'}" (click)="daNavigation(viewRecords.da_id,'/material/billableform')">arrow_back</mat-icon> -->
+                </div>
+                <div class="col-6">
+                    <label>DA No</label>
+                </div>
+            </div>
+           
+        </div>
+        <div class="col-2">  
+            <span>:&nbsp;{{viewRecords.jobcode_da_no}}</span>
+           
+        </div>
+        <div class="col-1">  
+            <label>Date</label>
+           
+        </div>
+        <div class="col-2">  
+            <span>:&nbsp;{{viewRecords.da_date | date}}</span>
+           
+        </div>
+        <div class="col-1">  
+            <label>SO no</label>
+           
+        </div>
+        <div class="col-1">  
+            <span>:&nbsp;{{viewRecords.so_no}}</span>
+           
+        </div>
+
+        <div class="col-1">  
+            <label>PO no</label>
+           
+        </div>
+        <div class="col-2">  
+            <span>:&nbsp;{{viewRecords.po_no}}</span>
+           
+        </div>
+        <div class="col-1">  
+           
+           
+        </div>
+        </div>
+        <div class="row">
+            <div class="col-1">  
+                <label>Job Code</label>
+               
+            </div>
+            <div class="col-2">  
+                <span>:&nbsp;{{viewRecords.job_code}}</span>
+               
+            </div>
+            <div class="col-1">  
+                <label>Job Name</label>
+               
+            </div>
+            <div class="col-2"> 
+                <span>:&nbsp;{{viewRecords.job_name}}</span>
+               
+            </div>
+            <div class="col-1">  
+                <label>Customer</label>
+               
+            </div>
+            <div class="col-5">  
+                <span>:&nbsp;</span>
+               
+            </div>
+
+        </div>
+</div>
+<div class="container-fluid" >
+    
+    <div class="row">
+        <div class="col-8" >
+            <div *ngIf="form.value.revision_type=='panel_wise'">
+            <div class="mt-2" *ngFor="let card of list;let i = index">
+                <div class="row">
+                    <div class="col-md-12 mb-2">
+                        <mat-card>
+                            <div class="row">
+                                <div class="col-md-5" style="margin-left: 8px;">
+                                </div>
+                                <div class="col-md-7" style="margin-left: inherit;">
+                                    <b>SECTION - {{card.section}}&nbsp;&nbsp;<span>({{card.panel.length}}) </span></b>
+                                </div>
+                            </div>
+                        </mat-card>
+                    </div>
+                </div>
+        
+            <mat-accordion>
+                <mat-expansion-panel *ngFor="let list of card.panel;let j=index ">
+
+                    <mat-expansion-panel-header >
+                      
+                            <div class="col-9">
+                                <mat-panel-title>
+                                    {{list.name}}<span>({{list.data.length}}) </span>
+                                   
+                                </mat-panel-title>
+                            </div>
+                            <div class="col-3">
+                                <mat-panel-title>
+                                    
+                                    <span  style="font-weight: bold;color: green;" *ngIf="list.single_checked_flag">Selected</span>
+                                </mat-panel-title>
+                                
+                            </div>
+                       
+                      
+                       
+                    </mat-expansion-panel-header>
+
+
+
+
+
+                    <table class="mat-elevation-z8 table" width="100%">
+                        <thead>
+                            <tr>
+                                <th >
+                                    <!-- <mat-checkbox (change)="$event ? masterToggle(list.data) : null"
+                                                  [checked]="selection.hasValue() && isAllSelected(list.data)"
+                                                  [indeterminate]="selection.hasValue() && !isAllSelected(list.data)"
+                                                  [aria-label]="checkboxLabelAll(list.data)">
+                                    </mat-checkbox> -->
+
+                                    <mat-checkbox 
+                                    [checked]="list.checked_flag"
+                                    (change)="clickofallcheckbox(i,list.name,list.data.length,$event,j)" ></mat-checkbox>  
+                                   
+                                  
+                                    
+                       
+                                  </th>
+                                <th>slno</th>
+                                <th>item_desc</th>
+                                <th>make</th>
+                                <th>model</th>
+                                <th>qty</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let panel_data of list.data;let k=index">
+                                <td >
+                                    <mat-checkbox 
+                                    (change)="clickofcheckbox(i,panel_data, $event,list.data.length,k,j)"
+                                    [checked]="panel_data.checked_flag" >
+                                   
+                                  
+                                    
+                     </mat-checkbox>   
+                                </td>                 
+                                <td>{{k+1}}</td>
+                                <td>{{panel_data.item_desc}}</td>
+                                <td>{{panel_data.make}}</td>
+                                <td>{{panel_data.model}}</td>
+                                <td>{{panel_data.qty}}</td>
+                            </tr>   
+                        </tbody>
+                
+                     
+                        
+        
+                        
+                
+                        
+                       
+                
+                    </table>
+
+
+
+
+
+
+
+                    
+
+                   
+
+                    
+
+                    
+                      
+                        
+                <!-- <div class="col-md-3">
+                    <button mat-raised-button color="primary" type="submit" style="float: left;" (click)="onSubmit(list.data)">Submit</button></div>
+                     -->
+                </mat-expansion-panel>
+            </mat-accordion>
+
+            </div>
+        </div>
+        </div>
+        <div class="col-4">
+           
+                <form  [formGroup]="form" >
+                  <div class="card-box taskboard-box">
+                      <h4 class="header-title m-t-0 text-warning">Update Status</h4>
+                      <div class="col-12">
+                          <div class="form-group row">
+                            <div class="col-8">
+                              <mat-form-field appearance="fill"  >
+                                  <mat-label>Request Type</mat-label>
+                                  <mat-select formControlName="revision_type">                                  
+                                    <mat-option value="da" > DA </mat-option>
+                                    <mat-option value="panel_wise" > Item / panel </mat-option>
+                                    <mat-option value="other" > Others </mat-option>
+                                </mat-select>
+                                </mat-form-field>   
+                            </div> 
+                            <div class="col-4">
+
+                            
+                               
+                                <mat-checkbox formControlName="self_edit_flag" color="primary">
+                                    Self Edit
+                                  </mat-checkbox>
+                            </div>
+                          </div>
+                          
+                          <div class="form-group row">
+                            <div class="col-8"> 
+                                <mat-form-field appearance="fill"  >
+                                    <mat-label>Assign To</mat-label>
+                                    <mat-select formControlName="user_ids" multiple> 
+                                      <mat-option>-select-</mat-option>
+                                      <mat-option *ngFor="let subskill of userList" [value]="subskill.id" >
+                                           {{subskill.employee_name }}
+                                      </mat-option>                           
+                                    </mat-select>          
+                                </mat-form-field> 
+                            </div>  
+                        </div>
+                        <div class="form-group row" id="desc">
+                            <div class="col-10"> 
+                                <mat-form-field class="example-full-width"  appearance="fill" style="width:100%">
+                                    <mat-label>Description</mat-label>
+                                    <textarea matInput 
+                                            placeholder="" formControlName="description"></textarea>
+                                    <mat-hint>Description</mat-hint>
+                             
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                                   
+                                    
+                                  
+
+          
+                                      
+                              
+                            
+                       
+          
+                          
+                           
+                      
+                         
+                         
+                               
+                         
+                     
+                          
+                          
+                      </div>
+                      <br>
+                     
+                       <div class="text-center">
+                        <button mat-raised-button color="primary"(click)="onSubmitPost()" >Submit</button>
+                      </div>
+                    
+                     
+                      
+                  </div>
+              </form>
+              
+          
+
+
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,574 @@
+
+ <style>
+    table {
+        margin-left: auto;
+        margin-right: auto;
+        font-size: 15px;
+        height: 100%;
+        table-layout: fixed;
+    }
+
+    td {
+       
+        text-align: center;
+        padding: 10px;
+        /* border-color:white !important; */
+    }
+    .headercolor{
+        background: radial-gradient(#bec6f5, transparent);
+    }
+
+    
+</style>
+<div class="wrapper">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+            <div class="card-box table-responsive">
+              
+                <table   class="table " style="word-break: break-all;">
+                    <thead>
+                        <tr>
+                            <th width="10%" >
+                            <button (click)="showother(1)" class="btn btn-secondary"> 
+                                <div class="center-vertically"> 
+                                <mat-icon>remove_red_eye</mat-icon>DA 
+                                </div>
+                            </button>
+                            </th>
+
+                            <th width="10%"   >
+                                <button (click)="showother(2)" class="btn btn-secondary"> 
+                                <div class="center-vertically"> 
+                                <mat-icon>remove_red_eye</mat-icon>BOM 
+                                </div>
+                            </button>
+                            </th>
+                            <th width="10%" >
+                                <button (click)="showother(3)" class="btn btn-secondary"> 
+                                <div class="center-vertically"> 
+                                <mat-icon>remove_red_eye</mat-icon>PanelWise Matirial 
+                                </div>
+                            </button>
+                            </th>
+                            <th width="10%" ></th>
+                            <th width="10%" ></th>
+                            <th width="10%" ></th>
+                            <th width="10%" ></th>
+                            <th width="10%" ></th>
+                            <th width="10%"  ></th>
+                            <th width="10%"  > </th>
+                          
+                        </tr>
+                    </thead>
+                    <tbody *ngIf="showdata==1" >
+                       
+                        <tr class="headercolor">
+                            <td class="text-right font-weight-bold "  colspan="2" >DA No:</td>
+                            <td class="text-left font-weight-bold "  colspan="3" >{{viewRecords.da_id}}</td>
+                            <td class="text-right font-weight-bold "  colspan="2" >Date</td>
+                            <td class="text-left font-weight-bold "  colspan="2" >{{viewRecords.jobcode_da_no}}</td>
+                            <th  class="text-right">  <a [routerLink]="'/material/DAcreate'" > <mat-icon>edit</mat-icon></a></th>
+                            </tr>
+                            <tr>
+                            <td class="text-right font-weight-bold">Job Code:</td>
+                            <td class="text-left">{{viewRecords.job_code}}</td>
+                            <td class="text-right font-weight-bold" >Job Name:</td>
+                            <td class="text-left" colspan="3">{{viewRecords.job_name}}</td>
+                            <td class="text-right font-weight-bold">SO No.:</td>
+                            <td class="text-left">{{viewRecords.so_no}}</td>
+                            <td class="text-right font-weight-bold">PO No.:</td>
+                            <td class="text-left">{{viewRecords.po_no}}</td>
+                           
+                               </tr>
+                                 <tr>
+                            <td class="text-right font-weight-bold">PO Date:</td>
+                            <td class="text-left">{{viewRecords.po_date}}</td>
+                            <td class="text-right font-weight-bold">To:</td>
+                            <td class="text-left">{{viewRecords.da_to}}</td>
+                            <td class="text-right font-weight-bold">From:</td>
+                            <td class="text-left">{{viewRecords.da_from}}</td>
+                            <td class="text-right font-weight-bold">Bill Type:</td>
+                            <td class="text-left">{{viewRecords.bill_type}}</td>
+                           
+                               </tr>
+                             
+
+                               <tr>
+                               
+                                <td class="text-right font-weight-bold">Dispatch Mode:</td>
+                                <td class="text-left">{{viewRecords.mode_of_dispatch}}</td>
+                                <td class="text-right font-weight-bold">Mode of Delivery:</td>
+                                <td class="text-left" colspan="2">{{viewRecords.mode_of_delivery}}</td>
+                                <td class="text-right  font-weight-bold">Attached:</td>
+                               
+                                   </tr>
+                                   <tr>
+                            <td class="text-center font-weight-bold headercolor"  colspan="10" >Address</td>
+                            </tr>
+                                   
+                         <tr>
+                               
+                                <td class="text-right font-weight-bold">Bill to:</td>
+                                <td class="text-left" colspan="2">{{viewRecords.bill_to}}                                </td>
+                                <td class="text-right font-weight-bold">Ship to:</td>
+                                <td class="text-left" colspan="2">{{viewRecords.ship_to}}                             </td>
+                                <td class="text-right font-weight-bold">Sold to:</td>
+                                <td class="text-left" colspan="2">{{viewRecords.sold_to}}
+                                </td>
+                                   </tr>
+                            
+                                <tr>
+                                    <td class="text-center font-weight-bold headercolor" colspan="10">GSTIN</td>
+                            </tr>
+                            <tr>
+                              
+                                <td class="text-right font-weight-bold">Bill To:</td>
+                                <td class="text-left" colspan="2">{{viewRecords.bill_to_gst}}</td>
+                                <td class="text-right font-weight-bold">Ship To:</td>
+                                <td class="text-left" colspan="2">{{viewRecords.ship_to_gst}}</td>
+                                <td class="text-right font-weight-bold">Sold To:</td>
+                                <td class="text-left" colspan="2">{{viewRecords.sold_to_gst}}</td>
+                               
+                                   </tr>
+
+                         <tr>
+                                    <td class="text-center font-weight-bold headercolor" colspan="10">Contact Person</td>
+                            </tr>
+                         <tr>
+                                
+                                <td class="text-right font-weight-bold">E-Mail:</td>
+                                <td class="text-left" colspan="2">{{viewRecords.email}}</td>
+                                <td class="text-right font-weight-bold">Tel/Fax No.:</td>
+                                <td class="text-left">{{viewRecords.telephone_no}}</td>
+                                <td class="text-right font-weight-bold">Mobile No.:</td>
+                                <td class="text-left">{{viewRecords.mobile_no}}</td>
+                                <td class="text-right font-weight-bold" colspan="2">Other Contact Person:</td>
+                                <td class="text-left" >{{viewRecords.otr_person_name}} </td>
+                               
+                        </tr>
+                        
+                        <tr>
+                                    <td class="text-center font-weight-bold headercolor" colspan="10">Insurance Details</td>
+                        </tr>
+
+
+
+
+                        <tr>
+                              
+                                <td class="text-right font-weight-bold">Insurance Scope:</td>
+                                <td class="text-left">{{viewRecords.insurance_scope}}</td>
+                                <td class="text-right font-weight-bold">Reimbursible / Non-Reimbursible:</td>
+                                <td class="text-left">{{viewRecords.reimbursible}}</td>
+                                <td class="text-right font-weight-bold">Amount:</td>
+                                <td class="text-left">{{viewRecords.insurance_amt}}</td>
+                                <td class="text-right font-weight-bold">file:</td>
+                                <td class="text-left"></td>
+                                <td class="text-right font-weight-bold">Policy No.:</td>
+                                <td class="text-left">{{viewRecords.insurance_no}}</td>
+                               
+                        </tr>
+                        
+                        <tr>
+                                <td class="text-right font-weight-bold">Address:</td>
+                                <td class="text-left" colspan="2">{{viewRecords.insurance_address}}</td>
+                                <td class="text-right font-weight-bold">Type of Insurance:</td>
+                                <td class="text-left" colspan="2">{{viewRecords.insurance_type}} </td>
+                                <td class="text-right font-weight-bold">Contact Person:</td>
+                                <td class="text-left" colspan="2">{{viewRecords.insurance_c_person}}</td>
+                                
+                               
+                        </tr>
+
+                        <tr>
+                            <td class="text-right font-weight-bold">E-Mail ID:</td>
+                            <td class="text-left" colspan="2">{{viewRecords.insurance_c_email}}</td>
+                                
+                                <td class="text-right font-weight-bold">Mobile No.:</td>
+                                <td class="text-left" colspan="2">{{viewRecords.insurance_c_mobile}} </td>
+                                <td class="text-right font-weight-bold">Fax No.:</td>
+                                <td class="text-left" colspan="2">{{viewRecords.faxno}}</td>
+                               
+                        </tr>
+                        <tr>
+                            <td class="text-center font-weight-bold headercolor" colspan="10">Other</td>
+                </tr>
+
+                         <tr>
+                                <td class="text-right font-weight-bold">Transportation Scope:</td>
+                                <td class="text-left">{{viewRecords.transportation_scope}}</td>
+                                <td class="text-right font-weight-bold">Freight Mode:</td>
+                                <td class="text-left">{{viewRecords.freight_mode}} </td>
+                                <td  class="text-right font-weight-bold">Regional Manager:</td>
+                                <td class="text-left">{{viewRecords.Fees_manager_name}}</td>
+                                <td class="text-right font-weight-bold">Contact No.:</td>
+                                <td class="text-left">{{viewRecords.Fees_manager_mobile}}</td>
+                                <td class="text-right font-weight-bold">Packaging Instruction:</td>
+                                <td class="text-left"> {{viewRecords.packing_instruction}}</td>
+                               
+                        </tr>
+                         <tr>
+                                
+                                <td class="text-right font-weight-bold">Dispatch Clearance:</td>
+                                <td class="text-left">{{viewRecords.dispatch_clearance}}</td>
+                                <td class="text-right font-weight-bold">Job:</td>
+                                <td class="text-left">{{viewRecords.merit_duty_job}}</td>
+                                <td class="text-right font-weight-bold">License Type:</td>
+                                <td class="text-left"> {{viewRecords.license_type}}</td>
+                                <td class="text-right font-weight-bold">GST:</td>
+                                <td class="text-left">{{viewRecords.gst_type}}</td>
+                                <td class="text-right font-weight-bold">TED Refund:</td>
+                                <td class="text-left">{{viewRecords.ted_refund}}</td>
+                               
+                        </tr>
+                         <tr>
+                                
+                               
+                        </tr>
+                         <tr>
+                                
+                                <td class="text-right font-weight-bold" colspan="2">Time Critical Shipment:</td>
+                                <td class="text-left">{{viewRecords.time_critical_flag}} </td>
+                                <td class="text-right font-weight-bold" colspan="2">Any other information:</td>
+                                <td class="text-left" colspan="5">{{viewRecords.remarks}}</td>
+                               
+                        </tr>
+                        
+
+
+
+
+
+  
+                    </tbody>
+                    <tbody *ngIf="showdata==2" >
+                       
+                        <tr class="headercolor">
+                            <h4>BOM Details</h4>
+                        </tr>
+                    </tbody>
+                    <tbody *ngIf="showdata==3" >
+                       
+                        <tr class="headercolor">
+                            <h4>PanelWise Matirial</h4>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+  
+    </div>
+  </div>
+
+
+
+<!-- ,ajsdkjaskdhaskdh -->
+
+
+
+<div class=" example-small-box-details row">
+    <div class="col-2 ">  <label>DA No:</label>
+        <span>{{viewRecords.da_id}}</span>
+    </div>
+    <div class="col-2">  <label>Date:</label>
+        <span>{{viewRecords.jobcode_da_no}}</span>
+    </div>
+    <div class="col-2">  <label>Job Code:</label>
+        <span>{{viewRecords.job_code}}</span>
+    </div>
+    <div class="col-2">  <label>Job Name:</label>
+        <span>{{viewRecords.job_name}}</span>
+    </div>
+    <div class="col-2">  <label>Customer</label>
+        <span>Name</span>
+    </div>
+    <div class="col-2">  <label>PO no:</label>
+        <span>{{viewRecords.po_no}}</span>
+    </div>
+</div>
+
+<mat-tab-group dynamicHeight>
+    <mat-tab label="DA">
+      <div class="example-small-box mat-elevation-z4 ">
+        <div class="row">
+        <div style="width:45%" >
+            <div class="row card-box" >
+                <div class="col-6">
+                    <div class="row">
+                        <div class="col-4">
+                            sdfdsfdffd
+                        </div>
+                        <div class="col-8">
+                            sdfdsfdfsadasdsadasdasdasdsadsdassadsafdsfdfsd
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="row">
+                        <div class="col-4">
+                            sdfdsfdffd
+                        </div>
+                        <div class="col-8">
+                            sdfdsfdffdsfdfsd
+                        </div>
+                    </div>
+
+
+                </div>
+             
+            </div>
+         
+        </div>
+        <div  style="width:5%">
+            
+        </div>
+       
+        <div  style="width:45%">
+            
+                <div class="row card-box" >
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-4">
+                                sdfdsfdffd
+                            </div>
+                            <div class="col-8">
+                                sdfdsfdfsadasdsadasdasdasdsadsdassadsafdsfdfsd
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-4">
+                                sdfdsfdffd
+                            </div>
+                            <div class="col-8">
+                                sdfdsfdffdsfdfsd
+                            </div>
+                        </div>
+    
+    
+                    </div>
+                 
+                </div>
+           
+            </div>
+        </div>
+       
+       
+
+
+
+        <div class="row" >
+            <div class="col-2 ">  
+                <label>To:</label>
+                <span>{{viewRecords.da_id}}</span>
+            </div>
+            <div class="col-2 "> 
+                <label>From:</label>
+                <span>{{viewRecords.da_id}}</span>
+            </div>
+            <div class="col-2 ">  
+                <label>CC:</label>
+                <span>{{viewRecords.da_id}}</span>
+            </div>
+            <div class="col-3 ">  
+                <label>YGS Project Definition:</label>
+                <span>{{viewRecords.da_id}}</span>
+            </div>
+            <div class="col-1 ">  
+                <label>Po Date:</label>
+                <span>2-2-2002</span>
+            </div>
+            <div class="col-2 ">  
+                <label>Bill Type</label>
+                <span>Non-Billable</span>
+            </div>
+        </div>
+      
+        <div class="row mt-1" >
+            <div class="col-1">  <label>Dispatch Mode:</label>
+                <span>{{viewRecords.mode_of_dispatch}}asdsa</span><br>
+               
+            </div>
+            <div class="col-2">  <label>Mode of Delivery:</label>
+                <span>{{viewRecords.mode_of_delivery}}</span>
+            </div>
+            <div class="col-3 "> 
+                <label>Bill to:</label>
+                <span>{{viewRecords.bill_to}} </span><br>
+                <label>GSTIN</label>
+                <span>{{viewRecords.bill_to}} </span>
+            </div>
+            <div class="col-3 ">  
+                <label>Ship to:</label>
+                <span>{{viewRecords.ship_to}} </span><br>
+                <label>GSTIN</label>
+                <span>{{viewRecords.ship_to}} </span>
+            </div>
+            <div class="col-3 ">
+                <label>Sold to:</label>
+                <span>{{viewRecords.sold_to}} </span><br>
+                <label>GSTIN</label>
+                <span>{{viewRecords.sold_to}} </span>
+            </div>
+           
+        </div>
+       
+        <div class="row mt-1" >
+            <div class="col-3 ">  
+                <label>E-Mail:</label>
+                <span>{{viewRecords.email}}</span>
+            </div>
+            <div class="col-3"> 
+                <label>Tel/Fax No.:</label>
+                <span>{{viewRecords.telephone_no}}</span>
+            </div>
+            <div class="col-3">  
+                <label>Mobile No.:</label>
+                <span>{{viewRecords.mobile_no}}</span>
+            </div>
+            <div class="col-3 ">  
+                <label>Other Contact Person:</label>
+                <span>{{viewRecords.otr_person_name}} </span>
+            </div>   
+        </div>
+        <div class="row mt-1" >
+            <div class="col-2 ">  
+                <label>Insurance Scope:</label>
+                <span>{{viewRecords.insurance_scope}}</span>
+            </div>
+            <div class="col-2 "> 
+                <label>Reimbursible:</label>
+                <span>{{viewRecords.reimbursible}}</span>
+            </div>
+            <div class="col-2 ">  
+                <label>Amount:</label>
+                <span>{{viewRecords.insurance_amt}}</span>
+            </div>
+            <div class="col-2 ">  
+                <label>file:</label>
+                <span></span>
+            </div>
+            <div class="col-2 ">  
+                <label>Policy No.:</label>
+                <span>{{viewRecords.insurance_no}}</span>
+            </div>
+            <div class="col-2 ">  
+                <label>Type of Insurance:</label>
+                <span>{{viewRecords.insurance_type}}</span>
+            </div>
+        </div>
+        <div class="row mt-1" >
+            <div class="col-3 ">  
+                <label>Insurance Address:</label>
+                <span>{{viewRecords.insurance_address}}</span>
+            </div>
+            <div class="col-2 "> 
+                <label>Contact Person:</label>
+                <span>{{viewRecords.insurance_c_person}}</span>
+            </div>
+            <div class="col-2 ">  
+                <label>E-Mail ID:</label>
+                <span>{{viewRecords.insurance_c_email}}</span>
+            </div>
+            <div class="col-2 ">  
+                <label>Mobile No.:</label>
+                <span>{{viewRecords.insurance_c_mobile}}</span>
+            </div>
+            <div class="col-2 ">  
+                <label>Fax No.:</label>
+                <span>{{viewRecords.faxno}}</span>
+            </div>
+            <div class="col-1 ">  
+               
+            </div>
+        </div>
+        <div class="row mt-1" >
+            <div class="col-2 ">  
+                <label>Transportation Scope:</label>
+                <span>{{viewRecords.transportation_scope}}</span>
+            </div>
+            <div class="col-2 "> 
+                <label>Freight Mode:</label>
+                <span>{{viewRecords.freight_mode}}</span>
+            </div>
+            <div class="col-2 ">  
+                <label>Regional Manager:</label>
+                <span>{{viewRecords.Fees_manager_name}}</span>
+            </div>
+            <div class="col-2 ">  
+                <label>Contact No.:</label>
+                <span>{{viewRecords.Fees_manager_mobile}}</span>
+            </div>
+            <div class="col-2 ">  
+                <label>Packaging Instruction:</label>
+                <span>{{viewRecords.packing_instruction}}</span>
+            </div>
+            <div class="col-1 ">  
+                <label>Dispatch Clearance:</label>
+                <span>{{viewRecords.dispatch_clearance}}</span>
+               
+            </div>
+        </div>
+        <div class="row mt-1" >
+            <div class="col-2 ">  
+                <label>Job:</label>
+                <span>{{viewRecords.merit_duty_job}}</span>
+            </div>
+            <div class="col-2 "> 
+                <label>License Type:</label>
+                <span>{{viewRecords.license_type}}</span>
+            </div>
+            <div class="col-2 ">  
+                <label>GST:</label>
+                <span>{{viewRecords.gst_type}}</span>
+            </div>
+            <div class="col-2 ">  
+                <label>TED Refund:</label>
+                <span>{{viewRecords.ted_refund}}</span>
+            </div>
+            <div class="col-2 ">  
+                <label>Time Critical Shipment:</label>
+                <span>{{viewRecords.time_critical_flag}}</span>
+            </div>
+            <div class="col-1 ">  
+                <label>Date</label>
+                <span>12-21=212</span>
+               
+            </div>
+        </div>
+        <br>
+
+        <div class="row mt-1" >
+            <div class="col-6">  
+                <label>Any other information:</label>
+                <span>{{viewRecords.remarks}}</span>
+            </div>
+            <div class="col-6">  
+               
+            </div>
+            
+        </div>
+       
+        
+      </div>
+    </mat-tab>
+    <mat-tab label="BOM">
+      <div class="example-large-box mat-elevation-z4">
+        Bill of Matirial Details
+      </div>
+    </mat-tab>
+    <mat-tab label="PanelWise Matirial">
+        <div class="example-large-box mat-elevation-z4">
+            PanelWise Matirial Details
+        </div>
+    </mat-tab>
+    <mat-tab label="Tracking">
+        <div class="example-large-box mat-elevation-z4">
+            Tracking Details
+        </div>
+    </mat-tab>
+  </mat-tab-group>
+  

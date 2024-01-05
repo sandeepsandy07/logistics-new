@@ -1,0 +1,45 @@
+.example-radio-button{margin-left: 7px;}
+mat-grid-tile {
+  background:rgb(241, 224, 230);
+}
+
+.width-50{width: 49%;}
+.ml-1{margin-left: 1%;}
+.ml-2{margin-left: 2%;}
+.width-100{width: 100%;}
+.width-25{width: 25%;}
+
+.example-card {
+  margin-top: 4rem;
+  margin-left: 5rem;
+  margin-bottom:5rem;
+  max-width: 400px;
+}
+.p
+{
+  font-size: medium;
+  color:blue;
+}
+
+.example-section {
+  margin: 12px 0;
+}
+
+.txt-align
+{
+margin-bottom: 3rem;
+}
+
+.item
+{
+  margin-right:3rem;
+}
+
+.qty
+{
+  width:50px;
+}
+.submitbtn
+{
+  margin-left:58rem;
+}

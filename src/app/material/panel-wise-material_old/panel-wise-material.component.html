@@ -1,0 +1,92 @@
+<div class="container-fluid" *ngIf="isListView">
+    <div class="mt-2">
+        <mat-card>
+            <form [formGroup]="uploadForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data" #myForm="ngForm">
+                <div class="row justify-content-center">
+                    <div class="col-md-12">
+                    <div ng-controller="AppController" class="upload">
+                        <h4>File Upload</h4>
+                        <input type="file" class="" name="panel_wise_material" #takeInput
+                        (change)="OnFileSelect($event,'panel_wise_material')" accept=".csv, text/plain, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                    </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center mt-2">
+                    <button type="submit" mat-raised-button color="primary" class="col-sm-2">Upload</button>
+                </div>
+            </form>
+        </mat-card>
+    </div>
+  </div>
+
+<div class="container-fluid">
+    <div class="mt-2">
+        <mat-card>
+            <div class="row">
+                <div class="col-md-7 mt-2" style="text-align: end;">
+                    <span *ngIf="isListView"><b>PANEL WISE MATERIAL (GRID VIEW)</b></span>
+                    <span *ngIf="!isListView"><b>PANEL WISE MATERIAL (LIST VIEW)</b></span>
+                </div>
+                <div class="col-md-5 mt-2" style="text-align: end;">
+                    <mat-icon *ngIf="isListView" (click)="isListView=false">reorder</mat-icon>
+                    <mat-icon *ngIf="!isListView" (click)="isListView=true">grid_view</mat-icon>
+                </div>
+            </div>
+        </mat-card>
+    </div>
+
+    <div class="mt-2" *ngFor="let card of list;let i = index">
+        <div class="row">
+            <div class="col-md-12 mb-2" style="text-align: center;">
+                <mat-card>
+                    <b>SECTION - {{card.section}}&nbsp;&nbsp;<span>({{card.panel.length}})</span></b>
+                </mat-card>
+            </div>
+        </div>
+        <div class="row" *ngIf="isListView">
+            <div class="col-md-2 mb-2" style="text-align: center;" *ngFor="let list of card.panel">
+                <mat-card style="cursor: pointer;" (click)="getFilterList(list.name, card.section)">{{list.name}}<br><span>({{list.data.length}})</span></mat-card>
+            </div>
+        </div>
+        <div class="row" *ngIf="!isListView">
+            <div class="col-md-12 mb-2" style="text-align: center;" *ngFor="let list of card.panel">
+                <mat-accordion>
+                    <mat-expansion-panel>
+
+                        <mat-expansion-panel-header>
+                            {{list.name}}<span>({{list.data.length}})</span>
+                        </mat-expansion-panel-header>
+
+                        <div class="row" mat-list-item >
+                            <div class="col-md-1"><b>SL.NO.</b></div>
+                            <div class="col-md-2"><b>QTY</b></div>
+                            <div class="col-md-3"><b>ITEM DESC</b></div>
+                            <div class="col-md-2"><b>MAKE</b></div>
+                            <div class="col-md-2"><b>MODEL</b></div>
+                            <div class="col-md-2"><b>REMARK</b></div>
+                            <hr>
+                        </div>
+
+                        <div class="row" mat-list-item *ngFor="let data of list.data; let i=index">
+                            <div class="col-md-1">{{i + 1}}</div>
+                            <div class="col-md-2">{{data.qty == null ? '-' : data.qty}}</div>
+                            <div class="col-md-3">{{data.item_desc == null ? '-' : data.item_desc}}</div>
+                            <div class="col-md-2">{{data.make == null ? '-' : data.make}}</div>
+                            <div class="col-md-2">{{data.model == null ? '-' : data.model}}</div>
+                            <div class="col-md-2">{{data.remark == null ? '-' : data.remark}}</div>
+                            <hr>
+                        </div>
+
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+

@@ -1,0 +1,81 @@
+<div class="wrapper " >
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+          
+              <h4 class=""><b>Module Access For Role</b></h4>
+             
+            </div>
+        </div>
+        <div class="row" >
+            <div class="col-12"> 
+                <div class="card-box">    
+                    <form  [formGroup]="form" enctype="multipart/form-data"  >
+                        <div class="row">
+                            <div class="col-3">
+                                <mat-form-field appearance="fill">
+                                <mat-label>Role</mat-label>
+                                <mat-select formControlName="role_id" [disabled]="true" >
+                                    <mat-option value="">Select Option</mat-option>
+                                    <mat-option *ngFor="let subskill of rolelist"  [value]="subskill.role_id" >
+                                      {{subskill.role_name}}
+                                </mat-option>                                   
+                                </mat-select>
+                                </mat-form-field>
+                              </div>
+                        </div>
+                        <div formArrayName="module_details">
+                            <div class="row"   *ngFor="let moduleDetails of moduleDetails().controls; let i=index;" [formGroupName]="i"   style="display:contents !important" >                            
+                                <div class="col-12" >
+                                    <div class="col-2 text-left" >
+                                        <label style=" color: #2887ba;font-size: 16px;" >
+                                            {{form.value.module_details[i].main_name}}
+                                        </label>
+                                    </div>
+                                    
+                                </div>
+                                
+                                <div class="col-12"  style="display:flex!important" >
+                                   
+                                    <div class="col-3 text-right" >
+                                            <label style="color: #2dad66;font-size: 15px;"  > {{form.value.module_details[i].sub_name}}</label>                               
+                                    </div>
+                                    <div class="col-1">
+                                        <mat-checkbox  color="primary" formControlName="add" >
+                                                Add
+                                        </mat-checkbox>                            
+                                    </div>
+                                    <div class="col-1">
+                                        <mat-checkbox  color="primary" formControlName="edit">
+                                                Edit
+                                        </mat-checkbox>                               
+                                    </div>
+                                    <div class="col-1">
+                                        <mat-checkbox  color="primary" formControlName="view">
+                                                View
+                                        </mat-checkbox>                                
+                                    </div>
+                                    <div class="col-1">
+                                        <mat-checkbox  color="primary" formControlName="delete">
+                                                Delete
+                                        </mat-checkbox>                               
+                                    </div>
+
+                            
+                            
+                            </div>
+                        </div>
+                        <br><br>
+
+                    </div>
+                        <div class="col-12" style="display: grid;align-items: end;">
+                            <mat-grid-list style="text-align:center" cols="2" rowHeight="4:1">
+                              <button mat-raised-button color="primary" [disabled]="!submit_button" (click)="onsubmit()" >Submit</button>                            
+                            </mat-grid-list>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

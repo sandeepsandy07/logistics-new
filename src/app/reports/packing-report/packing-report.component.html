@@ -1,0 +1,182 @@
+
+<div class="wrapper">
+    <div class="container-fluid">
+        <form  [formGroup]="form" enctype="multipart/form-data"  >
+            <div class="card-box" style="padding-top: 0px">
+                
+                <div class="row">
+                    <div class="col-12">
+                        <h4  style="text-align:center">Packing Cost Report</h4>
+                    </div>
+                </div>
+               
+                <div class="col-1">
+                    <button mat-raised-button color="primary" (click)="filter_table()">Filter <mat-icon>search</mat-icon></button>
+                </div>
+                <br/>
+
+                <div *ngIf="filterDataForm">
+                    <div class="row">
+
+                        <div class="col-2" style="margin-right: 18px;">
+                            <mat-form-field class="example-full-width" appearance="fill">
+                                <input type="text" matInput formControlName="daId" 
+                                    placeholder="DA No">
+                                    <mat-hint>DA No</mat-hint>
+                            </mat-form-field>
+                        </div>
+    
+                        <div class="col-2" style="margin-right: 18px;">
+                            <mat-form-field class="example-full-width" appearance="fill">
+                                    <input type="text" matInput formControlName="ship_to_party_name" 
+                                    placeholder="Customer Name">
+                                    <mat-hint>Customer Name</mat-hint>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-2" style="margin-right: 18px;">
+                            <mat-form-field class="example-full-width" appearance="fill">
+                                    <input type="text" matInput formControlName="reference_document" 
+                                    placeholder="So No">
+                                    <mat-hint>So No</mat-hint>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-2" style="margin-right: 18px;">
+                            <mat-form-field appearance="fill">
+                              <mat-label>Business Unit</mat-label>
+                              <mat-select formControlName="business_unit" [(value)]="form.value.business_unit" multiple>
+                                <mat-option>-select-</mat-option>
+                                <mat-option *ngFor="let subskill of business_unit_list" [value]="subskill.sub_dept_id">
+                                  {{subskill.sub_department}}
+                                </mat-option>
+                              </mat-select>
+                              <mat-hint>Business Unit</mat-hint>
+                              </mat-form-field>
+                        </div>
+
+
+                        <div  class="col-2" style="margin-right: 18px;">
+                            <mat-form-field>
+                                <mat-label>Enter a date range</mat-label>
+                                <mat-date-range-input [rangePicker]="picker">
+                                  <input matStartDate  placeholder="Start date"  formControlName="fromDate" (ngModelChange)="datePickerChange()">
+                                  <input matEndDate  placeholder="End date"  formControlName="toDate" (ngModelChange)="datePickerChange()">
+                                </mat-date-range-input>
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-date-range-picker #picker></mat-date-range-picker>
+                                <mat-hint>Select DA Date Range</mat-hint>
+                              </mat-form-field>
+                        </div>
+
+                        <div class="col-2" style="margin-left: 15px;">
+                            <button mat-raised-button color="primary" (click)="getRecordsBasedOnFilterData()">Search</button>
+                            <button style="margin-left:1rem;" mat-raised-button color="primary" (click)="clearAllFilterDataFields()">Clear</button>
+                        </div>
+
+                </div>
+                </div>
+            </div>
+        </form>
+
+
+      <div class="row">
+        <div class="col-12">
+            <div class="card-box table-responsive">
+              <table  class="table table-bordered table-striped table-hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" style="overflow: scroll;">
+                    <thead>
+                        <tr>
+                            <th style="width: 130px;white-space: nowrap;">SL.No</th>
+                            <th style="width: 130px;">DA No</th>
+                            <th style="width: 230px;white-space: nowrap;" >So No</th>
+                            <th style="width: 230px;">Customer Name</th>
+                            <th style="width: 230px;">Destination</th>
+                            <th style="width: 230px;">DA Date</th>
+                            <th style="width: 130px;">Business Unit</th>
+                            <!-- <th  style="width: 130px;" >Category</th> -->
+                            
+                            
+                            <!-- <th style="width: 130px;">Dispatch Date</th> -->
+                            <th style="width: 130px;">Number of Boxes</th>
+                            <th style="width: 130px;">Total Packing Cost</th>
+                            <th style="width: 130px;">View</th>
+                            <th style="width: 130px;">Project ID</th>
+                            <th style="width: 130px;">DA Remarks</th> 
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                            <tr *ngFor="let subskill of tablelist;let i=index">
+                            <td style="text-align: center;">{{i+1}}</td>
+                            
+                            <!-- <td><span *ngIf="subskill.delivery_challan.length != 0">{{subskill.delivery_challan[0].da[0].ygs_proj_defi}}</span></td> -->
+                            <!-- <td><span *ngIf="subskill.delivery_challan.length != 0">{{subskill.delivery_challan[0].da[0].jobcode_da_no}}</span></td> -->
+                            <td>{{subskill.jobcode_da_no != null ? subskill.jobcode_da_no : '-'}}</td>
+                            <td>{{subskill.so_no != null ? subskill.so_no : '-'}}</td>
+                            <td>{{subskill.customer_name != null ? subskill.customer_name : '-'}}</td>
+                            <td>{{subskill.ship_to_city != null ? subskill.ship_to_city : '-'}}</td>
+                            <td>{{subskill.da_date != null ? (subskill.da_date | date : 'dd/MM/yyyy') : ('-')}}</td>
+
+                            <td>{{subskill.business_unit != null ? subskill.business_unit : '-'}}</td>
+                            <!-- <td>-</td> -->
+                            
+                            <!-- <td>{{subskill.dispatch_date | date : 'dd/MM/yyyy'}}</td> -->
+                            <!-- <td><span *ngIf="subskill.delivery_challan.length != 0">{{subskill.delivery_challan[0].trucklist[0].check_out | date : 'dd/MM/yyyy'}}</span></td> -->
+                            <td style="text-align:center;">{{subskill.No_of_boxes != null ? subskill.No_of_boxes : '-'}}</td>
+                            <td style="text-align: right;"><span *ngIf="subskill.total_packing_price != null">{{subskill.total_packing_price.price__sum != null ? (subskill.total_packing_price.price__sum | number:'1.2-2') : ('-') }}</span></td>
+                            <!-- <td style="color:blue;" (click)="openDialogPanel(subskill.challan_no)">View</td> 18_03_2023-->
+                            <td style="color:blue;" (click)="openDialogPanel(subskill.da_id)">View</td>
+                            <td>{{subskill.ygs_proj_defi != null ? subskill.ygs_proj_defi : '-'}}</td>
+                            <td>{{subskill.remarks != null ? subskill.remarks : '-'}}</td>
+
+                        </tr> 
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    </div>
+  </div>
+  
+
+  
+
+
+  <!-- <div class="col-2" style="margin-right: 18px;">
+                            <mat-form-field class="example-full-width" appearance="fill">
+                                    <input type="text" matInput formControlName="ship_to_city" 
+                                    placeholder="Destination">
+                                    <mat-hint>Destination</mat-hint>
+                            </mat-form-field>
+                        </div> -->
+
+                            <!-- <div class="col-2" style="margin-right: 18px;">
+                            <mat-form-field class="example-full-width" appearance="fill">
+                                <mat-label>Data Type</mat-label>
+                                        <mat-select #datetypeselect  formControlName="date_type" (selectionChange) ='onDateTypeSelected(datetypeselect.value)'>
+                                        <mat-option value="LoadingDate">Loading Date</mat-option>
+                                        <mat-option value="BillDate">Bill Date</mat-option>
+                                      </mat-select>
+                                    </mat-form-field>
+                        </div> -->
+
+                        <!-- <div class="col-2" style="margin-right: 18px;">
+                            <mat-form-field class="example-full-width" appearance="fill">
+                                    <input type="text" matInput formControlName="transporter_name" 
+                                    placeholder="Transporter Name">
+                            </mat-form-field>
+                        </div> -->
+
+                        <!-- <div class="col-2" style="margin-right: 18px;">
+                            <mat-form-field appearance="fill">
+                              <mat-label>Transporter Name</mat-label>
+                              <mat-select formControlName="transporter_name" [(value)]="form.value.transporter_name">
+                                <mat-option>-select-</mat-option>
+                                <mat-option *ngFor="let subskill of transportationlist" [value]="subskill.transportationName">
+                                  {{subskill.transportationName}}
+                                </mat-option>
+                              </mat-select>
+                              <mat-hint>Transporter Name</mat-hint>
+                              </mat-form-field>
+                        </div> -->

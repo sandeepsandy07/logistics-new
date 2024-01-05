@@ -1,0 +1,114 @@
+
+<div class="col-12" align="right">  
+    <button color="warn" mat-raised-button mat-dialog-close style="position: fixed;z-index: 10;" (click)="dialogClose()">Close</button>
+</div> 
+<div class="row">
+    
+    <div class="col-12">
+        <div class="card-box table-responsive">
+          <table class="table table-bordered table-striped table-hover " datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" style="overflow: scroll;">
+                <thead>
+                    <tr>
+                        <th style="width: 30px;">Sl.no</th>
+                        <th style="width: 230px;white-space: nowrap;">DA no</th>
+                        <th style="width: 230px;">From</th>
+                        <!-- <th style="width: 130px;">To</th> -->
+                        <th style="width: 230px;white-space: nowrap;">Job Code</th>
+                        <th  style="width: 230px;white-space: nowrap;" >Job Name</th>
+                        <th  style="width: 230px;white-space: nowrap;" >PM</th>
+                        <th  style="width: 230px;white-space: nowrap;" >DA Date</th>
+                        <th style="width: 230px;white-space: nowrap;">So no</th>
+                        <th style="width: 230px;white-space: nowrap;">Po No</th>
+                        <th   style="width: 230px;">Type</th>
+                        <th style="width: 230px;white-space: nowrap;">Customer Name</th>
+                        <th style="width: 230px;">Status</th>
+                        <!-- <th style="width: 230px;white-space: nowrap;">Ship to Party Name
+                        </th> -->
+                        <th style="width: 230px;white-space: nowrap;">Invoice Amount(SAP)
+                        </th>
+                        <th style="width: 230px;white-space: nowrap;">Billing Value(Portal)
+                        </th>
+                       
+                        <th style="width: 230px;">Transportation Cost
+                        </th>
+                        <th style="width: 230px;">Packing Cost
+                        </th>
+                        <th style="width: 230px;">No. of Boxes
+                        </th>
+                        <th style="width: 230px;">DA Acknowledge Date</th>
+                        <th style="width: 230px;">Loading Completed Date</th>
+                        <th style="width: 230px;">No. of Days Taken</th>
+                        <!-- <th style="width: 230px;">View</th> -->
+                        <!-- <th style="width: 230px;">Vehicle Details
+                        </th> -->
+
+                    </tr>
+                </thead>
+                <tbody >
+                    
+                        <tr *ngFor="let subskill of tablelist;let i=index">
+                        <td >{{i+1}}</td>
+                        <td style="color:blue;padding:2px;" (click)="daNavigation_tab(subskill.da_id,'material/DA-details')">{{subskill.jobcode_da_no}}</td>
+                        <!-- <td style="color:blue;padding:2px;" ><a target="_blank" [routerLink]="['material/da-details-new']">{{subskill.jobcode_da_no}}</a></td> -->
+                        
+                        <td><span *ngIf="subskill.da_from != 0">{{subskill.sub_department}}</span></td>
+                        <!-- <td>{{subskill.da_from}}</td> -->
+                        <!-- <td>{{subskill.da_to}}</td> -->
+                        <td>{{subskill.job_code}}</td>
+                        <td>{{subskill.job_name}}</td>
+                        <td>{{subskill.pm_name}}</td>
+                        <td>{{subskill.da_date | date : 'dd/MM/yyyy'}}</td>
+                        <td>{{subskill.so_no}}</td>
+                        <td>{{subskill.po_no}}</td>
+                        <td>{{subskill.bill_type}}</td>
+                        <!-- <td>{{subskill.customer_name}}</td> -->
+                        <td><span *ngIf="subskill.customer_id != 0">{{subskill.customer_name}}</span></td>
+                        <td>{{subskill.status}}</td>
+                        <!-- <td></td> -->
+                        <td> {{subskill.sap_billing_data | number}}</td>
+                        <td> {{subskill.portal_billing_value | number}}</td>
+                        <td> {{subskill.transport_cost | number}}</td>
+                        <td>{{subskill.packing_cost | number}}</td>
+                        <td>{{subskill.box_total}}</td>
+                        <td>{{subskill.da_ack_date != null ? (subskill.da_ack_date | date : 'dd/MM/yyyy') : ('-')}}</td>
+                        <td>{{subskill.loaded_date != null ? (subskill.loaded_date | date : 'dd/MM/yyyy') : ('-')}}</td>
+                        <td style="text-align:center;">{{(subskill.date_diff) != null ? (subskill.date_diff) : ('-')}}</td>
+                        <!-- <td style="color: blue;" (click)="openDialogPanel(subskill.da_id)">View</td> -->
+                    </tr> 
+                   
+                    <tr style="background-color: #2b8dc03d; font-weight: bolder;">
+                   
+                      <td ></td>
+                      <td ></td>
+                      <td ></td>
+                      <td ></td>
+                     
+                      <td ></td>
+                      <td ></td>
+                      <td ></td>
+                      <td ></td>
+                      <td ></td>
+                      <td ></td>
+                      <td ></td>
+                      <td >Total</td>
+                      <td >{{total_sap_cost | number}}</td>
+                      <td >{{total_inv_cost | number}}</td>
+                      <td >{{total_transport_cost | number}}</td>
+                      <td >{{total_packing_cost | number}}</td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                     
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="d-flex justify-content-center">
+    <div class="spinner-border" role="status" >
+      <span  id="loading"></span>
+    </div>
+  </div>

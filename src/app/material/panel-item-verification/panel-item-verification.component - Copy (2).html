@@ -1,0 +1,113 @@
+<div class="card-box example-small-box-details" *ngIf="viewRecords">
+    <div class="row">
+        <div class="col-1">  
+            <div class="row">
+                <div class="col-6">
+                    <!-- <mat-icon matListIcon [ngStyle]="{'color':'red'}" (click)="daNavigation(viewRecords.da_id,'/material/billableform')">arrow_back</mat-icon> -->
+                </div>
+                <div class="col-6">
+                    <label>DA No</label>
+                </div>
+            </div>
+           
+        </div>
+        <div class="col-3">  
+            <span>:&nbsp;<a style="color: blue;cursor: pointer;" (click)="daNavigation(viewRecords.da_id,'material/DA-details')">{{viewRecords.jobcode_da_no}}</a></span>
+           <label>(R-{{viewRecords.revision}})</label>
+        </div>
+       
+        <div class="col-2">  
+            <label>Date</label>
+            <span>:&nbsp;{{viewRecords.da_date | date}}</span>
+           
+        </div>
+        <div class="col-1">  
+            <label>SO no</label>
+           
+        </div>
+        <div class="col-1">  
+            <span>:&nbsp;{{viewRecords.so_no}}</span>
+           
+        </div>
+        <div class="col-1">  
+            <label>PO no</label>
+           
+        </div>
+        <div class="col-2">  
+            <span>:&nbsp;{{viewRecords.po_no}}</span>
+           
+        </div>
+        <div class="col-1">  
+           
+           
+        </div>
+        </div>
+        <div class="row">
+            <div class="col-2">  
+                <label>Job Code</label><span>:&nbsp;{{viewRecords.job_code}}</span>
+               
+            </div>
+            <div class="col-1">  
+                <label>Location</label><span>:&nbsp;{{viewRecords.location_unit}}</span>
+               
+            </div>
+           
+            <div class="col-4">  
+                <label>Job Name</label><span>:&nbsp;{{viewRecords.job_name}}</span>
+               
+            </div>
+            <div class="col-1">  
+                <label>Customer</label>
+               
+            </div>
+            <div class="col-3">  
+                <span>:&nbsp;{{viewRecords.customer_name }}</span>
+               
+            </div>
+            <div class="col-1" style="color: red;">
+           
+                <mat-icon (click)="daNavigation(viewRecords.da_id,'material/revisioncreate')">bug_report</mat-icon>
+                 <span >*revise</span>
+            </div>
+
+        </div>
+</div>
+
+<div class="container-fluid">
+    <div class="mt-2" *ngFor="let card of list;let i = index">
+        
+        <div class="row" >
+            <div class="col-md-2 mb-2" style="text-align: center;" *ngFor="let list of card.panel">
+               
+                
+                <mat-card *ngIf="list.panel_name !='LOOSE SUPPLY' &&  list.status == 'verified' " style="cursor: pointer;padding:7px;background-color: #ffc864d1;"  >
+                  
+                                    
+     
+                              
+                 
+                    <span style="color: #3f51b5;" (click)="getFilterList(list.panel_name, card.section)"><b>{{list.panel_name}}&nbsp;&nbsp;</b></span><br>                    
+                   
+                    <span style="color:green;"><b>  Verified</b></span> <span><mat-icon style="font-size:25px;float:right;color:rebeccapurple" title="Dispatch Check List" (click)="generateSinglePanelWisePdf(list.panel_name)">print</mat-icon></span>
+                </mat-card>
+                <mat-card *ngIf="list.panel_name !='LOOSE SUPPLY' &&  list.status == null " style="cursor: pointer;padding:7px;background-color: #afbbaf5c;"  >
+                    <span style="color: #3f51b5;" (click)="getFilterList(list.panel_name, card.section)"><b><s>{{list.name}}&nbsp;&nbsp;[{{list.data.length}}]</s></b></span><br>                    
+                    <span style="color:green;"><b>  Not Verified</b></span> 
+                </mat-card>
+                <mat-card *ngIf="list.panel_name !='LOOSE SUPPLY' &&  list.packing_flag >= '1' " style="cursor: pointer;padding:7px;background-color: #65ff65b8;"  >
+                    <span style="color: #3f51b5;" (click)="getFilterList(list.panel_name, card.section)"><b>{{list.panel_name}}&nbsp;&nbsp;</b></span><br>                    
+                    <span style="color:green;"><b>Approved</b></span> <span><mat-icon style="font-size:25px;float:right;color:rebeccapurple" title="Dispatch Check List" (click)="generateSinglePanelWisePdf(list.panel_name)">print</mat-icon></span>
+                </mat-card>
+            </div>
+        </div>
+      
+</div>
+</div>
+
+
+
+
+
+
+
+

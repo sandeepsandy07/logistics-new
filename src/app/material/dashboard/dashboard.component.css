@@ -1,0 +1,7 @@
+#cdk-overlay-0 {
+    max-width: 100% !important;
+}
+.dataTables_wrapper {
+    height: 300px;
+    overflow-y: auto;
+  }

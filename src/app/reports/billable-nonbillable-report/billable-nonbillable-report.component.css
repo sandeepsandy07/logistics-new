@@ -1,0 +1,24 @@
+
+/* element.style {
+    position: relative;
+    overflow: auto;
+    width: 100%;
+    height: 300px;
+} */
+
+  /* tbody {
+      display:block;
+      height:200px;
+      overflow:auto;
+  }
+  thead, tbody tr {
+      display:table;
+      width:100%;
+      table-layout:fixed;
+  }
+  thead {
+      width: calc( 100% - 1em )
+  }
+  table {
+    width:400px;
+} */

@@ -1,0 +1,341 @@
+<div style="text-align: center">
+    <span>
+        <h2 style="font-size: 25px;"><b>Truck Request</b></h2>
+    </span>
+</div>
+<hr>
+
+<div class="conainer" style="border:1px solid bold">
+    <div class="row">
+        <div class="col-md-3" style="margin-left:4rem;">
+            <mat-radio-group aria-label="Select an option">
+                <label><b>Options :</b></label>&nbsp;&nbsp;
+                <mat-radio-button name="billType" (change)="SelectType('contract')" value="1">Contract</mat-radio-button>&nbsp;&nbsp;
+                <mat-radio-button name="billType" (change)="SelectType('manual')" value="2">Manual</mat-radio-button>
+              </mat-radio-group>
+        </div>
+    </div>
+</div>
+<br>
+
+<div class="container" *ngIf="ContractForm">
+    <div class="row">
+        <div class="col-2" style="margin-right: 18px;">
+          <mat-form-field appearance="fill">
+            <mat-label>Transporter Name</mat-label>
+            <mat-select [(ngModel)]="transportationID">
+              <mat-option  *ngFor="let val of TransportationList" [value]="val.transportationId" selected>{{val.transportationName}}</mat-option>
+            </mat-select>
+            <mat-hint style="color:black">eg.ABC</mat-hint>
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-2" style="margin-right: 18px;">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Transportation Mode</mat-label>
+            <input type="text" matInput list="transport" [(ngModel)]="mode_of_transport" autocomplete="off">
+            <datalist id="transport">
+              <option value="Air">Air</option>
+              <option value="Sea">Sea</option>
+              <option value="Surface">Surface</option>
+            </datalist>
+          </mat-form-field>
+        </div>
+
+        <div class="col-2" style="margin-right: 18px;">
+          <mat-form-field appearance="fill">
+            <mat-label>Delivery Mode</mat-label>
+            <mat-select [(ngModel)]="transportationMode">
+              <mat-option *ngFor="let val of transportationList" [value]="val.transportationModeId" selected>{{val.transportationMode}}</mat-option>
+            </mat-select>
+            <mat-hint style="color:black">eg.Godown Delivery </mat-hint>
+          </mat-form-field>
+        </div>
+
+        <div class="col-2" style="margin-right: 18px;">
+          <mat-form-field appearance="fill">
+            <mat-label>Freight Mode</mat-label>
+            <mat-select [(ngModel)]="freightMode">
+              <mat-option *ngFor="let val of freightList" [value]="val.freightTypeId" selected>{{val.freightType}}</mat-option>
+            </mat-select>
+            <mat-hint style="color:black">eg.TBB</mat-hint>
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-2" style="margin-right: 18px;">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Description of Goods</mat-label>
+            <input type="text" matInput list="codes" [(ngModel)]="descriptionOfGoods" autocomplete="off">
+            <datalist id="codes">
+              <!-- <option *ngFor="let val of customer_name_list" value="{{val.customer_name}}">{{val.customer_name}}</option> -->
+              <option value="Distributed Control System">Distributed Control System</option>
+              <option value="Parts for Distributed Control System">Parts for Distributed Control System</option>
+              <option value="Analyser System">Analyser System</option>
+              <option value="Parts for Analyser System">Parts for Analyser System</option>
+              <option value="Spares">Spares</option>
+              <option value="Customer Material (as per DC)">Customer Material (as per DC)</option>
+              <option value="Vendor Material">Vendor Material</option>
+              <option value="Transmitter">Transmitter</option>
+              <option value="Cylinders">Cylinders</option>
+              <option value="Data Aquiation system">Data Aquiation system</option>
+              <option value="Programmable Logist Control">Programmable Logist Control</option>
+              <option value="Parts for Programmable Logic Control">Parts for Programmable Logic Control</option>
+              <option value="OTHERS">OTHERS</option>
+            </datalist>
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-2" style="margin-right: 18px;">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Mode of Payment</mat-label>
+            <input type="text" matInput list="modeofpayment" [(ngModel)]="mode_of_payment" autocomplete="off">
+            <datalist id="modeofpayment">
+              <option value="">Select Option</option>
+              <option value="Direct">Direct</option>
+              <option value="Through Bank">Through Bank</option>
+              <option value="COD">COD</option>
+              <option value="Proforma invoice">Proforma invoice</option>  
+            </datalist>
+          </mat-form-field>
+        </div>
+
+        <div class="col-2" style="margin-right: 18px;">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Pincode</mat-label>
+            <input type="text" matInput list="codes" [(ngModel)]="pincodeId" autocomplete="off" >
+            <button mat-button matSuffix  mat-icon-button (click)="getSoDetails_by_p_id()">
+              <mat-icon>search</mat-icon>  </button>
+            <datalist id="codes" (click)="getSoDetails_by_p_id()">
+              <!--<option *ngFor="let subskill of soList" [value]="subskill.sales_document_no" (click)="getSoDetails_by_p_id()"> {{subskill.sales_document_no }}</option>-->
+              <!-- <option *ngFor="let val of PincodeList" [value]="val.pincodeId" (click)="getSoDetails_by_p_id()">{{val.pincodeNo}}</option> -->
+              <option *ngFor="let val of PincodeList" [value]="val.pincodeNo" (click)="getSoDetails_by_p_id()">{{val.pincodeNo}}</option>
+            </datalist>
+          </mat-form-field>
+        </div>
+
+        <div class="col-2" style="margin-right: 18px;">
+          <mat-form-field appearance="fill">
+            <mat-label>State</mat-label>
+            <mat-select #mySelect [(ngModel)]="stateId" (selectionChange) ='onOptionsSelected(mySelect.value)'>
+              <mat-option value="">Select Option</mat-option>
+              <mat-option *ngFor="let val of StateList" [value]="val.stateId" selected>{{val.stateName}}</mat-option>
+            </mat-select>
+            <mat-hint style="color:black">eg.Karnataka</mat-hint>
+          </mat-form-field>
+        </div>
+
+        <div class="col-2" style="margin-right: 18px;">
+            <mat-form-field appearance="fill">
+              <mat-label>Destination</mat-label>
+              <mat-select #destSelect [(ngModel)]="destinationId" (selectionChange) ='onDestinationSelected(destSelect.value)'>
+                <mat-option value="">Select Option</mat-option>
+                <mat-option *ngFor="let val of DestinationList" [value]="val.destinationId" selected>{{val.destinationName}}</mat-option>
+              </mat-select>
+              <mat-hint style="color:black">eg.Karnataka</mat-hint>
+            </mat-form-field>
+          </div>
+   
+      <div class="col-2" style="margin-right: 18px;">
+        <mat-form-field appearance="fill">
+          <mat-label>Taluk</mat-label>
+          <mat-select #talukSelect [(ngModel)]="talukId" (selectionChange) ='onTalukSelected(talukSelect.value)'>
+            <mat-option value="">Select Option</mat-option>
+            <mat-option *ngFor="let val of TalukList" [value]="val.talukId" selected>{{val.talukName}}</mat-option>
+          </mat-select>
+          <mat-hint style="color:black">eg.Nirmal
+          </mat-hint>
+        </mat-form-field>
+      </div>
+
+      <div class="col-2" style="margin-right: 18px;">
+        <div class="example-container div">
+              <mat-form-field appearance="fill">
+                <mat-label>Remarks</mat-label>
+                <input matInput placeholder="Remarks" [(ngModel)]="remark" ngModel maxlength="200" #Remarks="ngModel">
+                  <mat-hint style="color:black" align="end">maxLength=200</mat-hint>
+                  <!-- <mat-error  *ngIf="Remarks.dirty && !Remarks.valid">Remarks is Required</mat-error> -->
+              </mat-form-field>
+        </div>
+    </div>
+      </div>
+</div>
+
+
+<div class="container" *ngIf="ManualForm">
+    <div class="row">
+        <div class="col-2" style="margin-right: 18px;">
+          <mat-form-field appearance="fill">
+            <mat-label>Transporter Name</mat-label>
+            <mat-select [(ngModel)]="transportationID" multiple>
+              <mat-option *ngFor="let val of TransportationList" [value]="val.transportationId" selected>{{val.transportationName}}</mat-option>
+            </mat-select>
+            <mat-hint style="color:black">eg.ABC</mat-hint>
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-2" style="margin-right: 18px;">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Transportation Mode</mat-label>
+            <input type="text" matInput list="transport" [(ngModel)]="mode_of_transport" autocomplete="off">
+            <datalist id="transport">
+              <option value="Air">Air</option>
+              <option value="Sea">Sea</option>
+              <option value="Surface">Surface</option>
+            </datalist>
+          </mat-form-field>
+        </div>
+
+        <div class="col-2" style="margin-right: 18px;">
+          <mat-form-field appearance="fill">
+            <mat-label>Delivery Mode</mat-label>
+            <mat-select [(ngModel)]="transportationMode">
+              <mat-option *ngFor="let val of transportationList" [value]="val.transportationModeId" selected>{{val.transportationMode}}</mat-option>
+            </mat-select>
+            <mat-hint style="color:black">eg.Godown Delivery </mat-hint>
+          </mat-form-field>
+        </div>
+
+        <div class="col-2" style="margin-right: 18px;">
+          <mat-form-field appearance="fill">
+            <mat-label>Freight Mode</mat-label>
+            <mat-select [(ngModel)]="freightMode">
+              <mat-option *ngFor="let val of freightList" [value]="val.freightTypeId" selected>{{val.freightType}}</mat-option>
+            </mat-select>
+            <mat-hint style="color:black">eg.TBB</mat-hint>
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-2" style="margin-right: 18px;">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Description of Goods</mat-label>
+            <input type="text" matInput list="codes" [(ngModel)]="descriptionOfGoods" autocomplete="off">
+            <datalist id="codes">
+              <!-- <option *ngFor="let val of customer_name_list" value="{{val.customer_name}}">{{val.customer_name}}</option> -->
+              <option value="Distributed Control System">Distributed Control System</option>
+              <option value="Parts for Distributed Control System">Parts for Distributed Control System</option>
+              <option value="Analyser System">Analyser System</option>
+              <option value="Parts for Analyser System">Parts for Analyser System</option>
+              <option value="Spares">Spares</option>
+              <option value="Customer Material (as per DC)">Customer Material (as per DC)</option>
+              <option value="Vendor Material">Vendor Material</option>
+              <option value="Transmitter">Transmitter</option>
+              <option value="Cylinders">Cylinders</option>
+              <option value="Data Aquiation system">Data Aquiation system</option>
+              <option value="Programmable Logist Control">Programmable Logist Control</option>
+              <option value="Parts for Programmable Logic Control">Parts for Programmable Logic Control</option>
+              <option value="OTHERS">OTHERS</option>
+            </datalist>
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-2" style="margin-right: 18px;">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Mode of Payment</mat-label>
+            <input type="text" matInput list="modeofpayment" [(ngModel)]="mode_of_payment" autocomplete="off">
+            <datalist id="modeofpayment">
+              <option value="">Select Option</option>
+              <option value="Direct">Direct</option>
+              <option value="Through Bank">Through Bank</option>
+              <option value="COD">COD</option>
+              <option value="Proforma invoice">Proforma invoice</option>  
+            </datalist>
+          </mat-form-field>
+        </div>
+
+       
+
+        <div class="col-2" style="margin-right: 18px;">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Pincode</mat-label>
+            <input type="text" matInput list="codes" [(ngModel)]="pincodeId" autocomplete="off" >
+            <button mat-button matSuffix  mat-icon-button (click)="getSoDetails_by_p_id()">
+              <mat-icon>search</mat-icon>  </button>
+            <datalist id="codes" (click)="getSoDetails_by_p_id()">
+              <!--<option *ngFor="let subskill of soList" [value]="subskill.sales_document_no" (click)="getSoDetails_by_p_id()"> {{subskill.sales_document_no }}</option>-->
+              <!-- <option *ngFor="let val of PincodeList" [value]="val.pincodeId" (click)="getSoDetails_by_p_id()">{{val.pincodeNo}}</option> -->
+              <option *ngFor="let val of PincodeList" [value]="val.pincodeNo" (click)="getSoDetails_by_p_id()">{{val.pincodeNo}}</option>
+            </datalist>
+          </mat-form-field>
+        </div>
+
+        <div class="col-2" style="margin-right: 18px;">
+          <mat-form-field appearance="fill">
+            <mat-label>State</mat-label>
+            <mat-select #mySelect [(ngModel)]="stateId" (selectionChange) ='onOptionsSelected(mySelect.value)'>
+              <mat-option value="">Select Option</mat-option>
+              <mat-option *ngFor="let val of StateList" [value]="val.stateId" selected>{{val.stateName}}</mat-option>
+            </mat-select>
+            <mat-hint style="color:black">eg.Karnataka</mat-hint>
+          </mat-form-field>
+        </div>
+
+        <div class="col-2" style="margin-right: 18px;">
+            <mat-form-field appearance="fill">
+              <mat-label>Destination</mat-label>
+              <mat-select #destSelect [(ngModel)]="destinationId" (selectionChange) ='onDestinationSelected(destSelect.value)'>
+                <mat-option value="">Select Option</mat-option>
+                <mat-option *ngFor="let val of DestinationList" [value]="val.destinationId" selected>{{val.destinationName}}</mat-option>
+              </mat-select>
+              <mat-hint style="color:black">eg.Karnataka</mat-hint>
+            </mat-form-field>
+        </div> 
+
+      <div class="col-2" style="margin-right: 18px;">
+        <mat-form-field appearance="fill">
+          <mat-label>Taluk</mat-label>
+          <mat-select #talukSelect [(ngModel)]="talukId" (selectionChange) ='onTalukSelected(talukSelect.value)'>
+            <mat-option value="">Select Option</mat-option>
+            <mat-option *ngFor="let val of TalukList" [value]="val.talukId" selected>{{val.talukName}}</mat-option>
+          </mat-select>
+          <mat-hint style="color:black">eg.Nirmal
+          </mat-hint>
+        </mat-form-field>
+      </div>
+
+      <div class="col-2" style="margin-right: 18px;">
+        <div class="example-container div">
+              <mat-form-field appearance="fill">
+                <mat-label>Remarks</mat-label>
+                <input matInput placeholder="Remarks" [(ngModel)]="remark" ngModel  maxlength="200" #Remark="ngModel">
+                <mat-hint style="color:black" align="end">maxLength=200</mat-hint>
+                <!-- <mat-error  *ngIf="Remark.dirty && !Remark.valid">Remarks is Required</mat-error> -->
+              </mat-form-field>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+<div class="container" *ngIf="TableDisplayForm">
+    <div class="row" mat-list-item >
+        <div class="col-md-1"><b>SL.NO.</b></div>
+        <div class="col-md-1"><b>TruckType</b></div>
+        <div class="col-md-2"><b>Quantity</b></div>
+        <hr>
+    </div>
+    <div class="row" mat-list-item *ngFor="let data of TruckList; let i=index">
+        <div class="col-md-1">{{i + 1}}</div>
+        <div class="col-md-1">{{data.truckName}}</div>
+        <div class="col-md-2">
+            <div class="example-container div">
+                  <mat-form-field appearance="fill" style="width:80px">
+                    <mat-label>Quantity</mat-label>
+                     <input matInput placeholder="Enter Quantity" (change)="fetchingAmountValue(data.truckId,i)" [(ngModel)]="quantity[i]" ngModel required #qty="ngModel" pattern="^[0-9]+$">
+                     <small class="form-text text-muted" *ngIf="qty.touched && !qty.valid">Only Numbers accepted</small>
+                  </mat-form-field>
+            </div>
+          </div>
+        </div>
+
+    <div class="col-md-3">
+       <button mat-raised-button style="margin-top:1rem;margin-left:3rem;" color="primary" type="submit" (click)="CreateList()">Submit</button>
+  </div>
+</div>
+
+        
+
+ 
+
+      
+     
+

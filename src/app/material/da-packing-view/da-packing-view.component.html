@@ -1,0 +1,78 @@
+
+<div *ngIf="packing.view_access">
+<h4  *ngIf="bigbox_details" style="text-align:center">Packing is not started</h4>
+<h4 style="color:rebeccapurple">Panel Box</h4><span *ngIf="bigbox_details.value.boxLIst_panel.length > 0" style="color: rebeccapurple;float: right; font-size: 14px;"><b><span style="color:red;">*</span>Panel Consolidated</b><mat-icon style="font-size:25px;float:right;cursor: pointer;" (click)="generatePackedConsolidatePanelPdf()">print</mat-icon></span>
+        
+<div class="row" >
+    <div class="col-md-2 mb-2" style="text-align: center;" *ngFor="let list of bigbox_details.value.boxLIst_panel;let i=index;" (click)="getMainBoxDetails_dailog(list.item.items,list.box_list.box_code)" >
+        <mat-card class="icon-rocket"  style="padding: unset;height:100%;cursor: pointer;background-image: url('../assets/images/packingimages5.png');background-size: cover;" >
+            <div class="row">   
+                <div class="col-12">
+                    <span>
+                        <!-- <mat-icon style="font-size:18px;float:right;color:red" (click)="barcodeprint(list.box_list.box_code,list.box_list.box_serial_no,true)" title="Barcode print">blur_linear</mat-icon> -->
+                        <mat-icon style="font-size:18px;float:right;color:rebeccapurple" (click)="generatePackedPanelPdf(list.box_list.box_code)" title="Packing list cum checklist">print</mat-icon>
+                        <mat-icon style="font-size:18px;float:right;color:red" (click)="generateConsigneeForm_single(list.box_list.box_code,list.panel.component_no)" title="Single Box Consignee Print ">alternate_email</mat-icon>
+                    </span>
+                </div>
+                <div class="col-12 text-center">
+                    <span style="font-weight: bold;font-size: 12px;">{{list.box_list.box_details.boxSize}}</span>
+                </div>
+                <div class="col-12">
+                    <span  class="text-center"style="font-weight: bold;font-size: 12px;" *ngIf="list.panel">{{list.panel.component_no}} - {{list.panel.size}}</span>
+
+
+                </div>
+                <div class="col-12">
+                    <span class="text-center" style="font-weight: bold;font-size: 12px;">Box.no ={{list.box_list.box_serial_no}}</span>
+
+                </div>
+                <div class="col-12">
+                    <span class="text-center" style="font-weight: bold;font-size: 12px;">{{list.box_list.box_code}}</span>
+
+                </div>
+            </div>
+
+        </mat-card>
+        
+    </div>
+    
+    
+</div>
+<h4 style="color:rebeccapurple">Loose Supply</h4><span *ngIf="bigbox_details.value.boxLIst_loose.length > 0" style="color: rebeccapurple;float: right; font-size: 14px;"><b><span style="color:red;">*</span>Loose Consolidated</b><mat-icon style="font-size:25px;float:right;cursor: pointer;" (click)="generateConsolidateLooseItemPdf()">print</mat-icon></span>
+    
+<div class="row"   >
+  
+    <div class="col-md-2 mb-2" style="text-align: center;" *ngFor="let list of bigbox_details.value.boxLIst_loose;let i=index;" (click)="getMainBoxDetails_dailog(list.item.items,list.box_list.box_code)" >
+        <mat-card class="icon-rocket"  style="padding: unset;height:100%;cursor: pointer;background-image: url('../assets/images/packingimages5.png');background-size: cover;" >
+            <div class="row">   
+                <div class="col-12">
+                    <span>
+                        <!-- <mat-icon style="font-size:18px;float:right;color:red" (click)="barcodeprint(list.box_list.box_code,list.box_list.box_serial_no,true)"  title="Barcode print">blur_linear</mat-icon> -->
+                        <mat-icon style="font-size:18px;float:right;color:rebeccapurple" (click)="generateLooseItemPdf(list.box_list.box_code)"  title="Packing list cum checklist">print</mat-icon>
+                        <mat-icon style="font-size:18px;float:right;color:red" (click)="generateConsigneeForm_single(list.box_list.box_code,list.panel.component_no)" title="Single Box Consignee Print ">alternate_email</mat-icon>
+                    </span>
+                </div>
+                <div class="col-12 text-center">
+                    <span style="font-weight: bold;font-size: 12px;">{{list.box_list.box_details.boxSize}}</span><br>
+                </div>
+                <div class="col-12">
+                    <span  class="text-center"style="font-weight: bold;font-size: 12px;">Box.no ={{list.box_list.box_serial_no}}</span>
+
+                </div>
+                <div class="col-12">
+                    <span class="text-center" style="font-weight: bold;font-size: 12px;">{{list.box_list.box_code}}</span>
+
+                </div>
+            </div>
+            
+                      
+           
+            
+          
+        </mat-card>
+        
+    </div>
+    
+    
+</div>
+</div>

@@ -1,0 +1,305 @@
+<div style="text-align: center;" *ngIf="mainFormHeader">
+    <span>
+        <h2 style="font-size: 25px;">User List</h2>
+    </span>
+</div>
+
+<div class="col-3" *ngIf="createFormHeader">
+  <b style="color:blue;font-size:16px;">Create New</b><button mat-icon-button color="accent" (click)="openDialog()">
+      <mat-icon class="mat-18">add_circle</mat-icon>
+  </button>
+</div>
+
+  
+<div *ngIf="ListForm">
+  
+  <mat-form-field style="margin-left:2rem;" appearance="standard">
+    <mat-label>Search</mat-label>
+    <input matInput (keyup)="applyFilter($event)" #input>
+  </mat-form-field>
+          <div style="margin-left:1rem;margin-right:1rem">
+              <table class="lessons-table mat-elevation-z8" matSort mat-table [dataSource]="dataSource">
+              
+                      <ng-container matColumnDef="Sl.no.">
+                        <th class="bg" mat-header-cell *matHeaderCellDef width="1%">Sl.no.</th>
+                        <td mat-cell *matCellDef="let element;let i=index;">{{i+1}}</td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="UserName">
+                        <th class="bg" mat-header-cell *matHeaderCellDef width ="2%">UserName</th>
+                        <td mat-cell *matCellDef="let element">{{element?.username}}</td>
+                      </ng-container>
+
+
+                      <ng-container matColumnDef="EmployeeName">
+                          <th class="bg" mat-header-cell *matHeaderCellDef width ="2%">EmployeeName</th>
+                          <td mat-cell *matCellDef="let element">{{element?.employee_name}}</td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="Dob">
+                          <th class="bg" mat-header-cell *matHeaderCellDef width ="4%">Dob</th>
+                          <td mat-cell *matCellDef="let element">{{element?.dob}}</td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="Department">
+                          <th class="bg" mat-header-cell *matHeaderCellDef width ="2%">Department</th>
+                          <td mat-cell *matCellDef="let element">{{element?.departmentName}}</td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="SubDepartment">
+                          <th class="bg" mat-header-cell *matHeaderCellDef width ="2%">Sub Department</th>
+                          <td mat-cell *matCellDef="let element">{{element?.subDepartmentName}}</td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="Location">
+                          <th class="bg" mat-header-cell *matHeaderCellDef width ="2%">Location</th>
+                          <td mat-cell *matCellDef="let element">{{element?.location}}</td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="SuperUserStatus">
+                          <th class="bg" mat-header-cell *matHeaderCellDef width ="2%">SuperUserStatus</th>
+                          <td mat-cell *matCellDef="let element">
+                          <mat-checkbox [checked]="element.is_superuser" [value]="element.id" (click)="SuperStatus(element)"></mat-checkbox>
+                          </td>
+                        </ng-container>
+
+                        <!-- <ng-container matColumnDef="ActiveStatus">
+                          <th class="bg" mat-header-cell *matHeaderCellDef width ="2%">ActiveStatus</th>
+                          <td mat-cell *matCellDef="let element">
+                            <mat-checkbox [checked]="element.is_active" [value]="element.id" (click)="activeStatus(element)"></mat-checkbox>
+                          </td>
+                        </ng-container> -->
+
+                  <ng-container matColumnDef="Action">
+                    <th class="bg" mat-header-cell *matHeaderCellDef width ="4%">Action</th>
+                    <td mat-cell *matCellDef="let element"> 
+                        <button mat-icon-button color="primary" (click)="viewData(element?.id)">
+                            <mat-icon class="mat-18">visibility</mat-icon>
+                        </button>
+                        <!-- <button mat-icon-button color="primary" (click)="Update(element)">
+                          <mat-icon class="mat-18">edit</mat-icon>
+                      </button> -->
+                        <button mat-icon-button color="accent" (click)="deleteData(element?.id)">
+                          <mat-icon class="mat-18">delete</mat-icon>
+                      </button>
+                    </td>
+                  </ng-container>
+          
+                      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                  </table>
+                  <div *ngIf="resultsLength == 0" class="noRecords">No records found</div>
+                  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+              </div>
+      </div>
+ 
+<div style="text-align: center;" *ngIf="viewFormHeader">
+  <span>
+      <h2 style="font-size: 25px;">User Details</h2>
+  </span>
+</div>
+
+<div class="div" *ngIf="ViewForm">
+  <mat-card class="example-card">
+    <mat-card-title>Details</mat-card-title>
+    <mat-card-content>
+      <div class="row">
+        <div class="col-6">
+          <p><b>Username: </b>{{viewRecords?.username}}</p>
+        </div>
+        <div class="col-6">
+          <p><b>Employee Number: </b> {{viewRecords.employee_no}}</p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-6">
+          <p><b>Employee Name: </b> {{viewRecords.employee_name}}</p>
+        </div>
+        <div class="col-6">
+          <p><b>Gender: </b>{{viewRecords.gender}}</p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-6">
+          <p><b>Date Of Birth: </b> {{viewRecords.dob}}</p>
+        </div>
+        <div class="col-6">
+          <p><b>Department Code: </b>{{viewRecords.dept_code}}</p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-6">
+          <p><b>Department Id: </b> {{viewRecords.dept_id}}</p>
+        </div>
+        <div class="col-6">
+          <p><b>Sub Department Id: </b> {{viewRecords.sub_dept_id}}</p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-6">
+          <p><b>Location: </b> {{viewRecords.location}}</p>
+        </div>
+        <div class="col-6">
+          <p><b>Designation: </b> {{viewRecords.designation}}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <p><b>Active Status: </b>{{viewRecords.is_active}}</p>
+        </div>
+        <div class="col-6">
+          <p><b>SuperUser Status: </b> {{viewRecords.is_superuser}}</p>
+        </div>
+      </div>
+      
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-raised-button (click)="setViewForm()" color="primary">Back</button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+
+<div style="text-align: center;" *ngIf="EditFormHeader">
+  <span>
+      <h2 style="font-size: 25px;">User List - Edit</h2>
+  </span>
+</div>
+<hr>
+<div class="container" *ngIf="EditForm">
+  <form #myForm="ngForm" (ngSubmit)="updateList()" id="MyForm" name="MyForm">
+  <div class="row"> 
+    <div class="col-md-3">
+      <mat-form-field appearance="fill">
+        <mat-label>User Name</mat-label>
+        <input matInput placeholder="" [(ngModel)]="userName" ngModel required  maxlength="150" name="UserName" #UserName="ngModel">
+        <mat-hint style="color:black" class="txt-align">Eg.464ID</mat-hint>
+        <mat-error  *ngIf="UserName.touched && !UserName.valid">UserName Field is required</mat-error>
+       </mat-form-field>
+    </div>
+    <div class="col-md-3">
+      <mat-form-field appearance="fill">
+      <mat-label>Employee Number</mat-label>
+      <input matInput placeholder="" [(ngModel)]="employeeNo"  ngModel required  maxlength="500" name="EmployeeNo" #EmployeeNo="ngModel" pattern="^[0-9\s _]+$">
+      <mat-hint style="color:black"  class="txt-align">Eg.160453</mat-hint>
+      <mat-error  *ngIf="EmployeeNo.touched && !EmployeeNo.valid">Employee Number Field is required.Special Characters and Characters Value are not accepted.</mat-error>
+    </mat-form-field>
+  </div>
+    <div class="col-md-3">
+      <mat-form-field appearance="fill">
+        <mat-label>Employee Name</mat-label>
+        <input matInput placeholder="" [(ngModel)]="employeeName" ngModel required  maxlength="500" name="EmployeeName" #EmployeeName="ngModel">
+        <mat-hint style="color:black"  class="txt-align">Eg.Hitesh S</mat-hint>
+        <mat-error  *ngIf="EmployeeName.touched && !EmployeeName.valid">EmployeeName Field is required.</mat-error>
+      </mat-form-field>
+  </div>
+  </div>
+  <br>
+ <div class="row">
+<div class="col-md-3">
+<label id="example-radio-group-label"><b>Gender:</b> </label>
+  <br><br>
+  <mat-radio-group aria-label="Select an option" [(ngModel)]="gender" name="GENDER">
+    <mat-radio-button  name="Gender" value="male">Male</mat-radio-button>
+    <mat-radio-button  name="Gender" class="example-radio-button" value="female">Female</mat-radio-button>
+  </mat-radio-group>
+</div>
+<div class="col-md-3">
+  <label id="example-radio-group-label"><b>DOB:</b></label><br>
+        <mat-form-field appearance="fill" style="width:150px;">
+          <mat-label>Field is required</mat-label> 
+          <input matInput [matDatepicker]="picker2" [(ngModel)]="DateOfBirth" (ngModelChange)="DatePickerChange()" ngModel required #DOB="ngModel" name="DOB">
+          <mat-error *ngIf="DOB.touched && !DOB.valid">Character and Special Characters are not allowed.</mat-error>
+          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+          <mat-datepicker #picker2></mat-datepicker>
+          <mat-hint style="color:black">Eg.20/09/1998</mat-hint>
+        </mat-form-field>
+</div>
+<div class="col-md-3">
+  <div class="example-container div">
+    <mat-form-field appearance="fill">
+      <mat-label>Department Code</mat-label>
+      <input matInput placeholder="" [(ngModel)]="deptCode" ngModel required  maxlength="500" name="DeptCode" #DeptCode="ngModel">
+      <mat-hint style="color:black">Eg.E13</mat-hint>
+      <mat-error  *ngIf="DeptCode.touched && !DeptCode.valid">Department Code Field is required.</mat-error>
+    </mat-form-field>
+  </div>
+</div>
+</div>
+<br>
+<div class="row">
+<div class="col-md-3">
+<div class="example-container div">
+  <mat-form-field appearance="fill">
+    <mat-label>Department Name</mat-label>
+    <input matInput placeholder="" [(ngModel)]="deptName" ngModel required maxlength="1000" name="DeptName" #DeptName="ngModel">
+    <mat-hint style="color:black"  class="txt-align">Eg.DSIN</mat-hint>
+    <mat-error  *ngIf="DeptName.touched && !DeptName.valid">Department Name Field is required.</mat-error>
+  </mat-form-field>
+</div>
+</div>
+<div class="col-md-3">
+<div class="example-container div">
+    <mat-form-field appearance="fill">
+      <mat-label>Designation</mat-label>
+      <input matInput placeholder="" [(ngModel)]="designation" ngModel required  maxlength="1000" name="Designation" #Designation="ngModel" pattern="^[a-zA-Z\s _]+$">
+      <mat-hint style="color:black"  class="txt-align">Eg.Manager</mat-hint>
+      <mat-error  *ngIf="Designation.touched && !Designation.valid">Designation Field is required.Special Characters and Numbers are not accepted.</mat-error>
+    </mat-form-field>
+</div>
+</div>
+<div class="col-md-3">
+<div class="example-container div">
+    <mat-form-field appearance="fill">
+      <mat-label>Location</mat-label>
+      <input matInput placeholder="" [(ngModel)]="location" ngModel required  maxlength="1000" name="Location" #Location="ngModel" pattern="^[a-zA-Z\s _]+$">
+      <mat-hint style="color:black"  class="txt-align">Eg.Banglore</mat-hint>
+      <mat-error  *ngIf="Location.touched && !Location.valid">Location Field is required.Special Characters and Numbers are not accepted.</mat-error>
+    </mat-form-field>
+</div>
+</div>
+</div>
+<br>
+<div class="row">
+
+<div class="col-3">
+  <mat-checkbox #superUserStatus
+    id="superUserStatus" name="SUPERUSERSTATUS"
+    type="checkbox"
+    [checked]="superUsername" 
+    (change)="OnSuperUserStatusChanged(superUserStatus.checked)">SuperUser</mat-checkbox>
+</div>
+
+<div class="col-3">
+  <mat-checkbox #active name="ACTIVE"
+    id="active" 
+    type="checkbox"
+    [checked]="Active" 
+    (change)="onActiveChange(active.checked)">Active</mat-checkbox>
+</div>
+
+<div class="col-3">
+<!-- <button mat-raised-button color="primary" type="submit" [disabled]="!myForm.valid" (click)="updateList()">Update</button><button style="margin-left: 3rem;" mat-raised-button (click)="setEditFormPage()" color="primary">Back</button> -->
+<button mat-raised-button color="primary" type="submit" [disabled]="!myForm.valid">Update</button><button style="margin-left: 3rem;" mat-raised-button (click)="setEditFormPage()" color="primary">Back</button>
+</div>
+</div>
+</form>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

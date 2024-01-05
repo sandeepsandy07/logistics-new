@@ -1,0 +1,143 @@
+
+
+    <span style="float: right;"> <mat-icon style="color: blue;" (click)="download_bom()">cloud_download</mat-icon></span>
+
+    <div class="mt-2" *ngFor="let card of list;let i = index">
+        <div class="row">
+            <div class="col-md-12 mb-2">
+                <b>SECTION - {{card.section}}&nbsp;&nbsp;<span></span></b>
+                
+            </div>
+        </div>
+        
+        <div class="row" *ngIf="isListView">
+            <div class="col-md-2 mb-2" style="text-align: center;" *ngFor="let list of card.panel">
+                <mat-card *ngIf="list.panel_name =='LOOSE SUPPLY'" style="cursor: pointer;padding:7px;background: #9caaf940;" (click)="getFilterList(list.panel_name, card.section)">
+                   
+                    <span style="color: #3f51b5;"><b>{{list.panel_name}}-{{list.component_no}}</b></span><br> 
+                    <span style="color: #3f51b5;"><b>{{list.description}}</b></span><br>                   
+                        <span style="padding-right: 5px;">                  
+                            <mat-icon  [ngStyle]="{'color': list.packing_flag == 0 ? 'red' :list.packing_flag >= 2 ? 'green': 'red' }" title="Verify">assignment_turned_in</mat-icon>
+                           
+                            
+                        </span>
+                        <span style="padding-right: 5px;">
+                            <mat-icon  [ngStyle]="{'color': list.packing_flag <=2 ? 'red' :list.packing_flag >= 3 ? 'green': 'red' }" title="Approve">verified_user</mat-icon>
+                            <!-- <mat-icon [ngStyle]="{'color': list.status == 'pending' ? 'red' :list.status == 'verified' ? 'red' : (list.status == 'approved' ? 'green' : list.status == 'packed' ? 'green' : list.status == 'loaded' ? 'green' : list.status == 'delivered' ? 'green' : 'red') }" title="Approve">verified_user</mat-icon> -->
+                        </span>
+                        <span style="padding-right: 5px;">
+                            <mat-icon  [ngStyle]="{'color': list.packing_flag <= 3 ? 'red' :list.packing_flag >= 4 ? 'green': 'red' }" title="packing">widgets</mat-icon>
+                           
+                            <!-- <mat-icon [ngStyle]="{'color':list.status == 'pending' ? 'red' : list.status == 'verified' ? 'red' : (list.status == 'approved' ? 'red' : list.status == 'packed' ? 'green' : list.status == 'loaded' ? 'green' : list.status == 'delivered' ? 'green' : 'red') }" title="packing" >widgets</mat-icon> -->
+                        </span>
+                        <span style="padding-right: 5px;">
+                            <mat-icon  [ngStyle]="{'color': list.packing_flag <= 4 ? 'red' :list.packing_flag >= 5 ? 'green': 'red' }" title="Shipping">local_shipping</mat-icon>
+                           
+                            <!-- <mat-icon [ngStyle]="{'color': list.status == 'pending' ? 'red' :list.status == 'verified' ? 'red' : (list.status == 'approved' ? 'red' : list.status == 'packed' ? 'red' : list.status == 'loaded' ? 'green' : list.status == 'delivered' ? 'green' : 'red') }" title="Shipping" > local_shipping</mat-icon> -->
+                        </span>
+                        <span style="padding-right: 5px;">
+                            <mat-icon  [ngStyle]="{'color': list.packing_flag <= 5 ? 'red' :list.packing_flag >= 6 ? 'green': 'red' }" title="Delivery">where_to_vote</mat-icon>
+                            
+                            <!-- <mat-icon [ngStyle]="{'color':list.status == 'pending' ? 'red' : list.status == 'verified' ? 'red' : (list.status == 'approved' ? 'red' : list.status == 'packed' ? 'red' : list.status == 'loaded' ? 'red' : list.status == 'delivered' ? 'green' : 'red') }" title="Delivery" >where_to_vote</mat-icon> -->
+                        </span>
+                       
+                       
+                        
+                        
+                
+                   
+                    <span><b>{{list.status}}</b></span>
+                
+                </mat-card>
+                
+                <mat-card *ngIf="list.panel_name !='LOOSE SUPPLY'" style="cursor: pointer;padding:7px;background: #9caaf940;" (click)="getFilterListPanel(list.panel_name, card.section)">
+                    <span style="color: #3f51b5;"><b>{{list.panel_name}}-{{list.component_no}}</b></span><br> 
+                    <span style="color: #3f51b5;"><b>{{list.description}}</b></span><br>     
+                    <span style="padding-right: 5px;">     
+                        <mat-icon  [ngStyle]="{'color': list.packing_flag == 0 ? 'red' :list.packing_flag >= 2 ? 'green': 'red' }" title="Verify">assignment_turned_in</mat-icon>            
+                        <!-- <mat-icon  [ngStyle]="{'color': list.status == 'pending' ? 'red' :list.status == 'verified' ? 'green' : (list.status == 'approved' ? 'green' : list.status == 'packed' ? 'green' : list.status == 'loaded' ? 'green' : list.status == 'delivered' ? 'green' : 'red') }" title="Verify">assignment_turned_in</mat-icon> -->
+                        </span> 
+                        <span style="padding-right: 5px;">
+                            <mat-icon  [ngStyle]="{'color': list.packing_flag == 0 ? 'red' :list.packing_flag >= 2 ? 'green': 'red' }" title="Approve">verified_user</mat-icon>
+
+                            <!-- <mat-icon [ngStyle]="{'color': list.status == 'pending' ? 'red' :list.status == 'verified' ? 'red' : (list.status == 'approved' ? 'green' : list.status == 'packed' ? 'green' : list.status == 'loaded' ? 'green' : list.status == 'delivered' ? 'green' : 'red') }" title="Acknowledge">verified_user</mat-icon> -->
+                        </span> 
+                        <span style="padding-right: 5px;">
+                            <mat-icon  [ngStyle]="{'color': list.packing_flag == 0 ? 'red' :list.packing_flag >= 2 ? 'green': 'red' }" title="packing">widgets</mat-icon>
+
+                            <!-- <mat-icon [ngStyle]="{'color':list.status == 'pending' ? 'red' : list.status == 'verified' ? 'red' : (list.status == 'approved' ? 'red' : list.status == 'packed' ? 'green' : list.status == 'loaded' ? 'green' : list.status == 'delivered' ? 'green' : 'red') }" title="Packing">widgets</mat-icon> -->
+                        </span>
+                        <span style="padding-right: 5px;">
+                            <mat-icon  [ngStyle]="{'color': list.packing_flag == 0 ? 'red' :list.packing_flag >= 2 ? 'green': 'red' }" title="Shipping">local_shipping</mat-icon>
+
+                            <!-- <mat-icon [ngStyle]="{'color': list.status == 'pending' ? 'red' :list.status == 'verified' ? 'red' : (list.status == 'approved' ? 'red' : list.status == 'packed' ? 'red' : list.status == 'loaded' ? 'green' : list.status == 'delivered' ? 'green' : 'red') }"  title="Shipping"> local_shipping</mat-icon> -->
+                        </span>
+                        <span style="padding-right: 5px;">
+                            <mat-icon  [ngStyle]="{'color': list.packing_flag == 0 ? 'red' :list.packing_flag >= 2 ? 'green': 'red' }" title="Delivery">where_to_vote</mat-icon>
+
+                            <!-- <mat-icon [ngStyle]="{'color':list.status == 'pending' ? 'red' : list.status == 'verified' ? 'red' : (list.status == 'approved' ? 'red' : list.status == 'packed' ? 'red' : list.status == 'loaded' ? 'red' : list.status == 'delivered' ? 'green' : 'red') }"  title="Delivery">where_to_vote</mat-icon> -->
+                        </span>
+                       
+                       
+                    <span><b> {{list.status}}</b></span>
+                </mat-card>
+            </div>
+        </div>
+        <div class="row" *ngIf="!isListView">
+            <div class="col-md-12 mb-2" style="text-align: center;">
+                <mat-accordion #accordion="matAccordion" [multi]="true">
+                    <mat-expansion-panel *ngFor="let list of card.panel;let san=index">
+
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <mat-icon (click)="generatePDF(list.name, card.section)">picture_as_pdf</mat-icon>
+                                &nbsp;&nbsp;&nbsp;&nbsp;{{list.name}}<span>({{list.data.length}})</span>
+                              
+                                
+                               
+                            </mat-panel-title>
+                            <span *ngIf="san != 2 " style="color: green;">Approved</span>
+                            <span *ngIf="san == 2" style="color: red;">Pending</span>
+                        </mat-expansion-panel-header>
+
+                        <div class="row" mat-list-item >
+                            <div class="col-md-1"><b>SL.NO.</b></div>
+                            <div class="col-md-2"><b>ITEM DESC</b></div>
+                            <div class="col-md-1"><b>MAKE</b></div>
+                            <div class="col-md-1"><b>MODEL</b></div>
+                            <div class="col-md-1"><b>QTY</b></div>
+                            <div class="col-md-1"><b>REMARK</b></div>
+                            <div class="col-md-1"><b>Status</b></div>
+                            <div class="col-md-1"><b>Approved By</b></div>
+                            <hr>
+                        </div>
+
+                        <div class="row" mat-list-item *ngFor="let data of list.data; let i=index">
+                            <div class="col-md-1">{{i + 1}}</div>
+                            <div class="col-md-2">{{data.item_desc == null ? '-' : data.item_desc}}</div>
+                            <div class="col-md-1">{{data.make == null ? '-' : data.make}}</div>
+                            <div class="col-md-1">{{data.model == null ? '-' : data.model}}</div>
+                            <div class="col-md-1">{{data.qty == null ? '-' : data.qty}}</div>
+                            <div class="col-md-1">{{data.remark == null ? '-' : data.remark}}</div>
+                            <div class="col-md-1">Approved</div>
+                            <div class="col-md-1">Senthil</div>
+                            <hr>
+                        </div>
+                        <!-- <div class="row" mat-list-item >
+                            <div class="col-md-12">   <button *ngIf="subskill.da_stage == 0"   type="button" (click)="onEditMode(subskill.da_id)" class="btn btn-primary">Continue(DA) </button></div>
+                           
+                           
+                        </div> -->
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
